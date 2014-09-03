@@ -157,13 +157,12 @@ $typo-default: tuple-key(nth($typo-data, 1));
   @else { @extend %typo-#{$alias}; }
 }
 
-/*
 
-@include set-query-typo(alpha, h1, s6) {
 
-  // apply for alpha upwards
-  // apply for any queries after alpha which have line-height or margin-y
+// @include set-query-typo(alpha, h1, s6) {
 
-}
+//   // apply for alpha upwards
+//   // apply for any queries after alpha which have line-height or margin-y
 
- */
+// }
+

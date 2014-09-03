@@ -27,7 +27,8 @@
 
 @function reject($list) {
   $output: (); @each $value in $list { @if $value { $output: append($output, $value); } }
-  @return $output; }
+  @return $output;
+}
 
 //////////
 // MAPS //

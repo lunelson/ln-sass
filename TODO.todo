@@ -1,5 +1,9 @@
 typo
 -	make less opinionated / more comprehensive
+	-	forget use of @extend;
+		-	jam all the properties in to 'typo' map entry for $alias
+		-	parse these properties and write them out again if typo() called with only $alias arg
+		-	(the above is a fix until @at-root and & interpolation arrive in libsass)
 	-	(nest under '.typo') class, otherwise all elements default to 0 margin
 	-	remove the margin-ref and size-ref resolution code in favor of get-size, get-margin
 	-	allow the setup function to take and register new assignments
