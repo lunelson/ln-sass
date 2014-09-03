@@ -1,0 +1,33 @@
+typo
+-	make less opinionated / more comprehensive
+	-	(nest under '.typo') class, otherwise all elements default to 0 margin
+	-	remove the margin-ref and size-ref resolution code in favor of get-size, get-margin
+	-	allow the setup function to take and register new assignments
+	-	allow it to handle 'size-modifier' from $font-data
+-	alternate function `set-query-typo($query-alias, h1, s1)`
+	-	* NB $query-alias can be a list i.e. 'null beta'
+	-	* if max-width, do base and everything up to query
+	-	* if min-width, do query and following queries
+	-	* if min and max, do in between obvi
+-	allow arbitrary rem size arguments to set-typo() and set-query-typo() to create new assignment
+	-	* NB this means that size-assignments have to be merge to query-data
+-	create html test suite for typesetting
+	-	nb. will need adjacent selector handling
+
+margin and size
+-	make less opinionated
+	-	write the set-margin() and set-size() mixins
+	-
+-	create functions to define font-family
++-	add grid routines, parsing through query to set .col & .row vars
++-	allow setup-margins() and setup-sizes() mixins to take arguments; resolve offset question
+-	add query-value() and q-value() alias functions
+- 	add query-for($keys...) mixin -- media query for all aliases that have given keys;
++- 	figure out why get returns double-nested map
++- 	include reset code in base setup?
+-	implement JSON output of query-data to head { font-family }
+-	reset stuff
+	-	font normalization
+	-	svg normalization
+	-	supports for picturefill 2
+	-	other html5 shit
