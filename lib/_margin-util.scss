@@ -1,0 +1,62 @@
+//                                                           88
+//                                                           ""
+//
+//  88,dPYba,,adPYba,   ,adPPYYba,  8b,dPPYba,   ,adPPYb,d8  88  8b,dPPYba,
+//  88P'   "88"    "8a  ""     `Y8  88P'   "Y8  a8"    `Y88  88  88P'   `"8a
+//  88      88      88  ,adPPPPP88  88          8b       88  88  88       88
+//  88      88      88  88,    ,88  88          "8a,   ,d88  88  88       88
+//  88      88      88  `"8bbdP"Y8  88           `"YbbdP"Y8  88  88       88
+//                                               aa,    ,88
+//                                                "Y8bbdP"
+
+$margin-assignments: () !default; // map of alias->index assignments
+$margin-queries: () !default; // list of queries which have margin-y-factor declared
+$margin-default: m3 !default;
+
+@function get-margin($ref: $margin-default) {
+  $index: null;
+  @if type-of($ref) == 'list' { $index: get-assignment($margin-assignments, $ref...); }
+  @else { $index: get-assignment($margin-assignments, $ref); }
+  @return nth(get(get-query(),'margin-y'), $index);
+}
+
+@function get-margin-x($ref: $margin-default) {
+  $index: null;
+  @if type-of($ref) == 'list' { $index: get-assignment($margin-assignments, $ref...); }
+  @else { $index: get-assignment($margin-assignments, $ref); }
+  @return nth(get(get-query(),'margin-x'), $index);
+}
+
+@function margin($args...) { @return get-margin($args...); }
+
+//  88
+//  88                         ,d
+//  88                         88
+//  88,dPPYba,    ,adPPYba,  MM88MMM  ,adPPYYba,
+//  88P'    "8a  a8P_____88    88     ""     `Y8
+//  88       d8  8PP"""""""    88     ,adPPPPP88
+//  88b,   ,a8"  "8b,   ,aa    88,    88,    ,88
+//  8Y"Ybbd8"'    `"Ybbd8"'    "Y888  `"8bbdP"Y8
+
+
+///////////////////////
+// alternative mixin //
+///////////////////////
+
+//   @include apply-margins('h2-small', m1 -1, m1 -1);
+//   @include apply-margins('h2-small', m1 -1); // if one arg do default
+
+// @mixin margin($typo-class, $mt-index, $mb-index) {
+//   @if index(0 'm0' 'trim', $mt-index) { margin-top: get($typo, $typo-class, 'trim-top'); }
+//   @else if $mt-index {
+//     @if type-of($mt-index) == 'list' { $mt-index: margin-index($mt-index...); }
+//     @else { $mt-index: margin-index($mt-index); }
+//     margin-top: nth(get($typo, $typo-class, 'margin-top'), $mt-index);
+//   }
+//   @if index(0 'm0' 'trim', $mb-index) { margin-top: get($typo, $typo-class, 'trim-bottom'); }
+//   @else if $mb-index {
+//     @if type-of($mb-index) == 'list' { $mb-index: margin-index($mb-index...); }
+//     @else { $mb-index: margin-index($mb-index); }
+//     margin-bottom: nth(get($typo, $typo-class, 'margin-bottom'), $mb-index);
+//   }
+// }

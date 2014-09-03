@@ -1,0 +1,24 @@
+//             88                                                  88  88
+//             ""                                           ,d     ""  88
+//                                                          88         88
+//  ,adPPYba,  88  888888888   ,adPPYba,     88       88  MM88MMM  88  88
+//  I8[    ""  88       a8P"  a8P_____88     88       88    88     88  88
+//   `"Y8ba,   88    ,d8P'    8PP"""""""     88       88    88     88  88
+//  aa    ]8I  88  ,d8"       "8b,   ,aa     "8a,   ,a88    88,    88  88
+//  `"YbbdP"'  88  888888888   `"Ybbd8"'      `"YbbdP'Y8    "Y888  88  88
+
+$size-default: s3 !default;
+
+@function get-assignment($map, $ref, $offset: 0) {
+  @if type-of($ref) == 'string' { $ref: map-get($map, $ref); }
+  @return $ref + $offset;
+}
+
+@function get-size($ref: $size-default) {
+  $index: null;
+  @if type-of($ref) == 'list' { $index: get-assignment($size-assignments, $ref...); }
+  @else { $index: get-assignment($size-assignments, $ref); }
+  @return nth($sizes, $index);
+}
+
+@function size($args...) { @return get-size($args...); }

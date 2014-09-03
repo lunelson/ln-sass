@@ -1,0 +1,85 @@
+@mixin clearfix {
+  &:after {
+    content:"";
+    display:table;
+    clear:both;
+  }
+}
+
+@function modular-scale($index, $basis: 2 4) {
+  @return pow(nth($basis, 1), $index/nth($basis, 2));
+}
+
+///////////
+// UNITS //
+///////////
+
+@function single($unit) {
+  $units: 'em', 'ex', 'ch', 'rem', '%', 'vw', 'vh', 'vmin', 'vmax', 'cm', 'mm', 'in', 'px', 'pt', 'pc', 'deg', 'grad', 'rad', 'turn', 's', 'ms', 'dpi', 'dpcm', 'dppx';
+  $singles: 1em, 1ex, 1ch, 1rem, 1%, 1vw, 1vh, 1vmin, 1vmax, 1cm, 1mm, 1in, 1px, 1pt, 1pc, 1deg, 1grad, 1rad, 1turn, 1s, 1ms, 1dpi, 1dpcm, 1dppx;
+  $index: index($units, $unit); @if $index { @return nth($singles, $index); } @return 1; }
+@function strip($value) { @return $value / single(unit($value)); }
+@function assert($value, $unit) { @return strip($value) * single($unit); }
+
+///////////
+// LISTS //
+///////////
+
+@function reject($list) {
+  $output: (); @each $value in $list { @if $value { $output: append($output, $value); } }
+  @return $output; }
+
+//////////
+// MAPS //
+//////////
+
+@function map-prev-key($map, $key) {
+  $keys: map-keys($map);
+  @return nth($keys, index($keys, $key) - 1)
+}
+@function map-next-key($map, $key) {
+  $keys: map-keys($map);
+  @return nth($keys, index($keys, $key) + 1)
+}
+@function map-subkey-sort($list-map, $key) {
+  $list-map: list-map-check($list-map);
+  @if length($list-map) > 1 {
+    $less: (); $equal: (); $greater: ();
+    $seed: nth($list-map, ceil(length($list-map) / 2));
+    @each $tuple in $list-map {
+      @if get(tuple-value($tuple), $key) == get(tuple-value($seed), $key) { $equal: append($equal, $tuple, 'comma'); }
+      @else if get(tuple-value($tuple), $key) < get(tuple-value($seed), $key) { $less: append($less, $tuple, 'comma'); }
+      @else { $greater: append($greater, $tuple, 'comma'); } }
+    @return join(join(map-subkey-sort($less, $key), $equal), map-subkey-sort($greater, $key)); }
+  @return $list-map;
+}
+@function map-subvalues($map, $key, $depth) {
+  $output: ();
+  @if $depth > 1 { @each $tuple in $map { $output: append($output, map-subvalues(value($tuple), $key, $depth - 1)); } }
+  @else { $output: get($map, $key); }
+  @return $output;
+}
+
+///////////
+// OTHER //
+///////////
+
+$opposite: (
+  'left' 'right',
+  'right' 'left',
+  'top' 'bottom',
+  'bottom' 'top'
+);
+
+@function m-scale($index, $factor, $spread) { @return pow($factor, $index/$spread); }
+
+@function trend($value, $basis: (0 0, 1 1)) {
+  $c1: nth($basis, 1); $c2: nth($basis, 2);
+  $x1: nth($c1, 1); $y1: nth($c1, 2);
+  $x2: nth($c2, 1); $y2: nth($c2, 2);
+  $m: ($y2 - $y1) / ($x2 - $x1);
+  @return $y1 + $m * ($value - $x1);
+}
+
+
+

@@ -1,0 +1,36 @@
+{
+  "name": "sass-ln",
+  "version": "0.0.1",
+  "description": "a framework for modularly-scaled responsive layout and optically-aligned typography",
+  "main": "gulpfile.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "gulp"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lunelson/sass-ln"
+  },
+  "keywords": [
+    "sass",
+    "libsass",
+    "optical",
+    "typography",
+    "map",
+    "maps",
+    "list-map",
+    "list-maps"
+  ],
+  "author": "Lu Nelson",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/lunelson/sass-ln/issues"
+  },
+  "homepage": "https://github.com/lunelson/sass-ln",
+  "devDependencies": {
+    "gulp": "^3.8.5",
+    "gulp-sass": "^0.7.2"
+  }
+}

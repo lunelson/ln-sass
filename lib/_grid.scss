@@ -1,0 +1,83 @@
+//                           88           88
+//                           ""           88
+//                                        88
+//   ,adPPYb,d8  8b,dPPYba,  88   ,adPPYb,88
+//  a8"    `Y88  88P'   "Y8  88  a8"    `Y88
+//  8b       88  88          88  8b       88
+//  "8a,   ,d88  88          88  "8a,   ,d88
+//   `"YbbdP"Y8  88          88   `"8bbdP"Y8
+//   aa,    ,88
+//    "Y8bbdP"
+
+@mixin setup-grid($margin-ref: $margin-default) {
+
+  $margin: get-margin-x($margin-ref);
+
+  .col, [class*="col--"] {
+    float: left;
+    width: 100%;
+    min-height: 1px; // http://css-tricks.com/make-sure-columns-dont-collapse-horizontally/
+    padding-left: $margin / 2;
+    padding-right: $margin / 2;
+  }
+
+  .row, [class*="row--"] {
+    @include clearfix();
+    margin-left: - $margin / 2;
+    margin-right: - $margin / 2;
+  }
+
+  .wrap, [class*="wrap--"] {
+    @include clearfix();
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  @each $query-alias in map-keys(get($query-data, 'width')) {
+
+    @if get($query-orig, 'width', $query-alias, 'margin-x') {
+      @include query($query-alias) {
+        $margin: get-margin-x($margin-ref);
+        .col {
+          padding-left: $margin / 2;
+          padding-right: $margin / 2;
+        }
+        .row {
+          margin-left: - $margin / 2;
+          margin-right: - $margin / 2;
+        }
+      }
+    }
+  }
+}
+
+// column sizing mixin
+@mixin col-size($span, $offsets...) {
+  $n: nth($span, 1); $d: nth($span, 2);
+  width: $n / $d * 100%;
+  @each $offset in $offsets {
+    $dir: nth($offset, 1); $o: nth($offset, 2);
+    @if length($offset) > 2 { $d: nth($offset, 3); }
+    @if $o == out {
+      margin-#{get($opposite, $dir)}: 100%;
+      margin-#{$dir}: $n / $d * -100%;
+      margin-bottom: -100%; }
+    @else { margin-#{$dir}: $o / $d * 100%; }
+  }
+}
+
+// row sizing mixin
+@mixin row-size($cols: false) {
+  @if $cols {
+    &::before {
+      content: '#{$cols} .col';
+      display: none;
+    }
+  }
+}
+
+
+// @if $margin {
+//   .col { padding-left: $margin/2; padding-right: $margin/2; }
+//   .row { margin-left: $margin/-2; margin-right: $margin/-2; }
+// }

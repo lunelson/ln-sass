@@ -1,0 +1,98 @@
+//  88                                                           d8                  88               88                       88
+//  88                                                         ,8P'                  88               88                       88
+//  88                                                        d8"                    88               88                       88
+//  88,dPPYba,   ,adPPYYba,  ,adPPYba,   ,adPPYba,          ,8P'         ,adPPYb,d8  88   ,adPPYba,   88,dPPYba,   ,adPPYYba,  88
+//  88P'    "8a  ""     `Y8  I8[    ""  a8P_____88         d8"          a8"    `Y88  88  a8"     "8a  88P'    "8a  ""     `Y8  88
+//  88       d8  ,adPPPPP88   `"Y8ba,   8PP"""""""       ,8P'           8b       88  88  8b       d8  88       d8  ,adPPPPP88  88
+//  88b,   ,a8"  88,    ,88  aa    ]8I  "8b,   ,aa      d8"             "8a,   ,d88  88  "8a,   ,a8"  88b,   ,a8"  88,    ,88  88
+//  8Y"Ybbd8"'   `"8bbdP"Y8  `"YbbdP"'   `"Ybbd8"'     8P'               `"YbbdP"Y8  88   `"YbbdP"'   8Y"Ybbd8"'   `"8bbdP"Y8  88
+//                                                                       aa,    ,88
+//                                                                        "Y8bbdP"
+
+$global-defaults: (
+  hd-ratio (3 2),
+  em-for-rem false,
+  force-rems true,
+  typo-margin-dir 'top',
+  typo-min-line-height 1.1,
+  typo-line-div 2,
+  typo-per-query true,
+  typo-font-path '/public/fonts/',
+  debug false,
+  debug-color rgba(0, 0, 0, 0.05)
+);
+
+// empty default for user spec
+$global-data: () !default;
+
+$base-defaults: (
+  font-size 16px,
+  line-height 1.4,
+  margin-x 1rem,
+  margin-y 1.4rem,
+  body-top 2rem,
+  body-right 1rem,
+  body-bottom 2rem,
+  body-left 1rem
+);
+
+// empty default for user spec
+$base-data: () !default;
+
+@mixin setup-base($output: true){
+
+  // merge global and base data with defaults
+  $global-data: merge($global-defaults, $global-data);
+  $base-data: merge($base-defaults, $base-data);
+
+  // calc and merge back some shit
+  $font-size: get($base-data, 'font-size');
+  $line-height: get($base-data, 'line-height');
+  $base-data: merge($base-data, (
+    'html-scale' $font-size / 16px,
+    'line-height' if(unit($line-height) == 'px', $line-height / $font-size, strip($line-height))
+  ));
+
+  // if output true, do all the base shite
+  @if $output {
+
+    // inherit box sizing (from html)
+    *, *:before, *:after { box-sizing: inherit; }
+
+    // query alias for js; ref: http://dropshado.ws/post/79494424279/conditional-css-doesnt-work-in-chrome
+    head { font-family: 'base'; }
+
+    // set height to 100%; needed for various shit
+    html, body { height: 100%; }
+
+    html {
+      // n3: set default font family to sans-serif.
+      font-family: sans-serif;
+      // n3: prevent iOS text size adjust after orientation change, without disabling user zoom.
+      -ms-text-size-adjust: 100%;
+      -webkit-text-size-adjust: 100%;
+      // set border box sizing
+      box-sizing: border-box;
+      // unify font rendering
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      // remove webkit tap highlight color
+      -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+      // set scale
+      font-size: percentage(get($base-data, 'html-scale'));
+    }
+
+    body {
+      font-size: get-size() * 1rem;
+      line-height: get($base-data, 'line-height');
+      margin: 0; // n3: remove default margin
+      margin-top: get($base-data, 'body-top'); margin-bottom: get($base-data, 'body-bottom');
+    }
+
+    .body-col { margin-left: get($base-data, 'body-left'); margin-right: get($base-data, 'body-right'); }
+    .body-row { margin-left: - get($base-data, 'body-left'); margin-right: - get($base-data, 'body-right'); }
+
+    // add any additional content
+    @content;
+  }
+}

@@ -1,0 +1,72 @@
+//                                                           88
+//                                                           ""
+//
+//  88,dPYba,,adPYba,   ,adPPYYba,  8b,dPPYba,   ,adPPYb,d8  88  8b,dPPYba,
+//  88P'   "88"    "8a  ""     `Y8  88P'   "Y8  a8"    `Y88  88  88P'   `"8a
+//  88      88      88  ,adPPPPP88  88          8b       88  88  88       88
+//  88      88      88  88,    ,88  88          "8a,   ,d88  88  88       88
+//  88      88      88  `"8bbdP"Y8  88           `"YbbdP"Y8  88  88       88
+//                                               aa,    ,88
+//                                                "Y8bbdP"
+
+@mixin setup-margins($options: ()) {
+
+  // defaults vs. options
+  $range: get($options, 'range') or 6;
+  $factor: get($options, 'factor') or 2;
+  $steps: get($options, 'steps') or 3;
+  $spread: get($options, 'spread') or 2;
+  $offset: get($options, 'offset') or 4;
+  $superclasses: kilo mega giga tera;
+
+  // get base margin-y value; fallback to line-height or just 1.5rem
+  $margin-y: get($base-data, 'margin-y') or get($base-data, 'line-height') * 1rem or 1.5rem;
+  $margin-x: get($base-data, 'margin-x') or 1rem;
+
+  // calc and hold base margin lists
+  $margins-y-temp: (); $margins-x-temp: ();
+  @for $n from 1 through ($range + length($superclasses)) * $spread {
+    $margin: m-scale($n - $offset * $spread, $factor, $steps * $spread);
+    $margins-y-temp: append($margins-y-temp, $margin * $margin-y, 'comma');
+    $margins-x-temp: append($margins-x-temp, $margin * $margin-x, 'comma');
+  }
+
+  // merge base margins to base-data
+  $base-data: merge($base-data, 'margin-y' $margins-y-temp);
+  $base-data: merge($base-data, 'margin-x' $margins-x-temp);
+
+  // if typo-per-query then merge query margins to query-data
+  @if get($global-data, 'typo-per-query') {
+
+    @each $query in get($query-data, 'width') {
+
+      $query-alias: tuple-key($query);
+      $query-spec: tuple-value($query);
+      $margin-y: get($query-spec, 'margin-y');
+      $margin-x: get($query-spec, 'margin-x');
+
+      $margins-y-temp: (); $margins-x-temp: ();
+      @for $n from 1 through ($range + length($superclasses)) * $spread {
+        $margin: m-scale($n - $offset * $spread, $factor, $steps * $spread);
+        $margins-y-temp: append($margins-y-temp, $margin * $margin-y, 'comma');
+        $margins-x-temp: append($margins-x-temp, $margin * $margin-x, 'comma');
+      }
+      $query-data: merge($query-data, 'width', $query-alias, 'margin-y' $margins-y-temp);
+      $query-data: merge($query-data, 'width', $query-alias, 'margin-x' $margins-x-temp);
+    }
+  }
+
+  // create margin assignments
+  @for $n from 1 through $range {
+    // $n: $range - $n + 1; $index: ($range - $n + 1) * $spread; // inverted
+    $index: $n * $spread;
+    $margin-assignments: merge($margin-assignments, 'm#{$n}', $index);
+  }
+
+  // create super margin assignments
+  @for $n from 1 through length($superclasses) {
+    $index: ($range + $n) * $spread;
+    $margin-assignments: merge($margin-assignments, '#{nth($superclasses, $n)}' $index);
+  }
+
+}

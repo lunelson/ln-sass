@@ -1,0 +1,43 @@
+//             88
+//             ""
+//
+//  ,adPPYba,  88  888888888   ,adPPYba,
+//  I8[    ""  88       a8P"  a8P_____88
+//   `"Y8ba,   88    ,d8P'    8PP"""""""
+//  aa    ]8I  88  ,d8"       "8b,   ,aa
+//  `"YbbdP"'  88  888888888   `"Ybbd8"'
+
+// global
+$sizes: () !default; // list of sizes, m-scaled
+$size-assignments: () !default; // map of alias->list-index assignments
+
+@mixin setup-sizes($options: ()) {
+
+  // options vs defaults
+  $factor: get($options, 'factor') or 2;
+  $steps: get($options, 'steps') or 3;
+  $spread: get($options, 'spread') or 2;
+  $offset: get($options, 'offset') or  1;
+  $superclasses: kilo mega giga tera;
+
+  // create size list
+  @for $n from 1 through (6 + length($superclasses)) * $spread {
+
+    $size: m-scale($n - $offset * $spread, $factor, $steps * $spread);
+    $sizes: append($sizes, $size, 'comma');
+  }
+
+  // create size assignments
+  @for $n from 1 through 6 {
+    // $n: 7 - $n; $index: (7 - $n) * $spread;
+    $index: $n * $spread;
+    $size-assignments: merge($size-assignments, 's#{$n}' $index);
+  }
+
+  // create super size assignments
+  @for $n from 1 through length($superclasses) {
+    $index: (6 + $n) * $spread;
+    $size-assignments: merge($size-assignments, '#{nth($superclasses, $n)}' $index);
+  }
+}
+
