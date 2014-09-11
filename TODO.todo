@@ -1,27 +1,50 @@
 typo
--	make less opinionated / more comprehensive
-	-	forget use of @extend;
-		-	jam all the properties in to 'typo' map entry for $alias
-		-	parse these properties and write them out again if typo() called with only $alias arg
-		-	(the above is a fix until @at-root and & interpolation arrive in libsass)
-	-	(nest under '.typo') class, otherwise all elements default to 0 margin
+-	new -- set-typo()
+	-	bring the logic in to a single 'set-typo()' mixin
+		- function works for current-query; meant to be nested in a query() mixin
+	-	set-typo($t-alias, [args...])
+		-	possibly use $options map in place of args
+		-	get the current query
+		-	check for t-alias in current-query [ typo = if get(current, t-alias)]
+		-	if yes -> parse typo to output
+		-	if no -> calc the values, merge them to current query under t-alias, output them
+-	new -- set-typo-all() or set-all-typo() or setup-typo($t-alias, [args...])
+	-	run all query scopes from base through any queries with line-height or margin-y
+	-	using 'set-typo()' function inside a query() mixin block
+-	new -- set-typo-query() or set-query-typo or query-typo($q-alias, $t-alias, [args...])
+	-	$q-alias can be a single string or a list; must parse whether this is min-width or max-width
+	-	if min-width, slice query-keys at index(query-keys, q-alias)
+		-	process from there UP
+		-	only for queries with margin-y or line-height
+	-	if max-width, slide query-keys at index(query-keys, q-alias)
+		-	process base, then queries up to slice point, if they contain margin-y or line-height
+	-	alternate function `set-query-typo($query-alias, h1, s1)`
+		-	* NB $query-alias can be a list i.e. 'null beta'
+		-	* if max-width, do base and everything up to query
+		-	* if min-width, do query and following queries
+		-	* if min and max, do in between obvi
+-	feat -- margins vs height queries
+	-	how to manage tracking margins over different kinds of queries?
+	-	probably have to choose between width/height or width-only query system, fundamentally
+
+-	typo stuff generally -- make more flexible, less opinionated
+	-	forget use of @extend until @at-root and '&' interpolation arrive in libsass
 	-	remove the margin-ref and size-ref resolution code in favor of get-size, get-margin
 	-	allow the setup function to take and register new assignments
+		-	* NB this means that size-assignments have to be merge to query-data
 	-	allow it to handle 'size-modifier' from $font-data
--	alternate function `set-query-typo($query-alias, h1, s1)`
-	-	* NB $query-alias can be a list i.e. 'null beta'
-	-	* if max-width, do base and everything up to query
-	-	* if min-width, do query and following queries
-	-	* if min and max, do in between obvi
--	allow arbitrary rem size arguments to set-typo() and set-query-typo() to create new assignment
-	-	* NB this means that size-assignments have to be merge to query-data
--	create html test suite for typesetting
+
+-	* create html test suite for typesetting
 	-	nb. will need adjacent selector handling
 
 margin and size
 -	make less opinionated
 	-	write the set-margin() and set-size() mixins
-	-
+	-	start with margin first
+		-	base function creates margins only for given context;
+			-	allows different modular scales at different queries
+			-	could even create some generic classes along with grid setup e.g. .mt3, .mb5 etc.
+		-	set-query-margin() function runs base function per query/ies, as with typo
 -	create functions to define font-family
 +-	add grid routines, parsing through query to set .col & .row vars
 +-	allow setup-margins() and setup-sizes() mixins to take arguments; resolve offset question

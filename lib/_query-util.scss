@@ -31,6 +31,12 @@ $query-current-alias: null;
   @return $base-data;
 }
 
+// function to retrieve current query-data-object based on $query-current-alias
+@function get-query-orig($alias: $query-current-alias) {
+  @if $alias { @return get($query-orig  , nth($alias, 1), nth($alias, 2)); }
+  @return $base-data;
+}
+
 // function to retrieve value for current query
 @function get-query-value($key, $alias: $query-current-alias) {
   @return get(get-query($alias), $key);
