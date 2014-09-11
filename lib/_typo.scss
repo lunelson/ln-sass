@@ -41,7 +41,7 @@ $font-default: tuple-key(nth($typo-data, 1));
   $size-index: null;
   @if type-of($size) == 'list' { $size-index: get-assignment($size-assignments, $size...); }
   @else { $size-index: get-assignment($size-assignments, $size); }
-  $size: nth($sizes, $size-index) * 1rem;
+  $size: nth($sizes, $size-index);
 
   // resolve margin index, then margin value
   $margin-index: null;
@@ -54,8 +54,7 @@ $font-default: tuple-key(nth($typo-data, 1));
   $margin-assignments: merge($margin-assignments, $alias, $margin-index);
 
   // trims
-  // $px-size: strip($size * get($base-data, 'font-size'));
-  $px-size: px($size); // better! works per html-scale
+  $px-size: strip(px($size)); // better! works per html-scale
   $capline-trim: map-get($options, 'capline') or trend($px-size, get($typo-data, $font, 'metrics', 'capline'));
   $baseline-trim: map-get($options, 'baseline') or trend($px-size, get($typo-data, $font, 'metrics', 'baseline'));
 
@@ -63,6 +62,18 @@ $font-default: tuple-key(nth($typo-data, 1));
   $line-div: get($global-data, 'typo-line-div') or ceil($size) + 1; // set global value to null to automate
   $min-height: get($global-data, 'typo-min-line-height');
   $margin-dir: get($global-data, 'typo-margin-dir');
+
+  // .debug {
+  //   size: $size;
+  //   px-size: px($size);
+  //   px-unit: unit(px($size));
+  //   unitless-size: strip(px($size));
+  //   capline-trim: $capline-trim;
+  //   baseline-trim: $baseline-trim;
+  //   line-div: $line-div;
+  //   min-height: $min-height;
+  //   margin-dir: $margin-dir;
+  // }
 
   // allow arbitrary size input?
     // if unit of $size is rem
@@ -101,9 +112,19 @@ $font-default: tuple-key(nth($typo-data, 1));
     $margin-top: $trim-top + $margin * if($margin-dir == 'top', 1, 0);
     $margin-bottom: $trim-bottom + $margin * if($margin-dir == 'bottom', 1, 0);
 
+    // .debug {
+    //   reference-height: get($context, 'line-height') / $size;
+    //   line-height: $reference-height * ceil($min-height / $reference-height * $line-div) / $line-div;
+    //   height-trim: (1 - $line-height) / 2;
+    //   trim-top: ($height-trim - $capline-trim) * $size * 1rem;
+    //   trim-bottom: ($height-trim - $baseline-trim) * $size * 1rem;
+    //   margin-top: $trim-top + $margin * if($margin-dir == 'top', 1, 0);
+    //   margin-bottom: $trim-bottom + $margin * if($margin-dir == 'bottom', 1, 0);
+    // }
+
     // merge them to current query under t-alias
     $context: merge($context, 'typo', $alias, (
-      'font-size' $size,
+      'font-size' $size * 1rem,
       'line-height' $line-height,
       'margin-top' $margin-top,
       'margin-bottom' $margin-bottom,
@@ -112,7 +133,7 @@ $font-default: tuple-key(nth($typo-data, 1));
     ));
 
     // then output them
-    font-size: $size;
+    font-size: $size * 1rem;
     line-height: $line-height;
     margin-top: $margin-top;
     margin-bottom: $margin-bottom;

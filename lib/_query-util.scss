@@ -52,7 +52,7 @@ $query-current-alias: null;
     @if index('rem' 'em', unit($value)) { $out: append($out, assert($value, $unit), 'space'); }
     @else { $out: append($out, assert($value / $scale / 16, $unit), 'space'); }
   }
-  @return $out;
+  @return if(length($out) > 1, $out, nth($out, 1));
 }
 
 // function to convert value(s) to px, following context scale
@@ -64,7 +64,7 @@ $query-current-alias: null;
     @if unit($value) == 'px' { $out: append($out, $value, 'space'); }
     @else { $out: append($out, assert($value * $scale * 16, 'px'), 'space'); }
   }
-  @return $out;
+  @return if(length($out) > 1, $out, nth($out, 1));
 }
 
 // mixin to output width media query
