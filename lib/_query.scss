@@ -43,7 +43,7 @@ $query-orig: ();
   @if $width-queries {
 
     // sort
-    $width-queries: map-sort($width-queries, min-width);
+    $width-queries: map-sort($width-queries, 'min-width');
 
     // parse width-queries relative to base properties
     $reference-spec: $base-data;
@@ -60,15 +60,15 @@ $query-orig: ();
       $min-width: get($reference-spec, 'min-width');
       $html-scale: get($reference-spec, 'font-size') / 16px;
       $content-width: strip($min-width) / $html-scale - get($reference-spec, 'body-left') - get($reference-spec, 'body-right');
-      $width-queries: merge($width-queries, $query-alias, join((
+      $width-queries: merge($width-queries, $query-alias, merge($reference-spec, (
         'html-scale' $html-scale,
         'content-width' $content-width,
-        // 'query-string' $query-string
-      ), $reference-spec));
+      )));
 
       // output values for whatever appeared in query-spec
       @if $output {
-        @media #{query-string($query-alias)} {
+        // @media #{query-string($query-alias)} {
+        @include query($query-alias) {
 
           $font-size: get($query-spec, 'font-size');
           $line-height: get($query-spec, 'line-height');

@@ -56,7 +56,7 @@ $typo-data: (
 );
 
 // 1. setup base; add any particulars as content
-@include setup-base(false){}
+@include setup-base(false);
 
 // 2. setup queries; 'false' means no outputs
 @include setup-query(false);
@@ -70,18 +70,18 @@ $typo-data: (
 
 $size-default: s3; // same as the offset above
 
-// 3. setup margins
-@include set-query-margins(null gamma, (
-  'factor' 1.25,
-  'steps' 2,
-  'offset' 4,
-));
+// // 3. setup margins
+// @include set-query-margins(null gamma, (
+//   'factor' 1.25,
+//   'steps' 2,
+//   'offset' 4,
+// ));
 
-@include set-query-margins(gamma, (
-  'factor' 2,
-  'steps' 2,
-  'offset' 4,
-));
+// @include set-query-margins(gamma, (
+//   'factor' 2,
+//   'steps' 2,
+//   'offset' 4,
+// ));
 
 // @include query(delta) {
 //   @include set-margins((
