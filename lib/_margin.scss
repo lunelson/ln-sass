@@ -27,6 +27,29 @@ $margin-defaults: (
 $margin-queries: () !default; // list of queries which have margin-y-factor declared
 $margin-default: m3 !default;
 
+/////////////
+// HELPERS //
+/////////////
+
+@function get-margin-assignment($reference, $offset: 0) {
+  $index: map-get($margin-assignments, $reference);
+  @return $index + $offset;
+}
+
+@function get-margin($reference: get($margin-defaults, default)) {
+  $index: null;
+  @if type-of($reference) == 'list' { $index: get-margin-assignment($reference...); }
+  @else { $index: get-margin-assignment($reference); }
+  @return nth(get(get-query(),'margin-y'), $index);
+}
+
+@function get-margin-x($reference: get($margin-defaults, default)) {
+  $index: null;
+  @if type-of($reference) == 'list' { $index: get-margin-assignment($reference...); }
+  @else { $index: get-margin-assignment($reference); }
+  @return nth(get(get-query(),'margin-x'), $index);
+}
+
 ////////////////
 // CORE MIXINs //
 ////////////////
@@ -90,7 +113,7 @@ $margin-default: m3 !default;
 // PER CONTEXT SETTING //
 /////////////////////////
 
-@mixin set-all-margins($options:()) {
+@mixin setup-margins($options:()) {
   $query-aliases: map-keys(map-get($query-data, 'width'));
   // base output
   @include set-margins($options);
@@ -102,7 +125,7 @@ $margin-default: m3 !default;
   @include assign-margins();
 }
 
-@mixin set-query-margins($aliases: null, $options:()) {
+@mixin setup-query-margins($aliases: null, $options:()) {
   $query-aliases: map-keys(map-get($query-data, 'width'));
   // parse args
   $alias1: nth($aliases, 1); $alias2: null;

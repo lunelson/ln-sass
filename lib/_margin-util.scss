@@ -9,21 +9,6 @@
 //                                               aa,    ,88
 //                                                "Y8bbdP"
 
-@function get-margin($ref: $margin-default) {
-  $index: null;
-  @if type-of($ref) == 'list' { $index: get-assignment($margin-assignments, $ref...); }
-  @else { $index: get-assignment($margin-assignments, $ref); }
-  @return nth(get(get-query(),'margin-y'), $index);
-}
-
-@function get-margin-x($ref: $margin-default) {
-  $index: null;
-  @if type-of($ref) == 'list' { $index: get-assignment($margin-assignments, $ref...); }
-  @else { $index: get-assignment($margin-assignments, $ref); }
-  @return nth(get(get-query(),'margin-x'), $index);
-}
-
-@function margin($args...) { @return get-margin($args...); }
 
 //  88
 //  88                         ,d

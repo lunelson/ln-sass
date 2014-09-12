@@ -8,6 +8,9 @@
 //               d8'      88
 //              d8'       88
 
+// TODO
+// - do setup-typo and setup-query-typo, separating global from per-query calculations
+
 $typo-data: (
   main (
     definition (
@@ -22,8 +25,6 @@ $typo-data: (
   )
 ) !default;
 
-$font-default: tuple-key(nth($typo-data, 1));
-
 ////////////////////////////
 // base set-typo function //
 ////////////////////////////
@@ -34,19 +35,23 @@ $font-default: tuple-key(nth($typo-data, 1));
   $context: get-query();
 
   // font and margin
-  $font: map-get($options, 'font') or $font-default;
-  $margin: map-get($options, 'margin') or $margin-default;
+  $font: map-get($options, 'font') or tuple-key(nth($typo-data, 1));
+  $margin: map-get($options, 'margin') or get($margin-defaults, 'default');
 
-  // resolve size index, then size value
+  // size index
   $size-index: null;
-  @if type-of($size) == 'list' { $size-index: get-assignment($size-assignments, $size...); }
-  @else { $size-index: get-assignment($size-assignments, $size); }
-  $size: nth($sizes, $size-index);
+  @if type-of($size) == 'list' { $size-index: get-size-assignment($size...); }
+  @else { $size-index: get-size-assignment($size); }
 
-  // resolve margin index, then margin value
+  // size value
+  $size: nth(get(get-query(),'font-size'), $size-index);
+
+  // margin index
   $margin-index: null;
-  @if type-of($margin) == 'list' { $margin-index: get-assignment($margin-assignments, $margin...); }
-  @else { $margin-index: get-assignment($margin-assignments, $margin); }
+  @if type-of($margin) == 'list' { $margin-index: get-margin-assignment($margin...); }
+  @else { $margin-index: get-margin-assignment($margin); }
+
+  // margin value
   $margin: nth(get($context,'margin-y'), $margin-index);
 
   // merge alias assignment back to the assignment lists
@@ -58,34 +63,57 @@ $font-default: tuple-key(nth($typo-data, 1));
   $capline-trim: map-get($options, 'capline') or trend($px-size, get($typo-data, $font, 'metrics', 'capline'));
   $baseline-trim: map-get($options, 'baseline') or trend($px-size, get($typo-data, $font, 'metrics', 'baseline'));
 
-  // global typo stuff
+  // global / default stuff
   $line-div: get($global-data, 'typo-line-div') or ceil($size) + 1; // set global value to null to automate
   $min-height: get($global-data, 'typo-min-line-height');
-  $margin-dir: get($global-data, 'typo-margin-dir');
+  $margin-dir: get($margin-defaults, 'margin-direction') or 'top';
+
+  // calc the values
+  $reference-height: get($context, 'line-height') / strip($size);
+  $line-height: $reference-height * ceil($min-height / $reference-height * $line-div) / $line-div;
+  $height-trim: (1 - $line-height) / 2;
+  $trim-top: ($height-trim - $capline-trim) * $size;
+  $trim-bottom: ($height-trim - $baseline-trim) * $size;
+  $margin-top: $trim-top + $margin * if($margin-dir == 'top', 1, 0);
+  $margin-bottom: $trim-bottom + $margin * if($margin-dir == 'bottom', 1, 0);
 
   // .debug {
   //   size: $size;
-  //   px-size: px($size);
-  //   px-unit: unit(px($size));
-  //   unitless-size: strip(px($size));
+  //   reference-height: get($context, 'line-height') / strip($size);
+  //   line-height: $reference-height * ceil($min-height / $reference-height * $line-div) / $line-div;
+  //   height-trim: (1 - $line-height) / 2;
+  //   px-size: $px-size;
   //   capline-trim: $capline-trim;
   //   baseline-trim: $baseline-trim;
-  //   line-div: $line-div;
-  //   min-height: $min-height;
-  //   margin-dir: $margin-dir;
+  //   trim-top: ($height-trim - $capline-trim) * $size;
+  //   trim-bottom: ($height-trim - $baseline-trim) * $size;
+  //   margin-top: $trim-top + $margin * if($margin-dir == 'top', 1, 0);
+  //   margin-bottom: $trim-bottom + $margin * if($margin-dir == 'bottom', 1, 0);
   // }
 
-  // allow arbitrary size input?
-    // if unit of $size is rem
-      // append $size to $sizes
-      // append new assignment: $alias, at length($sizes);
-    // if unit of size is not rem (it's a reference)
-      // resolve $size-index & $size-value
-      // append new assignment: $alias, $size-index
-      // set $size to $size-value * 1rem
+  // merge them to current query under t-alias
+  $context: merge($context, 'typo', $alias, (
+    'font-size' $size,
+    'line-height' $line-height,
+    'margin-top' $margin-top,
+    'margin-bottom' $margin-bottom,
+    'trim-top' $trim-top,
+    'trim-bottom' $trim-bottom,
+  ));
 
-  // allow arbitrary margin input?
-    //
+  // then output them
+  font-size: $size;
+  line-height: $line-height;
+  margin-top: $margin-top;
+  margin-bottom: $margin-bottom;
+  @if $margin-dir == 'top' { &:first-child, &.trim-top { margin-top: $trim-top; } }
+  @else { &:last-child, &.trim-bottom { margin-bottom: $trim-bottom; } }
+
+  // additional content
+  @content;
+}
+
+@mixin get-typo($alias) {
 
   // check for $alias in typo map for current context
   $context-typo: get($context, typo, $alias);
@@ -97,53 +125,11 @@ $font-default: tuple-key(nth($typo-data, 1));
     line-height: get($context-typo, line-height);
     margin-top: get($context-typo, margin-top);
     margin-bottom: get($context-typo, margin-bottom);
-    @if $margin-dir == 'top' { &:first-child, &.trim-top { margin-top: $trim-top; } }
-    @else { &:last-child, &.trim-bottom { margin-top: $trim-top; } }
-
-  }
-  @else { // i.e. if it doesn't exist ->
-
-    // calc the values
-    $reference-height: get($context, 'line-height') / $size;
-    $line-height: $reference-height * ceil($min-height / $reference-height * $line-div) / $line-div;
-    $height-trim: (1 - $line-height) / 2;
-    $trim-top: ($height-trim - $capline-trim) * $size * 1rem;
-    $trim-bottom: ($height-trim - $baseline-trim) * $size * 1rem;
-    $margin-top: $trim-top + $margin * if($margin-dir == 'top', 1, 0);
-    $margin-bottom: $trim-bottom + $margin * if($margin-dir == 'bottom', 1, 0);
-
-    // .debug {
-    //   reference-height: get($context, 'line-height') / $size;
-    //   line-height: $reference-height * ceil($min-height / $reference-height * $line-div) / $line-div;
-    //   height-trim: (1 - $line-height) / 2;
-    //   trim-top: ($height-trim - $capline-trim) * $size * 1rem;
-    //   trim-bottom: ($height-trim - $baseline-trim) * $size * 1rem;
-    //   margin-top: $trim-top + $margin * if($margin-dir == 'top', 1, 0);
-    //   margin-bottom: $trim-bottom + $margin * if($margin-dir == 'bottom', 1, 0);
-    // }
-
-    // merge them to current query under t-alias
-    $context: merge($context, 'typo', $alias, (
-      'font-size' $size * 1rem,
-      'line-height' $line-height,
-      'margin-top' $margin-top,
-      'margin-bottom' $margin-bottom,
-      'trim-top' $trim-top,
-      'trim-bottom' $trim-bottom,
-    ));
-
-    // then output them
-    font-size: $size * 1rem;
-    line-height: $line-height;
-    margin-top: $margin-top;
-    margin-bottom: $margin-bottom;
-    @if $margin-dir == 'top' { &:first-child, &.trim-top { margin-top: $trim-top; } }
-    @else { &:last-child, &.trim-bottom { margin-top: $trim-top; } }
+    @if $margin-dir == 'top' { &:first-child, &.trim-top { margin-top: get($context-typo, trim-top); } }
+    @else { &:last-child, &.trim-bottom { margin-bottom: get($context-typo, trim-bottom); } }
 
   }
 }
-
-
 
 //               88           88
 //               88           88

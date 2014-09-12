@@ -1,3 +1,55 @@
+h1 {
+  font-size: 2.56rem;
+  line-height: 1.36719;
+  margin-top: 1.4604rem;
+  margin-bottom: -0.71695rem; }
+  h1:first-child, h1.trim-top {
+    margin-top: -0.77566rem; }
+
+h2 {
+  font-size: 2.02386rem;
+  line-height: 1.3835;
+  margin-top: 1.61245rem;
+  margin-bottom: -0.58127rem; }
+  h2:first-child, h2.trim-top {
+    margin-top: -0.62362rem; }
+
+h3 {
+  font-size: 1.6rem;
+  line-height: 1.3125;
+  margin-top: 1.80367rem;
+  margin-bottom: -0.40147rem; }
+  h3:first-child, h3.trim-top {
+    margin-top: -0.4324rem; }
+
+h4 {
+  font-size: 1.26491rem;
+  line-height: 1.1068;
+  margin-top: 2.02671rem;
+  margin-bottom: -0.18649rem; }
+  h4:first-child, h4.trim-top {
+    margin-top: -0.20936rem; }
+
+h5 {
+  font-size: 1rem;
+  line-height: 1.4;
+  margin-top: 1.92544rem;
+  margin-bottom: -0.29354rem; }
+  h5:first-child, h5.trim-top {
+    margin-top: -0.31062rem; }
+
+h6 {
+  font-size: 0.79057rem;
+  line-height: 1.77088;
+  margin-top: 1.84483rem;
+  margin-bottom: -0.37836rem; }
+  h6:first-child, h6.trim-top {
+    margin-top: -0.39124rem; }
+
+.scratch {
+  margin-test: 2.23607rem;
+  size-test: 1.26491rem; }
+
 .assignments {
   size-assignments: '(
     s1 2,
@@ -9,7 +61,13 @@
     kilo 14,
     mega 16,
     giga 18,
-    tera 20
+    tera 20,
+    h1 12,
+    h2 10,
+    h3 8,
+    h4 6,
+    h5 4,
+    h6 2
   )';
   margin-assignments: '(
     m1 2,
@@ -21,7 +79,13 @@
     kilo 14,
     mega 16,
     giga 18,
-    tera 20
+    tera 20,
+    h1 6,
+    h2 6,
+    h3 6,
+    h4 6,
+    h5 6,
+    h6 6
   )'; }
 
 .base {
