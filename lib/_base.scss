@@ -86,7 +86,8 @@ $base-data: () !default;
       // font-size: get-size() * 1rem;
       line-height: get($base-data, 'line-height');
       margin: 0; // n3: remove default margin
-      margin-top: get($base-data, 'body-top'); margin-bottom: get($base-data, 'body-bottom');
+      margin-top: get($base-data, 'body-top');
+      margin-bottom: get($base-data, 'body-bottom');
     }
 
     .body-col { margin-left: get($base-data, 'body-left'); margin-right: get($base-data, 'body-right'); }

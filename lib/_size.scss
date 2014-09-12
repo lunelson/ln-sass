@@ -8,8 +8,108 @@
 //  `"YbbdP"'  88  888888888   `"Ybbd8"'
 
 // global
-$sizes: () !default; // list of sizes, m-scaled
 $size-assignments: () !default; // map of alias->list-index assignments
+
+$size-defaults: (
+  'spread' 2,
+  'offset' 2,
+  'superclasses' kilo mega giga tera,
+  'default' s3,
+  'assignments' (),
+) !default;
+
+// TODO
+// - move spread, offset and superclasses into a size-defaults object, along with default-reference
+// - add rem units to generated sizes
+// - replace set-all-sizes with set-query-sizes(null, args)
+
+@function calc-sizes($options: ()) {
+
+  // options & defaults
+  $factor: get($options, 'factor') or 2;
+  $steps: get($options, 'steps') or 3;
+  $spread: get($size-defaults, 'spread') or 2;
+  $offset: get($size-defaults, 'offset') or  1;
+  $superclasses: get($size-defaults, 'superclasses') or kilo mega giga tera;
+
+  // populate size list
+  $out: ();
+  @for $n from 1 through (6 + length($superclasses)) * $spread {
+    $size: m-scale($n - $offset * $spread, $factor, $steps * $spread);
+    $out: append($out, $size, 'comma');
+  }
+  @return $out;
+}
+
+@mixin set-all-sizes($options:()) {
+
+  // calculate the size range
+  $calc-sizes: calc-sizes($options);
+
+  // merge to base context
+  $base-data: merge($base-data, ('font-size' $calc-sizes));
+
+  // merge to all query contexts
+  @each $alias in map-keys(map-get($query-data, 'width')) {
+    $query-data: merge($query-data, 'width', $alias, ('font-size' $calc-sizes));
+  }
+  @include assign-sizes();
+}
+
+@mixin set-query-sizes($aliases: null, $options:()) {
+
+  // parse args
+  $alias1: nth($aliases, 1); $alias2: null;
+  @if length($aliases) > 1 { $alias2: nth($aliases, 2); }
+
+  // calculate the size range
+  $calc-sizes: calc-sizes($options);
+
+  // conditional: merge to base
+  @if $alias1 == null { $base-data: merge($base-data, ('font-size' $calc-sizes)); }
+
+  // conditional: merge to any queries
+  $query-aliases: map-keys(map-get($query-data, 'width'));
+  @each $alias in slice($query-aliases,
+      if($alias1, index($query-aliases, $alias1), 1),
+      if($alias2, index($query-aliases, $alias2) - 1, length($query-aliases))
+    ) {
+    $query-data: merge($query-data, 'width', $alias, ('font-size' $calc-sizes));
+  }
+  @include assign-sizes();
+}
+
+@mixin set-sizes($options: ()) {
+
+  // calculate the size range
+  $calc-sizes: calc-sizes($options);
+
+  // merge this to appropriate context
+  $query-alias: get($options, 'query-alias') or $query-current-alias;
+  @if $query-alias { $query-data: merge($query-data, nth($query-alias, 1), nth($query-alias, 2), ('size' $calc-sizes)); }
+  @else { $base-data: merge($base-data, ('size' $calc-sizes)); }
+}
+
+@mixin assign-sizes() {
+
+  // resolve data
+  $spread: get($size-defaults, 'spread') or 2;
+  $superclasses: get($size-defaults, 'superclasses') or kilo mega giga tera;
+
+  // create size assignments
+  @for $n from 1 through 6 {
+    // $n: 7 - $n; $index: (7 - $n) * $spread;
+    $index: $n * $spread;
+    $size-assignments: merge($size-assignments, 's#{$n}' $index);
+  }
+
+  // create super size assignments
+  @for $n from 1 through length($superclasses) {
+    $index: (6 + $n) * $spread;
+    $superclass: nth($superclasses, $n);
+    $size-assignments: merge($size-assignments, $superclass $index);
+  }
+}
 
 @mixin setup-sizes($options: ()) {
 

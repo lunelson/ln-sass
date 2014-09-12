@@ -62,7 +62,7 @@ $typo-data: (
 @include setup-query(false);
 
 // 0. setup sizes
-@include setup-sizes((
+@include set-all-sizes((
   'factor' 1.6,
   'steps' 2,
   'offset' 3,
@@ -71,17 +71,17 @@ $typo-data: (
 $size-default: s3; // same as the offset above
 
 // // 3. setup margins
-// @include set-query-margins(null gamma, (
-//   'factor' 1.25,
-//   'steps' 2,
-//   'offset' 4,
-// ));
+@include set-query-margins(null gamma, (
+  'factor' 1.25,
+  'steps' 2,
+  'offset' 4,
+));
 
-// @include set-query-margins(gamma, (
-//   'factor' 2,
-//   'steps' 2,
-//   'offset' 4,
-// ));
+@include set-query-margins(gamma, (
+  'factor' 2,
+  'steps' 2,
+  'offset' 4,
+));
 
 // @include query(delta) {
 //   @include set-margins((
@@ -118,7 +118,11 @@ $size-default: s3; // same as the offset above
   //   }
   // }
 }
-
+.assignments {
+  defaults: nth(map-get($size-defaults, superclasses), 1);
+  size-assignments: map-pretty($size-assignments);
+  margin-assignments: map-pretty($margin-assignments);
+}
 .base { debug: map-pretty($base-data); }
 .query { debug: map-pretty(get($query-data, width)); }
 

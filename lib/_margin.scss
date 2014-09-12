@@ -9,6 +9,80 @@
 //                                               aa,    ,88
 //                                                "Y8bbdP"
 
+$margin-defaults: (
+  'range' 6,
+  'spread' 2,
+  'offset' 2,
+  'superclasses' kilo mega giga tera,
+  'default' m3,
+  'assignments' (),
+) !default;
+
+// TODO
+// - optimize margin calculation logic vs query
+
+////////////////
+// CORE MIXINs //
+////////////////
+
+@mixin set-margins($options: ()) {
+
+  // options
+  $factor: get($options, 'factor') or 2;
+  $steps: get($options, 'steps') or 3;
+  $query-alias: get($options, 'query-alias') or $query-current-alias;
+
+  // defaults
+  $range: get($margin-defaults, 'range') or 6;
+  $spread: get($margin-defaults, 'spread') or 2;
+  $offset: get($margin-defaults, 'offset') or  1;
+  $superclasses: get($margin-defaults, 'superclasses') or kilo mega giga tera;
+
+  // establish context
+  $context: get-query($query-alias);
+
+  // get context margin-y value; fallback to line-height or just 1.5rem
+  $margin-y: get($context, 'margin-y') or get($context, 'line-height') * 1rem or 1.5rem;
+  $margin-x: get($context, 'margin-x') or 1rem;
+
+  // calc and hold context margin lists
+  $margins-y-temp: (); $margins-x-temp: ();
+  @for $n from 1 through ($range + length($superclasses)) * $spread {
+    $margin: m-scale($n - $offset * $spread, $factor, $steps * $spread);
+    $margins-y-temp: append($margins-y-temp, $margin * $margin-y, 'comma');
+    $margins-x-temp: append($margins-x-temp, $margin * $margin-x, 'comma');
+  }
+  $margins: ('margin-y' $margins-y-temp, 'margin-x' $margins-x-temp);
+
+  // merge them back to appropriate data
+  @if $query-alias { $query-data: merge($query-data, nth($query-alias, 1), nth($query-alias, 2), $margins); }
+  @else { $base-data: merge($base-data, $margins); }
+}
+
+@mixin assign-margins() {
+
+  // resolve data
+  $range: get($margin-defaults, 'range') or 6;
+  $spread: get($margin-defaults, 'spread') or 2;
+  $superclasses: get($margin-defaults, 'superclasses') or kilo mega giga tera;
+
+  // create margin assignments
+  @for $n from 1 through $range {
+    // $n: $range - $n + 1; $index: ($range - $n + 1) * $spread; // inverted
+    $index: $n * $spread;
+    $margin-assignments: merge($margin-assignments, 'm#{$n}', $index);
+  }
+
+  // create super margin assignments
+  @for $n from 1 through length($superclasses) {
+    $index: ($range + $n) * $spread;
+    $margin-assignments: merge($margin-assignments, '#{nth($superclasses, $n)}' $index);
+  }
+}
+
+/////////////////////////
+// PER CONTEXT SETTING //
+/////////////////////////
 
 @mixin set-all-margins($options:()) {
   $query-aliases: map-keys(map-get($query-data, 'width'));
@@ -19,6 +93,7 @@
     $query-options: merge($options, (query-alias (width $alias)));
     @include set-margins($query-options);
   }
+  @include assign-margins();
 }
 
 @mixin set-query-margins($aliases: null, $options:()) {
@@ -36,55 +111,5 @@
     $query-options: merge($options, (query-alias (width $alias)));
     @include set-margins($query-options);
   }
-}
-
-
-@mixin set-margins($options: ()) {
-
-  // defaults vs. options
-  $range: get($options, 'range') or 6;
-  $factor: get($options, 'factor') or 2;
-  $steps: get($options, 'steps') or 3;
-  $spread: get($options, 'spread') or 2;
-  $offset: get($options, 'offset') or 4;
-  $superclasses: kilo mega giga tera;
-
-  $query-alias: get($options, 'query-alias') or $query-current-alias;
-  $context: get-query($query-alias);
-
-  // get context margin-y value; fallback to line-height or just 1.5rem
-  $margin-y: get($context, 'margin-y') or get($context, 'line-height') * 1rem or 1.5rem;
-  $margin-x: get($context, 'margin-x') or 1rem;
-
-  // calc and hold context margin lists
-  $margins-y-temp: (); $margins-x-temp: ();
-  @for $n from 1 through ($range + length($superclasses)) * $spread {
-    $margin: m-scale($n - $offset * $spread, $factor, $steps * $spread);
-    $margins-y-temp: append($margins-y-temp, $margin * $margin-y, 'comma');
-    $margins-x-temp: append($margins-x-temp, $margin * $margin-x, 'comma');
-  }
-
-  // merge margin-lists to context
-  $context: merge($context, 'margin-y' $margins-y-temp);
-  $context: merge($context, 'margin-x' $margins-x-temp);
-
-  // merge this back to appropriate data
-  @if $query-alias != null {
-    $query-data: merge($query-data, nth($query-alias, 1), nth($query-alias, 2), $context);
-  } @else {
-    $base-data: merge($base-data, $context);
-  }
-
-  // create margin assignments
-  @for $n from 1 through $range {
-    // $n: $range - $n + 1; $index: ($range - $n + 1) * $spread; // inverted
-    $index: $n * $spread;
-    $margin-assignments: merge($margin-assignments, 'm#{$n}', $index);
-  }
-
-  // create super margin assignments
-  @for $n from 1 through length($superclasses) {
-    $index: ($range + $n) * $spread;
-    $margin-assignments: merge($margin-assignments, '#{nth($superclasses, $n)}' $index);
-  }
+  @include assign-margins();
 }
