@@ -9,17 +9,23 @@
 //                                               aa,    ,88
 //                                                "Y8bbdP"
 
+// TODO
+// - optimize margin calculation logic vs query
+// - make set-margins-all(options) an alias to set-margins-query(null, options)
+// - get rid of margin-queries and margin-default
+
+$margin-assignments: () !default; // map of alias->index assignments
 $margin-defaults: (
   'range' 6,
   'spread' 2,
   'offset' 2,
-  'superclasses' kilo mega giga tera,
+  'superclasses' (kilo mega giga tera),
   'default' m3,
   'assignments' (),
 ) !default;
 
-// TODO
-// - optimize margin calculation logic vs query
+$margin-queries: () !default; // list of queries which have margin-y-factor declared
+$margin-default: m3 !default;
 
 ////////////////
 // CORE MIXINs //
@@ -62,9 +68,9 @@ $margin-defaults: (
 @mixin assign-margins() {
 
   // resolve data
-  $range: get($margin-defaults, 'range') or 6;
-  $spread: get($margin-defaults, 'spread') or 2;
-  $superclasses: get($margin-defaults, 'superclasses') or kilo mega giga tera;
+  $range: get($margin-defaults, 'range');
+  $spread: get($margin-defaults, 'spread');
+  $superclasses: get($margin-defaults, 'superclasses');
 
   // create margin assignments
   @for $n from 1 through $range {

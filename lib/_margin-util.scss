@@ -9,10 +9,6 @@
 //                                               aa,    ,88
 //                                                "Y8bbdP"
 
-$margin-assignments: () !default; // map of alias->index assignments
-$margin-queries: () !default; // list of queries which have margin-y-factor declared
-$margin-default: m3 !default;
-
 @function get-margin($ref: $margin-default) {
   $index: null;
   @if type-of($ref) == 'list' { $index: get-assignment($margin-assignments, $ref...); }

@@ -7,8 +7,6 @@
 //  aa    ]8I  88  ,d8"       "8b,   ,aa     "8a,   ,a88    88,    88  88
 //  `"YbbdP"'  88  888888888   `"Ybbd8"'      `"YbbdP'Y8    "Y888  88  88
 
-$size-default: s3 !default;
-
 @function get-assignment($map, $ref, $offset: 0) {
   @if type-of($ref) == 'string' { $ref: map-get($map, $ref); }
   @return $ref + $offset;
