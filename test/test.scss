@@ -71,19 +71,25 @@ $typo-data: (
 $size-default: s3; // same as the offset above
 
 // 3. setup margins
-@include set-margins((
-  'factor' 1.6,
+@include set-query-margins(null gamma, (
+  'factor' 1.25,
   'steps' 2,
   'offset' 4,
 ));
 
-@include query(alpha) {
-  @include set-margins((
-    'factor' 1.6,
-    'steps' 2,
-    'offset' 4,
-  ));
-}
+@include set-query-margins(gamma, (
+  'factor' 2,
+  'steps' 2,
+  'offset' 4,
+));
+
+// @include query(delta) {
+//   @include set-margins((
+//     'factor' 1.6,
+//     'steps' 2,
+//     'offset' 4,
+//   ));
+// }
 
 // 4. setup typo by class/alias
 // h1 { @include set-typo(h1, s6); }
@@ -92,8 +98,27 @@ $size-default: s3; // same as the offset above
 // h4 { @include set-typo(h4, s3); }
 // h5 { @include set-typo(h5, s2); }
 // h6 { @include set-typo(h6, s1); }
+.scratch {
+  // query-current: $query-current-alias;
+  // $args: null delta;
+  // $arg1: nth($args, 1); $arg2: null;
+  // @if length($args) > 1 { $arg2: nth($args, 2); }
+  // @if $arg1 == null { do: base; }
+  // $query-aliases: map-keys(get($query-data, 'width'));
+  // @each $alias in slice($query-aliases,
+  //     if($arg1, index($query-aliases, $arg1), 1),
+  //     if($arg2, index($query-aliases, $arg2) - 1, length($query-aliases))
+  //   ) {
+  //   do: $alias;
+  // }
+  // @if length($args) > 1 {
+  // } @else {
+  //   @each $alias in slice($query-aliases, if($arg1, index($query-aliases, $arg1), 1)) {
+  //     query: $alias;
+  //   }
+  // }
+}
 
-.query-current-alias { debug: $query-current-alias; }
 .base { debug: map-pretty($base-data); }
 .query { debug: map-pretty(get($query-data, width)); }
 
