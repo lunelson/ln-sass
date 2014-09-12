@@ -71,23 +71,29 @@ $typo-data: (
 $size-default: s3; // same as the offset above
 
 // 3. setup margins
-@include setup-margins((
+@include set-margins((
   'factor' 1.6,
   'steps' 2,
   'offset' 4,
 ));
 
-// 4. setup typo by class/alias
-// @include set-typo(giga, giga);
-// @include set-typo(mega, mega);
-// @include set-typo(kilo, kilo);
-h1 { @include set-typo(h1, s6); }
-h2 { @include set-typo(h2, s5); }
-h3 { @include set-typo(h3, s4); }
-h4 { @include set-typo(h4, s3); }
-h5 { @include set-typo(h5, s2); }
-h6 { @include set-typo(h6, s1); }
+@include query(alpha) {
+  @include set-margins((
+    'factor' 1.6,
+    'steps' 2,
+    'offset' 4,
+  ));
+}
 
+// 4. setup typo by class/alias
+// h1 { @include set-typo(h1, s6); }
+// h2 { @include set-typo(h2, s5); }
+// h3 { @include set-typo(h3, s4); }
+// h4 { @include set-typo(h4, s3); }
+// h5 { @include set-typo(h5, s2); }
+// h6 { @include set-typo(h6, s1); }
+
+.query-current-alias { debug: $query-current-alias; }
 .base { debug: map-pretty($base-data); }
 .query { debug: map-pretty(get($query-data, width)); }
 

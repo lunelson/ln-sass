@@ -1,50 +1,7 @@
-h1 {
-  font-size: 2.02386rem;
-  line-height: 1.3835;
-  margin-top: 1.37638rem;
-  margin-bottom: -0.58127rem; }
-  h1:first-child, h1.trim-top {
-    margin-top: -0.62362rem; }
+@media screen and (min-width: 20em) { }
 
-h2 {
-  font-size: 1.6rem;
-  line-height: 1.3125;
-  margin-top: 1.5676rem;
-  margin-bottom: -0.40147rem; }
-  h2:first-child, h2.trim-top {
-    margin-top: -0.4324rem; }
-
-h3 {
-  font-size: 1.26491rem;
-  line-height: 1.1068;
-  margin-top: 1.79064rem;
-  margin-bottom: -0.18649rem; }
-  h3:first-child, h3.trim-top {
-    margin-top: -0.20936rem; }
-
-h4 {
-  font-size: 1rem;
-  line-height: 1.4;
-  margin-top: 1.68938rem;
-  margin-bottom: -0.29354rem; }
-  h4:first-child, h4.trim-top {
-    margin-top: -0.31062rem; }
-
-h5 {
-  font-size: 0.79057rem;
-  line-height: 1.77088;
-  margin-top: 1.60876rem;
-  margin-bottom: -0.37836rem; }
-  h5:first-child, h5.trim-top {
-    margin-top: -0.39124rem; }
-
-h6 {
-  font-size: 0.625rem;
-  line-height: 1.12;
-  margin-top: 1.89468rem;
-  margin-bottom: -0.09552rem; }
-  h6:first-child, h6.trim-top {
-    margin-top: -0.10532rem; }
+.query-current-alias {
+  debug: null; }
 
 .base {
   debug: '(
@@ -165,50 +122,8 @@ h6 {
       html-scale 1.125,
       content-width 22.66667rem,
       font-size 18px,
-      margin-x (
-        0.43933rem,
-        0.49411rem,
-        0.55571rem,
-        0.625rem,
-        0.70293rem,
-        0.79057rem,
-        0.88914rem,
-        1rem,
-        1.12468rem,
-        1.26491rem,
-        1.42262rem,
-        1.6rem,
-        1.79949rem,
-        2.02386rem,
-        2.2762rem,
-        2.56rem,
-        2.87919rem,
-        3.23817rem,
-        3.64192rem,
-        4.096rem
-      ),
-      margin-y (
-        0.87866rem,
-        0.98821rem,
-        1.11142rem,
-        1.25rem,
-        1.40585rem,
-        1.58114rem,
-        1.77828rem,
-        2rem,
-        2.24937rem,
-        2.52982rem,
-        2.84525rem,
-        3.2rem,
-        3.59898rem,
-        4.04772rem,
-        4.5524rem,
-        5.12rem,
-        5.75838rem,
-        6.47634rem,
-        7.28383rem,
-        8.192rem
-      ),
+      margin-x 1rem,
+      margin-y 2rem,
       body-top 2rem,
       body-right 2rem,
       body-bottom 2rem,
@@ -221,50 +136,8 @@ h6 {
       html-scale 1.25,
       content-width 34.4rem,
       line-height 1.6,
-      margin-x (
-        0.43933rem,
-        0.49411rem,
-        0.55571rem,
-        0.625rem,
-        0.70293rem,
-        0.79057rem,
-        0.88914rem,
-        1rem,
-        1.12468rem,
-        1.26491rem,
-        1.42262rem,
-        1.6rem,
-        1.79949rem,
-        2.02386rem,
-        2.2762rem,
-        2.56rem,
-        2.87919rem,
-        3.23817rem,
-        3.64192rem,
-        4.096rem
-      ),
-      margin-y (
-        0.87866rem,
-        0.98821rem,
-        1.11142rem,
-        1.25rem,
-        1.40585rem,
-        1.58114rem,
-        1.77828rem,
-        2rem,
-        2.24937rem,
-        2.52982rem,
-        2.84525rem,
-        3.2rem,
-        3.59898rem,
-        4.04772rem,
-        4.5524rem,
-        5.12rem,
-        5.75838rem,
-        6.47634rem,
-        7.28383rem,
-        8.192rem
-      ),
+      margin-x 1rem,
+      margin-y 2rem,
       body-top 2rem,
       body-right 2rem,
       body-bottom 2rem,
@@ -277,50 +150,8 @@ h6 {
       content-width 47.2rem,
       font-size 20px,
       line-height 1.6,
-      margin-x (
-        0.43933rem,
-        0.49411rem,
-        0.55571rem,
-        0.625rem,
-        0.70293rem,
-        0.79057rem,
-        0.88914rem,
-        1rem,
-        1.12468rem,
-        1.26491rem,
-        1.42262rem,
-        1.6rem,
-        1.79949rem,
-        2.02386rem,
-        2.2762rem,
-        2.56rem,
-        2.87919rem,
-        3.23817rem,
-        3.64192rem,
-        4.096rem
-      ),
-      margin-y (
-        0.87866rem,
-        0.98821rem,
-        1.11142rem,
-        1.25rem,
-        1.40585rem,
-        1.58114rem,
-        1.77828rem,
-        2rem,
-        2.24937rem,
-        2.52982rem,
-        2.84525rem,
-        3.2rem,
-        3.59898rem,
-        4.04772rem,
-        4.5524rem,
-        5.12rem,
-        5.75838rem,
-        6.47634rem,
-        7.28383rem,
-        8.192rem
-      ),
+      margin-x 1rem,
+      margin-y 2rem,
       body-top 2rem,
       body-right 2rem,
       body-bottom 2rem,
@@ -333,50 +164,8 @@ h6 {
       content-width 60rem,
       font-size 20px,
       line-height 1.6,
-      margin-x (
-        0.43933rem,
-        0.49411rem,
-        0.55571rem,
-        0.625rem,
-        0.70293rem,
-        0.79057rem,
-        0.88914rem,
-        1rem,
-        1.12468rem,
-        1.26491rem,
-        1.42262rem,
-        1.6rem,
-        1.79949rem,
-        2.02386rem,
-        2.2762rem,
-        2.56rem,
-        2.87919rem,
-        3.23817rem,
-        3.64192rem,
-        4.096rem
-      ),
-      margin-y (
-        0.87866rem,
-        0.98821rem,
-        1.11142rem,
-        1.25rem,
-        1.40585rem,
-        1.58114rem,
-        1.77828rem,
-        2rem,
-        2.24937rem,
-        2.52982rem,
-        2.84525rem,
-        3.2rem,
-        3.59898rem,
-        4.04772rem,
-        4.5524rem,
-        5.12rem,
-        5.75838rem,
-        6.47634rem,
-        7.28383rem,
-        8.192rem
-      ),
+      margin-x 1rem,
+      margin-y 2rem,
       body-top 2rem,
       body-right 2rem,
       body-bottom 2rem,
