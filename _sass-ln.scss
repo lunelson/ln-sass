@@ -1,8 +1,3 @@
-//  Sass LN 0.5.0
-//  a framework for modularly-scaled responsive layout and optically-aligned typography
-//  by @lunelson
-//  MIT License
-
 //                                                         88
 //                                                         88
 //                                                         88
@@ -12,20 +7,26 @@
 //  aa    ]8I  88,    ,88  aa    ]8I  aa    ]8I            88  88       88
 //  `"YbbdP"'  `"8bbdP"Y8  `"YbbdP"'  `"YbbdP"'            88  88       88
 
+//  Sass LN 0.5.0
+//  a framework for modularly-scaled responsive layout and optically-aligned typography
+//  by @lunelson
+//  MIT License
+
+
 /////////////
 // IMPORTS //
 /////////////
 
 @import "lib/base";
 
-@import "lib/query-util";
-@import "lib/query";
+@import "lib/queries-util";
+@import "lib/queries";
 
-@import "lib/margin-util";
-@import "lib/margin";
+@import "lib/sizes-util";
+@import "lib/sizes";
 
-@import "lib/size-util";
-@import "lib/size";
+@import "lib/margins-util";
+@import "lib/margins";
 
 @import "lib/typo-util";
 @import "lib/typo";

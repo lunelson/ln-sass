@@ -67,17 +67,17 @@ $query-orig: ();
 
       // output values for whatever appeared in query-spec
       @if $output {
-        // @media #{query-string($query-alias)} {
-        @include query($query-alias) {
 
-          $font-size: get($query-spec, 'font-size');
-          $line-height: get($query-spec, 'line-height');
-          $margin-x: get($query-spec, 'margin-x');
-          $margin-y: get($query-spec, 'margin-y');
-          $body-top: get($query-spec, 'body-top');
-          $body-right: get($query-spec, 'body-right');
-          $body-bottom: get($query-spec, 'body-bottom');
-          $body-left: get($query-spec, 'body-left');
+        $font-size: get($query-spec, 'font-size');
+        $line-height: get($query-spec, 'line-height');
+        $margin-x: get($query-spec, 'margin-x');
+        $margin-y: get($query-spec, 'margin-y');
+        $body-top: get($query-spec, 'body-top');
+        $body-right: get($query-spec, 'body-right');
+        $body-bottom: get($query-spec, 'body-bottom');
+        $body-left: get($query-spec, 'body-left');
+
+        @include query($query-alias) {
 
           // output for JS; ref: http://dropshado.ws/post/79494424279/conditional-css-doesnt-work-in-chrome
           head { font-family: '#{$query-alias}'; }

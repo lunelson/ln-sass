@@ -31,32 +31,44 @@ $typo-data: (
 
 @mixin set-typo($alias, $size, $options: ()) {
 
-  // query context
-  $context: get-query();
+  ///////////////////////
+  // query-independent //
+  ///////////////////////
 
   // font and margin
   $font: map-get($options, 'font') or tuple-key(nth($typo-data, 1));
   $margin: map-get($options, 'margin') or get($margin-defaults, 'default');
 
-  // size index
+  // size-index
   $size-index: null;
   @if type-of($size) == 'list' { $size-index: get-size-assignment($size...); }
   @else { $size-index: get-size-assignment($size); }
 
-  // size value
-  $size: nth(get(get-query(),'font-size'), $size-index);
-
-  // margin index
+  // margin-index
   $margin-index: null;
   @if type-of($margin) == 'list' { $margin-index: get-margin-assignment($margin...); }
   @else { $margin-index: get-margin-assignment($margin); }
 
-  // margin value
-  $margin: nth(get($context,'margin-y'), $margin-index);
-
   // merge alias assignment back to the assignment lists
   $size-assignments: merge($size-assignments, $alias, $size-index);
   $margin-assignments: merge($margin-assignments, $alias, $margin-index);
+
+  // globals
+  $min-height: get($global-data, 'typo-min-line-height');
+  $margin-dir: get($margin-defaults, 'margin-direction') or 'top';
+
+  /////////////////////
+  // query-dependent //
+  /////////////////////
+
+  // query context
+  $context: get-query();
+
+  // size value
+  $size: nth(get($context,'font-size'), $size-index);
+
+  // margin value
+  $margin: nth(get($context,'margin-y'), $margin-index);
 
   // trims
   $px-size: strip(px($size)); // better! works per html-scale
@@ -65,8 +77,6 @@ $typo-data: (
 
   // global / default stuff
   $line-div: get($global-data, 'typo-line-div') or ceil($size) + 1; // set global value to null to automate
-  $min-height: get($global-data, 'typo-min-line-height');
-  $margin-dir: get($margin-defaults, 'margin-direction') or 'top';
 
   // calc the values
   $reference-height: get($context, 'line-height') / strip($size);
