@@ -7,20 +7,14 @@
 //  aa    ]8I  88  ,d8"       "8b,   ,aa
 //  `"YbbdP"'  88  888888888   `"Ybbd8"'
 
-// TODO
-// - move spread, offset and superclasses into a size-defaults object, along with default-reference
-// - add rem units to generated sizes
-// - replace setup-sizes with setup-sizes-per-query(null, args)
-// - get rid of size-default value
-
-// global
+// GLOBALS
 $size-assignments: () !default; // map of alias->list-index assignments
 $size-defaults: (
-  'spread' 2,
-  'offset' 2,
-  'superclasses' (kilo mega giga tera),
-  'default' s3,
   'assignments' (),
+  'default' s3,
+  'offset' 3,
+  'spread' 2,
+  'superclasses' (kilo mega giga tera),
 ) !default;
 
 // $size-default: s3 !default;

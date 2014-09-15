@@ -30,6 +30,13 @@
   @return $output;
 }
 
+@function contains-any($list, $items) {
+  @each $item in $items {
+    @if index($list, $item) != false { @return true; }
+  }
+  @return false;
+}
+
 //////////
 // MAPS //
 //////////

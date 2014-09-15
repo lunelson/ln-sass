@@ -2,12 +2,6 @@
 @import "../lib/mathsass/dist/_math";
 @import "../sass-ln";
 
-////////////////
-// PARAMETERS //
-////////////////
-
-$margin-default: m4;
-
 $base-data: (
   font-size 18px,
   line-height 1.4,
@@ -62,18 +56,10 @@ $typo-data: (
 @include setup-query(false);
 
 // 0. setup sizes
-@include setup-sizes-per-query(beta, (
-  'factor' 1.6,
+@include setup-sizes((
+  'factor' 2,
   'steps' 2,
 ));
-
-// $size-default: s3; // same as the offset above
-
-// // 3. setup margins
-// @include setup-margins((
-//   'factor' 2,
-//   'steps' 2,
-// ));
 
 @include setup-margins-per-query(null gamma, (
   'factor' 1.25,
@@ -85,51 +71,13 @@ $typo-data: (
   'steps' 2,
 ));
 
-// @include query(delta) {
-//   @include set-margins((
-//     'factor' 1.6,
-//     'steps' 2,
-//     'offset' 4,
-//   ));
-// }
-
 // 4. setup typo by class/alias
-// h1 { @include set-typo(h1, s6); }
-// h2 { @include set-typo(h2, s5); }
-// h3 { @include set-typo(h3, s4); }
-// h4 { @include set-typo(h4, s3); }
-// h5 { @include set-typo(h5, s2); }
-// h6 { @include set-typo(h6, s1); }
-
-.scratch {
-  // margin-test: get-margin();
-  // size-test: get-size();
-  // query-current: $query-current-alias;
-  // $args: null delta;
-  // $arg1: nth($args, 1); $arg2: null;
-  // @if length($args) > 1 { $arg2: nth($args, 2); }
-  // @if $arg1 == null { do: base; }
-  // $query-aliases: map-keys(get($query-data, 'width'));
-  // @each $alias in slice($query-aliases,
-  //     if($arg1, index($query-aliases, $arg1), 1),
-  //     if($arg2, index($query-aliases, $arg2) - 1, length($query-aliases))
-  //   ) {
-  //   do: $alias;
-  // }
-  // @if length($args) > 1 {
-  // } @else {
-  //   @each $alias in slice($query-aliases, if($arg1, index($query-aliases, $arg1), 1)) {
-  //     query: $alias;
-  //   }
-  // }
-}
-// .assignments {
-//   size-assignments: map-pretty($size-assignments);
-//   margin-assignments: map-pretty($margin-assignments);
-// }
-.base { debug: map-pretty($base-data); }
-.query { debug: map-pretty(get($query-data, width)); }
-// .query { debug: map-pretty(get($query-orig, width)); }
+%h1 { @include set-typo(h1, s6); }
+%h2 { @include set-typo(h2, s5); }
+%h3 { @include set-typo(h3, s4); }
+%h4 { @include set-typo(h4, s3); }
+%h5 { @include set-typo(h5, s2); }
+%h6 { @include set-typo(h6, s1); }
 
 // // 5. setup grids
 // @include setup-grid();
@@ -160,22 +108,20 @@ $typo-data: (
 // //                                                      aa,    ,88
 // //                                                       "Y8bbdP"
 
-// .sizes-and-margins {
-//   // @for $n from 1 through 6 {
-//   //   margin-#{$n}: margin(m#{$n});
-//   // }
-//   // @for $n from 1 through 6 {
-//   //   size-#{$n}: size(s#{$n});
-//   // }
-//   // mg: map-pretty(get(get-query(), 'margin-y'));
-//   // mg-a: map-pretty($margin-assignments);
-//   sz: map-pretty($sizes);
-//   sz-a: map-pretty($size-assignments);
-// }
 
-
-// // @include set-query-typo(gamma, h6, s2);
-// // --- should create an extension point only for
+.scratch {
+  margin-test: get-margin(h1);
+  size-test: get-size(h5);
+  query-current: $query-current-alias;
+  // size-assignments: map-pretty($size-assignments);
+  // margin-assignments: map-pretty($margin-assignments);
+  @each $h in h1 h2 h3 h4 h5 h6 {
+    size-#{$h}: get-size($h);
+  }
+}
+.base { debug: map-pretty($base-data); }
+.query { debug: map-pretty(get($query-data, width)); }
+// .query { debug: map-pretty(get($query-orig, width)); }
 
 
 // // .query-values {
