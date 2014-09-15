@@ -29,7 +29,7 @@ $typo-data: (
 // base set-typo function //
 ////////////////////////////
 
-@mixin set-typo($alias, $size, $options: ()) {
+@mixin set-typo($alias, $size: $size-default, $options: ()) {
 
   ///////////////////////
   // query-independent //

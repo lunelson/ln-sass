@@ -30,15 +30,21 @@
     - will run a submixin for each query context specified
     - _should merge a flag to query-orig to first context with new properties_
 6. set-typo-per-query OR set-typo
-    - take an alias and size argument, optional query-argument
+    - take an alias and size argument, optional query-argument + options object
+    - options object:
+        + font -- defaults to first in $fonts
+        + margin -- defaults to margin-default
+        + capline -- defaults to value in $fonts for font
+        + baseline -- defaults to value in $fonts for font
     - output base styles
-    - for each query in query-orig that has-key 'margin-y', 'line-height', 'sizes' or 'margins', parse out query styles
+    - for each query in query-orig that has-key 'margin-y', 'line-height', 'size-breakpoint' or 'margin-breakpoint', parse out query styles
+    - put the 
 
 ## global objects and settings
 
-$base-data -> base
-$query-data -> queries
-$typo-data -> fonts
+$base-data -> $base
+$query-data -> $queries
+$typo-data -> $fonts
 
 $size-defaults
 $size-assignments
