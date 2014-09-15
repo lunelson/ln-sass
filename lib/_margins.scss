@@ -122,11 +122,13 @@ $margin-default: m3 !default;
   @if $query-alias1 == null { @include merge-margins($margins); }
 
   // conditional: per query actions
-  $query-aliases: map-keys(map-get($query-data, 'width'));
+  $query-aliases: map-keys(map-get($query-data, 'width')); $count: 1;
   @each $query-alias in slice($query-aliases,
       if($query-alias1, index($query-aliases, $query-alias1), 1),
       if($query-alias2, index($query-aliases, $query-alias2) - 1, length($query-aliases))) {
     @include merge-margins($margins, 'width' $query-alias);
+    @if $count == 1 and $query-alias1 != null { $query-orig: merge($query-orig, 'width', $query-alias, ('margin-bp' true)); }
+    $count: $count + 1;
   }
   @include assign-margins();
 }
