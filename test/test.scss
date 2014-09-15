@@ -62,10 +62,10 @@ $typo-data: (
 @include setup-query(false);
 
 // 0. setup sizes
-// @include setup-sizes((
-//   'factor' 1.6,
-//   'steps' 2,
-// ));
+@include setup-sizes((
+  'factor' 1.6,
+  'steps' 2,
+));
 
 // $size-default: s3; // same as the offset above
 

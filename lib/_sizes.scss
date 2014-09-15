@@ -25,15 +25,17 @@ $size-defaults: (
 
 // $size-default: s3 !default;
 
-/////////////
-// HELPERS //
-/////////////
+///////////////
+// FUNCTIONS //
+///////////////
 
+// HELPER
 @function get-size-assignment($reference, $offset: 0) {
   $index: map-get($size-assignments, $reference);
   @return $index + $offset;
 }
 
+// MAIN
 @function get-size($reference: get($size-defaults, default)) {
   $index: null;
   @if type-of($reference) == 'list' { $index: get-size-assignment($reference...); }
@@ -41,13 +43,14 @@ $size-defaults: (
   @return nth(get(get-query(),'font-size'), $index);
 }
 
-//////////
-// CORE //
-//////////
+////////////
+// MIXINS //
+////////////
 
+// SUBMIX
 @mixin assign-sizes() {
 
-  // resolve data
+  // defaults
   $spread: get($size-defaults, 'spread');
   $superclasses: get($size-defaults, 'superclasses');
 
@@ -66,41 +69,8 @@ $size-defaults: (
   }
 }
 
-@function generate-sizes($options: ()) {
-
-  // options
-  $factor: get($options, 'factor') or 2;
-  $steps: get($options, 'steps') or 3;
-
-  // defaults
-  $spread: get($size-defaults, 'spread');
-  $offset: get($size-defaults, 'offset');
-  $superclasses: get($size-defaults, 'superclasses');
-
-  // populate size list
-  $out: (); @for $n from 1 through (6 + length($superclasses)) * $spread {
-    $size: m-scale($n - $offset * $spread, $factor, $steps * $spread);
-    $out: append($out, $size * 1rem, 'comma');
-  }
-  @return $out;
-}
-
-@mixin setup-sizes($options:()) {
-
-  // calculate the list
-  $sizes: generate-sizes($options);
-
-  // merge list to base context
-  $base-data: merge($base-data, ('font-size' $sizes));
-
-  // merge list to all query contexts
-  @each $alias in map-keys(map-get($query-data, 'width')) {
-    $query-data: merge($query-data, 'width', $alias, ('font-size' $sizes));
-  }
-  @include assign-sizes();
-}
-
-@mixin setup-sizes-per-query($aliases: null, $options:()) {
+// MASTER
+@mixin setup-sizes-per-query($query-aliases: null, $options:()) {
 
   // options
   $factor: get($options, 'factor') or 2;
@@ -112,8 +82,8 @@ $size-defaults: (
   $superclasses: get($size-defaults, 'superclasses');
 
   // query aliases
-  $alias1: nth($aliases, 1); $alias2: null;
-  @if length($aliases) > 1 { $alias2: nth($aliases, 2); }
+  $query-alias1: nth($query-aliases, 1); $query-alias2: null;
+  @if length($query-aliases) > 1 { $query-alias2: nth($query-aliases, 2); }
 
   // calculate the size list
   $sizes: (); @for $n from 1 through (6 + length($superclasses)) * $spread {
@@ -121,15 +91,21 @@ $size-defaults: (
     $sizes: append($sizes, $size * 1rem, 'comma');
   }
 
-  // conditional: merge list to base
-  @if $alias1 == null { $base-data: merge($base-data, ('font-size' $sizes)); }
+  // conditional base actions
+  @if $query-alias1 == null { $base-data: merge($base-data, ('font-size' $sizes)); }
 
-  // conditional: merge list to any queries
+  // conditional per query actions
   $query-aliases: map-keys(map-get($query-data, 'width'));
-  @each $alias in slice($query-aliases,
-      if($alias1, index($query-aliases, $alias1), 1),
-      if($alias2, index($query-aliases, $alias2) - 1, length($query-aliases))) {
-    $query-data: merge($query-data, 'width', $alias, ('font-size' $sizes));
+  @each $query-alias in slice($query-aliases,
+      if($query-alias1, index($query-aliases, $query-alias1), 1),
+      if($query-alias2, index($query-aliases, $query-alias2) - 1, length($query-aliases))) {
+    $query-data: merge($query-data, 'width', $query-alias, ('font-size' $sizes));
   }
   @include assign-sizes();
 }
+
+// ALIAS
+@mixin setup-sizes($options:()) {
+  @include setup-sizes-per-query(null, $options);
+}
+
