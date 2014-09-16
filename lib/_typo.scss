@@ -33,6 +33,7 @@ $typo-data: (
 @mixin get-typo($alias) {
 
   // check for $alias in typo map for current context
+  $context: get-query();
   $context-typo: get($context, typo, $alias);
 
   @if $context-typo != null { // i.e. if it exists ->

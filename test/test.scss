@@ -3,7 +3,7 @@
 @import "../sass-ln";
 
 $base-data: (
-  font-size 18px,
+  font-size 16px,
   line-height 1.4,
   margin-y 2rem,
   body-top 0,
@@ -70,22 +70,34 @@ $typo-data: (
 ));
 
 // 4. setup typo by class/alias
-h1 { @include set-typo(h1, s6); }
-h2 { @include set-typo(h2, s5); }
-h3 { @include set-typo(h3, s4); }
-h4 { @include set-typo(h4, s3); }
-h5 { @include set-typo(h5, s2); }
-h6 { @include set-typo(h6, s1); }
+h1 { @include set-typo('h1', s6); }
+h2 { @include set-typo('h2', s5); }
+h3 { @include set-typo('h3', s4); }
+h4, p, ul, ol, dl { @include set-typo('h4', s3); }
+h5 { @include set-typo('h5', s2); }
+h6 { @include set-typo('h6', s1); }
 
 // // 5. setup grids
 @include setup-grid();
 
+img, figure {
+  margin-top: get-margin();
+}
+figure {
+  -webkit-margin-before: 0;
+  -webkit-margin-after: 0;
+  -webkit-margin-start: 0;
+  -webkit-margin-end: 0;
+  figcaption { @include get-typo('h5'); }
+}
+
 .wrap--test {
   width: 60%;
   margin-top: 1rem;
-  background-color: pink;
-  overflow-x: hidden;
-  overflow-y: visible;
+  // background-color: pink;
+  // padding-top: 1px;
+  // overflow-x: visible;
+  // overflow-y: hidden;
 }
 
 .trimbox {

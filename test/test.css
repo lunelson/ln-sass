@@ -15,7 +15,7 @@ html {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-  font-size: 112.5%; }
+  font-size: 100%; }
 
 body {
   line-height: 1.4;
@@ -54,155 +54,157 @@ body {
 h1 {
   font-size: 1.83712rem;
   line-height: 1.1431;
-  margin-top: 1.73008rem;
+  margin-top: 1.73458rem;
   margin-bottom: -0.3519rem; }
   h1.single, h1.sngl {
     line-height: 1;
     margin-top: 0;
     margin-bottom: 0; }
   h1:first-child, h1.trim {
-    margin-top: -0.26992rem; }
+    margin-top: -0.26542rem; }
   @media screen and (min-width: 20em) { }
   @media screen and (min-width: 30em) { }
   @media screen and (min-width: 48em) {
     h1 {
       font-size: 1.83712rem;
       line-height: 1.1431;
-      margin-top: 1.73008rem;
+      margin-top: 1.73458rem;
       margin-bottom: -0.3519rem; }
       h1:first-child, h1.trim {
-        margin-top: -0.26992rem; } }
+        margin-top: -0.26542rem; } }
   @media screen and (min-width: 64em) { }
   @media screen and (min-width: 80em) { }
 
 h2 {
   font-size: 1.5rem;
   line-height: 1.4;
-  margin-top: 1.593rem;
+  margin-top: 1.596rem;
   margin-bottom: -0.48rem; }
   h2.single, h2.sngl {
     line-height: 1;
     margin-top: 0;
     margin-bottom: 0; }
   h2:first-child, h2.trim {
-    margin-top: -0.407rem; }
+    margin-top: -0.404rem; }
   @media screen and (min-width: 20em) { }
   @media screen and (min-width: 30em) { }
   @media screen and (min-width: 48em) {
     h2 {
       font-size: 1.5rem;
       line-height: 1.4;
-      margin-top: 1.593rem;
+      margin-top: 1.596rem;
       margin-bottom: -0.48rem; }
       h2:first-child, h2.trim {
-        margin-top: -0.407rem; } }
+        margin-top: -0.404rem; } }
   @media screen and (min-width: 64em) { }
   @media screen and (min-width: 80em) { }
 
 h3 {
   font-size: 1.22474rem;
   line-height: 1.1431;
-  margin-top: 1.82905rem;
+  margin-top: 1.83105rem;
   margin-bottom: -0.2346rem; }
   h3.single, h3.sngl {
     line-height: 1;
     margin-top: 0;
     margin-bottom: 0; }
   h3:first-child, h3.trim {
-    margin-top: -0.17095rem; }
+    margin-top: -0.16895rem; }
   @media screen and (min-width: 20em) { }
   @media screen and (min-width: 30em) { }
   @media screen and (min-width: 48em) {
     h3 {
       font-size: 1.22474rem;
       line-height: 1.1431;
-      margin-top: 1.82905rem;
+      margin-top: 1.83105rem;
       margin-bottom: -0.2346rem; }
       h3:first-child, h3.trim {
-        margin-top: -0.17095rem; } }
+        margin-top: -0.16895rem; } }
   @media screen and (min-width: 64em) { }
   @media screen and (min-width: 80em) { }
 
-h4 {
+h4, p, ul, ol, dl {
   font-size: 1rem;
   line-height: 1.4;
-  margin-top: 1.73467rem;
+  margin-top: 1.736rem;
   margin-bottom: -0.32rem; }
-  h4.single, h4.sngl {
+  h4.single, h4.sngl, p.single, p.sngl, ul.single, ul.sngl, ol.single, ol.sngl, dl.single, dl.sngl {
     line-height: 1;
     margin-top: 0;
     margin-bottom: 0; }
-  h4:first-child, h4.trim {
-    margin-top: -0.26533rem; }
+  h4:first-child, h4.trim, p:first-child, p.trim, ul:first-child, ul.trim, ol:first-child, ol.trim, dl:first-child, dl.trim {
+    margin-top: -0.264rem; }
   @media screen and (min-width: 20em) { }
   @media screen and (min-width: 30em) { }
   @media screen and (min-width: 48em) {
-    h4 {
+    h4, p, ul, ol, dl {
       font-size: 1rem;
       line-height: 1.4;
-      margin-top: 1.73467rem;
+      margin-top: 1.736rem;
       margin-bottom: -0.32rem; }
-      h4:first-child, h4.trim {
-        margin-top: -0.26533rem; } }
+      h4:first-child, h4.trim, p:first-child, p.trim, ul:first-child, ul.trim, ol:first-child, ol.trim, dl:first-child, dl.trim {
+        margin-top: -0.264rem; } }
   @media screen and (min-width: 64em) { }
   @media screen and (min-width: 80em) { }
 
 h5 {
   font-size: 0.8165rem;
   line-height: 1.71464;
-  margin-top: 1.6567rem;
+  margin-top: 1.65759rem;
   margin-bottom: -0.38973rem; }
   h5.single, h5.sngl {
     line-height: 1;
     margin-top: 0;
     margin-bottom: 0; }
   h5:first-child, h5.trim {
-    margin-top: -0.3433rem; }
+    margin-top: -0.34241rem; }
   @media screen and (min-width: 20em) { }
   @media screen and (min-width: 30em) { }
   @media screen and (min-width: 48em) {
     h5 {
       font-size: 0.8165rem;
       line-height: 1.71464;
-      margin-top: 1.6567rem;
+      margin-top: 1.65759rem;
       margin-bottom: -0.38973rem; }
       h5:first-child, h5.trim {
-        margin-top: -0.3433rem; } }
+        margin-top: -0.34241rem; } }
   @media screen and (min-width: 64em) { }
   @media screen and (min-width: 80em) { }
 
 h6 {
   font-size: 0.66667rem;
   line-height: 2.1;
-  margin-top: 1.59244rem;
+  margin-top: 1.59304rem;
   margin-bottom: -0.44667rem; }
   h6.single, h6.sngl {
     line-height: 1;
     margin-top: 0;
     margin-bottom: 0; }
   h6:first-child, h6.trim {
-    margin-top: -0.40756rem; }
+    margin-top: -0.40696rem; }
   @media screen and (min-width: 20em) { }
   @media screen and (min-width: 30em) { }
   @media screen and (min-width: 48em) {
     h6 {
       font-size: 0.66667rem;
       line-height: 2.1;
-      margin-top: 1.59244rem;
+      margin-top: 1.59304rem;
       margin-bottom: -0.44667rem; }
       h6:first-child, h6.trim {
-        margin-top: -0.40756rem; } }
+        margin-top: -0.40696rem; } }
   @media screen and (min-width: 64em) { }
   @media screen and (min-width: 80em) { }
 
 .col, [class*="col--"] {
   float: left;
   width: 100%;
-  min-height: 1px;
+  margin-top: -1px;
+  padding-top: 1px;
   padding-left: 0.5rem;
   padding-right: 0.5rem; }
 
 .row, [class*="row--"] {
+  margin-top: -1px;
   margin-left: -0.5rem;
   margin-right: -0.5rem; }
   .row:after, [class*="row--"]:after {
@@ -211,6 +213,7 @@ h6 {
     clear: both; }
 
 .wrap, [class*="wrap--"] {
+  padding-top: 1px;
   margin-left: auto;
   margin-right: auto; }
   .wrap:after, [class*="wrap--"]:after {
@@ -218,12 +221,18 @@ h6 {
     display: table;
     clear: both; }
 
+img, figure {
+  margin-top: 2rem; }
+
+figure {
+  -webkit-margin-before: 0;
+  -webkit-margin-after: 0;
+  -webkit-margin-start: 0;
+  -webkit-margin-end: 0; }
+
 .wrap--test {
   width: 60%;
-  margin-top: 1rem;
-  background-color: pink;
-  overflow-x: hidden;
-  overflow-y: visible; }
+  margin-top: 1rem; }
 
 .trimbox {
   margin-top: 0.5rem;
