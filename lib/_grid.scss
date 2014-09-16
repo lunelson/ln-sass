@@ -9,11 +9,17 @@
 //   aa,    ,88
 //    "Y8bbdP"
 
+// NEXT
+// - put top and bottom padding on all elements, according to get-margin() / get-margin-x()
+// - apply for each query containing margin-y or margin-x in query-orig
+// - convert this to attribute-module (am) system
+// -
+
 @mixin setup-grid($margin-ref: $margin-default) {
 
   $margin: get-margin-x($margin-ref);
 
-  .col, [class*="col--"] {
+  %col {
     float: left;
     width: 100%;
     // min-height: 1px; // http://css-tricks.com/make-sure-columns-dont-collapse-horizontally/
@@ -22,23 +28,26 @@
     padding-left: $margin / 2;
     padding-right: $margin / 2;
   }
+  .col, [class*="col--"] { @extend %col; }
 
-  .row, [class*="row--"] {
+  %row {
     @include clearfix();
     margin-top: -1px;
     margin-left: - $margin / 2;
     margin-right: - $margin / 2;
   }
+  .row, [class*="row--"] { @extend %row; }
 
-  .wrap, [class*="wrap--"] {
+  %wrap {
     @include clearfix();
     padding-top: 1px; // fix margin collapsing
     margin-left: auto;
     margin-right: auto;
   }
+  .wrap, [class*="wrap--"] { @extend %wrap; }
 
   @each $query-alias in map-keys(get($query-data, 'width')) {
-
+    // here apply if margin-x or margin-y exists in query-orig
     @if get($query-orig, 'width', $query-alias, 'margin-x') {
       @include query($query-alias) {
         $margin: get-margin-x($margin-ref);
@@ -70,6 +79,11 @@
   }
 }
 
+// new mixin; either assigns or
+@mixin col($args...) { @extend %col;
+  @if $args != () { @include col-size($args...); }
+}
+
 // row sizing mixin
 @mixin row-size($cols: false) {
   @if $cols {
@@ -80,8 +94,6 @@
   }
 }
 
-
-// @if $margin {
-//   .col { padding-left: $margin/2; padding-right: $margin/2; }
-//   .row { margin-left: $margin/-2; margin-right: $margin/-2; }
-// }
+@mixin wrap() {
+  @extend %wrap;
+}

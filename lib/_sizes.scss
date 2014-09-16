@@ -37,6 +37,12 @@ $size-defaults: (
   @return nth(get(get-query(),'font-size'), $index);
 }
 
+@function size2($index: 0, $sub-index: 0) {
+  $offset: get($size-defaults, 'offset');
+  $spread: get($size-defaults, 'spread');
+  @return nth(get(get-query(),'font-size'), ($index + $offset) * $spread + $sub-index);
+}
+
 ////////////
 // MIXINS //
 ////////////

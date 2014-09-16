@@ -29,6 +29,13 @@ $typo-data: (
 // base set-typo function //
 ////////////////////////////
 
+%typo {
+  &.single {
+    line-height: 1;
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+}
 
 @mixin get-typo($alias) {
 
@@ -118,11 +125,11 @@ $typo-data: (
     ));
 
     // output
+    @extend %typo;
     font-size: $size;
     line-height: $line-height;
     margin-top: $margin-top;
     margin-bottom: $margin-bottom;
-    &.single, &.sngl { line-height: 1; margin-top: 0; margin-bottom: 0; }
     @if $margin-dir == 'top' { &:first-child, &.trim { margin-top: $trim-top; } }
     @else { &:last-child, &.trim { margin-bottom: $trim-bottom; } }
   }

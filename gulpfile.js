@@ -15,7 +15,7 @@ var filter       = require('gulp-filter');
 
 gulp.task('sass', function () {
     gulp.src('test/test.scss')
-        .pipe(sourcemaps.init())
+        // .pipe(sourcemaps.init())
         .pipe(sass({
             errLogToConsole: false,
             onError: function(err) {
@@ -26,9 +26,9 @@ gulp.task('sass', function () {
             browsers: ['last 3 versions'],
             cascade: false
         }))
-        .pipe(sourcemaps.write('.'))
+        // .pipe(sourcemaps.write('.'))
         .pipe(gulp.dest('test'))
-        .pipe(filter('*.css')) // necessary?
+        // .pipe(filter('*.css')) // necessary?
         .pipe(browserSync.reload({stream:true}));
 });
 
@@ -55,5 +55,12 @@ gulp.task('watch', function () {
     gulp.watch(['test/*.html'], browserSync.reload);
 });
 
+gulp.task('watch-sass', function () {
+    gulp.watch('**/*.scss', ['sass']);
+});
+
 // run 'browser-sync' at startup; implicitly run 'sass'
 gulp.task('default', ['browser-sync', 'watch']);
+
+// sass only version
+gulp.task('sass-only', ['sass', 'watch-sass']);
