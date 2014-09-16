@@ -1,3 +1,12 @@
+typo2
+-	allow set-typo to take arbitrary size and margin
+	- if rem, leave it alone
+	- if px, convert to rem
+	- if unitless, assume it's a pos/neg index, default 0
+-	configure size() and margin() functions to take index and sub-index arguments
+	e.g. size(1, -1); margin(0, 1)
+-
+
 typo
 -	new -- set-typo()
 	-	bring the logic in to a single 'set-typo()' mixin

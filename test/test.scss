@@ -6,6 +6,7 @@ $base-data: (
   font-size 18px,
   line-height 1.4,
   margin-y 2rem,
+  body-top 0,
   body-right 2rem,
   body-left 2rem
 );
@@ -14,15 +15,12 @@ $query-data: (
   width (
     alpha (
       min-width 20em,
-      line-height 1.5,
     ),
     beta (
       min-width 30em,
-      line-height 1.6,
     ),
     gamma (
       min-width 48em,
-      font-size 20px,
     ),
     delta (
       min-width 64em,
@@ -43,21 +41,21 @@ $typo-data: (
     ),
     metrics (
       size-modifier 1,
-      capline (32 0.115, 128 0.145),
-      baseline (32 0.095, 128 0.105)
+      capline (10 0.06, 100 0.12),
+      baseline (10 0.12, 128 0.12)
     )
   )
 );
 
 // 1. setup base; add any particulars as content
-@include setup-base(false);
+@include setup-base();
 
 // 2. setup queries; 'false' means no outputs
-@include setup-query(false);
+@include setup-query();
 
 // 0. setup sizes
 @include setup-sizes((
-  'factor' 2,
+  'factor' 1.5,
   'steps' 2,
 ));
 
@@ -72,15 +70,29 @@ $typo-data: (
 ));
 
 // 4. setup typo by class/alias
-%h1 { @include set-typo(h1, s6); }
-%h2 { @include set-typo(h2, s5); }
-%h3 { @include set-typo(h3, s4); }
-%h4 { @include set-typo(h4, s3); }
-%h5 { @include set-typo(h5, s2); }
-%h6 { @include set-typo(h6, s1); }
+h1 { @include set-typo(h1, s6); }
+h2 { @include set-typo(h2, s5); }
+h3 { @include set-typo(h3, s4); }
+h4 { @include set-typo(h4, s3); }
+h5 { @include set-typo(h5, s2); }
+h6 { @include set-typo(h6, s1); }
 
 // // 5. setup grids
-// @include setup-grid();
+@include setup-grid();
+
+.wrap--test {
+  width: 60%;
+  margin-top: 1rem;
+  background-color: pink;
+  overflow-x: hidden;
+  overflow-y: visible;
+}
+
+.trimbox {
+  margin-top: 0.5rem;
+  overflow: hidden;
+  background-color: lightgray;
+}
 
 // %hn { font-weight: normal; font-weight: 400; }
 
@@ -109,18 +121,18 @@ $typo-data: (
 // //                                                       "Y8bbdP"
 
 
-.scratch {
-  margin-test: get-margin(h1);
-  size-test: get-size(h5);
-  query-current: $query-current-alias;
-  // size-assignments: map-pretty($size-assignments);
-  // margin-assignments: map-pretty($margin-assignments);
-  @each $h in h1 h2 h3 h4 h5 h6 {
-    size-#{$h}: get-size($h);
-  }
-}
-.base { debug: map-pretty($base-data); }
-.query { debug: map-pretty(get($query-data, width)); }
+// .scratch {
+//   margin-test: get-margin(h1);
+//   size-test: get-size(h5);
+//   query-current: $query-current-alias;
+//   size-assignments: map-pretty($size-assignments);
+//   margin-assignments: map-pretty($margin-assignments);
+//   @each $h in h1 h2 h3 h4 h5 h6 {
+//     size-#{$h}: get-size($h);
+//   }
+// }
+// .base { debug: map-pretty($base-data); }
+// .query { debug: map-pretty(get($query-data, width)); }
 // .query { debug: map-pretty(get($query-orig, width)); }
 
 

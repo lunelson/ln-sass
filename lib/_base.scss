@@ -18,6 +18,19 @@ $global-defaults: (
   typo-line-div 2,
   typo-per-query true,
   typo-font-path '/public/fonts/',
+  typo (
+    margin-dir 'top',
+    min-line-height 1.1,
+    line-div 2,
+    per-query true,
+    font-path '/public/fonts/',
+  ),
+  size (),
+  margin (),
+  debug (
+    render false,
+    color rgba(0, 0, 0, 0.05),
+  ),
   debug false,
   debug-color rgba(0, 0, 0, 0.05)
 );
@@ -30,9 +43,9 @@ $base-defaults: (
   line-height 1.4,
   margin-x 1rem,
   margin-y 1.4rem,
-  body-top 2rem,
+  body-top 1rem,
   body-right 1rem,
-  body-bottom 2rem,
+  body-bottom 1rem,
   body-left 1rem
 );
 
@@ -86,12 +99,12 @@ $base-data: () !default;
       // font-size: get-size() * 1rem;
       line-height: get($base-data, 'line-height');
       margin: 0; // n3: remove default margin
-      margin-top: get($base-data, 'body-top');
-      margin-bottom: get($base-data, 'body-bottom');
+      padding-top: get($base-data, 'body-top');
+      padding-bottom: get($base-data, 'body-bottom');
     }
 
-    .body-col { margin-left: get($base-data, 'body-left'); margin-right: get($base-data, 'body-right'); }
-    .body-row { margin-left: - get($base-data, 'body-left'); margin-right: - get($base-data, 'body-right'); }
+    .body-col { padding-left: get($base-data, 'body-left'); padding-right: get($base-data, 'body-right'); }
+    .body-row { padding-left: - get($base-data, 'body-left'); padding-right: - get($base-data, 'body-right'); }
 
     // add any additional content
     @content;

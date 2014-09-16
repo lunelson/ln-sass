@@ -42,8 +42,8 @@ $typo-data: (
     line-height: get($context-typo, line-height);
     margin-top: get($context-typo, margin-top);
     margin-bottom: get($context-typo, margin-bottom);
-    @if $margin-dir == 'top' { &:first-child, &.trim-top { margin-top: get($context-typo, trim-top); } }
-    @else { &:last-child, &.trim-bottom { margin-bottom: get($context-typo, trim-bottom); } }
+    @if $margin-dir == 'top' { &:first-child, &.trim { margin-top: get($context-typo, trim-top); } }
+    @else { &:last-child, &.trim { margin-bottom: get($context-typo, trim-bottom); } }
 
   }
 }
@@ -122,8 +122,8 @@ $typo-data: (
     margin-top: $margin-top;
     margin-bottom: $margin-bottom;
     &.single, &.sngl { line-height: 1; margin-top: 0; margin-bottom: 0; }
-    @if $margin-dir == 'top' { &:first-child, &.trim-top { margin-top: $trim-top; } }
-    @else { &:last-child, &.trim-bottom { margin-bottom: $trim-bottom; } }
+    @if $margin-dir == 'top' { &:first-child, &.trim { margin-top: $trim-top; } }
+    @else { &:last-child, &.trim { margin-bottom: $trim-bottom; } }
   }
 
   /////////////////
@@ -174,8 +174,8 @@ $typo-data: (
         line-height: $line-height;
         margin-top: $margin-top;
         margin-bottom: $margin-bottom;
-        @if $margin-dir == 'top' { &:first-child, &.trim-top { margin-top: $trim-top; } }
-        @else { &:last-child, &.trim-bottom { margin-bottom: $trim-bottom; } }
+        @if $margin-dir == 'top' { &:first-child, &.trim { margin-top: $trim-top; } }
+        @else { &:last-child, &.trim { margin-bottom: $trim-bottom; } }
       }
     }
   }
