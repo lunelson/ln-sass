@@ -69,22 +69,25 @@ $typo-data: (
 
 .size-and-margin-3 {
   debug: 'hello world';
+  $margin-arg: 0;
+  $context: $base-data;
+  query-margin: get-query-margin($context, join((),$margin-arg)...);
   @for $n from 1 through 2 {
-    margin-neg-#{3 - $n}: margin2(-(3 - $n));
+    margin-neg-#{3 - $n}: get-margin(-(3 - $n));
   }
   @for $n from 0 through 6 {
-    margin-#{$n}: margin2($n);
+    margin-#{$n}: get-margin($n);
   }
   @for $n from 1 through 2 {
-    size-neg-#{3 - $n}: size2(-(3 - $n));
+    size-neg-#{3 - $n}: size(-(3 - $n));
   }
   @for $n from 0 through 6 {
-    size-#{$n}: size2($n);
+    size-#{$n}: size($n);
   }
 }
 
 // 4. setup typo by class/alias
-// h1 { @include set-typo('h1', s6); }
+h1 { @include set-typo-per-query(null, 'h1', 3); }
 // h2 { @include set-typo('h2', s5); }
 // h3 { @include set-typo('h3', s4); }
 // h4, p, ul, ol, dl { @include set-typo('h4', s3); }

@@ -8,13 +8,10 @@
 //  `"YbbdP"'  88  888888888   `"Ybbd8"'
 
 // GLOBALS
-$size-assignments: () !default; // map of alias->list-index assignments
 $size-defaults: (
-  'assignments' (),
-  'default' s3,
   'offset' 3,
-  'spread' 2,
-  'superclasses' (kilo mega giga tera),
+  'range' 10,
+  'spread' 3,
 ) !default;
 
 // $size-default: s3 !default;
@@ -23,51 +20,19 @@ $size-defaults: (
 // FUNCTIONS //
 ///////////////
 
-// HELPER
-@function get-size-assignment($reference, $offset: 0) {
-  $index: map-get($size-assignments, $reference);
-  @return $index + $offset;
-}
-
 // MAIN
-@function get-size($reference: get($size-defaults, default)) {
-  $index: null;
-  @if type-of($reference) == 'list' { $index: get-size-assignment($reference...); }
-  @else { $index: get-size-assignment($reference); }
-  @return nth(get(get-query(),'font-size'), $index);
-}
-
-@function size2($index: 0, $sub-index: 0) {
+@function get-size($index: 0, $sub-index: 0) {
   $offset: get($size-defaults, 'offset');
   $spread: get($size-defaults, 'spread');
   @return nth(get(get-query(),'font-size'), ($index + $offset) * $spread + $sub-index);
 }
 
+// ALIAS to MAIN
+@function size($args...) { @return get-size($args...); }
+
 ////////////
 // MIXINS //
 ////////////
-
-// SUBMIX
-@mixin assign-sizes() {
-
-  // defaults
-  $spread: get($size-defaults, 'spread');
-  $superclasses: get($size-defaults, 'superclasses');
-
-  // create size assignments
-  @for $n from 1 through 6 {
-    // $n: 7 - $n; $index: (7 - $n) * $spread;
-    $index: $n * $spread;
-    $size-assignments: merge($size-assignments, 's#{$n}' $index);
-  }
-
-  // create super size assignments
-  @for $n from 1 through length($superclasses) {
-    $index: (6 + $n) * $spread;
-    $superclass: nth($superclasses, $n);
-    $size-assignments: merge($size-assignments, $superclass $index);
-  }
-}
 
 // MASTER
 @mixin setup-sizes-per-query($query-aliases: null, $options:()) {
@@ -77,16 +42,16 @@ $size-defaults: (
   $steps: get($options, 'steps') or 2;
 
   // defaults
+  $range: get($size-defaults, 'range') or 10;
   $spread: get($size-defaults, 'spread');
   $offset: get($size-defaults, 'offset');
-  $superclasses: get($size-defaults, 'superclasses');
 
   // query aliases
   $query-alias1: nth($query-aliases, 1); $query-alias2: null;
   @if length($query-aliases) > 1 { $query-alias2: nth($query-aliases, 2); }
 
   // calculate the size list
-  $sizes: (); @for $n from 1 through (6 + length($superclasses)) * $spread {
+  $sizes: (); @for $n from 1 through $range * $spread {
     $size: m-scale($n - $offset * $spread, $factor, $steps * $spread);
     $sizes: append($sizes, $size * 1rem, 'comma');
   }
@@ -103,11 +68,9 @@ $size-defaults: (
     @if $count == 1 and $query-alias1 != null { $query-orig: merge($query-orig, 'width', $query-alias, ('size-bp' true)); }
     $count: $count + 1;
   }
-  @include assign-sizes();
 }
 
 // ALIAS
 @mixin setup-sizes($options:()) {
   @include setup-sizes-per-query(null, $options);
 }
-

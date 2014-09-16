@@ -29,61 +29,19 @@ $typo-data: (
 // base set-typo function //
 ////////////////////////////
 
-%typo {
-  &.single {
-    line-height: 1;
-    margin-top: 0;
-    margin-bottom: 0;
-  }
-}
-
-@mixin get-typo($alias) {
-
-  // check for $alias in typo map for current context
-  $context: get-query();
-  $context-typo: get($context, typo, $alias);
-
-  @if $context-typo != null { // i.e. if it exists ->
-
-    // parse typo to output
-    font-size: get($context-typo, size);
-    line-height: get($context-typo, line-height);
-    margin-top: get($context-typo, margin-top);
-    margin-bottom: get($context-typo, margin-bottom);
-    @if $margin-dir == 'top' { &:first-child, &.trim { margin-top: get($context-typo, trim-top); } }
-    @else { &:last-child, &.trim { margin-bottom: get($context-typo, trim-bottom); } }
-
-  }
-}
-
 // MASTER
-@mixin set-typo-per-query($query-aliases: null, $typo-alias: null, $size: null, $options: ()) {
+@mixin set-typo-per-query($query-aliases: null, $typo-alias: null, $size-arg: 0, $margin-arg: 0, $options: ()) {
 
   /////////////////////////////
   // ARGS, DEFAULTS, GLOBALS //
   /////////////////////////////
 
-  // font and margin
+  // options
   $font: map-get($options, 'font') or tuple-key(nth($typo-data, 1));
-  $margin: map-get($options, 'margin') or get($margin-defaults, 'default');
-
-  // size-index
-  $size-index: null;
-  @if type-of($size) == 'list' { $size-index: get-size-assignment($size...); }
-  @else { $size-index: get-size-assignment($size); }
-
-  // margin-index
-  $margin-index: null;
-  @if type-of($margin) == 'list' { $margin-index: get-margin-assignment($margin...); }
-  @else { $margin-index: get-margin-assignment($margin); }
-
-  // merge alias assignment back to the assignment lists
-  $size-assignments: merge($size-assignments, $typo-alias, $size-index);
-  $margin-assignments: merge($margin-assignments, $typo-alias, $margin-index);
 
   // globals
-  $min-height: get($global-data, 'typo-min-line-height');
-  $margin-dir: get($margin-defaults, 'margin-direction') or 'top';
+  $min-height: get($global-data, 'typo', 'min-line-height');
+  $margin-dir: get($global-data, 'typo', 'margin-dir') or 'top';
 
   // query-aliases
   $query-alias1: nth($query-aliases, 1); $query-alias2: null;
@@ -92,10 +50,13 @@ $typo-data: (
   // conditional: base actions
   @if $query-alias1 == null {
 
+    // TODO: wrap this shit up in to a submixin, cause it's repetitive
+    // @include process-typo($base-data, $typo-alias, $size-arg, $margin-arg, $font, $min-height, $margin-dir);
+
     // get query object + corresp. size, margin
     $context: $base-data;
-    $size: nth(get($context,'font-size'), $size-index);
-    $margin: nth(get($context,'margin-y'), $margin-index);
+    $size: get-size(join((), $size-arg)...);
+    $margin: get-query-margin($context, join((), $margin-arg)...);
 
     // get trims
     $px-size: strip(px($size)); // better! works per html-scale
@@ -146,8 +107,8 @@ $typo-data: (
 
       // get query object + corresp. size, margin
       $context: get-query();
-      $size: nth(get($context,'font-size'), $size-index);
-      $margin: nth(get($context,'margin-y'), $margin-index);
+      $size: get-size(join((), $size-arg)...);
+      $margin: get-query-margin($context, join((), $margin-arg)...);
 
       // get trims
       $px-size: strip(px($size)); // better! works per html-scale
@@ -189,7 +150,42 @@ $typo-data: (
   }
 }
 
-// ALIAS
-@mixin set-typo($typo-alias, $size: $size-default, $options: ()) {
-  @include set-typo-per-query(null, $typo-alias, $size, $options);
+// SIMPLE call for ALL case
+@mixin set-typo($args...) {
+  @include set-typo-per-query(null, $args...);
 }
+// @mixin set-typo($typo-alias, $size: $size-default, $options: ()) {
+//   @include set-typo-per-query(null, $typo-alias, $size, $options);
+// }
+
+///////////////////////////
+// UNIVERSAL TYPO STYLES //
+///////////////////////////
+
+%typo {
+  &.single {
+    line-height: 1;
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+}
+
+@mixin get-typo($alias) {
+
+  // check for $alias in typo map for current context
+  $context: get-query();
+  $context-typo: get($context, typo, $alias);
+
+  @if $context-typo != null { // i.e. if it exists ->
+
+    // parse typo to output
+    font-size: get($context-typo, size);
+    line-height: get($context-typo, line-height);
+    margin-top: get($context-typo, margin-top);
+    margin-bottom: get($context-typo, margin-bottom);
+    @if $margin-dir == 'top' { &:first-child, &.trim { margin-top: get($context-typo, trim-top); } }
+    @else { &:last-child, &.trim { margin-bottom: get($context-typo, trim-bottom); } }
+
+  }
+}
+
