@@ -30,6 +30,10 @@
   @return $output;
 }
 
+@function contains($list, $item) {
+  @return index($list, $item) != false;
+}
+
 @function contains-any($list, $items) {
   @each $item in $items {
     @if index($list, $item) != false { @return true; }

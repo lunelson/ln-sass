@@ -19,6 +19,7 @@ $query-data: (
     ),
     gamma (
       min-width 48em,
+      margin-y 1.5rem,
     ),
     delta (
       min-width 64em,
@@ -63,7 +64,7 @@ $typo-data: (
 ));
 
 @include setup-margins-per-query(gamma, (
-  'factor' 2,
+  'factor' 3,
   'steps' 2,
 ));
 
@@ -87,8 +88,9 @@ $typo-data: (
 }
 
 // 4. setup typo by class/alias
-h1 { @include set-typo-per-query(null, 'h1', 3); }
-// h2 { @include set-typo('h2', s5); }
+@include set-typo-per-query(null, 'h1' 'large',(size 3));
+// h1 { @include set-typo-per-query(alpha, 'h1' 'large',(size 4)); }
+// h2 { @include set-typo('h2' 'mlarge', (size 3)); }
 // h3 { @include set-typo('h3', s4); }
 // h4, p, ul, ol, dl { @include set-typo('h4', s3); }
 // h5 { @include set-typo('h5', s2); }
@@ -161,7 +163,7 @@ h1 { @include set-typo-per-query(null, 'h1', 3); }
 //     size-#{$h}: get-size($h);
 //   }
 // }
-// .base { debug: map-pretty($base-data); }
+.base { debug: map-pretty($base-data); }
 .query { debug: map-pretty(get($query-data, width)); }
 // .query { debug: map-pretty(get($query-orig, width)); }
 
