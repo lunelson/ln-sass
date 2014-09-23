@@ -1,32 +1,171 @@
-@media screen and (min-width: 20em) { }
+.single.h1, h1.single, .single.h2, h2.single, .single.h3, h3.single, .single.h4, h4.single, p.single, ul.single, .single.h5, h5.single, .single.h6, h6.single {
+  line-height: 1;
+  margin-top: 0;
+  margin-bottom: 0; }
 
-@media screen and (min-width: 30em) { }
+*, *:before, *:after {
+  box-sizing: inherit; }
 
-@media screen and (min-width: 48em) { }
+head {
+  font-family: 'base'; }
 
-@media screen and (min-width: 64em) { }
+html, body {
+  height: 100%; }
 
-@media screen and (min-width: 80em) { }
+html {
+  font-family: sans-serif;
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  font-size: 100%; }
 
-@media screen and (min-width: 20em) { }
+body {
+  line-height: 1.4;
+  margin: 0;
+  padding-top: 0;
+  padding-bottom: 1rem; }
 
-@media screen and (min-width: 30em) { }
+.body-col {
+  padding-left: 1rem;
+  padding-right: 1rem; }
 
-@media screen and (min-width: 48em) { }
+.body-row {
+  padding-left: -1rem;
+  padding-right: -1rem; }
 
-@media screen and (min-width: 64em) { }
+@media screen and (min-width: 20em) {
+  head {
+    font-family: 'alpha'; } }
 
-@media screen and (min-width: 80em) { }
+@media screen and (min-width: 30em) {
+  head {
+    font-family: 'beta'; } }
 
-@media screen and (min-width: 20em) { }
+@media screen and (min-width: 48em) {
+  head {
+    font-family: 'gamma'; } }
 
-@media screen and (min-width: 30em) { }
+@media screen and (min-width: 64em) {
+  head {
+    font-family: 'delta'; } }
 
-@media screen and (min-width: 48em) { }
+@media screen and (min-width: 80em) {
+  head {
+    font-family: 'epsilon'; } }
 
-@media screen and (min-width: 64em) { }
+.h1, h1 {
+  font-size: 4rem;
+  line-height: 1.225;
+  margin-top: 0.166rem;
+  margin-bottom: -0.93rem; }
+  .h1:first-child, h1:first-child, .h1.trim, h1.trim {
+    margin-top: -0.834rem; }
 
-@media screen and (min-width: 80em) { }
+@media screen and (min-width: 48em) {
+  .h1, h1 {
+    font-size: 4rem;
+    line-height: 1.225;
+    margin-top: 0.666rem;
+    margin-bottom: -0.93rem; }
+    .h1:first-child, h1:first-child, .h1.trim, h1.trim {
+      margin-top: -0.834rem; } }
+
+.h2, h2 {
+  font-size: 2rem;
+  line-height: 1.4;
+  margin-top: 0.45067rem;
+  margin-bottom: -0.64rem; }
+  .h2:first-child, h2:first-child, .h2.trim, h2.trim {
+    margin-top: -0.54933rem; }
+
+@media screen and (min-width: 30em) {
+  .h2, h2 {
+    font-size: 2.82843rem;
+    line-height: 1.23744;
+    margin-top: 0.42803rem;
+    margin-bottom: -0.6752rem; }
+    .h2:first-child, h2:first-child, .h2.trim, h2.trim {
+      margin-top: -0.57197rem; } }
+
+@media screen and (min-width: 48em) {
+  .h2, h2 {
+    font-size: 2.82843rem;
+    line-height: 1.23744;
+    margin-top: 0.92803rem;
+    margin-bottom: -0.6752rem; }
+    .h2:first-child, h2:first-child, .h2.trim, h2.trim {
+      margin-top: -0.57197rem; } }
+
+.h3, h3 {
+  font-size: 4rem;
+  line-height: 1.225;
+  margin-top: 0.166rem;
+  margin-bottom: -0.93rem; }
+  .h3:first-child, h3:first-child, .h3.trim, h3.trim {
+    margin-top: -0.834rem; }
+
+@media screen and (min-width: 48em) {
+  .h3, h3 {
+    font-size: 4rem;
+    line-height: 1.225;
+    margin-top: 0.666rem;
+    margin-bottom: -0.93rem; }
+    .h3:first-child, h3:first-child, .h3.trim, h3.trim {
+      margin-top: -0.834rem; } }
+
+.h4, h4, p, ul {
+  font-size: 2.82843rem;
+  line-height: 1.23744;
+  margin-top: 0.42803rem;
+  margin-bottom: -0.6752rem; }
+  .h4:first-child, h4:first-child, .h4.trim, h4.trim, p:first-child, ul:first-child, p.trim, ul.trim {
+    margin-top: -0.57197rem; }
+
+@media screen and (min-width: 48em) {
+  .h4, h4, p, ul {
+    font-size: 2.82843rem;
+    line-height: 1.23744;
+    margin-top: 0.92803rem;
+    margin-bottom: -0.6752rem; }
+    .h4:first-child, h4:first-child, .h4.trim, h4.trim, p:first-child, ul:first-child, p.trim, ul.trim {
+      margin-top: -0.57197rem; } }
+
+.h5, h5 {
+  font-size: 2rem;
+  line-height: 1.4;
+  margin-top: 0.45067rem;
+  margin-bottom: -0.64rem; }
+  .h5:first-child, h5:first-child, .h5.trim, h5.trim {
+    margin-top: -0.54933rem; }
+
+@media screen and (min-width: 48em) {
+  .h5, h5 {
+    font-size: 2rem;
+    line-height: 1.4;
+    margin-top: 0.95067rem;
+    margin-bottom: -0.64rem; }
+    .h5:first-child, h5:first-child, .h5.trim, h5.trim {
+      margin-top: -0.54933rem; } }
+
+.h6, h6 {
+  font-size: 1.41421rem;
+  line-height: 1.48492;
+  margin-top: 0.56035rem;
+  margin-bottom: -0.5126rem; }
+  .h6:first-child, h6:first-child, .h6.trim, h6.trim {
+    margin-top: -0.43965rem; }
+
+@media screen and (min-width: 48em) {
+  .h6, h6 {
+    font-size: 1.41421rem;
+    line-height: 1.48492;
+    margin-top: 1.06035rem;
+    margin-bottom: -0.5126rem; }
+    .h6:first-child, h6:first-child, .h6.trim, h6.trim {
+      margin-top: -0.43965rem; } }
 
 .col, [class*='col--'], [ln-grid~='col'] {
   float: left;
@@ -45,11 +184,11 @@
     display: table;
     clear: both; }
 
-.wrap, [class*='wrap--'], [ln-grid~='wrap'] {
+.wrap, [class*='wrap--'], [ln-grid~='wrap'], .wraptest > * {
   padding-top: 1px;
   margin-left: auto;
   margin-right: auto; }
-  .wrap:after, [class*='wrap--']:after, [ln-grid~='wrap']:after {
+  .wrap:after, [class*='wrap--']:after, [ln-grid~='wrap']:after, .wraptest > *:after {
     content: "";
     display: table;
     clear: both; }
@@ -63,774 +202,24 @@
 .wrap[ln-grid~='delta'], [class*='wrap--'][ln-grid~='delta'], [ln-grid~='wrap'][ln-grid~='delta'] {
   max-width: 18rem; }
 
-.base {
-  debug: '(
-    font-size (
-      0.39685rem,
-      0.44545rem,
-      0.5rem,
-      0.56123rem,
-      0.62996rem,
-      0.70711rem,
-      0.7937rem,
-      0.8909rem,
-      1rem,
-      1.12246rem,
-      1.25992rem,
-      1.41421rem,
-      1.5874rem,
-      1.7818rem,
-      2rem,
-      2.24492rem,
-      2.51984rem,
-      2.82843rem,
-      3.1748rem,
-      3.56359rem,
-      4rem,
-      4.48985rem,
-      5.03968rem,
-      5.65685rem,
-      6.3496rem,
-      7.12719rem,
-      8rem,
-      8.9797rem,
-      10.07937rem,
-      11.31371rem
-    ),
-    line-height 1.4,
-    margin-x (
-      0.39685rem,
-      0.44545rem,
-      0.5rem,
-      0.56123rem,
-      0.62996rem,
-      0.70711rem,
-      0.7937rem,
-      0.8909rem,
-      1rem,
-      1.12246rem,
-      1.25992rem,
-      1.41421rem,
-      1.5874rem,
-      1.7818rem,
-      2rem,
-      2.24492rem,
-      2.51984rem,
-      2.82843rem,
-      3.1748rem,
-      3.56359rem,
-      4rem,
-      4.48985rem,
-      5.03968rem,
-      5.65685rem,
-      6.3496rem,
-      7.12719rem,
-      8rem,
-      8.9797rem,
-      10.07937rem,
-      11.31371rem
-    ),
-    margin-y (
-      0.39685rem,
-      0.44545rem,
-      0.5rem,
-      0.56123rem,
-      0.62996rem,
-      0.70711rem,
-      0.7937rem,
-      0.8909rem,
-      1rem,
-      1.12246rem,
-      1.25992rem,
-      1.41421rem,
-      1.5874rem,
-      1.7818rem,
-      2rem,
-      2.24492rem,
-      2.51984rem,
-      2.82843rem,
-      3.1748rem,
-      3.56359rem,
-      4rem,
-      4.48985rem,
-      5.03968rem,
-      5.65685rem,
-      6.3496rem,
-      7.12719rem,
-      8rem,
-      8.9797rem,
-      10.07937rem,
-      11.31371rem
-    ),
-    body-top 0,
-    body-right 1rem,
-    body-bottom 1rem,
-    body-left 1rem,
-    html-scale 1,
-    typo (
-      large h1,
-      big h1,
-      h1 (
-        font-size 4rem,
-        line-height 1.225,
-        margin-top 0.166rem,
-        margin-bottom -0.93rem,
-        trim-top -0.834rem,
-        trim-bottom -0.93rem
-      ),
-      mlarge h2,
-      h2 (
-        font-size 2.82843rem,
-        line-height 1.23744,
-        margin-top 0.42803rem,
-        margin-bottom -0.6752rem,
-        trim-top -0.57197rem,
-        trim-bottom -0.6752rem
-      )
-    )
-  )'; }
+.h1, h1, .h2, h2, .h3, h3, .h4, h4, .h5, h5, .h6, h6 {
+  font-weight: normal;
+  font-weight: 400; }
 
-.query {
-  debug: '(
-    alpha (
-      min-width 20em,
-      font-size (
-        0.39685rem,
-        0.44545rem,
-        0.5rem,
-        0.56123rem,
-        0.62996rem,
-        0.70711rem,
-        0.7937rem,
-        0.8909rem,
-        1rem,
-        1.12246rem,
-        1.25992rem,
-        1.41421rem,
-        1.5874rem,
-        1.7818rem,
-        2rem,
-        2.24492rem,
-        2.51984rem,
-        2.82843rem,
-        3.1748rem,
-        3.56359rem,
-        4rem,
-        4.48985rem,
-        5.03968rem,
-        5.65685rem,
-        6.3496rem,
-        7.12719rem,
-        8rem,
-        8.9797rem,
-        10.07937rem,
-        11.31371rem
-      ),
-      line-height 1.4,
-      margin-x (
-        0.39685rem,
-        0.44545rem,
-        0.5rem,
-        0.56123rem,
-        0.62996rem,
-        0.70711rem,
-        0.7937rem,
-        0.8909rem,
-        1rem,
-        1.12246rem,
-        1.25992rem,
-        1.41421rem,
-        1.5874rem,
-        1.7818rem,
-        2rem,
-        2.24492rem,
-        2.51984rem,
-        2.82843rem,
-        3.1748rem,
-        3.56359rem,
-        4rem,
-        4.48985rem,
-        5.03968rem,
-        5.65685rem,
-        6.3496rem,
-        7.12719rem,
-        8rem,
-        8.9797rem,
-        10.07937rem,
-        11.31371rem
-      ),
-      margin-y (
-        0.39685rem,
-        0.44545rem,
-        0.5rem,
-        0.56123rem,
-        0.62996rem,
-        0.70711rem,
-        0.7937rem,
-        0.8909rem,
-        1rem,
-        1.12246rem,
-        1.25992rem,
-        1.41421rem,
-        1.5874rem,
-        1.7818rem,
-        2rem,
-        2.24492rem,
-        2.51984rem,
-        2.82843rem,
-        3.1748rem,
-        3.56359rem,
-        4rem,
-        4.48985rem,
-        5.03968rem,
-        5.65685rem,
-        6.3496rem,
-        7.12719rem,
-        8rem,
-        8.9797rem,
-        10.07937rem,
-        11.31371rem
-      ),
-      body-top 0,
-      body-right 1rem,
-      body-bottom 1rem,
-      body-left 1rem,
-      html-scale 1,
-      content-width 18rem,
-      typo (
-        large h1,
-        big h1,
-        h1 (
-          font-size 4rem,
-          line-height 1.225,
-          margin-top 0.166rem,
-          margin-bottom -0.93rem,
-          trim-top -0.834rem,
-          trim-bottom -0.93rem
-        ),
-        mlarge h2,
-        h2 (
-          query-bp true,
-          font-size 2.82843rem,
-          line-height 1.23744,
-          margin-top 0.42803rem,
-          margin-bottom -0.6752rem,
-          trim-top -0.57197rem,
-          trim-bottom -0.6752rem
-        ),
-        big-small h2
-      )
-    ),
-    beta (
-      min-width 30em,
-      font-size (
-        0.39685rem,
-        0.44545rem,
-        0.5rem,
-        0.56123rem,
-        0.62996rem,
-        0.70711rem,
-        0.7937rem,
-        0.8909rem,
-        1rem,
-        1.12246rem,
-        1.25992rem,
-        1.41421rem,
-        1.5874rem,
-        1.7818rem,
-        2rem,
-        2.24492rem,
-        2.51984rem,
-        2.82843rem,
-        3.1748rem,
-        3.56359rem,
-        4rem,
-        4.48985rem,
-        5.03968rem,
-        5.65685rem,
-        6.3496rem,
-        7.12719rem,
-        8rem,
-        8.9797rem,
-        10.07937rem,
-        11.31371rem
-      ),
-      line-height 1.4,
-      margin-x (
-        0.39685rem,
-        0.44545rem,
-        0.5rem,
-        0.56123rem,
-        0.62996rem,
-        0.70711rem,
-        0.7937rem,
-        0.8909rem,
-        1rem,
-        1.12246rem,
-        1.25992rem,
-        1.41421rem,
-        1.5874rem,
-        1.7818rem,
-        2rem,
-        2.24492rem,
-        2.51984rem,
-        2.82843rem,
-        3.1748rem,
-        3.56359rem,
-        4rem,
-        4.48985rem,
-        5.03968rem,
-        5.65685rem,
-        6.3496rem,
-        7.12719rem,
-        8rem,
-        8.9797rem,
-        10.07937rem,
-        11.31371rem
-      ),
-      margin-y (
-        0.39685rem,
-        0.44545rem,
-        0.5rem,
-        0.56123rem,
-        0.62996rem,
-        0.70711rem,
-        0.7937rem,
-        0.8909rem,
-        1rem,
-        1.12246rem,
-        1.25992rem,
-        1.41421rem,
-        1.5874rem,
-        1.7818rem,
-        2rem,
-        2.24492rem,
-        2.51984rem,
-        2.82843rem,
-        3.1748rem,
-        3.56359rem,
-        4rem,
-        4.48985rem,
-        5.03968rem,
-        5.65685rem,
-        6.3496rem,
-        7.12719rem,
-        8rem,
-        8.9797rem,
-        10.07937rem,
-        11.31371rem
-      ),
-      body-top 0,
-      body-right 1rem,
-      body-bottom 1rem,
-      body-left 1rem,
-      html-scale 1,
-      content-width 28rem,
-      typo (
-        large h1,
-        big h1,
-        h1 (
-          font-size 4rem,
-          line-height 1.225,
-          margin-top 0.166rem,
-          margin-bottom -0.93rem,
-          trim-top -0.834rem,
-          trim-bottom -0.93rem
-        ),
-        mlarge h2,
-        h2 (
-          font-size 2.82843rem,
-          line-height 1.23744,
-          margin-top 0.42803rem,
-          margin-bottom -0.6752rem,
-          trim-top -0.57197rem,
-          trim-bottom -0.6752rem
-        ),
-        big-small h2
-      )
-    ),
-    gamma (
-      min-width 48em,
-      margin-y (
-        0.34668rem,
-        0.41634rem,
-        0.5rem,
-        0.60047rem,
-        0.72112rem,
-        0.86603rem,
-        1.04004rem,
-        1.24902rem,
-        1.5rem,
-        1.80141rem,
-        2.16337rem,
-        2.59808rem,
-        3.12013rem,
-        3.74707rem,
-        4.5rem,
-        5.40422rem,
-        6.49012rem,
-        7.79423rem,
-        9.36038rem,
-        11.24122rem,
-        13.5rem,
-        16.21265rem,
-        19.47037rem,
-        23.38269rem,
-        28.08113rem,
-        33.72367rem,
-        40.5rem,
-        48.63795rem,
-        58.41111rem,
-        70.14806rem
-      ),
-      font-size (
-        0.39685rem,
-        0.44545rem,
-        0.5rem,
-        0.56123rem,
-        0.62996rem,
-        0.70711rem,
-        0.7937rem,
-        0.8909rem,
-        1rem,
-        1.12246rem,
-        1.25992rem,
-        1.41421rem,
-        1.5874rem,
-        1.7818rem,
-        2rem,
-        2.24492rem,
-        2.51984rem,
-        2.82843rem,
-        3.1748rem,
-        3.56359rem,
-        4rem,
-        4.48985rem,
-        5.03968rem,
-        5.65685rem,
-        6.3496rem,
-        7.12719rem,
-        8rem,
-        8.9797rem,
-        10.07937rem,
-        11.31371rem
-      ),
-      line-height 1.4,
-      margin-x (
-        0.23112rem,
-        0.27756rem,
-        0.33333rem,
-        0.40031rem,
-        0.48075rem,
-        0.57735rem,
-        0.69336rem,
-        0.83268rem,
-        1rem,
-        1.20094rem,
-        1.44225rem,
-        1.73205rem,
-        2.08008rem,
-        2.49805rem,
-        3rem,
-        3.60281rem,
-        4.32675rem,
-        5.19615rem,
-        6.24025rem,
-        7.49415rem,
-        9rem,
-        10.80843rem,
-        12.98025rem,
-        15.58846rem,
-        18.72075rem,
-        22.48245rem,
-        27rem,
-        32.4253rem,
-        38.94074rem,
-        46.76537rem
-      ),
-      body-top 0,
-      body-right 1rem,
-      body-bottom 1rem,
-      body-left 1rem,
-      html-scale 1,
-      content-width 46rem,
-      typo (
-        large h1,
-        big h1,
-        h1 (
-          font-size 4rem,
-          line-height 1.225,
-          margin-top 0.666rem,
-          margin-bottom -0.93rem,
-          trim-top -0.834rem,
-          trim-bottom -0.93rem
-        ),
-        mlarge h2,
-        h2 (
-          font-size 2.82843rem,
-          line-height 1.23744,
-          margin-top 0.92803rem,
-          margin-bottom -0.6752rem,
-          trim-top -0.57197rem,
-          trim-bottom -0.6752rem
-        ),
-        big-small h2
-      )
-    ),
-    delta (
-      min-width 64em,
-      font-size (
-        0.39685rem,
-        0.44545rem,
-        0.5rem,
-        0.56123rem,
-        0.62996rem,
-        0.70711rem,
-        0.7937rem,
-        0.8909rem,
-        1rem,
-        1.12246rem,
-        1.25992rem,
-        1.41421rem,
-        1.5874rem,
-        1.7818rem,
-        2rem,
-        2.24492rem,
-        2.51984rem,
-        2.82843rem,
-        3.1748rem,
-        3.56359rem,
-        4rem,
-        4.48985rem,
-        5.03968rem,
-        5.65685rem,
-        6.3496rem,
-        7.12719rem,
-        8rem,
-        8.9797rem,
-        10.07937rem,
-        11.31371rem
-      ),
-      line-height 1.4,
-      margin-x (
-        0.23112rem,
-        0.27756rem,
-        0.33333rem,
-        0.40031rem,
-        0.48075rem,
-        0.57735rem,
-        0.69336rem,
-        0.83268rem,
-        1rem,
-        1.20094rem,
-        1.44225rem,
-        1.73205rem,
-        2.08008rem,
-        2.49805rem,
-        3rem,
-        3.60281rem,
-        4.32675rem,
-        5.19615rem,
-        6.24025rem,
-        7.49415rem,
-        9rem,
-        10.80843rem,
-        12.98025rem,
-        15.58846rem,
-        18.72075rem,
-        22.48245rem,
-        27rem,
-        32.4253rem,
-        38.94074rem,
-        46.76537rem
-      ),
-      margin-y (
-        0.34668rem,
-        0.41634rem,
-        0.5rem,
-        0.60047rem,
-        0.72112rem,
-        0.86603rem,
-        1.04004rem,
-        1.24902rem,
-        1.5rem,
-        1.80141rem,
-        2.16337rem,
-        2.59808rem,
-        3.12013rem,
-        3.74707rem,
-        4.5rem,
-        5.40422rem,
-        6.49012rem,
-        7.79423rem,
-        9.36038rem,
-        11.24122rem,
-        13.5rem,
-        16.21265rem,
-        19.47037rem,
-        23.38269rem,
-        28.08113rem,
-        33.72367rem,
-        40.5rem,
-        48.63795rem,
-        58.41111rem,
-        70.14806rem
-      ),
-      body-top 0,
-      body-right 1rem,
-      body-bottom 1rem,
-      body-left 1rem,
-      html-scale 1,
-      content-width 62rem,
-      typo (
-        large h1,
-        big h1,
-        h1 (
-          font-size 4rem,
-          line-height 1.225,
-          margin-top 0.666rem,
-          margin-bottom -0.93rem,
-          trim-top -0.834rem,
-          trim-bottom -0.93rem
-        ),
-        mlarge h2,
-        h2 (
-          font-size 2.82843rem,
-          line-height 1.23744,
-          margin-top 0.92803rem,
-          margin-bottom -0.6752rem,
-          trim-top -0.57197rem,
-          trim-bottom -0.6752rem
-        ),
-        big-small h2
-      )
-    ),
-    epsilon (
-      min-width 80em,
-      font-size (
-        0.39685rem,
-        0.44545rem,
-        0.5rem,
-        0.56123rem,
-        0.62996rem,
-        0.70711rem,
-        0.7937rem,
-        0.8909rem,
-        1rem,
-        1.12246rem,
-        1.25992rem,
-        1.41421rem,
-        1.5874rem,
-        1.7818rem,
-        2rem,
-        2.24492rem,
-        2.51984rem,
-        2.82843rem,
-        3.1748rem,
-        3.56359rem,
-        4rem,
-        4.48985rem,
-        5.03968rem,
-        5.65685rem,
-        6.3496rem,
-        7.12719rem,
-        8rem,
-        8.9797rem,
-        10.07937rem,
-        11.31371rem
-      ),
-      line-height 1.4,
-      margin-x (
-        0.23112rem,
-        0.27756rem,
-        0.33333rem,
-        0.40031rem,
-        0.48075rem,
-        0.57735rem,
-        0.69336rem,
-        0.83268rem,
-        1rem,
-        1.20094rem,
-        1.44225rem,
-        1.73205rem,
-        2.08008rem,
-        2.49805rem,
-        3rem,
-        3.60281rem,
-        4.32675rem,
-        5.19615rem,
-        6.24025rem,
-        7.49415rem,
-        9rem,
-        10.80843rem,
-        12.98025rem,
-        15.58846rem,
-        18.72075rem,
-        22.48245rem,
-        27rem,
-        32.4253rem,
-        38.94074rem,
-        46.76537rem
-      ),
-      margin-y (
-        0.34668rem,
-        0.41634rem,
-        0.5rem,
-        0.60047rem,
-        0.72112rem,
-        0.86603rem,
-        1.04004rem,
-        1.24902rem,
-        1.5rem,
-        1.80141rem,
-        2.16337rem,
-        2.59808rem,
-        3.12013rem,
-        3.74707rem,
-        4.5rem,
-        5.40422rem,
-        6.49012rem,
-        7.79423rem,
-        9.36038rem,
-        11.24122rem,
-        13.5rem,
-        16.21265rem,
-        19.47037rem,
-        23.38269rem,
-        28.08113rem,
-        33.72367rem,
-        40.5rem,
-        48.63795rem,
-        58.41111rem,
-        70.14806rem
-      ),
-      body-top 0,
-      body-right 1rem,
-      body-bottom 1rem,
-      body-left 1rem,
-      html-scale 1,
-      content-width 78rem,
-      typo (
-        large h1,
-        big h1,
-        h1 (
-          font-size 4rem,
-          line-height 1.225,
-          margin-top 0.666rem,
-          margin-bottom -0.93rem,
-          trim-top -0.834rem,
-          trim-bottom -0.93rem
-        ),
-        mlarge h2,
-        h2 (
-          font-size 2.82843rem,
-          line-height 1.23744,
-          margin-top 0.92803rem,
-          margin-bottom -0.6752rem,
-          trim-top -0.57197rem,
-          trim-bottom -0.6752rem
-        ),
-        big-small h2
-      )
-    )
-  )'; }
+img, figure {
+  margin-top: 1rem; }
+
+figure {
+  -webkit-margin-before: 0;
+  -webkit-margin-after: 0;
+  -webkit-margin-start: 0;
+  -webkit-margin-end: 0; }
+
+.wraptest > * {
+  width: 60%;
+  padding-top: 2rem; }
+
+.trimbox {
+  margin-top: 0.5rem;
+  overflow: hidden;
+  background-color: lightgray; }

@@ -62,8 +62,8 @@ $margin-defaults: (
   $margin-data: ('margin-y' $margins-y, 'margin-x' $margins-x);
 
   // merge them back to appropriate data
-  @if $query-alias { $query-data: merge($query-data, nth($query-alias, 1), nth($query-alias, 2), $margin-data); }
-  @else { $base-data: merge($base-data, $margin-data); }
+  @if $query-alias { $queries: merge($queries, nth($query-alias, 1), nth($query-alias, 2), $margin-data); }
+  @else { $base: merge($base, $margin-data); }
 }
 
 // MASTER
@@ -95,7 +95,7 @@ $margin-defaults: (
   @if $query-alias1 == null { @include merge-margins($margins); }
 
   // determine referenced queries
-  $query-aliases: map-keys(map-get($query-data, 'width'));
+  $query-aliases: map-keys(map-get($queries, 'width'));
   $sliced-query-aliases: slice($query-aliases,
       if($query-alias1, index($query-aliases, $query-alias1), 1),
       if($query-alias2, index($query-aliases, $query-alias2) - 1, length($query-aliases)));

@@ -6,7 +6,7 @@
 //           88                                           d8'
 //           88                                          d8'
 
-$query-data: (
+$queries: (
   width (
     alpha (
       min-width 20em
@@ -31,23 +31,23 @@ $query-data: (
 // init backup of user spec
 $query-orig: ();
 
-@mixin setup-query($output: true){
+@mixin setup-queries($output: true){
 
   // backup data first
-  $query-orig: $query-data;
+  $query-orig: $queries;
 
   ///////////
   // WIDTH //
   ///////////
 
-  $width-queries: get($query-data, 'width');
+  $width-queries: get($queries, 'width');
   @if $width-queries {
 
     // sort
     $width-queries: map-sort($width-queries, 'min-width');
 
     // parse width-queries relative to base properties
-    $reference-spec: $base-data;
+    $reference-spec: $base;
     @each $query in $width-queries {
 
       // init
@@ -101,14 +101,14 @@ $query-orig: ();
       }
     }
     // merge back to query-data
-    $query-data: merge($query-data, 'width', $width-queries);
+    $queries: merge($queries, 'width', $width-queries);
   }
 
   ////////////
   // HEIGHT //
   ////////////
 
-  $height-queries: get($query-data, height);
+  $height-queries: get($queries, height);
   @if $height-queries {
 
     // parse height-queries relative to empty properites
@@ -123,6 +123,6 @@ $query-orig: ();
       $height-queries: merge($height-queries, $query-alias, $reference-spec);
     }
 
-    $query-data: merge($query-data, 'height', $height-queries);
+    $queries: merge($queries, 'height', $height-queries);
   }
 }

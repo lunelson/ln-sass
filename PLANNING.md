@@ -12,7 +12,7 @@
     - 'html-scale' and 'line-height' calc'd and merged to base-data
     - `*` `html` and `body` codes plus `.body_col/_row` styles
     - any additional @content
-3. setup-query() _TODO: rename to setup-queries_
+3. setup-queries() _TODO: rename to setup-queries_
     - back up query-data to query-orig
     - look at width and height queries separately; following for width only
     - sort width queries by breakpoint; assume mobile first, mind-width only
@@ -42,8 +42,8 @@
 
 ## global objects and settings
 
-$base-data -> $base
-$query-data -> $queries
+$base -> $base
+$queries -> $queries
 $fonts -> $fonts
 
 $size-defaults
@@ -65,16 +65,16 @@ $margin-assignments
 ## mixins
 
 @mixin setup-base()
-@mixin setup-query() -> setup-queries
+@mixin setup-queries() -> setup-queries
 
 @mixin setup-sizes() 
 - _reincorporate calc-sizes()_
 - calls setup-sizes-from(null, $args)
 
-@mixin setup-query-sizes() -> setup-sizes-from()
+@mixin setup-queries-sizes() -> setup-sizes-from()
 
 @mixin setup-margins() -> calls setup-margins-from(null, $args)
-@mixin setup-query-margins() -> setup-margins-from()
+@mixin setup-queries-margins() -> setup-margins-from()
 
 @mixin set-typo()
 @mixin get-typo()

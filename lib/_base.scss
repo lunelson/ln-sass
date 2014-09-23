@@ -50,18 +50,18 @@ $base-defaults: (
 );
 
 // empty default for user spec
-$base-data: () !default;
+$base: () !default;
 
 @mixin setup-base($output: true){
 
   // merge global and base data with defaults
   $global-data: merge($global-defaults, $global-data);
-  $base-data: merge($base-defaults, $base-data);
+  $base: merge($base-defaults, $base);
 
   // calc and merge back some shit
-  $font-size: get($base-data, 'font-size');
-  $line-height: get($base-data, 'line-height');
-  $base-data: merge($base-data, (
+  $font-size: get($base, 'font-size');
+  $line-height: get($base, 'line-height');
+  $base: merge($base, (
     'html-scale' $font-size / 16px,
     'line-height' if(unit($line-height) == 'px', $line-height / $font-size, strip($line-height))
   ));
@@ -92,19 +92,19 @@ $base-data: () !default;
       // remove webkit tap highlight color
       -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
       // set scale
-      font-size: percentage(get($base-data, 'html-scale'));
+      font-size: percentage(get($base, 'html-scale'));
     }
 
     body {
       // font-size: get-size() * 1rem;
-      line-height: get($base-data, 'line-height');
+      line-height: get($base, 'line-height');
       margin: 0; // n3: remove default margin
-      padding-top: get($base-data, 'body-top');
-      padding-bottom: get($base-data, 'body-bottom');
+      padding-top: get($base, 'body-top');
+      padding-bottom: get($base, 'body-bottom');
     }
 
-    .body-col { padding-left: get($base-data, 'body-left'); padding-right: get($base-data, 'body-right'); }
-    .body-row { padding-left: - get($base-data, 'body-left'); padding-right: - get($base-data, 'body-right'); }
+    .body-col { padding-left: get($base, 'body-left'); padding-right: get($base, 'body-right'); }
+    .body-row { padding-left: - get($base, 'body-left'); padding-right: - get($base, 'body-right'); }
 
     // add any additional content
     @content;

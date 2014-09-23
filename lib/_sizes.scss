@@ -64,17 +64,17 @@ $size-defaults: (
   }
 
   // conditional base action
-  @if $query-alias1 == null { $base-data: merge($base-data, ('font-size' $sizes)); }
+  @if $query-alias1 == null { $base: merge($base, ('font-size' $sizes)); }
 
   // determine referenced queries
-  $query-aliases: map-keys(map-get($query-data, 'width'));
+  $query-aliases: map-keys(map-get($queries, 'width'));
   $sliced-query-aliases: slice($query-aliases,
       if($query-alias1, index($query-aliases, $query-alias1), 1),
       if($query-alias2, index($query-aliases, $query-alias2) - 1, length($query-aliases)));
 
   // per referenced query actions
   $count: 1; @each $query-alias in $sliced-query-aliases {
-    $query-data: merge($query-data, 'width', $query-alias, ('font-size' $sizes));
+    $queries: merge($queries, 'width', $query-alias, ('font-size' $sizes));
     @if $count == 1 and $query-alias1 != null { $query-orig: merge($query-orig, 'width', $query-alias, ('size-bp' true)); }
     $count: $count + 1;
   }

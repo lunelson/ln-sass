@@ -18,27 +18,27 @@ $query-current-alias: null;
 // width query string function
 @function query-string($alias1: null, $alias2: null) {
   @return 'screen'
-    + if($alias1, ' and (min-width: #{get($query-data, width, $alias1, min-width)})', '')
-    + if($alias2, ' and (max-width: #{get($query-data, width, $alias2, min-width) - 0.001})', '');
+    + if($alias1, ' and (min-width: #{get($queries, width, $alias1, min-width)})', '')
+    + if($alias2, ' and (max-width: #{get($queries, width, $alias2, min-width) - 0.001})', '');
 }
 
 // height query string function
 @function query-string-y($alias1: null, $alias2: null) {
   @return 'screen'
-    + if($alias1, ' and (min-height: #{get($query-data, height, $alias1, min-width)})', '')
-    + if($alias2, ' and (max-height: #{get($query-data, height, $alias2, min-width) - 0.001})', '');
+    + if($alias1, ' and (min-height: #{get($queries, height, $alias1, min-width)})', '')
+    + if($alias2, ' and (max-height: #{get($queries, height, $alias2, min-width) - 0.001})', '');
 }
 
 // function to retrieve current query-data-object based on $query-current-alias
 @function get-query($alias: $query-current-alias) {
-  @if $alias { @return get($query-data, nth($alias, 1), nth($alias, 2)); }
-  @return $base-data;
+  @if $alias { @return get($queries, nth($alias, 1), nth($alias, 2)); }
+  @return $base;
 }
 
 // function to retrieve current query-data-object based on $query-current-alias
 @function get-orig-query($alias: $query-current-alias) {
   @if $alias { @return get($query-orig  , nth($alias, 1), nth($alias, 2)); }
-  @return $base-data;
+  @return $base;
 }
 
 // function to retrieve value for current query
@@ -77,7 +77,7 @@ $query-current-alias: null;
   $query-temp: $query-current-alias;
   @if length($aliases) > 0 {
     // get current alias or at least the previous one if in max-width query
-    $alias: nth($aliases, 1) or map-prev-key(get($query-data, 'width'), nth($aliases, 2));
+    $alias: nth($aliases, 1) or map-prev-key(get($queries, 'width'), nth($aliases, 2));
     // set current context to width plus alias
     $query-current-alias: 'width' $alias;
   }
@@ -93,7 +93,7 @@ $query-current-alias: null;
   $query-temp: $query-current-alias;
   @if length($aliases) > 0 {
     // get current alias or at least the previous one if in max-height query
-    $alias: nth($aliases, 1) or map-prev-key(get($query-data, 'height'), nth($aliases, 2));
+    $alias: nth($aliases, 1) or map-prev-key(get($queries, 'height'), nth($aliases, 2));
     // set current context to height plus alias
     $query-current-alias: 'height' $alias;
   }
@@ -115,7 +115,7 @@ $query-current-alias: null;
   $query-temp: $query-current-alias;
   @if length($aliases) > 0 {
     // get current alias or at least the previous one if in max-width query
-    $alias: nth($aliases, 1) or map-prev-key(get($query-data, 'width'), nth($aliases, 2));
+    $alias: nth($aliases, 1) or map-prev-key(get($queries, 'width'), nth($aliases, 2));
     // set current context to width plus alias
     $query-current-alias: 'width' $alias;
   }
