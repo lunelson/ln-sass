@@ -39,7 +39,7 @@ $size-defaults: (
 ////////////
 
 // MASTER
-@mixin setup-sizes-from($query-aliases: null, $options:()) {
+@mixin setup-sizes-from-to($query-aliases, $options...) {
 
   // options
   $factor: get($options, 'factor') or 2;
@@ -81,4 +81,4 @@ $size-defaults: (
 }
 
 // ALTERNATE
-@mixin setup-sizes($options:()) { @include setup-sizes-from(null, $options); }
+@mixin setup-sizes($options...) { @include setup-sizes-from-to(null, $options...); }

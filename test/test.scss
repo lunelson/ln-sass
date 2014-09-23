@@ -4,9 +4,12 @@
 
 $base: (
   font-size 16px,
-  line-height 1.4,
-  margin-y 1rem,
+  line-height 1.33,
+  margin-y 1.25rem,
   body-top 0,
+  body-bottom 0,
+  body-right 0.75rem,
+  body-left 0.75rem,
 );
 
 $queries: (
@@ -16,13 +19,18 @@ $queries: (
     ),
     beta (
       min-width 30em,
+      margin-y 1.5rem,
+      line-height 1.4,
+      body-right 1rem,
+      body-left 1rem,
     ),
     gamma (
       min-width 48em,
-      margin-y 1.5rem,
+      font-size 18px,
     ),
     delta (
       min-width 64em,
+      font-size 20px,
     ),
     epsilon (
       min-width 80em,
@@ -52,30 +60,24 @@ $fonts: (
 // 2. setup queries; 'false' means no outputs
 @include setup-queries(); // render-queries(); or do-queries();
 
-// 0. setup sizes
-@include setup-sizes(( // set-sizes((...)); / set-sizes-from((...));
-  'factor' 2,
-  'steps' 2,
-));
+// 3. setup sizes and margins
+// @include setup-sizes(factor 1.33, steps 2);
+@include setup-sizes-from-to(null gamma, factor 1.333, steps 2);
+@include setup-sizes-from-to(gamma delta, factor 1.667, steps 2);
+@include setup-sizes-from-to(delta, factor 2, steps 2);
 
-@include setup-margins-from(null gamma, ( // set-margins((...)); / set-margins-from((...));
-  'factor' 2,
-  'steps' 2,
-));
+@include setup-margins-from-to(null gamma, factor 2, steps 2);
 
-@include setup-margins-from(gamma, (
-  'factor' 3,
-  'steps' 2,
-));
+@include setup-margins-from-to(gamma, factor 3, steps 2);
 
 // 4a. setup typo by class/alias
-@include set-typo('h1' 'large',(size 4));
-@include set-typo-from(null beta, 'h2' 'mlarge', (size 2));
-@include set-typo-from(beta, 'h2' 'mlarge' 'large', (size 3));
-@include set-typo('h3', (size 4));
-@include set-typo('h4' 'p' 'ul' 'ol' 'dl', (size 3));
-@include set-typo('h5', (size 2));
-@include set-typo('h6', (size 1));
+@include set-typo('h1', size 3);
+@include set-typo('h2', size 2);
+@include set-typo('h3', size 1);
+@include set-typo('h4' 'p' 'ul' 'ol' 'dl', size 0);
+@include set-typo('h5', size -1);
+@include set-typo('compact', size -1, margin -2);
+@include set-typo('h6', size -1);
 
 // 4b. render typo
 // @include render-typo();
@@ -91,21 +93,61 @@ $fonts: (
 // .query { debug: map-pretty(get($queries, width)); }
 // .query { debug: map-pretty(get($query-orig, width)); }
 
-%hn { font-weight: normal; font-weight: 400; }
+// %hn { font-weight: normal; font-weight: 400; }
 
-.h1, h1 { @extend %hn; @include apply-typo('h1'); }
-.h2, h2 { @extend %hn; @include apply-typo('h2'); }
-.h3, h3 { @extend %hn; @include apply-typo('h3'); }
-.h4, h4 { @extend %hn; @include apply-typo('h4'); }
-.h5, h5 { @extend %hn; @include apply-typo('h5'); }
-.h6, h6 { @extend %hn; @include apply-typo('h6'); }
+h1 { @extend %hn; @include apply-typo('h1'); }
+h2 { @extend %hn; @include apply-typo('h2'); }
+h3 { @extend %hn; @include apply-typo('h3'); }
+h4 { @extend %hn; @include apply-typo('h4'); }
+h5 { @extend %hn; @include apply-typo('h5'); }
+h6 { @extend %hn; @include apply-typo('h6'); }
 
-p, %p { @include apply-typo('p'); }
+@mixin adjacent($args...) {
+  @if length($args) == 0 {
+    & + & { @content; }
+  } @else {
+    @if type_of(nth($args,1)) == list { $args: join($n, $args...); }
+    $arr: unquote("#{nth($args, 1)} + &");
+    @for $n from 2 through length($args) {
+      $arr: append($arr, unquote(", #{nth($args,$n)} + &"));
+    }
+    #{$arr} { @content; }
+  }
+}
+
+@each $hn in h1 h2 h3 h4 h5 h6 {
+  #{$hn} { @include adjacent(p, ul, ol, dl, table, img, figure) {
+    margin-top: trim-top($hn) + get-margin(1); }
+  }
+}
+
+%p { @include apply-typo('p'); }
+
+p {
+  @extend %p;
+  p + & {
+    text-indent: 1em;
+  }
+  @include query-for(line-height) {
+    p + & {
+      margin-top: trim-top('p') + t-value('p', 'line-height') / 2;
+    }
+  }
+  @include query-for(margin, line-height) {
+    @include adjacent(img, figure) {
+      margin-top: trim-top('p') + get-margin(1);
+    }
+  }
+}
 
 ul { @extend %p; }
 
 img, figure {
-  margin-top: get-margin();
+  margin-top: get-margin(1);
+  // margin-top: get-margin(0);
+  display: block;
+  max-width: 100%;
+  height: auto;
 }
 
 figure {
@@ -113,16 +155,19 @@ figure {
   -webkit-margin-after: 0;
   -webkit-margin-start: 0;
   -webkit-margin-end: 0;
-  // figcaption { @include get-typo('h5'); }
+  figcaption { @include apply-typo('compact'); }
 }
 
-.wraptest > * {
+.wrap--site {
   @include wrap();
-  width: 60%;
+  @include query(alpha) { max-width: get(get-query(),'content-width'); }
+  @include query(beta) { max-width: get(get-query(),'content-width'); }
+  @include query(gamma) { max-width: get(get-query(),'content-width'); }
+  @include query(delta) { max-width: get(get-query(),'content-width'); }
   padding-top: 2rem;
-  // background-color: pink;
+  background-color: whitesmoke;
   // padding-top: 1px;
-  // overflow-x: visible;
+  overflow: hidden;
   // overflow-y: hidden;
 }
 

@@ -35,22 +35,31 @@ $fonts: (
 // FUNCTIONS //
 ///////////////
 
-@function trim-top($alias, $margin-ref: 0rem) {
-  @if unit($margin-ref) == 'rem' { @return get(get-query(), 'typo', $alias, 'trim-top') + $margin-ref; }
-  @return get(get-query(), 'typo', $alias, 'trim-top') + get-margin($margin-ref);
+@function trim-top($typo-alias) {
+  $typo: get(get-query(), 'typo', $typo-alias);
+  @if type-of($typo) == 'string' { @return trim-top($typo); }
+  @return map-get($typo, 'trim-top');
 }
 
-@function trim-bottom($alias, $margin-ref: 0rem) {
-  @if unit($margin-ref) == 'rem' { @return get(get-query(), 'typo', $alias, 'trim-bottom') + $margin-ref; }
-  @return get(get-query(), 'typo', $alias, 'trim-bottom') + get-margin($margin-ref);
+@function trim-bottom($typo-alias) {
+  $typo: get(get-query(), 'typo', $typo-alias);
+  @if type-of($typo) == 'string' { @return trim-bottom($typo); }
+  @return map-get($typo, 'trim-bottom');
 }
 
+// generalized typo-value
+@function typo-value($typo-alias, $key) {
+  $typo: get(get-query(), 'typo', $typo-alias);
+  @if type-of($typo) == 'string' { @return typo-value($typo, $key); }
+  @return map-get($typo, $key);
+}
+@function t-value($args...) { @return typo-value($args...); }
 ////////////
 // MIXINS //
 ////////////
 
 // MASTER
-@mixin set-typo-from($query-aliases: null, $typo-aliases: null, $options: ()) {
+@mixin set-typo-from($query-aliases, $typo-aliases, $options...) {
 
   /////////////////////////////
   // ARGS, DEFAULTS, GLOBALS //

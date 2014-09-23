@@ -96,7 +96,6 @@ $base: () !default;
     }
 
     body {
-      // font-size: get-size() * 1rem;
       line-height: get($base, 'line-height');
       margin: 0; // n3: remove default margin
       padding-top: get($base, 'body-top');

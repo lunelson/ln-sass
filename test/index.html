@@ -1,12 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
 	<title>Sass-LN Test Suite</title>
 	<link rel="stylesheet" href="test.css">
 </head>
 <body>
-	<div class="wrap--test">
+	<div class="wrap--site">
 		<div class="trimbox"><h1>AWOT. This is h1</h1></div>
 		<div class="trimbox"><h2>AWOT. This is h2</h2></div>
 		<div class="trimbox"><h3>AWOT. This is h3</h3></div>
@@ -15,27 +18,28 @@
 		<div class="trimbox"><h6>AWOT. This is h6</h6></div>
 	</div>
 
-	<div class="wrap--test">
+	<div class="wrap--site">
+
 		<!-- headings -->
-		<h1>Header one</h1>
-		<h2>Header two</h2>
-		<h3>Header three</h3>
-		<h4>Header four</h4>
-		<h5>Header five</h5>
-		<h6>Header six</h6>
+		<h1>Header Level</h1>
+		<h2>Header Level</h2>
+		<h3>Header Level</h3>
+		<h4>Header Level</h4>
+		<h5>Header Level</h5>
+		<h6>Header Level</h6>
 
 		<!-- paragraphs -->
 		<h3>Paragraphs with Image</h3>
 		<p>Cras mattis consectetur purus sit amet fermentum. Donec id elit non mi porta gravida at eget metus. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam porta sem malesuada magna mollis euismod. Nullam id dolor id nibh ultricies vehicula ut id elit. Nullam quis risus eget urna mollis ornare vel eu leo.</p>
 		<p>Cras mattis consectetur purus sit amet fermentum. Nulla vitae elit libero, a pharetra augue. Sed posuere consectetur est at lobortis. Aenean lacinia bibendum nulla sed consectetur.</p>
-		<img src="http://placehold.it/600x300" alt="This is a placeholder image">
+		<img src="http://placehold.it/1200x800" alt="This is a placeholder image">
 		<p>Cras mattis consectetur purus sit amet fermentum. Nulla vitae elit libero, a pharetra augue. Sed posuere consectetur est at lobortis. Aenean lacinia bibendum nulla sed consectetur.</p>
 		<p>Maecenas sed diam eget risus varius blandit sit amet non magna. Maecenas sed diam eget risus varius blandit sit amet non magna. Donec id elit non mi porta gravida at eget metus. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Sed posuere consectetur est at lobortis. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
 
 		<!-- figure: http://html5doctor.com/the-figure-figcaption-elements/ -->
 		<h3>Figures</h3>
 		<figure>
-			<img src="http://placehold.it/600x300" alt="This is a placeholder image">
+			<img src="http://placehold.it/1200x800" alt="This is a placeholder image">
 			<figcaption>A placeholder image inside a figure element, by <a href='http://placehold.it/'>Placehold.it</a></figcaption>
 		</figure>
 
@@ -75,7 +79,7 @@
 			<li>List item three</li>
 			<li>List item four</li>
 		</ul>
-		<h2>Ordered List (Nested)</h2>
+		<h3>Ordered List (Nested)</h3>
 		<ol>
 			<li>List item one
 				<ol>
@@ -199,5 +203,14 @@
 
 		</div>
 	<!-- <script src="test.js"></script> -->
+	<script>
+		// PREVENT IOS TEST DEVICES FROM SLEEPING
+		iosSleepPreventInterval = setInterval(function () {
+		    window.location.href = "/new/page";
+		    window.setTimeout(function () {
+		        window.stop()
+		    }, 0);
+		}, 20000);
+	</script>
 </body>
 </html>

@@ -143,8 +143,42 @@ $query-current-alias: null;
 //  88b,   ,a8"  "8b,   ,aa    88,    88,    ,88
 //  8Y"Ybbd8"'    `"Ybbd8"'    "Y888  `"8bbdP"Y8
 
-@mixin query-from($query-aliases) {}
-@mixin query-for($keys...) {}
+@mixin query-from-to($query-aliases) {
+
+  // query aliases
+  $query-alias1: nth($query-aliases, 1); $query-alias2: null;
+  @if length($query-aliases) > 1 { $query-alias2: nth($query-aliases, 2); }
+
+  // conditional base action
+  @if $query-alias1 == null { @content; }
+
+  // determine referenced queries
+  $query-aliases: map-keys(map-get($queries, 'width'));
+  $sliced-query-aliases: slice($query-aliases,
+      if($query-alias1, index($query-aliases, $query-alias1), 1),
+      if($query-alias2, index($query-aliases, $query-alias2) - 1, length($query-aliases)));
+
+  // per referenced query actions
+  @each $query-alias in $sliced-query-aliases {
+    @include query($query-alias) { @content; }
+  }
+}
+
+@mixin query-for($keys...) {
+  @if contains-any($keys, margin margin-y margins) { $keys: join($keys, margin-bp margin-y)}
+  @if contains-any($keys, size sizes) { $keys: join($keys, size-bp font-size); }
+  @if contains-any($keys, trim height) { $keys: join($keys, line-height); }
+  @if contains-any(keys($base), $keys) {
+    @content;
+  }
+  @each $query in get($query-orig, width) {
+    @if contains-any(keys(value($query)), $keys) {
+      @include query(key($query)) {
+        @content;
+      }
+    }
+  }
+}
 
 // // dumb application across all queries, no checks
 // @mixin query-each() {
