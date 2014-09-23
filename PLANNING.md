@@ -21,11 +21,11 @@
     - merge these back to width-queries along with values for html-scale, content-width each time
     - output styles if spec'd in query for `html`, `body`, `.body_col/_row` etc.
     - merge width-queries back to the main query-data object
-4. setup-sizes-per-query() OR setup-sizes()
+4. setup-sizes-from() OR setup-sizes()
     - latter mixin calls the former with `null` first argument
     - will run a submixin for each query context specified
     - _should merge a flag to first context with new properties_
-5. setup-margins-per-query() OR setup-margins()
+5. setup-margins-from() OR setup-margins()
     - latter mixin calls the former with `null` first argument
     - will run a submixin for each query context specified
     - _should merge a flag to query-orig to first context with new properties_
@@ -44,7 +44,7 @@
 
 $base-data -> $base
 $query-data -> $queries
-$typo-data -> $fonts
+$fonts -> $fonts
 
 $size-defaults
 $size-assignments
@@ -69,12 +69,12 @@ $margin-assignments
 
 @mixin setup-sizes() 
 - _reincorporate calc-sizes()_
-- calls setup-sizes-per-query(null, $args)
+- calls setup-sizes-from(null, $args)
 
-@mixin setup-query-sizes() -> setup-sizes-per-query()
+@mixin setup-query-sizes() -> setup-sizes-from()
 
-@mixin setup-margins() -> calls setup-margins-per-query(null, $args)
-@mixin setup-query-margins() -> setup-margins-per-query()
+@mixin setup-margins() -> calls setup-margins-from(null, $args)
+@mixin setup-query-margins() -> setup-margins-from()
 
 @mixin set-typo()
 @mixin get-typo()

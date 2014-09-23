@@ -1,54 +1,67 @@
-.typo-h1.single, .typo-large.single {
-  line-height: 1;
-  margin-top: 0;
-  margin-bottom: 0; }
+@media screen and (min-width: 20em) { }
 
-.size-and-margin-3 {
-  debug: 'hello world';
-  query-margin: 1rem;
-  margin-neg-2: 0.5rem;
-  margin-neg-1: 0.70711rem;
-  margin-0: 1rem;
-  margin-1: 1.41421rem;
-  margin-2: 2rem;
-  margin-3: 2.82843rem;
-  margin-4: 4rem;
-  margin-5: 5.65685rem;
-  margin-6: 8rem;
-  size-neg-2: 0.5rem;
-  size-neg-1: 0.70711rem;
-  size-0: 1rem;
-  size-1: 1.41421rem;
-  size-2: 2rem;
-  size-3: 2.82843rem;
-  size-4: 4rem;
-  size-5: 5.65685rem;
-  size-6: 8rem; }
+@media screen and (min-width: 30em) { }
 
-.typo-h1, .typo-large {
-  font-size: 2.82843rem;
-  line-height: 1.23744;
-  margin-top: 0.42803rem;
-  margin-bottom: -0.6752rem; }
-  .typo-h1:first-child, .typo-h1.trim, .typo-large:first-child, .typo-large.trim {
-    margin-top: -0.57197rem; }
+@media screen and (min-width: 48em) { }
+
+@media screen and (min-width: 64em) { }
+
+@media screen and (min-width: 80em) { }
 
 @media screen and (min-width: 20em) { }
 
 @media screen and (min-width: 30em) { }
 
-@media screen and (min-width: 48em) {
-  .typo-h1, .typo-large {
-    font-size: 2.82843rem;
-    line-height: 1.23744;
-    margin-top: 0.92803rem;
-    margin-bottom: -0.6752rem; }
-    .typo-h1:first-child, .typo-h1.trim, .typo-large:first-child, .typo-large.trim {
-      margin-top: -0.57197rem; } }
+@media screen and (min-width: 48em) { }
 
 @media screen and (min-width: 64em) { }
 
 @media screen and (min-width: 80em) { }
+
+@media screen and (min-width: 20em) { }
+
+@media screen and (min-width: 30em) { }
+
+@media screen and (min-width: 48em) { }
+
+@media screen and (min-width: 64em) { }
+
+@media screen and (min-width: 80em) { }
+
+.col, [class*='col--'], [ln-grid~='col'] {
+  float: left;
+  width: 100%;
+  margin-top: -1px;
+  padding-top: 1px;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem; }
+
+.row, [class*='row--'], [ln-grid~='row'] {
+  margin-top: -1px;
+  margin-left: -0.5rem;
+  margin-right: -0.5rem; }
+  .row:after, [class*='row--']:after, [ln-grid~='row']:after {
+    content: "";
+    display: table;
+    clear: both; }
+
+.wrap, [class*='wrap--'], [ln-grid~='wrap'] {
+  padding-top: 1px;
+  margin-left: auto;
+  margin-right: auto; }
+  .wrap:after, [class*='wrap--']:after, [ln-grid~='wrap']:after {
+    content: "";
+    display: table;
+    clear: both; }
+
+.wrap[ln-grid~='alpha'], [class*='wrap--'][ln-grid~='alpha'], [ln-grid~='wrap'][ln-grid~='alpha'] {
+  max-width: 18rem; }
+.wrap[ln-grid~='beta'], [class*='wrap--'][ln-grid~='beta'], [ln-grid~='wrap'][ln-grid~='beta'] {
+  max-width: 18rem; }
+.wrap[ln-grid~='gamma'], [class*='wrap--'][ln-grid~='gamma'], [ln-grid~='wrap'][ln-grid~='gamma'] {
+  max-width: 18rem; }
+.wrap[ln-grid~='delta'], [class*='wrap--'][ln-grid~='delta'], [ln-grid~='wrap'][ln-grid~='delta'] {
+  max-width: 18rem; }
 
 .base {
   debug: '(
@@ -155,10 +168,18 @@
     body-left 1rem,
     html-scale 1,
     typo (
+      large h1,
+      big h1,
       h1 (
-        aliases (
-          large
-        ),
+        font-size 4rem,
+        line-height 1.225,
+        margin-top 0.166rem,
+        margin-bottom -0.93rem,
+        trim-top -0.834rem,
+        trim-bottom -0.93rem
+      ),
+      mlarge h2,
+      h2 (
         font-size 2.82843rem,
         line-height 1.23744,
         margin-top 0.42803rem,
@@ -277,17 +298,27 @@
       html-scale 1,
       content-width 18rem,
       typo (
+        large h1,
+        big h1,
         h1 (
-          aliases (
-            large
-          ),
+          font-size 4rem,
+          line-height 1.225,
+          margin-top 0.166rem,
+          margin-bottom -0.93rem,
+          trim-top -0.834rem,
+          trim-bottom -0.93rem
+        ),
+        mlarge h2,
+        h2 (
+          query-bp true,
           font-size 2.82843rem,
           line-height 1.23744,
           margin-top 0.42803rem,
           margin-bottom -0.6752rem,
           trim-top -0.57197rem,
           trim-bottom -0.6752rem
-        )
+        ),
+        big-small h2
       )
     ),
     beta (
@@ -396,17 +427,26 @@
       html-scale 1,
       content-width 28rem,
       typo (
+        large h1,
+        big h1,
         h1 (
-          aliases (
-            large
-          ),
+          font-size 4rem,
+          line-height 1.225,
+          margin-top 0.166rem,
+          margin-bottom -0.93rem,
+          trim-top -0.834rem,
+          trim-bottom -0.93rem
+        ),
+        mlarge h2,
+        h2 (
           font-size 2.82843rem,
           line-height 1.23744,
           margin-top 0.42803rem,
           margin-bottom -0.6752rem,
           trim-top -0.57197rem,
           trim-bottom -0.6752rem
-        )
+        ),
+        big-small h2
       )
     ),
     gamma (
@@ -515,17 +555,26 @@
       html-scale 1,
       content-width 46rem,
       typo (
+        large h1,
+        big h1,
         h1 (
-          aliases (
-            large
-          ),
+          font-size 4rem,
+          line-height 1.225,
+          margin-top 0.666rem,
+          margin-bottom -0.93rem,
+          trim-top -0.834rem,
+          trim-bottom -0.93rem
+        ),
+        mlarge h2,
+        h2 (
           font-size 2.82843rem,
           line-height 1.23744,
           margin-top 0.92803rem,
           margin-bottom -0.6752rem,
           trim-top -0.57197rem,
           trim-bottom -0.6752rem
-        )
+        ),
+        big-small h2
       )
     ),
     delta (
@@ -634,17 +683,26 @@
       html-scale 1,
       content-width 62rem,
       typo (
+        large h1,
+        big h1,
         h1 (
-          aliases (
-            large
-          ),
+          font-size 4rem,
+          line-height 1.225,
+          margin-top 0.666rem,
+          margin-bottom -0.93rem,
+          trim-top -0.834rem,
+          trim-bottom -0.93rem
+        ),
+        mlarge h2,
+        h2 (
           font-size 2.82843rem,
           line-height 1.23744,
           margin-top 0.92803rem,
           margin-bottom -0.6752rem,
           trim-top -0.57197rem,
           trim-bottom -0.6752rem
-        )
+        ),
+        big-small h2
       )
     ),
     epsilon (
@@ -753,17 +811,26 @@
       html-scale 1,
       content-width 78rem,
       typo (
+        large h1,
+        big h1,
         h1 (
-          aliases (
-            large
-          ),
+          font-size 4rem,
+          line-height 1.225,
+          margin-top 0.666rem,
+          margin-bottom -0.93rem,
+          trim-top -0.834rem,
+          trim-bottom -0.93rem
+        ),
+        mlarge h2,
+        h2 (
           font-size 2.82843rem,
           line-height 1.23744,
           margin-top 0.92803rem,
           margin-bottom -0.6752rem,
           trim-top -0.57197rem,
           trim-bottom -0.6752rem
-        )
+        ),
+        big-small h2
       )
     )
   )'; }

@@ -14,18 +14,22 @@ $size-defaults: (
   'spread' 3,
 ) !default;
 
-// $size-default: s3 !default;
-
 ///////////////
 // FUNCTIONS //
 ///////////////
 
 // MAIN
-@function get-size($index: 0, $sub-index: 0) {
-  $offset: get($size-defaults, 'offset');
-  $spread: get($size-defaults, 'spread');
-  @return nth(get(get-query(),'font-size'), ($index + $offset) * $spread + $sub-index);
+@function get-query-size($query-object, $index: 0, $sub-index: 0) {
+  $offset: get($size-defaults, 'offset'); $spread: get($size-defaults, 'spread');
+  @return nth(get($query-object,'font-size'), ($index + $offset) * $spread + $sub-index);
 }
+
+@function get-size($args...) { @return get-query-size(get-query(), $args...); }
+
+// @function get-size($index: 0, $sub-index: 0) {
+//   $offset: get($size-defaults, 'offset'); $spread: get($size-defaults, 'spread');
+//   @return nth(get(get-query(),'font-size'), ($index + $offset) * $spread + $sub-index);
+// }
 
 // ALIAS to MAIN
 @function size($args...) { @return get-size($args...); }
@@ -35,7 +39,7 @@ $size-defaults: (
 ////////////
 
 // MASTER
-@mixin setup-sizes-per-query($query-aliases: null, $options:()) {
+@mixin setup-sizes-from($query-aliases: null, $options:()) {
 
   // options
   $factor: get($options, 'factor') or 2;
@@ -43,8 +47,11 @@ $size-defaults: (
 
   // defaults
   $range: get($size-defaults, 'range') or 10;
-  $spread: get($size-defaults, 'spread');
+  $spread: get($size-defaults, 'spread') or 3;
   $offset: get($size-defaults, 'offset');
+  @if not $offset {
+    $offset: floor($range / 3);
+    $size-defaults: merge($size-defaults, 'offset' $offset); }
 
   // query aliases
   $query-alias1: nth($query-aliases, 1); $query-alias2: null;
@@ -56,21 +63,22 @@ $size-defaults: (
     $sizes: append($sizes, $size * 1rem, 'comma');
   }
 
-  // conditional base actions
+  // conditional base action
   @if $query-alias1 == null { $base-data: merge($base-data, ('font-size' $sizes)); }
 
-  // conditional per query actions
-  $query-aliases: map-keys(map-get($query-data, 'width')); $count: 1;
-  @each $query-alias in slice($query-aliases,
+  // determine referenced queries
+  $query-aliases: map-keys(map-get($query-data, 'width'));
+  $sliced-query-aliases: slice($query-aliases,
       if($query-alias1, index($query-aliases, $query-alias1), 1),
-      if($query-alias2, index($query-aliases, $query-alias2) - 1, length($query-aliases))) {
+      if($query-alias2, index($query-aliases, $query-alias2) - 1, length($query-aliases)));
+
+  // per referenced query actions
+  $count: 1; @each $query-alias in $sliced-query-aliases {
     $query-data: merge($query-data, 'width', $query-alias, ('font-size' $sizes));
     @if $count == 1 and $query-alias1 != null { $query-orig: merge($query-orig, 'width', $query-alias, ('size-bp' true)); }
     $count: $count + 1;
   }
 }
 
-// ALIAS
-@mixin setup-sizes($options:()) {
-  @include setup-sizes-per-query(null, $options);
-}
+// ALTERNATE
+@mixin setup-sizes($options:()) { @include setup-sizes-from(null, $options); }

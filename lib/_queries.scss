@@ -39,6 +39,7 @@ $query-orig: ();
   ///////////
   // WIDTH //
   ///////////
+
   $width-queries: get($query-data, 'width');
   @if $width-queries {
 
@@ -106,6 +107,7 @@ $query-orig: ();
   ////////////
   // HEIGHT //
   ////////////
+
   $height-queries: get($query-data, height);
   @if $height-queries {
 

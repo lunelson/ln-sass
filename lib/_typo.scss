@@ -15,9 +15,9 @@
 // - allow arbitrary size and margins
 // - have set-typo function just populate data
 // - create a render-typography() mixin to render the data, keeping mq's together
-// - set-typo-per-query(null beta, kilo site-title, size 5, margin 1, options ())
+// - set-typo-from(null beta, kilo site-title, size 5, margin 1, options ())
 
-$typo-data: (
+$fonts: (
   main (
     definition (
       font-family (sans-serif),
@@ -31,19 +31,33 @@ $typo-data: (
   )
 ) !default;
 
-////////////////////////////
-// base set-typo function //
-////////////////////////////
+///////////////
+// FUNCTIONS //
+///////////////
+
+@function trim-top($alias, $margin-ref: 0rem) {
+  @if unit($margin-ref) == 'rem' { @return get(get-query(), 'typo', $alias, 'trim-top') + $margin-ref; }
+  @return get(get-query(), 'typo', $alias, 'trim-top') + get-margin($margin-ref);
+}
+
+@function trim-bottom($alias, $margin-ref: 0rem) {
+  @if unit($margin-ref) == 'rem' { @return get(get-query(), 'typo', $alias, 'trim-bottom') + $margin-ref; }
+  @return get(get-query(), 'typo', $alias, 'trim-bottom') + get-margin($margin-ref);
+}
+
+////////////
+// MIXINS //
+////////////
 
 // MASTER
-@mixin set-typo-per-query($query-aliases: null, $typo-aliases: null, $options: ()) {
+@mixin set-typo-from($query-aliases: null, $typo-aliases: null, $options: ()) {
 
   /////////////////////////////
   // ARGS, DEFAULTS, GLOBALS //
   /////////////////////////////
 
   // options
-  $font-alias: map-get($options, 'font') or tuple-key(nth($typo-data, 1));
+  $font-alias: map-get($options, 'font') or tuple-key(nth($fonts, 1));
   $size-arg: map-get($options, 'size') or 0;
   $margin-arg: map-get($options, 'margin') or 0;
 
@@ -56,12 +70,15 @@ $typo-data: (
   @if length($query-aliases) > 1 { $query-alias2: nth($query-aliases, 2); }
 
   // typo-aliases
-  $other-typo-aliases: if(length($typo-aliases) > 1, ('aliases' slice($typo-aliases, 2),), ());
-  $placeholder: '.typo-#{nth($typo-aliases, 1)}';
-  @for $n from 2 through length($typo-aliases) {
-    $placeholder: $placeholder + ', .typo-#{nth($typo-aliases, $n)}';
-  }
+  $typo-alias-main: nth($typo-aliases, 1);
+  $typo-alias-alts: slice($typo-aliases, 2);
 
+  // populate typo-alt-aliases object and compute placeholder string
+  $typo-alt: (); $placeholder: '%typo-#{$typo-alias-main}';
+  @each $alias in $typo-alias-alts {
+    $typo-alt: append($typo-alt, $alias $typo-alias-main);
+    $placeholder: $placeholder + ', %typo-#{$alias}';
+  }
 
   // conditional: base actions
   @if $query-alias1 == null {
@@ -76,8 +93,8 @@ $typo-data: (
 
     // get trims
     $px-size: strip(px($size)); // better! works per html-scale
-    $capline-trim: map-get($options, 'capline') or trend($px-size, get($typo-data, $font-alias, 'metrics', 'capline'));
-    $baseline-trim: map-get($options, 'baseline') or trend($px-size, get($typo-data, $font-alias, 'metrics', 'baseline'));
+    $capline-trim: map-get($options, 'capline') or trend($px-size, get($fonts, $font-alias, 'metrics', 'capline'));
+    $baseline-trim: map-get($options, 'baseline') or trend($px-size, get($fonts, $font-alias, 'metrics', 'baseline'));
 
     // global / default stuff
     $line-div: get($global-data, 'typo-line-div') or ceil($size) + 1; // set global value to null to automate
@@ -91,26 +108,17 @@ $typo-data: (
     $margin-top: $trim-top + $margin * if($margin-dir == 'top', 1, 0);
     $margin-bottom: $trim-bottom + $margin * if($margin-dir == 'bottom', 1, 0);
 
-    // merge them to current query under t-alias
-    $typo-local: merge($other-typo-aliases, (
+    // merge main and alts to base data
+    $typo-main: (
       'font-size' $size,
       'line-height' $line-height,
       'margin-top' $margin-top,
       'margin-bottom' $margin-bottom,
       'trim-top' $trim-top,
       'trim-bottom' $trim-bottom,
-    ));
-    $base-data: merge($base-data, 'typo', nth($typo-aliases, 1), $typo-local);
-
-    // $base-data: merge($base-data, 'typo', nth($typo-aliases, 1), (
-    //   'font-size' $size,
-    //   'line-height' $line-height,
-    //   'margin-top' $margin-top,
-    //   'margin-bottom' $margin-bottom,
-    //   'trim-top' $trim-top,
-    //   'trim-bottom' $trim-bottom,
-    //   'aliases' if(length($typo-aliases) > 1, slice($typo-aliases, 2), false),
-    // ));
+    );
+    $typo-full: join($typo-alt, ($typo-alias-main $typo-main,));
+    $base-data: merge($base-data, 'typo', $typo-full);
 
     // output
     #{$placeholder} {
@@ -141,8 +149,8 @@ $typo-data: (
 
       // get trims
       $px-size: strip(px($size)); // better! works per html-scale
-      $capline-trim: map-get($options, 'capline') or trend($px-size, get($typo-data, $font-alias, 'metrics', 'capline'));
-      $baseline-trim: map-get($options, 'baseline') or trend($px-size, get($typo-data, $font-alias, 'metrics', 'baseline'));
+      $capline-trim: map-get($options, 'capline') or trend($px-size, get($fonts, $font-alias, 'metrics', 'capline'));
+      $baseline-trim: map-get($options, 'baseline') or trend($px-size, get($fonts, $font-alias, 'metrics', 'baseline'));
 
       // global / default stuff
       $line-div: get($global-data, 'typo-line-div') or ceil($size) + 1; // set global value to null to automate
@@ -158,7 +166,7 @@ $typo-data: (
 
       // merge them to current query under t-alias
       $query-bp: if($query-alias1 == $query-alias, ('query-bp' true,),());
-      $typo-local: merge(join($query-bp, $other-typo-aliases), (
+      $typo-main: merge($query-bp, (
         'font-size' $size,
         'line-height' $line-height,
         'margin-top' $margin-top,
@@ -166,16 +174,8 @@ $typo-data: (
         'trim-top' $trim-top,
         'trim-bottom' $trim-bottom,
       ));
-      $query-data: merge($query-data, 'width', $query-alias, 'typo', nth($typo-aliases, 1), $typo-local);
-      // $query-data: merge($query-data, 'width', $query-alias, 'typo', nth($typo-aliases, 1), (
-      //   'font-size' $size,
-      //   'line-height' $line-height,
-      //   'margin-top' $margin-top,
-      //   'margin-bottom' $margin-bottom,
-      //   'trim-top' $trim-top,
-      //   'trim-bottom' $trim-bottom,
-      //   'aliases' if(length($typo-aliases) > 1, slice($typo-aliases, 2), false),
-      // ));
+      $typo-full: join($typo-alt, ($typo-alias-main $typo-main,));
+      $query-data: merge($query-data, 'width', $query-alias, 'typo', $typo-full);
 
       // conditionally, output
       $orig-query-keys: map-keys(get($query-orig, 'width', $query-alias));
@@ -202,12 +202,12 @@ $typo-data: (
 }
 
 // SIMPLE call for ALL case
-@mixin set-typo($args...) {
-  @include set-typo-per-query(null, $args...);
+@mixin set-typo($args...) { @include set-typo-from(null, $args...); }
+
+@mixin render-typo() {
+  // output the styles merged through set- operations
 }
-// @mixin set-typo($typo-aliases, $size: $size-default, $options: ()) {
-//   @include set-typo-per-query(null, $typo-aliases, $size, $options);
-// }
+
 
 ///////////////////////////
 // UNIVERSAL TYPO STYLES //
@@ -225,7 +225,7 @@ $typo-data: (
 
   // check for $alias in typo map for current context
   $context: get-query();
-  $context-typo: get($context, typo, $alias);
+  $context-typo: get($context, 'typo', $alias);
 
   @if $context-typo != null { // i.e. if it exists ->
 

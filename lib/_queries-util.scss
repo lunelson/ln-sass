@@ -23,7 +23,7 @@ $query-current-alias: null;
 }
 
 // height query string function
-@function h-query-string($alias1: null, $alias2: null) {
+@function query-string-y($alias1: null, $alias2: null) {
   @return 'screen'
     + if($alias1, ' and (min-height: #{get($query-data, height, $alias1, min-width)})', '')
     + if($alias2, ' and (max-height: #{get($query-data, height, $alias2, min-width) - 0.001})', '');
@@ -88,7 +88,7 @@ $query-current-alias: null;
 }
 
 // mixin to output height media query
-@mixin h-query($aliases...) {
+@mixin query-y($aliases...) {
   // save the context (not really necessary cause there's no nesting)
   $query-temp: $query-current-alias;
   @if length($aliases) > 0 {
@@ -98,12 +98,12 @@ $query-current-alias: null;
     $query-current-alias: 'height' $alias;
   }
   // run the content in context
-  @media #{h-query-string($aliases...)} { @content }
+  @media #{query-string-y($aliases...)} { @content }
   // reset the context (no nesting; could just reset to null)
   $query-current-alias: $query-temp;
 }
 
-// hd width-query mixin
+// hd widtquery-y mixin
 @mixin query-hd($aliases...) {
 
   // compute the hd-ratio shite
@@ -144,7 +144,7 @@ $query-current-alias: null;
 //  8Y"Ybbd8"'    `"Ybbd8"'    "Y888  `"8bbdP"Y8
 
 @mixin query-from($query-aliases) {}
-@mixin query-by-key($keys...) {}
+@mixin query-for($keys...) {}
 
 // // dumb application across all queries, no checks
 // @mixin query-each() {

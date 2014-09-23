@@ -3,7 +3,7 @@ typo2
 	- if rem, leave it alone
 	- if px, convert to rem
 	- if unitless, assume it's a pos/neg index, default 0
--	configure size() and margin() functions to take index and sub-index arguments
++-	configure size() and margin() functions to take index and sub-index arguments
 	e.g. size(1, -1); margin(0, 1)
 -
 
