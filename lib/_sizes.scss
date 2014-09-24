@@ -75,7 +75,7 @@ $size-defaults: (
   // per referenced query actions
   $count: 1; @each $query-alias in $sliced-query-aliases {
     $queries: merge($queries, 'width', $query-alias, ('font-size' $sizes));
-    @if $count == 1 and $query-alias1 != null { $query-orig: merge($query-orig, 'width', $query-alias, ('size-bp' true)); }
+    @if $count == 1 and $query-alias1 != null { $queries-orig: merge($queries-orig, 'width', $query-alias, ('size-bp' true)); }
     $count: $count + 1;
   }
 }

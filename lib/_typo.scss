@@ -31,26 +31,28 @@ $fonts: (
   )
 ) !default;
 
+$current-typo-alias: null;
+
 ///////////////
 // FUNCTIONS //
 ///////////////
 
-@function trim-top($typo-alias) {
+@function trim-top($typo-alias: $current-typo-alias) {
   $typo: get(get-query(), 'typo', $typo-alias);
   @if type-of($typo) == 'string' { @return trim-top($typo); }
   @return map-get($typo, 'trim-top');
 }
 
-@function trim-bottom($typo-alias) {
+@function trim-bottom($typo-alias: $current-typo-alias) {
   $typo: get(get-query(), 'typo', $typo-alias);
   @if type-of($typo) == 'string' { @return trim-bottom($typo); }
   @return map-get($typo, 'trim-bottom');
 }
 
 // generalized typo-value
-@function typo-value($typo-alias, $key) {
+@function typo-value($key, $typo-alias: $current-typo-alias) {
   $typo: get(get-query(), 'typo', $typo-alias);
-  @if type-of($typo) == 'string' { @return typo-value($typo, $key); }
+  @if type-of($typo) == 'string' { @return typo-value($key, $typo); }
   @return map-get($typo, $key);
 }
 @function t-value($args...) { @return typo-value($args...); }
@@ -69,6 +71,8 @@ $fonts: (
   $font-alias: map-get($options, 'font') or tuple-key(nth($fonts, 1));
   $size-arg: map-get($options, 'size') or 0;
   $margin-arg: map-get($options, 'margin') or 0;
+  $from-query: map-get($options, 'from') or null;
+  $to-query: map-get($options, 'to') or null;
 
   // globals
   $min-height: get($global-data, 'typo', 'min-line-height');
@@ -187,7 +191,7 @@ $fonts: (
     $queries: merge($queries, 'width', $query-alias, 'typo', $typo-full);
 
     // conditionally, output
-    $orig-query-keys: map-keys(get($query-orig, 'width', $query-alias));
+    $orig-query-keys: map-keys(get($queries-orig, 'width', $query-alias));
     $spec-check: contains-any($orig-query-keys, ('margin-y', 'line-height'));
     $size-check: contains($orig-query-keys, 'size-bp') and $size-arg != (0);
     $margin-check: contains($orig-query-keys, 'margin-bp') and $margin-arg != (0);
@@ -215,10 +219,18 @@ $fonts: (
 @mixin set-typo($args...) { @include set-typo-from(null, $args...); }
 
 @mixin render-typo() {
+  // WIP
   // output the styles merged through set- operations
 }
 
-@mixin apply-typo($typo-alias) { @extend %typo-#{$typo-alias}; }
+// APPLY TYPO creates BLOCK CONTEXT
+@mixin typo($typo-alias) {
+  @extend %typo-#{$typo-alias};
+  $temp-typo-alias: $current-typo-alias;
+  $current-typo-alias: $typo-alias;
+  @content;
+  $current-typo-alias: $temp-typo-alias;
+}
 
 ///////////////////////////
 // UNIVERSAL TYPO STYLES //

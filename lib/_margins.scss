@@ -103,7 +103,7 @@ $margin-defaults: (
   // per referenced query actions
   $count: 1; @each $query-alias in $sliced-query-aliases {
     @include merge-margins($margins, 'width' $query-alias);
-    @if $count == 1 and $query-alias1 != null { $query-orig: merge($query-orig, 'width', $query-alias, ('margin-bp' true)); }
+    @if $count == 1 and $query-alias1 != null { $queries-orig: merge($queries-orig, 'width', $query-alias, ('margin-bp' true)); }
     $count: $count + 1;
   }
 }

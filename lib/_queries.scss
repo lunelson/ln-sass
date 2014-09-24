@@ -29,12 +29,15 @@ $queries: (
 ) !default;
 
 // init backup of user spec
-$query-orig: ();
+$queries-orig: ();
+
+// var to hold current query; will be set by query() mixin
+$current-query-alias: null;
 
 @mixin setup-queries($output: true){
 
   // backup data first
-  $query-orig: $queries;
+  $queries-orig: $queries;
 
   ///////////
   // WIDTH //

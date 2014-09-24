@@ -9,11 +9,6 @@
 //           88                                           d8'
 //           88                                          d8'
 
-// TODO
-// - create @mixin query-from()
-// - create @mixin query-by-key()
-
-$query-current-alias: null;
 
 // width query string function
 @function query-string($alias1: null, $alias2: null) {
@@ -29,20 +24,20 @@ $query-current-alias: null;
     + if($alias2, ' and (max-height: #{get($queries, height, $alias2, min-width) - 0.001})', '');
 }
 
-// function to retrieve current query-data-object based on $query-current-alias
-@function get-query($alias: $query-current-alias) {
+// function to retrieve current query-data-object based on $current-query-alias
+@function get-query($alias: $current-query-alias) {
   @if $alias { @return get($queries, nth($alias, 1), nth($alias, 2)); }
   @return $base;
 }
 
-// function to retrieve current query-data-object based on $query-current-alias
-@function get-orig-query($alias: $query-current-alias) {
-  @if $alias { @return get($query-orig  , nth($alias, 1), nth($alias, 2)); }
+// function to retrieve current query-data-object based on $current-query-alias
+@function get-orig-query($alias: $current-query-alias) {
+  @if $alias { @return get($queries-orig  , nth($alias, 1), nth($alias, 2)); }
   @return $base;
 }
 
 // function to retrieve value for current query
-@function get-query-value($key, $alias: $query-current-alias) {
+@function get-query-value($key, $alias: $current-query-alias) {
   @return get(get-query($alias), $key);
 }
 
@@ -74,33 +69,33 @@ $query-current-alias: null;
 // mixin to output width media query
 @mixin query($aliases...) {
   // save the context (not really necessary cause there's no nesting)
-  $query-temp: $query-current-alias;
+  $query-temp: $current-query-alias;
   @if length($aliases) > 0 {
     // get current alias or at least the previous one if in max-width query
     $alias: nth($aliases, 1) or map-prev-key(get($queries, 'width'), nth($aliases, 2));
     // set current context to width plus alias
-    $query-current-alias: 'width' $alias;
+    $current-query-alias: 'width' $alias;
   }
   // run the content in context
   @media #{query-string($aliases...)} { @content }
   // reset the context (no nesting; could just reset to null)
-  $query-current-alias: $query-temp;
+  $current-query-alias: $query-temp;
 }
 
 // mixin to output height media query
-@mixin query-y($aliases...) {
+@mixin height-query($aliases...) {
   // save the context (not really necessary cause there's no nesting)
-  $query-temp: $query-current-alias;
+  $query-temp: $current-query-alias;
   @if length($aliases) > 0 {
     // get current alias or at least the previous one if in max-height query
     $alias: nth($aliases, 1) or map-prev-key(get($queries, 'height'), nth($aliases, 2));
     // set current context to height plus alias
-    $query-current-alias: 'height' $alias;
+    $current-query-alias: 'height' $alias;
   }
   // run the content in context
   @media #{query-string-y($aliases...)} { @content }
   // reset the context (no nesting; could just reset to null)
-  $query-current-alias: $query-temp;
+  $current-query-alias: $query-temp;
 }
 
 // hd widtquery-y mixin
@@ -112,12 +107,12 @@ $query-current-alias: null;
   $ratio: $n/$d;
 
   // save the context (not really necessary cause there's no nesting)
-  $query-temp: $query-current-alias;
+  $query-temp: $current-query-alias;
   @if length($aliases) > 0 {
     // get current alias or at least the previous one if in max-width query
     $alias: nth($aliases, 1) or map-prev-key(get($queries, 'width'), nth($aliases, 2));
     // set current context to width plus alias
-    $query-current-alias: 'width' $alias;
+    $current-query-alias: 'width' $alias;
   }
 
   // run the content in context
@@ -131,7 +126,7 @@ $query-current-alias: null;
     @content;
   }
   // reset the context (no nesting; could just reset to null)
-  $query-current-alias: $query-temp;
+  $current-query-alias: $query-temp;
 }
 
 //  88
@@ -143,7 +138,7 @@ $query-current-alias: null;
 //  88b,   ,a8"  "8b,   ,aa    88,    88,    ,88
 //  8Y"Ybbd8"'    `"Ybbd8"'    "Y888  `"8bbdP"Y8
 
-@mixin query-from-to($query-aliases) {
+@mixin query-each($query-aliases) {
 
   // query aliases
   $query-alias1: nth($query-aliases, 1); $query-alias2: null;
@@ -167,11 +162,11 @@ $query-current-alias: null;
 @mixin query-for($keys...) {
   @if contains-any($keys, margin margin-y margins) { $keys: join($keys, margin-bp margin-y)}
   @if contains-any($keys, size sizes) { $keys: join($keys, size-bp font-size); }
-  @if contains-any($keys, trim height) { $keys: join($keys, line-height); }
+  @if contains-any($keys, trim height line-height) { $keys: join($keys, line-height size-bp); }
   @if contains-any(keys($base), $keys) {
     @content;
   }
-  @each $query in get($query-orig, width) {
+  @each $query in get($queries-orig, width) {
     @if contains-any(keys(value($query)), $keys) {
       @include query(key($query)) {
         @content;
@@ -181,25 +176,28 @@ $query-current-alias: null;
 }
 
 // // dumb application across all queries, no checks
-// @mixin query-each() {
-//   @each $query-alias in $query-aliases {
-//     @include query($query-alias) {
-//       @content;
-//     }
-//   }
-// }
+@mixin query-each2($options...) {
 
-// // smart application... come back to this one
-// @mixin query-apply($list...) {
-//   @if length($list) == 1 { $list: list-map-check($list...); }
-//   @else { $list: list-map-check($list); } $output: ();
-//   $list: list-map-check($list);
-//   @each $query-alias in $query-aliases {
-//     @include query($query-alias) {
-//       @each $tuple in $list {
-//         #{key($tuple)}: get-query-value(value($tuple));
-//       }
-//     }
-//   }
-// }
+  // get from, to and keys options
+  $from-query: get($options, 'from') or null;
+  $to-query: get($options, 'to') or null;
+  $keys: get($options, 'keys') or null;
 
+  // conditional base action
+  @if $from-query == null {
+    @if not $keys { @content; }
+    @else if contains-any(keys($base), $keys) { @content; }
+  }
+
+  // determine referenced queries
+  $query-aliases: map-keys(map-get($queries, 'width'));
+  $sliced-aliases: slice($query-aliases,
+      if($from-query, index($query-aliases, $from-query), 1),
+      if($to-query, index($query-aliases, $to-query) - 1, length($query-aliases)));
+
+  // conditional per-query actions
+  @each $query-alias in $sliced-aliases {
+    @if not $keys { @include query($query-alias) { @content; } }
+    @else if contains-any(keys(value($query)), $keys) { @include query($query-alias) { @content; } }
+  }
+}

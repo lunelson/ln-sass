@@ -76,7 +76,7 @@
 
   @each $query-alias in map-keys(get($queries, 'width')) {
     // here apply if margin-x or margin-y exists in query-orig
-    @if get($query-orig, 'width', $query-alias, 'margin-x') {
+    @if get($queries-orig, 'width', $query-alias, 'margin-x') {
       @include query($query-alias) {
         $margin-x: get-margin-x($args...);
         $margin-y: get-margin($args...);

@@ -1,4 +1,4 @@
-h1.single, h2.single, h3.single, h4.single, p.single, ul.single, h5.single, figure figcaption.single, h6.single {
+h1.single, h2.single, h3.single, h4.single, ul.single, p.single, h4.single, ul.single, p.single, h5.single, figure figcaption.single, h6.single {
   line-height: 1;
   margin-top: 0;
   margin-bottom: 0; }
@@ -175,22 +175,57 @@ h3 {
     h3:first-child, h3.trim {
       margin-top: -0.43965rem; } }
 
-h4, p, ul {
+h4, ul, p {
   font-size: 1rem;
   line-height: 1.33;
   margin-top: 1.021rem;
   margin-bottom: -0.285rem; }
-  h4:first-child, h4.trim, p:first-child, ul:first-child, p.trim, ul.trim {
+  h4:first-child, h4.trim, ul:first-child, p:first-child, ul.trim, p.trim {
     margin-top: -0.229rem; }
 
 @media screen and (min-width: 30em) {
-  h4, p, ul {
+  h4, ul, p {
     font-size: 1rem;
     line-height: 1.4;
     margin-top: 1.236rem;
     margin-bottom: -0.32rem; }
-    h4:first-child, h4.trim, p:first-child, ul:first-child, p.trim, ul.trim {
+    h4:first-child, h4.trim, ul:first-child, p:first-child, ul.trim, p.trim {
       margin-top: -0.264rem; } }
+
+h4, ul, p {
+  font-size: 1.15456rem;
+  line-height: 1.15196;
+  margin-top: 1.08648rem;
+  margin-bottom: -0.22627rem; }
+  h4:first-child, h4.trim, ul:first-child, p:first-child, ul.trim, p.trim {
+    margin-top: -0.16352rem; }
+
+@media screen and (min-width: 30em) {
+  h4, ul, p {
+    font-size: 1.15456rem;
+    line-height: 1.21259;
+    margin-top: 1.30148rem;
+    margin-bottom: -0.26127rem; }
+    h4:first-child, h4.trim, ul:first-child, p:first-child, ul.trim, p.trim {
+      margin-top: -0.19852rem; } }
+
+@media screen and (min-width: 48em) {
+  h4, ul, p {
+    font-size: 1.29112rem;
+    line-height: 1.62649;
+    margin-top: 1.00892rem;
+    margin-bottom: -0.55937rem; }
+    h4:first-child, h4.trim, ul:first-child, p:first-child, ul.trim, p.trim {
+      margin-top: -0.49108rem; } }
+
+@media screen and (min-width: 64em) {
+  h4, ul, p {
+    font-size: 1.41421rem;
+    line-height: 1.48492;
+    margin-top: 1.06035rem;
+    margin-bottom: -0.5126rem; }
+    h4:first-child, h4.trim, ul:first-child, p:first-child, ul.trim, p.trim {
+      margin-top: -0.43965rem; } }
 
 h5 {
   font-size: 0.86613rem;
@@ -342,7 +377,7 @@ p + h3, ul + h3, ol + h3, dl + h3, table + h3, img + h3, figure + h3 {
   margin-top: 1.60425rem; }
 
 p + h4, ul + h4, ol + h4, dl + h4, table + h4, img + h4, figure + h4 {
-  margin-top: 1.53877rem; }
+  margin-top: 1.60425rem; }
 
 p + h5, ul + h5, ol + h5, dl + h5, table + h5, img + h5, figure + h5 {
   margin-top: 1.48164rem; }
@@ -353,18 +388,24 @@ p + h6, ul + h6, ol + h6, dl + h6, table + h6, img + h6, figure + h6 {
 p + p {
   text-indent: 1em; }
 p + p {
-  margin-top: 0.436rem; }
+  margin-top: 0.22627rem; }
 @media screen and (min-width: 30em) {
   p + p {
-    margin-top: 0.436rem; } }
+    margin-top: 0.26127rem; } }
+@media screen and (min-width: 48em) {
+  p + p {
+    margin-top: 0.55937rem; } }
+@media screen and (min-width: 64em) {
+  p + p {
+    margin-top: 0.5126rem; } }
 img + p, figure + p {
-  margin-top: 1.53877rem; }
+  margin-top: 1.60425rem; }
 @media screen and (min-width: 30em) {
   img + p, figure + p {
-    margin-top: 1.85732rem; } }
+    margin-top: 1.9228rem; } }
 @media screen and (min-width: 48em) {
   img + p, figure + p {
-    margin-top: 2.33408rem; } }
+    margin-top: 2.107rem; } }
 
 img, figure {
   margin-top: 1.76777rem;
