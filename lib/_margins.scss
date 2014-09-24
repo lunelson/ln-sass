@@ -21,22 +21,23 @@ $margin-defaults: (
 ///////////////
 
 // MAIN
-@function get-query-margin($query-object, $index: 0, $sub-index: 0) {
-  $offset: get($margin-defaults, 'offset'); $spread: get($margin-defaults, 'spread');
-  @return nth(get($query-object, 'margin-y'), ($index + $offset) * $spread + $sub-index);
-}
-
-// ALIAS to MAIN
-@function get-margin($args...) { @return get-query-margin(get-query(), $args...); }
-@function margin($args...) { @return get-margin($args...); }
-
-// ALT for X margins
-@function get-margin-x($index: 0, $sub-index: 0) {
+@function get-margin($index: 0, $sub-index: 0, $query-alias: $current-query-alias) {
   $offset: get($margin-defaults, 'offset');
   $spread: get($margin-defaults, 'spread');
   $target: ($index + $offset) * $spread + $sub-index;
-  @return nth(get(get-query(),'margin-x'), $target);
+  @return nth(get(get-query($query-alias), 'margin-y'), $target);
 }
+// alias
+@function margin($args...) { @return get-margin($args...); }
+
+// ALT for X margins
+@function margin-x($index: 0, $sub-index: 0, $query-alias: $current-query-alias) {
+  $offset: get($margin-defaults, 'offset');
+  $spread: get($margin-defaults, 'spread');
+  $target: ($index + $offset) * $spread + $sub-index;
+  @return nth(get(get-query($query-alias),'margin-x'), $target);
+}
+// alias
 @function margin-x($args...) { @return get-margin-x($args...); }
 
 ////////////

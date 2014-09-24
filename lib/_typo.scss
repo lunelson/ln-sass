@@ -80,11 +80,13 @@ $current-typo-alias: null;
   $font-alias: map-get($options, 'font') or tuple-key(nth($fonts, 1));
   $size-arg: map-get($options, 'size') or 0;
   $margin-arg: map-get($options, 'margin') or 0;
-
-  // query-aliases, w correction
   $from-query: map-get($options, 'from') or null;
-  @if contains(root base null, $from-query) { $from-query: null; }
   $to-query: map-get($options, 'to') or null;
+
+  // corrections
+  @if length($size-arg) < 2 { $size-arg: append($size-arg, 0); }
+  @if length($margin-arg) < 2 { $margin-arg: append($margin-arg, 0); }
+  @if contains(root base null, $from-query) { $from-query: null; }
 
   // globals
   $min-height: get($global-data, 'typo', 'min-line-height');
@@ -106,8 +108,8 @@ $current-typo-alias: null;
 
     // get query object + corresp. size, margin
     $context: $base;
-    $size: get-size(join((), $size-arg)...);
-    $margin: get-query-margin($context, join((), $margin-arg)...);
+    $size: get-size($size-arg...);
+    $margin: get-margin($margin-arg...);
 
     // get trims
     $px-size: strip(px($size)); // better! works per html-scale
@@ -160,8 +162,8 @@ $current-typo-alias: null;
 
     // get query object + corresp. size, margin
     $context: get-query('width' $query-alias);
-    $size: get-query-size($context, join((), $size-arg)...);
-    $margin: get-query-margin($context, join((), $margin-arg)...);
+    $size: get-size(nth($size-arg, 1), nth($size-arg, 2), 'width' $query-alias);
+    $margin: get-margin(nth($margin-arg, 1), nth($margin-arg, 2), 'width' $query-alias);
 
     // get trims
     $px-size: strip(px($size)); // better! works per html-scale
