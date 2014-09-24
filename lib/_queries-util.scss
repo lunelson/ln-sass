@@ -10,6 +10,7 @@
 //           88                                          d8'
 
 
+// FIX: when removing width from query object
 // width query string function
 @function query-string($alias1: null, $alias2: null) {
   @return 'screen'
@@ -17,19 +18,22 @@
     + if($alias2, ' and (max-width: #{get($queries, width, $alias2, min-width) - 0.001})', '');
 }
 
+// FIX: when removing width from query object
 // height query string function
-@function query-string-y($alias1: null, $alias2: null) {
+@function height-query-string($alias1: null, $alias2: null) {
   @return 'screen'
     + if($alias1, ' and (min-height: #{get($queries, height, $alias1, min-width)})', '')
     + if($alias2, ' and (max-height: #{get($queries, height, $alias2, min-width) - 0.001})', '');
 }
 
+// FIX: when removing width from query object
 // function to retrieve current query-data-object based on $current-query-alias
 @function get-query($alias: $current-query-alias) {
   @if $alias { @return get($queries, nth($alias, 1), nth($alias, 2)); }
   @return $base;
 }
 
+// FIX: when removing width from query object
 // function to retrieve current query-data-object based on $current-query-alias
 @function get-orig-query($alias: $current-query-alias) {
   @if $alias { @return get($queries-orig  , nth($alias, 1), nth($alias, 2)); }
@@ -66,6 +70,7 @@
   @return if(length($out) > 1, $out, nth($out, 1));
 }
 
+// FIX: when removing width from query object
 // mixin to output width media query
 @mixin query($aliases...) {
   // save the context (not really necessary cause there's no nesting)
@@ -82,6 +87,7 @@
   $current-query-alias: $query-temp;
 }
 
+// FIX: when removing width from query object
 // mixin to output height media query
 @mixin height-query($aliases...) {
   // save the context (not really necessary cause there's no nesting)
@@ -98,6 +104,7 @@
   $current-query-alias: $query-temp;
 }
 
+// FIX: when removing width from query object
 // hd widtquery-y mixin
 @mixin query-hd($aliases...) {
 
@@ -127,6 +134,44 @@
   }
   // reset the context (no nesting; could just reset to null)
   $current-query-alias: $query-temp;
+}
+
+//////////////////////////////
+// MASTER MULTI QUERY MIXIN //
+//////////////////////////////
+
+// FIX: when removing width from query object
+// combines both query-each() and query-for() functionality
+@mixin queries($options...) {
+
+  // get 'from', 'to' and 'keys'
+  $from-query: get($options, 'from') or null;
+  $to-query: get($options, 'to') or null;
+  $keys: get($options, 'keys') or null;
+
+  // transform/correct options
+  @if contains(root base null, $from-query) { $from-query: null; }
+  @if contains-any($keys, margin margin-y margins) { $keys: join($keys, margin-bp margin-y)}
+  @if contains-any($keys, size sizes) { $keys: join($keys, size-bp font-size); }
+  @if contains-any($keys, trim height line-height) { $keys: join($keys, line-height size-bp); }
+
+  // conditional base action
+  @if $from-query == null {
+    @if $keys == null { @content; }
+    @else if contains-any(keys($base), $keys) { @content; }
+  }
+
+  // determine referenced queries
+  $query-aliases: map-keys(map-get($queries, 'width'));
+  $sliced-aliases: slice($query-aliases,
+      if($from-query, index($query-aliases, $from-query), 1),
+      if($to-query, index($query-aliases, $to-query) - 1, length($query-aliases)));
+
+  // conditional per-query actions
+  @each $query-alias in $sliced-aliases {
+    @if not $keys { @include query($query-alias) { @content; } }
+    @else if contains-any(keys(value($query)), $keys) { @include query($query-alias) { @content; } }
+  }
 }
 
 //  88
@@ -172,38 +217,5 @@
         @content;
       }
     }
-  }
-}
-
-// // dumb application across all queries, no checks
-@mixin queries($options...) {
-
-  // get 'from', 'to' and 'keys'
-  $from-query: get($options, 'from') or null;
-  $to-query: get($options, 'to') or null;
-  $keys: get($options, 'keys') or null;
-
-  // transform/correct options
-  @if contains(root base null, $from-query) { $from-query: null; }
-  @if contains-any($keys, margin margin-y margins) { $keys: join($keys, margin-bp margin-y)}
-  @if contains-any($keys, size sizes) { $keys: join($keys, size-bp font-size); }
-  @if contains-any($keys, trim height line-height) { $keys: join($keys, line-height size-bp); }
-
-  // conditional base action
-  @if $from-query == null {
-    @if $keys == null { @content; }
-    @else if contains-any(keys($base), $keys) { @content; }
-  }
-
-  // determine referenced queries
-  $query-aliases: map-keys(map-get($queries, 'width'));
-  $sliced-aliases: slice($query-aliases,
-      if($from-query, index($query-aliases, $from-query), 1),
-      if($to-query, index($query-aliases, $to-query) - 1, length($query-aliases)));
-
-  // conditional per-query actions
-  @each $query-alias in $sliced-aliases {
-    @if not $keys { @include query($query-alias) { @content; } }
-    @else if contains-any(keys(value($query)), $keys) { @include query($query-alias) { @content; } }
   }
 }

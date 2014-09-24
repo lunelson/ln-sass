@@ -9,18 +9,13 @@
 //              d8'       88
 
 // TODO
-// - do setup-typo and setup-queries-typo, separating global from per-query calculations
-// NEW
-// - allow a list of aliases to the set-typo function
-// - allow arbitrary size and margins
 // - have set-typo function just populate data
 // - create a render-typography() mixin to render the data, keeping mq's together
-// - set-typo-from(null beta, kilo site-title, size 5, margin 1, options ())
 
 $fonts: (
-  main (
+  default (
     definition (
-      font-family (sans-serif),
+      font-family ('Helvetica Neue' Helvetica sans-serif),
       letter-spacing 0.0125em
     ),
     metrics (
@@ -31,56 +26,69 @@ $fonts: (
   )
 ) !default;
 
+//////////////////////////
+// VARs and PLACEHOLDER //
+//////////////////////////
+
 $current-typo-alias: null;
+
+%typo-all {
+  &.single {
+    line-height: 1;
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+}
 
 ///////////////
 // FUNCTIONS //
 ///////////////
 
+// typo-value retrieves value for current or given typo alias
+@function typo-value($key, $typo-alias: $current-typo-alias, $query-alias: $current-query-alias) {
+  $result: get(get-query($query-alias), 'typo', $typo-alias);
+  @if type-of($result) == 'string' { @return typo-value($key, $result); }
+  @return get($result, $key);
+}
+
+// aliases
+@function t-value($args...) { @return typo-value($args...); }
+@function tval($args...) { @return typo-value($args...); }
+
+// trim-top - special use
 @function trim-top($typo-alias: $current-typo-alias) {
   $typo: get(get-query(), 'typo', $typo-alias);
   @if type-of($typo) == 'string' { @return trim-top($typo); }
-  @return map-get($typo, 'trim-top');
+  @return get($typo, 'trim-top');
 }
 
+// trim-bottom - special use
 @function trim-bottom($typo-alias: $current-typo-alias) {
   $typo: get(get-query(), 'typo', $typo-alias);
   @if type-of($typo) == 'string' { @return trim-bottom($typo); }
-  @return map-get($typo, 'trim-bottom');
+  @return get($typo, 'trim-bottom');
 }
 
-// generalized typo-value
-@function typo-value($key, $typo-alias: $current-typo-alias) {
-  $typo: get(get-query(), 'typo', $typo-alias);
-  @if type-of($typo) == 'string' { @return typo-value($key, $typo); }
-  @return map-get($typo, $key);
-}
-@function t-value($args...) { @return typo-value($args...); }
 ////////////
 // MIXINS //
 ////////////
 
-// MASTER
-@mixin set-typo-from($query-aliases, $typo-aliases, $options...) {
-
-  /////////////////////////////
-  // ARGS, DEFAULTS, GLOBALS //
-  /////////////////////////////
+// SETUP MASTER
+@mixin set-typo($typo-aliases, $options...) {
 
   // options
   $font-alias: map-get($options, 'font') or tuple-key(nth($fonts, 1));
   $size-arg: map-get($options, 'size') or 0;
   $margin-arg: map-get($options, 'margin') or 0;
+
+  // query-aliases, w correction
   $from-query: map-get($options, 'from') or null;
+  @if contains(root base null, $from-query) { $from-query: null; }
   $to-query: map-get($options, 'to') or null;
 
   // globals
   $min-height: get($global-data, 'typo', 'min-line-height');
   $margin-dir: get($global-data, 'typo', 'margin-dir') or 'top';
-
-  // query-aliases
-  $query-alias1: nth($query-aliases, 1); $query-alias2: null;
-  @if length($query-aliases) > 1 { $query-alias2: nth($query-aliases, 2); }
 
   // typo-aliases
   $typo-alias-main: nth($typo-aliases, 1);
@@ -93,8 +101,8 @@ $current-typo-alias: null;
     $placeholder: $placeholder + ', %typo-#{$alias}';
   }
 
-  // conditional: base actions
-  @if $query-alias1 == null {
+  // BASE
+  @if $from-query == null {
 
     // get query object + corresp. size, margin
     $context: $base;
@@ -142,16 +150,11 @@ $current-typo-alias: null;
     }
   }
 
-  /////////////////
-  // QUERY SHITE //
-  /////////////////
-
-  // conditional: per query actions
+  // QUERIES
   $query-aliases: map-keys(map-get($queries, 'width'));
-  $sliced-query-aliases: slice(
-    $query-aliases,
-    if($query-alias1, index($query-aliases, $query-alias1), 1),
-    if($query-alias2, index($query-aliases, $query-alias2) - 1, length($query-aliases))
+  $sliced-query-aliases: slice($query-aliases,
+    if($from-query, index($query-aliases, $from-query), 1),
+    if($to-query, index($query-aliases, $to-query) - 1, length($query-aliases))
   );
   @each $query-alias in $sliced-query-aliases {
 
@@ -178,7 +181,7 @@ $current-typo-alias: null;
     $margin-bottom: $trim-bottom + $margin * if($margin-dir == 'bottom', 1, 0);
 
     // merge them to current query under t-alias
-    $query-bp: if($query-alias1 == $query-alias, ('query-bp' true,),());
+    $query-bp: if($from-query == $query-alias, ('query-bp' true,),());
     $typo-main: merge($query-bp, (
       'font-size' $size,
       'line-height' $line-height,
@@ -195,7 +198,7 @@ $current-typo-alias: null;
     $spec-check: contains-any($orig-query-keys, ('margin-y', 'line-height'));
     $size-check: contains($orig-query-keys, 'size-bp') and $size-arg != (0);
     $margin-check: contains($orig-query-keys, 'margin-bp') and $margin-arg != (0);
-    $first-query: $query-alias == $query-alias1;
+    $first-query: $query-alias == $from-query;
     // spec-check: $spec-check;
     // size-check: $size-check;
     // margin-check: $margin-check;
@@ -215,15 +218,11 @@ $current-typo-alias: null;
   }
 }
 
-// SIMPLE call for ALL case
-@mixin set-typo($args...) { @include set-typo-from(null, $args...); }
-
 @mixin render-typo() {
-  // WIP
-  // output the styles merged through set- operations
+  // WIP; render the stored styles, in efficient css
 }
 
-// APPLY TYPO creates BLOCK CONTEXT
+// OUTPUT MASTER
 @mixin typo($typo-alias) {
   @extend %typo-#{$typo-alias};
   $temp-typo-alias: $current-typo-alias;
@@ -231,34 +230,3 @@ $current-typo-alias: null;
   @content;
   $current-typo-alias: $temp-typo-alias;
 }
-
-///////////////////////////
-// UNIVERSAL TYPO STYLES //
-///////////////////////////
-
-%typo-all {
-  &.single {
-    line-height: 1;
-    margin-top: 0;
-    margin-bottom: 0;
-  }
-}
-
-
-// @mixin get-query-typo($query-object, $alias) {
-
-//   $query-typo: get($query-object, 'typo', $alias);
-
-//   @if $query-typo != null { // i.e. if it exists ->
-
-//     // parse typo to output
-//     font-size: get($query-typo, size);
-//     line-height: get($query-typo, line-height);
-//     margin-top: get($query-typo, margin-top);
-//     margin-bottom: get($query-typo, margin-bottom);
-//     @if $margin-dir == 'top' { &:first-child, &.trim { margin-top: get($query-typo, trim-top); } }
-//     @else { &:last-child, &.trim { margin-bottom: get($query-typo, trim-bottom); } }
-
-//   }
-// }
-

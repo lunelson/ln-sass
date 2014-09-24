@@ -1,4 +1,4 @@
-h1.single, h2.single, h3.single, h4.single, p.single, ul.single, ol.single, dl.single, table.single, h4.single, p.single, ul.single, ol.single, dl.single, table.single, h5.single, figure figcaption.single, h6.single {
+h1.single, h2.single, h3.single, h4.single, p.single, ul.single, ol.single, dl.single, table.single, h5.single, figure figcaption.single, h6.single {
   line-height: 1;
   margin-top: 0;
   margin-bottom: 0; }
@@ -192,23 +192,6 @@ h4, p, ul, ol, dl, table {
     h4:first-child, h4.trim, p:first-child, ul:first-child, ol:first-child, dl:first-child, table:first-child, p.trim, ul.trim, ol.trim, dl.trim, table.trim {
       margin-top: -0.264rem; } }
 
-h4, p, ul, ol, dl, table {
-  font-size: 1.15456rem;
-  line-height: 1.15196;
-  margin-top: 1.08648rem;
-  margin-bottom: -0.22627rem; }
-  h4:first-child, h4.trim, p:first-child, ul:first-child, ol:first-child, dl:first-child, table:first-child, p.trim, ul.trim, ol.trim, dl.trim, table.trim {
-    margin-top: -0.16352rem; }
-
-@media screen and (min-width: 30em) {
-  h4, p, ul, ol, dl, table {
-    font-size: 1.15456rem;
-    line-height: 1.21259;
-    margin-top: 1.30148rem;
-    margin-bottom: -0.26127rem; }
-    h4:first-child, h4.trim, p:first-child, ul:first-child, ol:first-child, dl:first-child, table:first-child, p.trim, ul.trim, ol.trim, dl.trim, table.trim {
-      margin-top: -0.19852rem; } }
-
 @media screen and (min-width: 48em) {
   h4, p, ul, ol, dl, table {
     font-size: 1.29112rem;
@@ -377,7 +360,7 @@ p + h3, ul + h3, ol + h3, dl + h3, table + h3, img + h3, figure + h3 {
   margin-top: 1.60425rem; }
 
 p + h4, ul + h4, ol + h4, dl + h4, table + h4, img + h4, figure + h4 {
-  margin-top: 1.60425rem; }
+  margin-top: 1.53877rem; }
 
 p + h5, ul + h5, ol + h5, dl + h5, table + h5, img + h5, figure + h5 {
   margin-top: 1.48164rem; }
@@ -388,24 +371,16 @@ p + h6, ul + h6, ol + h6, dl + h6, table + h6, img + h6, figure + h6 {
 p + p {
   text-indent: 1em; }
 p + p {
-  margin-top: 0.22627rem; }
+  margin-top: 0.285rem; }
 @media screen and (min-width: 30em) {
   p + p {
-    margin-top: 0.26127rem; } }
+    margin-top: 0.32rem; } }
 @media screen and (min-width: 48em) {
   p + p {
     margin-top: 0.55937rem; } }
 @media screen and (min-width: 64em) {
   p + p {
     margin-top: 0.5126rem; } }
-img + p, figure + p {
-  margin-top: 1.60425rem; }
-@media screen and (min-width: 30em) {
-  img + p, figure + p {
-    margin-top: 1.9228rem; } }
-@media screen and (min-width: 48em) {
-  img + p, figure + p {
-    margin-top: 2.107rem; } }
 
 img, figure {
   margin-top: 1.76777rem;
