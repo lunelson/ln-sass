@@ -1,4 +1,4 @@
-h1.single, h2.single, h3.single, h4.single, ul.single, p.single, h4.single, ul.single, p.single, h5.single, figure figcaption.single, h6.single {
+h1.single, h2.single, h3.single, h4.single, p.single, ul.single, ol.single, dl.single, table.single, h4.single, p.single, ul.single, ol.single, dl.single, table.single, h5.single, figure figcaption.single, h6.single {
   line-height: 1;
   margin-top: 0;
   margin-bottom: 0; }
@@ -44,15 +44,15 @@ body {
   head {
     font-family: 'beta'; }
   body {
-    line-height: 1.4; }
+    line-height: 3; }
   .body-col {
-    margin-right: 1rem; }
+    margin-right: 4; }
   .body-row {
-    margin-right: -1rem; }
+    margin-right: -4; }
   .body-col {
-    margin-left: 1rem; }
+    margin-left: 5; }
   .body-row {
-    margin-left: -1rem; } }
+    margin-left: -5; } }
 
 @media screen and (min-width: 48em) {
   head {
@@ -175,56 +175,56 @@ h3 {
     h3:first-child, h3.trim {
       margin-top: -0.43965rem; } }
 
-h4, ul, p {
+h4, p, ul, ol, dl, table {
   font-size: 1rem;
   line-height: 1.33;
   margin-top: 1.021rem;
   margin-bottom: -0.285rem; }
-  h4:first-child, h4.trim, ul:first-child, p:first-child, ul.trim, p.trim {
+  h4:first-child, h4.trim, p:first-child, ul:first-child, ol:first-child, dl:first-child, table:first-child, p.trim, ul.trim, ol.trim, dl.trim, table.trim {
     margin-top: -0.229rem; }
 
 @media screen and (min-width: 30em) {
-  h4, ul, p {
+  h4, p, ul, ol, dl, table {
     font-size: 1rem;
     line-height: 1.4;
     margin-top: 1.236rem;
     margin-bottom: -0.32rem; }
-    h4:first-child, h4.trim, ul:first-child, p:first-child, ul.trim, p.trim {
+    h4:first-child, h4.trim, p:first-child, ul:first-child, ol:first-child, dl:first-child, table:first-child, p.trim, ul.trim, ol.trim, dl.trim, table.trim {
       margin-top: -0.264rem; } }
 
-h4, ul, p {
+h4, p, ul, ol, dl, table {
   font-size: 1.15456rem;
   line-height: 1.15196;
   margin-top: 1.08648rem;
   margin-bottom: -0.22627rem; }
-  h4:first-child, h4.trim, ul:first-child, p:first-child, ul.trim, p.trim {
+  h4:first-child, h4.trim, p:first-child, ul:first-child, ol:first-child, dl:first-child, table:first-child, p.trim, ul.trim, ol.trim, dl.trim, table.trim {
     margin-top: -0.16352rem; }
 
 @media screen and (min-width: 30em) {
-  h4, ul, p {
+  h4, p, ul, ol, dl, table {
     font-size: 1.15456rem;
     line-height: 1.21259;
     margin-top: 1.30148rem;
     margin-bottom: -0.26127rem; }
-    h4:first-child, h4.trim, ul:first-child, p:first-child, ul.trim, p.trim {
+    h4:first-child, h4.trim, p:first-child, ul:first-child, ol:first-child, dl:first-child, table:first-child, p.trim, ul.trim, ol.trim, dl.trim, table.trim {
       margin-top: -0.19852rem; } }
 
 @media screen and (min-width: 48em) {
-  h4, ul, p {
+  h4, p, ul, ol, dl, table {
     font-size: 1.29112rem;
     line-height: 1.62649;
     margin-top: 1.00892rem;
     margin-bottom: -0.55937rem; }
-    h4:first-child, h4.trim, ul:first-child, p:first-child, ul.trim, p.trim {
+    h4:first-child, h4.trim, p:first-child, ul:first-child, ol:first-child, dl:first-child, table:first-child, p.trim, ul.trim, ol.trim, dl.trim, table.trim {
       margin-top: -0.49108rem; } }
 
 @media screen and (min-width: 64em) {
-  h4, ul, p {
+  h4, p, ul, ol, dl, table {
     font-size: 1.41421rem;
     line-height: 1.48492;
     margin-top: 1.06035rem;
     margin-bottom: -0.5126rem; }
-    h4:first-child, h4.trim, ul:first-child, p:first-child, ul.trim, p.trim {
+    h4:first-child, h4.trim, p:first-child, ul:first-child, ol:first-child, dl:first-child, table:first-child, p.trim, ul.trim, ol.trim, dl.trim, table.trim {
       margin-top: -0.43965rem; } }
 
 h5 {

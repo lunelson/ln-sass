@@ -1,3 +1,17 @@
+@mixin adjacent($args...) {
+  @if length($args) == 0 {
+    & + & { @content; }
+  } @else {
+    @if type_of(nth($args,1)) == list { $args: join($n, $args...); }
+    $arr: unquote("#{nth($args, 1)} + &");
+    @for $n from 2 through length($args) {
+      $arr: append($arr, unquote(", #{nth($args,$n)} + &"));
+    }
+    #{$arr} { @content; }
+  }
+}
+
+
 @mixin clearfix {
   &:after {
     content:"";

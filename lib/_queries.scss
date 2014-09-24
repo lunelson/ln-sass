@@ -72,14 +72,15 @@ $current-query-alias: null;
       // output values for whatever appeared in query-spec
       @if $output {
 
-        $font-size: get($query-spec, 'font-size');
-        $line-height: get($query-spec, 'line-height');
-        $margin-x: get($query-spec, 'margin-x');
-        $margin-y: get($query-spec, 'margin-y');
-        $body-top: get($query-spec, 'body-top');
-        $body-right: get($query-spec, 'body-right');
-        $body-bottom: get($query-spec, 'body-bottom');
-        $body-left: get($query-spec, 'body-left');
+        $spec-keys: map-keys($query-spec);
+        $font-size: index($spec-keys, 'font-size');
+        $line-height: index($spec-keys, 'line-height');
+        $margin-x: index($spec-keys, 'margin-x');
+        $margin-y: index($spec-keys, 'margin-y');
+        $body-top: index($spec-keys, 'body-top');
+        $body-right: index($spec-keys, 'body-right');
+        $body-bottom: index($spec-keys, 'body-bottom');
+        $body-left: index($spec-keys, 'body-left');
 
         @include query($query-alias) {
 

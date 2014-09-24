@@ -70,8 +70,10 @@ $fonts: (
 // @include setup-sizes(from gamma, factor 1.333, steps 2);
 
 @include setup-margins-from-to(null gamma, factor 2, steps 2);
-
 @include setup-margins-from-to(gamma, factor 3, steps 2);
+
+// @include setup-margins(from root, to gamma, factor 2, steps 2);
+// @include setup-margins(from gamma, factor 3, steps 2);
 
 // 4a. setup typo by class/alias
 @include set-typo('h1', size 3);
@@ -97,8 +99,12 @@ $fonts: (
 // .query { debug: map-pretty(get($queries, width)); }
 // .query { debug: map-pretty(get($queries-orig, width)); }
 
-// %hn { font-weight: normal; font-weight: 400; }
 
+//////////////
+// HEADINGS //
+//////////////
+
+// %hn { font-weight: normal; font-weight: 400; }
 h1 { @extend %hn; @include typo('h1'); }
 h2 { @extend %hn; @include typo('h2'); }
 h3 { @extend %hn; @include typo('h3'); }
@@ -106,26 +112,15 @@ h4 { @extend %hn; @include typo('h4'); }
 h5 { @extend %hn; @include typo('h5'); }
 h6 { @extend %hn; @include typo('h6'); }
 
-@mixin adjacent($args...) {
-  @if length($args) == 0 {
-    & + & { @content; }
-  } @else {
-    @if type_of(nth($args,1)) == list { $args: join($n, $args...); }
-    $arr: unquote("#{nth($args, 1)} + &");
-    @for $n from 2 through length($args) {
-      $arr: append($arr, unquote(", #{nth($args,$n)} + &"));
-    }
-    #{$arr} { @content; }
-  }
-}
-
 @each $hn in h1 h2 h3 h4 h5 h6 {
   #{$hn} { @include adjacent(p, ul, ol, dl, table, img, figure) {
     margin-top: trim-top($hn) + get-margin(1); }
   }
 }
 
-%p { @include typo('p'); }
+////////////////
+// PARAGRAPHS //
+////////////////
 
 p {
   @include typo('p') {
@@ -143,7 +138,13 @@ p {
   }
 }
 
-ul { @extend %p; }
+///////////
+// OTHER //
+///////////
+
+%p { @include typo('p'); }
+
+ul, ol, dl, table { @extend %p; }
 
 img, figure {
   margin-top: get-margin(1);
@@ -160,6 +161,10 @@ figure {
   -webkit-margin-end: 0;
   figcaption { @include typo('compact'); }
 }
+
+////////////
+// LAYOUT //
+////////////
 
 .wrap--site {
   @include wrap();
