@@ -176,16 +176,22 @@
 }
 
 // // dumb application across all queries, no checks
-@mixin query-each2($options...) {
+@mixin queries($options...) {
 
-  // get from, to and keys options
+  // get 'from', 'to' and 'keys'
   $from-query: get($options, 'from') or null;
   $to-query: get($options, 'to') or null;
   $keys: get($options, 'keys') or null;
 
+  // transform/correct options
+  @if contains(root base null, $from-query) { $from-query: null; }
+  @if contains-any($keys, margin margin-y margins) { $keys: join($keys, margin-bp margin-y)}
+  @if contains-any($keys, size sizes) { $keys: join($keys, size-bp font-size); }
+  @if contains-any($keys, trim height line-height) { $keys: join($keys, line-height size-bp); }
+
   // conditional base action
   @if $from-query == null {
-    @if not $keys { @content; }
+    @if $keys == null { @content; }
     @else if contains-any(keys($base), $keys) { @content; }
   }
 
