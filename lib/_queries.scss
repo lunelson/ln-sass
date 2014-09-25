@@ -32,10 +32,6 @@ $height-queries: () !default;
 $queries-orig: ();
 $height-queries-orig: ();
 
-// vars to hold current queries
-$current-query-alias: null;
-$current-height-query-alias: null;
-
 @mixin setup-queries($output: true){
 
   // backup data first

@@ -37,9 +37,10 @@ $typo-defaults: (
   'font-path' '/public/fonts/',
 );
 
-
+// var to hold typo context
 $current-typo-alias: null;
 
+// placeholder for universal typo styles
 %typo-all {
   &.single {
     line-height: 1;
@@ -63,14 +64,21 @@ $current-typo-alias: null;
 @function t-value($args...) { @return typo-value($args...); }
 @function tval($args...) { @return typo-value($args...); }
 
-// trim-top - special use
+// trim -- special use
+@function trim($direction, $typo-alias: $current-typo-alias, $query-alias: $current-query-alias) {
+  $result: get(get-query($query-alias), 'typo', $typo-alias);
+  @if type-of($result) == 'string' { @return trim($direction, $result); }
+  @return get($result, 'trim-#{$direction}');
+}
+
+// trim-top - alt to above
 @function trim-top($typo-alias: $current-typo-alias) {
   $typo: get(get-query(), 'typo', $typo-alias);
   @if type-of($typo) == 'string' { @return trim-top($typo); }
   @return get($typo, 'trim-top');
 }
 
-// trim-bottom - special use
+// trim-bottom - alt to above
 @function trim-bottom($typo-alias: $current-typo-alias) {
   $typo: get(get-query(), 'typo', $typo-alias);
   @if type-of($typo) == 'string' { @return trim-bottom($typo); }
@@ -81,7 +89,7 @@ $current-typo-alias: null;
 // MIXINS //
 ////////////
 
-// SETUP MASTER
+// master setup -- creates data and placeholders
 @mixin set-typo($typo-aliases, $options...) {
 
   // options
@@ -162,14 +170,14 @@ $current-typo-alias: null;
 
   // QUERIES
   $query-aliases: map-keys($queries);
-  $sliced-query-aliases: slice($query-aliases,
+  $sliced-aliases: slice($query-aliases,
     if($from-query, index($query-aliases, $from-query), 1),
     if($to-query, index($query-aliases, $to-query) - 1, length($query-aliases))
   );
-  @each $query-alias in $sliced-query-aliases {
+  @each $query-alias in $sliced-aliases {
 
     // get query object + corresp. size, margin
-    $context: get-query('width' $query-alias);
+    $context: get-query($query-alias);
     $size: get-size(nth($size-arg, 1), nth($size-arg, 2), $query-alias);
     $margin: get-margin(nth($margin-arg, 1), nth($margin-arg, 2), $query-alias);
 
@@ -209,10 +217,7 @@ $current-typo-alias: null;
     $size-check: contains($orig-query-keys, 'size-bp') and $size-arg != (0);
     $margin-check: contains($orig-query-keys, 'margin-bp') and $margin-arg != (0);
     $first-query: $query-alias == $from-query;
-    // spec-check: $spec-check;
-    // size-check: $size-check;
-    // margin-check: $margin-check;
-    // first-query-check: $first-query;
+
     @if $spec-check or $size-check or $margin-check or $first-query {
       @media #{query-string($query-alias)} {
         #{$placeholder} {
@@ -228,15 +233,81 @@ $current-typo-alias: null;
   }
 }
 
-@mixin render-typo() {
-  // WIP; render the stored styles, in efficient css
-}
-
-// OUTPUT MASTER
+// output -- apply placeholder and create data context
 @mixin typo($typo-alias) {
   @extend %typo-#{$typo-alias};
   $temp-typo-alias: $current-typo-alias;
   $current-typo-alias: $typo-alias;
   @content;
   $current-typo-alias: $temp-typo-alias;
+}
+
+//  88
+//  88                         ,d
+//  88                         88
+//  88,dPPYba,    ,adPPYba,  MM88MMM  ,adPPYYba,
+//  88P'    "8a  a8P_____88    88     ""     `Y8
+//  88       d8  8PP"""""""    88     ,adPPPPP88
+//  88b,   ,a8"  "8b,   ,aa    88,    88,    ,88
+//  8Y"Ybbd8"'    `"Ybbd8"'    "Y888  `"8bbdP"Y8
+
+@mixin render-typo() {
+
+  $margin-dir: get($typo-defaults, 'margin-dir') or top;
+
+  $base-typos: get($base, 'typo');
+  @each $typo in $base-typos {
+    $typo-spec: value($typo);
+    @if type-of($typo-spec) != 'string' {
+      #{key($typo)} {
+        @extend %typo-all;
+        font-size: get($typo-spec, 'font-size');
+        line-height: get($typo-spec, 'line-height');
+        margin-top: get($typo-spec, 'margin-top');
+        margin-bottom: get($typo-spec, 'margin-bottom');
+        @if $margin-dir == 'top' { &:first-child, &.trim { margin-top: get($typo-spec, 'trim-top'); } }
+        @else { &:last-child, &.trim { margin-bottom: get($typo-spec, 'trim-bottom'); } }
+      }
+    }
+  }
+
+  @each $query in $queries {
+
+    $query-alias: key($query);
+    $query-spec: value($query);
+
+    $orig-query-keys: keys(get($queries-orig, $query-alias));
+    $spec-check: contains-any($orig-query-keys, ('margin-y', 'line-height'));
+
+    // TODO: size and margin checks should return false of their resp. args == 0
+    // setup mixin has to add a flag for this
+    $size-check: contains($orig-query-keys, 'size-bp');
+    $margin-check: contains($orig-query-keys, 'margin-bp');
+
+    // TODO: setup mixin has to add a flag for this too
+    $first-query: $query-alias == $from-query;
+
+    @if $spec-check or $size-check or $margin-check or $first-query {
+      @media #{query-string($query-alias)} {
+
+        $query-typos: get($query-spec, 'typo');
+        @each $typo in $query-typos {
+          $typo-spec: value($typo);
+          @if type-of($typo-spec) != 'string' {
+            #{key($typo)} {
+              @extend %typo-all;
+              font-size: get($typo-spec, 'font-size');
+              line-height: get($typo-spec, 'line-height');
+              margin-top: get($typo-spec, 'margin-top');
+              margin-bottom: get($typo-spec, 'margin-bottom');
+              @if $margin-dir == 'top' { &:first-child, &.trim { margin-top: get($typo-spec, 'trim-top'); } }
+              @else { &:last-child, &.trim { margin-bottom: get($typo-spec, 'trim-bottom'); } }
+            }
+          }
+        }
+
+      }
+    }
+
+  }
 }

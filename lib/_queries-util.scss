@@ -9,34 +9,30 @@
 //           88                                           d8'
 //           88                                          d8'
 
+// vars to hold current queries
+$current-query-alias: null;
+$current-height-query-alias: null;
 
-// FIX: when removing width from query object
+///////////////////
+// WIDTH QUERIES //
+///////////////////
+
 // width query string function
 @function query-string($alias1: null, $alias2: null) {
   @return 'screen'
-    + if($alias1, ' and (min-width: #{get($queries, width, $alias1, min-width)})', '')
-    + if($alias2, ' and (max-width: #{get($queries, width, $alias2, min-width) - 0.001})', '');
+    + if($alias1, ' and (min-width: #{get($queries, $alias1, min-width)})', '')
+    + if($alias2, ' and (max-width: #{get($queries, $alias2, min-width) - 0.001})', '');
 }
 
-// FIX: when removing width from query object
-// height query string function
-@function height-query-string($alias1: null, $alias2: null) {
-  @return 'screen'
-    + if($alias1, ' and (min-height: #{get($queries, height, $alias1, min-width)})', '')
-    + if($alias2, ' and (max-height: #{get($queries, height, $alias2, min-width) - 0.001})', '');
-}
-
-// FIX: when removing width from query object
-// function to retrieve current query-data-object based on $current-query-alias
+// retrieve current width query object
 @function get-query($query-alias: $current-query-alias) {
   @if $query-alias { @return get($queries, $query-alias); }
   @return $base;
 }
 
-// FIX: when removing width from query object
 // function to retrieve current query-data-object based on $current-query-alias
 @function get-orig-query($query-alias: $current-query-alias) {
-  @if $query-alias { @return get($queries-orig  , $query-alias); }
+  @if $query-alias { @return get($queries-orig, $query-alias); }
   @return $base;
 }
 
@@ -44,6 +40,40 @@
 @function get-query-value($key, $alias: $current-query-alias) {
   @return get(get-query($alias), $key);
 }
+
+// aliases
+@function q-value($args...) { @return get-query-value($args...); }
+@function qval($args...) { @return get-query-value($args...); }
+
+////////////////////
+// HEIGHT QUERIES //
+////////////////////
+
+// height query string function
+@function height-query-string($alias1: null, $alias2: null) {
+  @return 'screen'
+    + if($alias1, ' and (min-height: #{get($height-queries, $alias1, min-width)})', '')
+    + if($alias2, ' and (max-height: #{get($height-queries, $alias2, min-width) - 0.001})', '');
+}
+
+// retrieve current height query object
+@function get-height-query($query-alias: $current-height-query-alias) {
+  @if $query-alias { @return get($height-queries, $query-alias); }
+  @return $base;
+}
+
+// function to retrieve value for current query
+@function get-height-query-value($key, $alias: $current-height-query-alias) {
+  @return get(get-query($alias), $key);
+}
+
+// aliases
+@function hq-value($args...) { @return get-height-query-value($args...); }
+@function hqval($args...) { @return get-height-query-value($args...); }
+
+///////////////////////////////////////////////////
+// UNIT CONVERSION -- DEPENDENT on WIDTH QUERIES //
+///////////////////////////////////////////////////
 
 // function to convert value(s) to rem, following context scale
 @function rem($values...) {
@@ -70,7 +100,10 @@
   @return if(length($out) > 1, $out, nth($out, 1));
 }
 
-// FIX: when removing width from query object
+////////////////////////
+// WIDTH QUERY MIXINS //
+////////////////////////
+
 // mixin to output width media query
 @mixin query($aliases...) {
   // save the context (not really necessary cause there's no nesting)
@@ -79,7 +112,7 @@
     // get current alias or at least the previous one if in max-width query
     $alias: nth($aliases, 1) or map-prev-key($queries, nth($aliases, 2));
     // set current context to width plus alias
-    $current-query-alias: 'width' $alias;
+    $current-query-alias: $alias;
   }
   // run the content in context
   @media #{query-string($aliases...)} { @content }
@@ -87,25 +120,7 @@
   $current-query-alias: $query-temp;
 }
 
-// FIX: when removing width from query object
-// mixin to output height media query
-@mixin height-query($aliases...) {
-  // save the context (not really necessary cause there's no nesting)
-  $query-temp: $current-query-alias;
-  @if length($aliases) > 0 {
-    // get current alias or at least the previous one if in max-height query
-    $alias: nth($aliases, 1) or map-prev-key(get($queries, 'height'), nth($aliases, 2));
-    // set current context to height plus alias
-    $current-query-alias: 'height' $alias;
-  }
-  // run the content in context
-  @media #{query-string-y($aliases...)} { @content }
-  // reset the context (no nesting; could just reset to null)
-  $current-query-alias: $query-temp;
-}
-
-// FIX: when removing width from query object
-// hd widtquery-y mixin
+// hd width query
 @mixin query-hd($aliases...) {
 
   // compute the hd-ratio shite
@@ -119,7 +134,7 @@
     // get current alias or at least the previous one if in max-width query
     $alias: nth($aliases, 1) or map-prev-key($queries, nth($aliases, 2));
     // set current context to width plus alias
-    $current-query-alias: 'width' $alias;
+    $current-query-alias: $alias;
   }
 
   // run the content in context
@@ -136,12 +151,7 @@
   $current-query-alias: $query-temp;
 }
 
-//////////////////////////////
-// MASTER MULTI QUERY MIXIN //
-//////////////////////////////
-
-// FIX: when removing width from query object
-// combines both query-each() and query-for() functionality
+// multi width query -- combines both query-each() and query-for()
 @mixin queries($options...) {
 
   // get 'from', 'to' and 'keys'
@@ -174,36 +184,30 @@
   }
 }
 
-//  88
-//  88                         ,d
-//  88                         88
-//  88,dPPYba,    ,adPPYba,  MM88MMM  ,adPPYYba,
-//  88P'    "8a  a8P_____88    88     ""     `Y8
-//  88       d8  8PP"""""""    88     ,adPPPPP88
-//  88b,   ,a8"  "8b,   ,aa    88,    88,    ,88
-//  8Y"Ybbd8"'    `"Ybbd8"'    "Y888  `"8bbdP"Y8
+// do each with query in a from/to range
+@mixin query-each($options) {
 
-@mixin query-each($query-aliases) {
-
-  // query aliases
-  $query-alias1: nth($query-aliases, 1); $query-alias2: null;
-  @if length($query-aliases) > 1 { $query-alias2: nth($query-aliases, 2); }
+  // get and correction options
+  $from-query: get($options, 'from') or null;
+  $to-query: get($options, 'to') or null;
+  @if contains(root base null, $from-query) { $from-query: null; }
 
   // conditional base action
   @if $query-alias1 == null { @content; }
 
   // determine referenced queries
   $query-aliases: map-keys($queries);
-  $sliced-query-aliases: slice($query-aliases,
-      if($query-alias1, index($query-aliases, $query-alias1), 1),
-      if($query-alias2, index($query-aliases, $query-alias2) - 1, length($query-aliases)));
+  $sliced-aliases: slice($query-aliases,
+      if($from-query, index($query-aliases, $from-query), 1),
+      if($to-query, index($query-aliases, $to-query) - 1, length($query-aliases)));
 
   // per referenced query actions
-  @each $query-alias in $sliced-query-aliases {
+  @each $query-alias in $sliced-aliases {
     @include query($query-alias) { @content; }
   }
 }
 
+// do each query where certain keys exist in original spec
 @mixin query-for($keys...) {
   @if contains-any($keys, margin margin-y margins) { $keys: join($keys, margin-bp margin-y)}
   @if contains-any($keys, size sizes) { $keys: join($keys, size-bp font-size); }
@@ -218,4 +222,24 @@
       }
     }
   }
+}
+
+/////////////////////////
+// HEIGHT QUERY MIXINS //
+/////////////////////////
+
+// mixin to output height media query
+@mixin height-query($aliases...) {
+  // save the context (not really necessary cause there's no nesting)
+  $query-temp: $current-height-query-alias;
+  @if length($aliases) > 0 {
+    // get current alias or at least the previous one if in max-height query
+    $alias: nth($aliases, 1) or map-prev-key($height-queries, nth($aliases, 2));
+    // set current context to height plus alias
+    $current-height-query-alias: $alias;
+  }
+  // run the content in context
+  @media #{query-string-y($aliases...)} { @content }
+  // reset the context (no nesting; could just reset to null)
+  $current-height-query-alias: $query-temp;
 }
