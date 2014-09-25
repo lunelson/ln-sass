@@ -7,7 +7,7 @@ $base: (
   line-height 1.33,
   margin-y 1.25rem,
   body-top 0,
-  body-bottom 0,
+  body-bottom 20px,
   body-right 0.75rem,
   body-left 0.75rem,
 );
@@ -51,24 +51,17 @@ $fonts: (
 );
 
 // 1. setup base; add any particulars as content
-@include setup-base(); // render-base(); or do-base();
+@include setup-base(false);
 
-// 2. setup queries; 'false' means no outputs
-@include setup-queries(); // render-queries(); or do-queries();
+// // 2. setup queries; 'false' means no outputs
+// @include setup-queries();
 
-// 3. setup sizes and margins
-// @include setup-sizes(factor 1.33, steps 2);
-@include setup-sizes-from-to(null gamma, factor 1.333, steps 2);
-@include setup-sizes-from-to(gamma delta, factor 1.667, steps 2);
-@include setup-sizes-from-to(delta, factor 2, steps 2);
+// // 3. setup sizes and margins
+// @include setup-sizes(from base, to gamma, factor 1.333, steps 2);
+// @include setup-sizes(from gamma, to delta, factor 1.667, steps 2);
+// @include setup-sizes(from delta, factor 2, steps 2);
 
-// @include setup-sizes(from root, to gamma, factor 1.333, steps 2);
-// @include setup-sizes(from gamma, factor 1.333, steps 2);
-
-@include setup-margins(from base, to gamma, factor 2, steps 2);
-// @include setup-margins(gamma, from gamma, factor 3, steps 2);
-
-// @include setup-margins(from root, to gamma, factor 2, steps 2);
+// @include setup-margins(from base, to gamma, factor 2, steps 2);
 // @include setup-margins(from gamma, factor 3, steps 2);
 
 // 4a. setup typo by class/alias
@@ -92,12 +85,13 @@ $fonts: (
 ///////////
 
 .base { debug: map-pretty($base); }
-.query { debug: map-pretty($queries); }
+// .query { debug: map-pretty($queries); }
 // .query { debug: map-pretty($queries-orig); }
 
-.test {
-  current-query: $current-query-alias;
-  current-typo: $current-typo-alias;
-  margin: margin();
-}
+// .debug {
+//   current-query: $current-query-alias;
+//   current-typo: $current-typo-alias;
+//   margin: margin();
+// }
+
 // @import 'index';

@@ -20,8 +20,7 @@ $margin-defaults: (
 // FUNCTIONS //
 ///////////////
 
-// MAIN
-// will return a margin even if setup-margins() has not been run
+// MAIN for margin-y
 @function get-margin($index: 0, $sub-index: 0, $query-alias: $current-query-alias) {
   $margin: if($query-alias, get($queries, $query-alias, 'margin-y'), get($base, 'margin-y'));
   @if length($margin) > 1 {
@@ -31,23 +30,27 @@ $margin-defaults: (
     @return nth($margin, $target);
   } @return $margin;
 }
+
 // alias
 @function margin($args...) { @return get-margin($args...); }
 
-// ALT (x margins)
-// TODO: add support for unmerged margins as above
+// ALT for margin-x
 @function get-margin-x($index: 0, $sub-index: 0, $query-alias: $current-query-alias) {
-  $offset: get($margin-defaults, 'offset');
-  $spread: get($margin-defaults, 'spread');
-  $target: ($index + $offset) * $spread + $sub-index;
-  @return nth(get(get-query($query-alias),'margin-x'), $target);
+  $margin: if($query-alias, get($queries, $query-alias, 'margin-x'), get($base, 'margin-x'));
+  @if length($margin) > 1 {
+    $offset: get($margin-defaults, 'offset');
+    $spread: get($margin-defaults, 'spread');
+    $target: ($index + $offset) * $spread + $sub-index;
+    @return nth($margin, $target);
+  } @return $margin;
 }
+
 // alias
 @function margin-x($args...) { @return get-margin-x($args...); }
 
-////////////
-// MIXINS //
-////////////
+//////////////////////////////////////
+// ========================= MIXINS //
+//////////////////////////////////////
 
 // SUBMIX
 @mixin merge-margins($margins, $query-alias: null) {
@@ -88,22 +91,9 @@ $margin-defaults: (
   @if contains(root base null, $from-query) { $from-query: null; }
   @if not $offset { $offset: floor($range / 3); $size-defaults: merge($size-defaults, 'offset' $offset); }
 
-  // debug
-  factor: $factor;
-  steps: $steps;
-  range: $range;
-  spread: $spread;
-  offset: $offset;
-  from: $from-query;
-  to: $to-query;
-
-  // fix and merge back offset if not in defaults
-  @if not $offset { $offset: floor($range / 3); $margin-defaults: merge($margin-defaults, 'offset' $offset); }
-
   // calculate the margin-list, unitless
   $margins: (); @for $n from 1 through $range * $spread {
     $margin: m-scale($n - $offset * $spread, $factor, $steps * $spread);
-    margin: $margin;
     $margins: append($margins, $margin, 'comma'); // unitless, at first
   }
 
@@ -116,12 +106,10 @@ $margin-defaults: (
       if($from-query, index($query-aliases, $from-query), 1),
       if($to-query, index($query-aliases, $to-query) - 1, length($query-aliases)));
 
-  sliced-aliases: $sliced-aliases;
-
   // per referenced query actions
   $count: 1; @each $query-alias in $sliced-aliases {
     @include merge-margins($margins, $query-alias);
-    @if $count == 1 and $from-query != null { $queries-orig: merge($queries-orig, $query-alias, 'margin-bp' true); }
+    @if $count == 1 and $from-query != null { $queries-orig: merge($queries-orig, $query-alias, ('margin-bp' true)); }
     $count: $count + 1;
   }
 }

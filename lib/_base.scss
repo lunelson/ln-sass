@@ -40,21 +40,23 @@ $base: () !default;
   $global: merge($global-defaults, $global);
   $base: merge($base-defaults, $base);
 
-  // calc and merge back some shit
+  // prep some values to merge back
   $font-size: get($base, 'font-size');
   $line-height: get($base, 'line-height');
-  $base: merge($base, (
+  $base-additions: (
     'html-scale' $font-size / 16px,
     'line-height' if(unit($line-height) == 'px', $line-height / $font-size, strip($line-height))
-  ));
+  );
 
-  // WIP: handling units other than PX
-  // $base-additions: ('html-scale' $font-size / 16px);
-  // $base-values: values($base);
-  // @for $n from 1 through $base-values {
-  //   $curr-val: nth($base-values, $n);
-  //   @if unit($curr-val) == 'px' { $base-additions: merge($base-additions, (key(nth($base, $n))) $curr-val / $font-size); }
-  // }
+  // proof/convert values other than font-size and line-height
+  $base-for-unit-check: map-remove($base, 'font-size', 'line-height');
+  @each $item in $base-for-unit-check {
+    $item-value: value($item);
+    @if unit($item-value) == 'px' { $base-additions: merge($base-additions, key($item), $item-value / $font-size * 1rem); }
+  }
+
+  // merge it all back to base
+  $base: merge($base, $base-additions);
 
   // if output true, do all the base shite
   @if $output {
