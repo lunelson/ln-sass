@@ -42,17 +42,13 @@ $base: () !default;
 
   // prep some values to merge back
   $font-size: get($base, 'font-size');
-  $line-height: get($base, 'line-height');
-  $base-additions: (
-    'html-scale' $font-size / 16px,
-    'line-height' if(unit($line-height) == 'px', $line-height / $font-size, strip($line-height))
-  );
+  $base-additions: ('html-scale' $font-size / 16px,);
 
   // proof/convert values other than font-size and line-height
-  $base-for-unit-check: map-remove($base, 'font-size', 'line-height');
+  $base-for-unit-check: map-remove($base, 'font-size');
   @each $item in $base-for-unit-check {
     $item-value: value($item);
-    @if unit($item-value) == 'px' { $base-additions: merge($base-additions, key($item), $item-value / $font-size * 1rem); }
+    @if unit($item-value) == 'px' { $base-additions: append($base-additions, (key($item) $item-value / $font-size * 1rem)); }
   }
 
   // merge it all back to base

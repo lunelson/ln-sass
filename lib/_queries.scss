@@ -117,28 +117,6 @@ $current-height-query-alias: null;
       }
     }
   }
-
-  ////////////
-  // HEIGHT //
-  ////////////
-
-  $height-queries: get($queries, height);
-  @if $height-queries {
-
-    // parse height-queries relative to empty properites
-    $height-queries: map-sort($height-queries, min-height);
-    $reference-spec: ();
-    @each $query in $height-queries {
-      $query-alias: tuple-key($query);
-      $query-spec: tuple-value($query);
-
-      // merge query to reference, merge this back to source
-      $reference-spec: merge($reference-spec, $query-spec);
-      $height-queries: merge($height-queries, $query-alias, $reference-spec);
-    }
-
-    $queries: merge($queries, 'height', $height-queries);
-  }
 }
 
 @mixin setup-height-queries($output: true){

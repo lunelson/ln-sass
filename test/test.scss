@@ -7,7 +7,7 @@ $base: (
   line-height 1.33,
   margin-y 1.25rem,
   body-top 0,
-  body-bottom 20px,
+  body-bottom 40px,
   body-right 0.75rem,
   body-left 0.75rem,
 );
@@ -21,7 +21,7 @@ $queries: (
     margin-y 1.5rem,
     line-height 1.4,
     body-right 1rem,
-    body-left 50px,
+    body-left 1rem,
   ),
   gamma (
     min-width 48em,
@@ -56,13 +56,13 @@ $fonts: (
 // // 2. setup queries; 'false' means no outputs
 @include setup-queries(false);
 
-// // 3. setup sizes and margins
-// @include setup-sizes(from base, to gamma, factor 1.333, steps 2);
-// @include setup-sizes(from gamma, to delta, factor 1.667, steps 2);
-// @include setup-sizes(from delta, factor 2, steps 2);
+// 3. setup sizes and margins
+@include setup-sizes(from base, to gamma, factor 1.333, steps 2);
+@include setup-sizes(from gamma, to delta, factor 1.667, steps 2);
+@include setup-sizes(from delta, factor 2, steps 2);
 
-// @include setup-margins(from base, to gamma, factor 2, steps 2);
-// @include setup-margins(from gamma, factor 3, steps 2);
+@include setup-margins(from base, to gamma, factor 2, steps 2);
+@include setup-margins(from gamma, factor 3, steps 2);
 
 // 4a. setup typo by class/alias
 // @include set-typo('h1', size 3);
