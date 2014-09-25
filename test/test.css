@@ -380,6 +380,23 @@ p + p {
   text-indent: 1em; }
 p + p {
   margin-top: 0.285rem; }
+@media screen and (min-width: 30em) {
+  p + p {
+    margin-top: 0.32rem; } }
+@media screen and (min-width: 48em) {
+  p + p {
+    margin-top: 0.55937rem; } }
+@media screen and (min-width: 64em) {
+  p + p {
+    margin-top: 0.5126rem; } }
+img + p, figure + p {
+  margin-top: 1.53877rem; }
+@media screen and (min-width: 30em) {
+  img + p, figure + p {
+    margin-top: 1.85732rem; } }
+@media screen and (min-width: 48em) {
+  img + p, figure + p {
+    margin-top: 2.107rem; } }
 
 img, figure {
   margin-top: 1.76777rem;

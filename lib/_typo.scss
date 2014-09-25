@@ -107,6 +107,7 @@ $current-typo-alias: null;
   // globals
   $min-height: get($typo-defaults, 'min-line-height');
   $margin-dir: get($typo-defaults, 'margin-dir') or 'top';
+  $line-div: get($typo-defaults, 'line-div');
 
   // typo-aliases
   $typo-alias-main: nth($typo-aliases, 1);
@@ -133,7 +134,7 @@ $current-typo-alias: null;
     $baseline-trim: map-get($options, 'baseline') or trend($px-size, get($fonts, $font-alias, 'metrics', 'baseline'));
 
     // global / default stuff
-    $line-div: get($typo-defaults, 'line-div') or ceil($size) + 1; // set global value to null to automate
+    $line-div: $line-div or ceil($size) + 1; // set global value to null to automate
 
     // calc the values
     $ref-height: get($context, 'line-height') / strip($size);

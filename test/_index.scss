@@ -25,12 +25,12 @@ p {
     p + & { text-indent: 1em; }
     @include query-for(line-height) {
       p + & {
-        margin-top: 0 - t-value('trim-bottom');
+        margin-top: 0 - trim(bottom);
       }
     }
-    @include query-for(margin line-height) {
+    @include query-for(margin, line-height) {
       @include adjacent(img, figure) {
-        margin-top: trim-top() + get-margin(1);
+        margin-top: trim(top) + margin(1);
       }
     }
   }

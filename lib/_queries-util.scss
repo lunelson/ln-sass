@@ -106,16 +106,16 @@ $current-height-query-alias: null;
 
 // mixin to output width media query
 @mixin query($aliases...) {
+
   // save the context (not really necessary cause there's no nesting)
   $query-temp: $current-query-alias;
-  @if length($aliases) > 0 {
-    // get current alias or at least the previous one if in max-width query
-    $alias: nth($aliases, 1) or map-prev-key($queries, nth($aliases, 2));
-    // set current context to width plus alias
-    $current-query-alias: $alias;
-  }
+
+  // save current alias or at least the previous one if in max-width query
+  @if length($aliases) > 0 { $current-query-alias: nth($aliases, 1) or map-prev-key($queries, nth($aliases, 2)); }
+
   // run the content in context
   @media #{query-string($aliases...)} { @content }
+
   // reset the context (no nesting; could just reset to null)
   $current-query-alias: $query-temp;
 }
@@ -125,17 +125,15 @@ $current-height-query-alias: null;
 
   // compute the hd-ratio shite
   $hd-ratio: get($global, 'hd-ratio');
-  $n: nth($hd-ratio, 1); $d: nth($hd-ratio, 2);
+  $n: nth($hd-ratio, 1);
+  $d: nth($hd-ratio, 2);
   $ratio: $n/$d;
 
   // save the context (not really necessary cause there's no nesting)
   $query-temp: $current-query-alias;
-  @if length($aliases) > 0 {
-    // get current alias or at least the previous one if in max-width query
-    $alias: nth($aliases, 1) or map-prev-key($queries, nth($aliases, 2));
-    // set current context to width plus alias
-    $current-query-alias: $alias;
-  }
+
+  // save current alias or at least the previous one if in max-width query
+  @if length($aliases) > 0 { $current-query-alias: nth($aliases, 1) or map-prev-key($queries, nth($aliases, 2)); }
 
   // run the content in context
   @media
@@ -147,6 +145,7 @@ $current-height-query-alias: null;
     #{query-string($aliases...)} and (min-resolution: $ratio * 1dppx) {
     @content;
   }
+
   // reset the context (no nesting; could just reset to null)
   $current-query-alias: $query-temp;
 }
@@ -212,10 +211,8 @@ $current-height-query-alias: null;
   @if contains-any($keys, margin margin-y margins) { $keys: join($keys, margin-bp margin-y)}
   @if contains-any($keys, size sizes) { $keys: join($keys, size-bp font-size); }
   @if contains-any($keys, trim height line-height) { $keys: join($keys, line-height size-bp); }
-  @if contains-any(keys($base), $keys) {
-    @content;
-  }
-  @each $query in get($queries-orig, width) {
+  @content;
+  @each $query in $queries-orig {
     @if contains-any(keys(value($query)), $keys) {
       @include query(key($query)) {
         @content;
