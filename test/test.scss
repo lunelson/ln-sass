@@ -21,7 +21,7 @@ $queries: (
     margin-y 1.5rem,
     line-height 1.4,
     body-right 1rem,
-    body-left 1rem,
+    body-left 50px,
   ),
   gamma (
     min-width 48em,
@@ -54,7 +54,7 @@ $fonts: (
 @include setup-base(false);
 
 // // 2. setup queries; 'false' means no outputs
-// @include setup-queries();
+@include setup-queries(false);
 
 // // 3. setup sizes and margins
 // @include setup-sizes(from base, to gamma, factor 1.333, steps 2);
@@ -85,7 +85,7 @@ $fonts: (
 ///////////
 
 .base { debug: map-pretty($base); }
-// .query { debug: map-pretty($queries); }
+.query { debug: map-pretty($queries); }
 // .query { debug: map-pretty($queries-orig); }
 
 // .debug {

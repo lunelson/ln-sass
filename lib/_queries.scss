@@ -6,6 +6,7 @@
 //           88                                           d8'
 //           88                                          d8'
 
+// width queries (default type everywhere)
 $queries: (
   alpha (
     min-width 20em
@@ -23,13 +24,15 @@ $queries: (
     min-width 80em
   )
 ) !default;
+
+// height queries
 $height-queries: () !default;
 
-// init backup maps
+// backup maps
 $queries-orig: ();
 $height-queries-orig: ();
 
-// init vars to hold current queries
+// vars to hold current queries
 $current-query-alias: null;
 $current-height-query-alias: null;
 
@@ -55,17 +58,31 @@ $current-height-query-alias: null;
       // merge query to reference
       $reference-spec: merge($reference-spec, $query-spec);
 
-      // calc new values and merge with reference back to width-queries
+      // get font-size for reference
+      $font-size: get($reference-spec, 'font-size');
+
+      // proof/convert values other than font-size and line-height
+      $spec-for-unit-check: map-remove($reference-spec, 'font-size', 'min-width');
+      @each $item in $spec-for-unit-check {
+        $item-value: value($item);
+        @if unit($item-value) == 'px' { $reference-spec: merge($reference-spec, key($item), $item-value / $font-size * 1rem); }
+      }
+
+      // do other values
       $min-width: get($reference-spec, 'min-width');
-      $html-scale: get($reference-spec, 'font-size') / 16px;
+      $html-scale: $font-size / 16px;
       $content-width: strip($min-width) / $html-scale - get($reference-spec, 'body-left') - get($reference-spec, 'body-right');
-      $queries: merge($queries, $query-alias, merge($reference-spec, (
+      $reference-spec: merge($reference-spec, (
         'html-scale' $html-scale,
-        'content-width' $content-width,
-      )));
+        'content-width' $content-width
+      ));
+
+      // merge it all back to queries
+      $queries: merge($queries, $query-alias, $reference-spec);
 
       // output values for whatever appeared in query-spec
       @if $output {
+
         // collect list of keys
         $spec-keys: map-keys($query-spec);
         // check for presence of keys
