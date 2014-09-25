@@ -1,3 +1,11 @@
+new
++-	update gulp-sass to 1.0
+-	separate height and width queries; comb all files for calls to ('width' $query)
+-	add ability for base and query setups to receive absolute px inputs for body-* and margins
+-
+-
+
+
 typo2
 -	allow set-typo to take arbitrary size and margin
 	- if rem, leave it alone

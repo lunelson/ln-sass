@@ -1,0 +1,84 @@
+//////////////
+// HEADINGS //
+//////////////
+
+// %hn { font-weight: normal; font-weight: 400; }
+h1 { @extend %hn; @include typo('h1'); }
+h2 { @extend %hn; @include typo('h2'); }
+h3 { @extend %hn; @include typo('h3'); }
+h4 { @extend %hn; @include typo('h4'); }
+h5 { @extend %hn; @include typo('h5'); }
+h6 { @extend %hn; @include typo('h6'); }
+
+@each $hn in h1 h2 h3 h4 h5 h6 {
+  #{$hn} { @include adjacent(p, ul, ol, dl, table, img, figure) {
+    margin-top: trim-top($hn) + get-margin(1); }
+  }
+}
+
+////////////////
+// PARAGRAPHS //
+////////////////
+
+p {
+  @include typo('p') {
+    p + & { text-indent: 1em; }
+    @include query-for(line-height) {
+      p + & {
+        margin-top: 0 - t-value('trim-bottom');
+      }
+    }
+    @include query-for(margin line-height) {
+      @include adjacent(img, figure) {
+        margin-top: trim-top() + get-margin(1);
+      }
+    }
+  }
+}
+
+///////////
+// OTHER //
+///////////
+
+%p { @include typo('p'); }
+
+ul, ol, dl, table { @extend %p; }
+
+img, figure {
+  margin-top: get-margin(1);
+  // margin-top: get-margin(0);
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+figure {
+  -webkit-margin-before: 0;
+  -webkit-margin-after: 0;
+  -webkit-margin-start: 0;
+  -webkit-margin-end: 0;
+  figcaption { @include typo('compact'); }
+}
+
+////////////
+// LAYOUT //
+////////////
+
+.wrap--site {
+  @include wrap();
+  @include query(alpha) { max-width: get(get-query(),'content-width'); }
+  @include query(beta) { max-width: get(get-query(),'content-width'); }
+  @include query(gamma) { max-width: get(get-query(),'content-width'); }
+  @include query(delta) { max-width: get(get-query(),'content-width'); }
+  padding-top: 2rem;
+  background-color: whitesmoke;
+  // padding-top: 1px;
+  overflow: hidden;
+  // overflow-y: hidden;
+}
+
+.trimbox {
+  margin-top: 0.5rem;
+  overflow: hidden;
+  background-color: lightgray;
+}

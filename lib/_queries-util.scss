@@ -28,15 +28,15 @@
 
 // FIX: when removing width from query object
 // function to retrieve current query-data-object based on $current-query-alias
-@function get-query($alias: $current-query-alias) {
-  @if $alias { @return get($queries, nth($alias, 1), nth($alias, 2)); }
+@function get-query($query-alias: $current-query-alias) {
+  @if $query-alias { @return get($queries, $query-alias); }
   @return $base;
 }
 
 // FIX: when removing width from query object
 // function to retrieve current query-data-object based on $current-query-alias
-@function get-orig-query($alias: $current-query-alias) {
-  @if $alias { @return get($queries-orig  , nth($alias, 1), nth($alias, 2)); }
+@function get-orig-query($query-alias: $current-query-alias) {
+  @if $query-alias { @return get($queries-orig  , $query-alias); }
   @return $base;
 }
 
@@ -49,7 +49,7 @@
 @function rem($values...) {
   @if $values == null { @return null; }
   $scale: get-query-value('html-scale');
-  $unit: if(get($global-data, 'em-for-rem'), 'em', 'rem');
+  $unit: if(get($global, 'em-for-rem'), 'em', 'rem');
   $out: ();
   @each $value in $values {
     @if index('rem' 'em', unit($value)) { $out: append($out, assert($value, $unit), 'space'); }
@@ -77,7 +77,7 @@
   $query-temp: $current-query-alias;
   @if length($aliases) > 0 {
     // get current alias or at least the previous one if in max-width query
-    $alias: nth($aliases, 1) or map-prev-key(get($queries, 'width'), nth($aliases, 2));
+    $alias: nth($aliases, 1) or map-prev-key($queries, nth($aliases, 2));
     // set current context to width plus alias
     $current-query-alias: 'width' $alias;
   }
@@ -109,7 +109,7 @@
 @mixin query-hd($aliases...) {
 
   // compute the hd-ratio shite
-  $hd-ratio: get($global-data, 'hd-ratio');
+  $hd-ratio: get($global, 'hd-ratio');
   $n: nth($hd-ratio, 1); $d: nth($hd-ratio, 2);
   $ratio: $n/$d;
 
@@ -117,7 +117,7 @@
   $query-temp: $current-query-alias;
   @if length($aliases) > 0 {
     // get current alias or at least the previous one if in max-width query
-    $alias: nth($aliases, 1) or map-prev-key(get($queries, 'width'), nth($aliases, 2));
+    $alias: nth($aliases, 1) or map-prev-key($queries, nth($aliases, 2));
     // set current context to width plus alias
     $current-query-alias: 'width' $alias;
   }
@@ -162,7 +162,7 @@
   }
 
   // determine referenced queries
-  $query-aliases: map-keys(map-get($queries, 'width'));
+  $query-aliases: map-keys($queries);
   $sliced-aliases: slice($query-aliases,
       if($from-query, index($query-aliases, $from-query), 1),
       if($to-query, index($query-aliases, $to-query) - 1, length($query-aliases)));
@@ -193,7 +193,7 @@
   @if $query-alias1 == null { @content; }
 
   // determine referenced queries
-  $query-aliases: map-keys(map-get($queries, 'width'));
+  $query-aliases: map-keys($queries);
   $sliced-query-aliases: slice($query-aliases,
       if($query-alias1, index($query-aliases, $query-alias1), 1),
       if($query-alias2, index($query-aliases, $query-alias2) - 1, length($query-aliases)));

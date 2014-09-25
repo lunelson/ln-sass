@@ -13,30 +13,26 @@ $base: (
 );
 
 $queries: (
-  width (
-    alpha (
-      min-width 20em,
-    ),
-    beta (
-      min-width 30em,
-      margin-y 1.5rem,
-      line-height 1.4,
-      body-right 1rem,
-      body-left 1rem,
-    ),
-    gamma (
-      min-width 48em,
-      font-size 18px,
-    ),
-    delta (
-      min-width 64em,
-      font-size 20px,
-    ),
-    epsilon (
-      min-width 80em,
-    ),
+  alpha (
+    min-width 20em,
   ),
-  height (
+  beta (
+    min-width 30em,
+    margin-y 1.5rem,
+    line-height 1.4,
+    body-right 1rem,
+    body-left 1rem,
+  ),
+  gamma (
+    min-width 48em,
+    font-size 18px,
+  ),
+  delta (
+    min-width 64em,
+    font-size 20px,
+  ),
+  epsilon (
+    min-width 80em,
   )
 );
 
@@ -69,118 +65,39 @@ $fonts: (
 // @include setup-sizes(from root, to gamma, factor 1.333, steps 2);
 // @include setup-sizes(from gamma, factor 1.333, steps 2);
 
-@include setup-margins-from-to(null gamma, factor 2, steps 2);
-@include setup-margins-from-to(gamma, factor 3, steps 2);
+@include setup-margins(from base, to gamma, factor 2, steps 2);
+// @include setup-margins(gamma, from gamma, factor 3, steps 2);
 
 // @include setup-margins(from root, to gamma, factor 2, steps 2);
 // @include setup-margins(from gamma, factor 3, steps 2);
 
 // 4a. setup typo by class/alias
-@include set-typo('h1', size 3);
-@include set-typo('h2', size 2);
-@include set-typo('h3', size 1);
-@include set-typo('h4' 'p', size 0, from root, to gamma);
-@include set-typo('h4' 'p', size 1, from gamma);
-@include set-typo('h5', size -1);
-@include set-typo('compact', size -1, margin -2, from root);
-@include set-typo('h6', size -1);
+// @include set-typo('h1', size 3);
+// @include set-typo('h2', size 2);
+// @include set-typo('h3', size 1);
+// @include set-typo('h4' 'p', size 0, from root, to gamma);
+// @include set-typo('h4' 'p', size 1, from gamma);
+// @include set-typo('h5', size -1);
+// @include set-typo('compact', size -1, margin -2, from root);
+// @include set-typo('h6', size -1);
 
 // 4b. render typo
 // @include render-typo();
 
 // 5. setup grids
-@include setup-grid(); // render-grid();
+// @include setup-grid(); // render-grid();
 
 ///////////
 // DEBUG //--------------------------------
 ///////////
 
-// .base { debug: map-pretty($base); }
-// .query { debug: map-pretty(get($queries, width)); }
-// .query { debug: map-pretty(get($queries-orig, width)); }
+.base { debug: map-pretty($base); }
+.query { debug: map-pretty($queries); }
+// .query { debug: map-pretty($queries-orig); }
 
-
-//////////////
-// HEADINGS //
-//////////////
-
-// %hn { font-weight: normal; font-weight: 400; }
-h1 { @extend %hn; @include typo('h1'); }
-h2 { @extend %hn; @include typo('h2'); }
-h3 { @extend %hn; @include typo('h3'); }
-h4 { @extend %hn; @include typo('h4'); }
-h5 { @extend %hn; @include typo('h5'); }
-h6 { @extend %hn; @include typo('h6'); }
-
-@each $hn in h1 h2 h3 h4 h5 h6 {
-  #{$hn} { @include adjacent(p, ul, ol, dl, table, img, figure) {
-    margin-top: trim-top($hn) + get-margin(1); }
-  }
+.test {
+  current-query: $current-query-alias;
+  current-typo: $current-typo-alias;
+  margin: margin();
 }
-
-////////////////
-// PARAGRAPHS //
-////////////////
-
-p {
-  @include typo('p') {
-    p + & { text-indent: 1em; }
-    @include query-for(line-height) {
-      p + & {
-        margin-top: 0 - t-value('trim-bottom');
-      }
-    }
-    @include query-for(margin line-height) {
-      @include adjacent(img, figure) {
-        margin-top: trim-top() + get-margin(1);
-      }
-    }
-  }
-}
-
-///////////
-// OTHER //
-///////////
-
-%p { @include typo('p'); }
-
-ul, ol, dl, table { @extend %p; }
-
-img, figure {
-  margin-top: get-margin(1);
-  // margin-top: get-margin(0);
-  display: block;
-  max-width: 100%;
-  height: auto;
-}
-
-figure {
-  -webkit-margin-before: 0;
-  -webkit-margin-after: 0;
-  -webkit-margin-start: 0;
-  -webkit-margin-end: 0;
-  figcaption { @include typo('compact'); }
-}
-
-////////////
-// LAYOUT //
-////////////
-
-.wrap--site {
-  @include wrap();
-  @include query(alpha) { max-width: get(get-query(),'content-width'); }
-  @include query(beta) { max-width: get(get-query(),'content-width'); }
-  @include query(gamma) { max-width: get(get-query(),'content-width'); }
-  @include query(delta) { max-width: get(get-query(),'content-width'); }
-  padding-top: 2rem;
-  background-color: whitesmoke;
-  // padding-top: 1px;
-  overflow: hidden;
-  // overflow-y: hidden;
-}
-
-.trimbox {
-  margin-top: 0.5rem;
-  overflow: hidden;
-  background-color: lightgray;
-}
+// @import 'index';

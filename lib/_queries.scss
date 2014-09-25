@@ -6,62 +6,51 @@
 //           88                                           d8'
 //           88                                          d8'
 
-// TODO
-// - remove width queries; simplify all mixins
-  // - set-typo()
-  // - get-query
-  // - get-query-orig
-
 $queries: (
-  width (
-    alpha (
-      min-width 20em
-    ),
-    beta (
-      min-width 30em
-    ),
-    gamma (
-      min-width 48em
-    ),
-    delta (
-      min-width 64em
-    ),
-    epsilon (
-      min-width 80em
-    ),
+  alpha (
+    min-width 20em
   ),
-  height (
+  beta (
+    min-width 30em
+  ),
+  gamma (
+    min-width 48em
+  ),
+  delta (
+    min-width 64em
+  ),
+  epsilon (
+    min-width 80em
   )
 ) !default;
+$height-queries: () !default;
 
-// init backup of user spec
+// init backup maps
 $queries-orig: ();
+$height-queries-orig: ();
 
-// var to hold current query; will be set by query() mixin
+// init vars to hold current queries
 $current-query-alias: null;
+$current-height-query-alias: null;
 
 @mixin setup-queries($output: true){
 
   // backup data first
   $queries-orig: $queries;
 
-  ///////////
-  // WIDTH //
-  ///////////
-
-  $width-queries: get($queries, 'width');
-  @if $width-queries {
+  @if $queries != () {
 
     // sort
-    $width-queries: map-sort($width-queries, 'min-width');
+    $queries: map-sort($queries, 'min-width');
 
     // parse width-queries relative to base properties
     $reference-spec: $base;
-    @each $query in $width-queries {
+
+    @each $query in $queries {
 
       // init
-      $query-alias: tuple-key($query);
-      $query-spec: tuple-value($query);
+      $query-alias: key($query);
+      $query-spec: value($query);
 
       // merge query to reference
       $reference-spec: merge($reference-spec, $query-spec);
@@ -70,15 +59,16 @@ $current-query-alias: null;
       $min-width: get($reference-spec, 'min-width');
       $html-scale: get($reference-spec, 'font-size') / 16px;
       $content-width: strip($min-width) / $html-scale - get($reference-spec, 'body-left') - get($reference-spec, 'body-right');
-      $width-queries: merge($width-queries, $query-alias, merge($reference-spec, (
+      $queries: merge($queries, $query-alias, merge($reference-spec, (
         'html-scale' $html-scale,
         'content-width' $content-width,
       )));
 
       // output values for whatever appeared in query-spec
       @if $output {
-
+        // collect list of keys
         $spec-keys: map-keys($query-spec);
+        // check for presence of keys
         $font-size: index($spec-keys, 'font-size');
         $line-height: index($spec-keys, 'line-height');
         $margin-x: index($spec-keys, 'margin-x');
@@ -107,11 +97,8 @@ $current-query-alias: null;
             .body-row { margin-left: - $body-left; }
           }
         }
-
       }
     }
-    // merge back to query-data
-    $queries: merge($queries, 'width', $width-queries);
   }
 
   ////////////
@@ -134,5 +121,26 @@ $current-query-alias: null;
     }
 
     $queries: merge($queries, 'height', $height-queries);
+  }
+}
+
+@mixin setup-height-queries($output: true){
+
+  // backup data first
+  $height-queries-orig: $height-queries;
+
+  @if $height-queries != () {
+
+    // parse height-queries relative to empty properites
+    $height-queries: map-sort($height-queries, 'min-height');
+    $reference-spec: ();
+    @each $query in $height-queries {
+      $query-alias: tuple-key($query);
+      $query-spec: tuple-value($query);
+
+      // merge query to reference, merge this back to source
+      $reference-spec: merge($reference-spec, $query-spec);
+      $height-queries: merge($height-queries, $query-alias, $reference-spec);
+    }
   }
 }

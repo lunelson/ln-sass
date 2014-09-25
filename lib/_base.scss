@@ -13,30 +13,12 @@ $global-defaults: (
   hd-ratio (3 2),
   em-for-rem false,
   force-rems true,
-  typo-margin-dir 'top',
-  typo-min-line-height 1.1,
-  typo-line-div 2,
-  typo-per-query true,
-  typo-font-path '/public/fonts/',
-  typo (
-    margin-dir 'top',
-    min-line-height 1.1,
-    line-div 2,
-    per-query true,
-    font-path '/public/fonts/',
-  ),
-  size (),
-  margin (),
-  debug (
-    render false,
-    color rgba(0, 0, 0, 0.05),
-  ),
   debug false,
   debug-color rgba(0, 0, 0, 0.05)
 );
 
 // empty default for user spec
-$global-data: () !default;
+$global: () !default;
 
 $base-defaults: (
   font-size 16px,
@@ -55,7 +37,7 @@ $base: () !default;
 @mixin setup-base($output: true){
 
   // merge global and base data with defaults
-  $global-data: merge($global-defaults, $global-data);
+  $global: merge($global-defaults, $global);
   $base: merge($base-defaults, $base);
 
   // calc and merge back some shit
@@ -65,6 +47,14 @@ $base: () !default;
     'html-scale' $font-size / 16px,
     'line-height' if(unit($line-height) == 'px', $line-height / $font-size, strip($line-height))
   ));
+
+  // WIP: handling units other than PX
+  // $base-additions: ('html-scale' $font-size / 16px);
+  // $base-values: values($base);
+  // @for $n from 1 through $base-values {
+  //   $curr-val: nth($base-values, $n);
+  //   @if unit($curr-val) == 'px' { $base-additions: merge($base-additions, (key(nth($base, $n))) $curr-val / $font-size); }
+  // }
 
   // if output true, do all the base shite
   @if $output {

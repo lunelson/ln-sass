@@ -21,17 +21,22 @@ $margin-defaults: (
 ///////////////
 
 // MAIN
+// will return a margin even if setup-margins() has not been run
 @function get-margin($index: 0, $sub-index: 0, $query-alias: $current-query-alias) {
-  $offset: get($margin-defaults, 'offset');
-  $spread: get($margin-defaults, 'spread');
-  $target: ($index + $offset) * $spread + $sub-index;
-  @return nth(get(get-query($query-alias), 'margin-y'), $target);
+  $margin: if($query-alias, get($queries, $query-alias, 'margin-y'), get($base, 'margin-y'));
+  @if length($margin) > 1 {
+    $offset: get($margin-defaults, 'offset');
+    $spread: get($margin-defaults, 'spread');
+    $target: ($index + $offset) * $spread + $sub-index;
+    @return nth($margin, $target);
+  } @return $margin;
 }
 // alias
 @function margin($args...) { @return get-margin($args...); }
 
-// ALT for X margins
-@function margin-x($index: 0, $sub-index: 0, $query-alias: $current-query-alias) {
+// ALT (x margins)
+// TODO: add support for unmerged margins as above
+@function get-margin-x($index: 0, $sub-index: 0, $query-alias: $current-query-alias) {
   $offset: get($margin-defaults, 'offset');
   $spread: get($margin-defaults, 'spread');
   $target: ($index + $offset) * $spread + $sub-index;
@@ -63,51 +68,60 @@ $margin-defaults: (
   $margin-data: ('margin-y' $margins-y, 'margin-x' $margins-x);
 
   // merge them back to appropriate data
-  @if $query-alias { $queries: merge($queries, nth($query-alias, 1), nth($query-alias, 2), $margin-data); }
+  @if $query-alias { $queries: merge($queries, $query-alias, $margin-data); }
   @else { $base: merge($base, $margin-data); }
 }
 
 // MASTER
-@mixin setup-margins-from-to($query-aliases, $options...) {
+@mixin setup-margins($options...) {
 
-  // options
+  // options and defaults
   $factor: get($options, 'factor') or 2;
   $steps: get($options, 'steps') or 3;
-
-  // defaults
   $range: get($margin-defaults, 'range') or 10;
   $spread: get($margin-defaults, 'spread') or 3;
   $offset: get($margin-defaults, 'offset');
-  @if not $offset {
-    $offset: floor($range / 3);
-    $margin-defaults: merge($margin-defaults, 'offset' $offset); }
+  $from-query: map-get($options, 'from') or null;
+  $to-query: map-get($options, 'to') or null;
 
-  // query-aliases
-  $query-alias1: nth($query-aliases, 1); $query-alias2: null;
-  @if length($query-aliases) > 1 { $query-alias2: nth($query-aliases, 2); }
+  // corrections
+  @if contains(root base null, $from-query) { $from-query: null; }
+  @if not $offset { $offset: floor($range / 3); $size-defaults: merge($size-defaults, 'offset' $offset); }
+
+  // debug
+  factor: $factor;
+  steps: $steps;
+  range: $range;
+  spread: $spread;
+  offset: $offset;
+  from: $from-query;
+  to: $to-query;
+
+  // fix and merge back offset if not in defaults
+  @if not $offset { $offset: floor($range / 3); $margin-defaults: merge($margin-defaults, 'offset' $offset); }
 
   // calculate the margin-list, unitless
   $margins: (); @for $n from 1 through $range * $spread {
     $margin: m-scale($n - $offset * $spread, $factor, $steps * $spread);
+    margin: $margin;
     $margins: append($margins, $margin, 'comma'); // unitless, at first
   }
 
   // conditional: base actions via submixin
-  @if $query-alias1 == null { @include merge-margins($margins); }
+  @if $from-query == null { @include merge-margins($margins); }
 
   // determine referenced queries
-  $query-aliases: map-keys(map-get($queries, 'width'));
-  $sliced-query-aliases: slice($query-aliases,
-      if($query-alias1, index($query-aliases, $query-alias1), 1),
-      if($query-alias2, index($query-aliases, $query-alias2) - 1, length($query-aliases)));
+  $query-aliases: map-keys($queries);
+  $sliced-aliases: slice($query-aliases,
+      if($from-query, index($query-aliases, $from-query), 1),
+      if($to-query, index($query-aliases, $to-query) - 1, length($query-aliases)));
+
+  sliced-aliases: $sliced-aliases;
 
   // per referenced query actions
-  $count: 1; @each $query-alias in $sliced-query-aliases {
-    @include merge-margins($margins, 'width' $query-alias);
-    @if $count == 1 and $query-alias1 != null { $queries-orig: merge($queries-orig, 'width', $query-alias, ('margin-bp' true)); }
+  $count: 1; @each $query-alias in $sliced-aliases {
+    @include merge-margins($margins, $query-alias);
+    @if $count == 1 and $from-query != null { $queries-orig: merge($queries-orig, $query-alias, 'margin-bp' true); }
     $count: $count + 1;
   }
 }
-
-// ALTERNATE
-@mixin setup-margins($options...) { @include setup-margins-from-to(null, $options...); }

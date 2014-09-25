@@ -25,7 +25,7 @@
     - latter mixin calls the former with `null` first argument
     - will run a submixin for each query context specified
     - _should merge a flag to first context with new properties_
-5. setup-margins-from-to() OR setup-margins()
+5. setup-margins() OR setup-margins()
     - latter mixin calls the former with `null` first argument
     - will run a submixin for each query context specified
     - _should merge a flag to query-orig to first context with new properties_
@@ -73,8 +73,8 @@ $margin-assignments
 
 @mixin setup-queries-sizes() -> setup-sizes-from-to()
 
-@mixin setup-margins() -> calls setup-margins-from-to(null, $args)
-@mixin setup-queries-margins() -> setup-margins-from-to()
+@mixin setup-margins() -> calls setup-margins(null, $args)
+@mixin setup-queries-margins() -> setup-margins()
 
 @mixin set-typo()
 @mixin get-typo()

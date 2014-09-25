@@ -22,11 +22,15 @@ $size-defaults: (
 ///////////////
 
 // MAIN
+// will return a size even if setup-sizes() has not been run
 @function get-size($index: 0, $sub-index: 0, $query-alias: $current-query-alias) {
-  $offset: get($size-defaults, 'offset');
-  $spread: get($size-defaults, 'spread');
-  $target: ($index + $offset) * $spread + $sub-index;
-  @return nth(get(get-query($query-alias),'font-size'), $target);
+  $size: get(get-query($query-alias),'font-size');
+  @if type-of($size) == 'list' {
+    $offset: get($size-defaults, 'offset');
+    $spread: get($size-defaults, 'spread');
+    $target-index: ($index + $offset) * $spread + $sub-index;
+    @return nth($size, $target-index);
+  } @return $size;
 }
 
 // ALIAS to MAIN
@@ -65,15 +69,15 @@ $size-defaults: (
   @if $query-alias1 == null { $base: merge($base, ('font-size' $sizes)); }
 
   // determine referenced queries
-  $query-aliases: map-keys(map-get($queries, 'width'));
+  $query-aliases: map-keys($queries);
   $sliced-query-aliases: slice($query-aliases,
       if($query-alias1, index($query-aliases, $query-alias1), 1),
       if($query-alias2, index($query-aliases, $query-alias2) - 1, length($query-aliases)));
 
   // per referenced query actions
   $count: 1; @each $query-alias in $sliced-query-aliases {
-    $queries: merge($queries, 'width', $query-alias, ('font-size' $sizes));
-    @if $count == 1 and $query-alias1 != null { $queries-orig: merge($queries-orig, 'width', $query-alias, ('size-bp' true)); }
+    $queries: merge($queries, $query-alias, ('font-size' $sizes));
+    @if $count == 1 and $query-alias1 != null { $queries-orig: merge($queries-orig, $query-alias, ('size-bp' true)); }
     $count: $count + 1;
   }
 }

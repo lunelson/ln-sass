@@ -63,10 +63,7 @@
   [class*='wrap--'],
   [ln-grid~='wrap'] {
     @extend %wrap;
-    &[ln-grid~='alpha'] { max-width: get($queries, 'width', 'alpha', 'content-width'); }
-    &[ln-grid~='beta'] { max-width: get($queries, 'width', 'alpha', 'content-width'); }
-    &[ln-grid~='gamma'] { max-width: get($queries, 'width', 'alpha', 'content-width'); }
-    &[ln-grid~='delta'] { max-width: get($queries, 'width', 'alpha', 'content-width'); }
+    @each $alias in keys($queries) { &[ln-grid~='#{$alias}'] { max-width: get($queries, '#{$alias}', 'content-width'); } }
   }
 
   %wrapkids {
@@ -74,9 +71,9 @@
     margin-right: auto;
   }
 
-  @each $query-alias in map-keys(get($queries, 'width')) {
+  @each $query-alias in map-keys($queries) {
     // here apply if margin-x or margin-y exists in query-orig
-    @if get($queries-orig, 'width', $query-alias, 'margin-x') {
+    @if get($queries-orig, $query-alias, 'margin-x') {
       @include query($query-alias) {
         $margin-x: get-margin-x($args...);
         $margin-y: get-margin($args...);
