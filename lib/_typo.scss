@@ -32,6 +32,8 @@ $fonts: (
 
 $typo-defaults: (
   'margin-dir' top,
+  'margin-arg' (0 0),
+  'size-arg' (0 0),
   'min-line-height' 1.1,
   'line-div' 2,
   'font-path' '/public/fonts/',
@@ -94,8 +96,8 @@ $current-typo-alias: null;
 
   // options
   $font-alias: map-get($options, 'font') or tuple-key(nth($fonts, 1));
-  $size-arg: map-get($options, 'size') or 0;
-  $margin-arg: map-get($options, 'margin') or 0;
+  $size-arg: map-get($options, 'size') or get($typo-defaults, 'size-arg');
+  $margin-arg: map-get($options, 'margin') or get($typo-defaults, 'margin-arg');
   $from-query: map-get($options, 'from') or null;
   $to-query: map-get($options, 'to') or null;
 
