@@ -34,6 +34,10 @@ $grid-defaults: (
     padding-top: $margin-y / 2;
     padding-bottom: $margin-y / 2;
 
+    // optional idea here for nesting
+    &.alpha { padding-left: 0; }
+    &.omega { padding-right: 0; }
+
     // alt to above
     // margin-top: -1px;
     // padding-top: 1px;
@@ -182,17 +186,24 @@ $grid-defaults: (
   $ns: if($ns, $ns + '-', '');
   @extend %#{$ns}grid-span-#{$n}-#{$d};
 
-  // offsets
+  // offsets: cycle or left/right
   @each $offset in $offsets {
-    $dir: nth($offset, 1); $o: nth($offset, 2);
-    @if length($offset) > 2 { $d: nth($offset, 3); }
-    @if $o == out {
-      margin-#{get($opposite, $dir)}: 100%;
-      margin-#{$dir}: $n / $d * -100%;
-      margin-bottom: -100%; }
-    @else { margin-#{$dir}: $o / $d * 100%; }
+    @if index('cycle' 'repeat', $offset) {
+      &:nth-child(#{$d}n+1) { clear: left; }
+    } @else {
+      $dir: nth($offset, 1); $o: nth($offset, 2);
+      @if length($offset) > 2 { $d: nth($offset, 3); }
+      @if $o == out {
+        margin-#{opposite($dir)}: 100%;
+        margin-#{$dir}: $n / $d * -100%;
+        margin-bottom: -100%; }
+      @else { margin-#{$dir}: $o / $d * 100%; }
+    }
   }
 }
+
+// alias -- effectively a span is a normal block
+@mixin span($args...) { @return col-size($args...); }
 
 // row sizing -- still refers to salvattore
 @mixin row-size($cols: false) {
