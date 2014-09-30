@@ -70,10 +70,11 @@ figure {
   @include query(beta) { max-width: get(get-query(),'content-width'); }
   @include query(gamma) { max-width: get(get-query(),'content-width'); }
   @include query(delta) { max-width: get(get-query(),'content-width'); }
-  padding-top: 2rem;
-  background-color: whitesmoke;
-  // padding-top: 1px;
-  overflow: hidden;
+  // padding-top: 2rem;
+  background-color: pink;
+  padding-top: 1px;
+  // overflow: hidden;
+  margin-top: 2rem;
   // overflow-y: hidden;
 }
 
