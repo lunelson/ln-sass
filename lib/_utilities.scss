@@ -76,14 +76,16 @@
   $output: (); @each $value in $list { @if $value { $output: append($output, $value); } }
   @return $output;
 }
+
 @function reduce($list) { @return reject($list); }
 
 @function contains($list, $item) {
-  @return index($list, $item) != false;
+  @if index($list, $item) { @return true; }
+  @return false;
 }
 
 @function contains-any($list, $items) {
-  @each $item in $items { @if index($list, $item) != false { @return true; } }
+  @each $item in $items { @if index($list, $item) { @return true; } }
   @return false;
 }
 
