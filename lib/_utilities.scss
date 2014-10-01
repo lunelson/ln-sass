@@ -2,6 +2,13 @@
 // OTHER //
 ///////////
 
+// output stringified number w/ suffix e.g. 1st 2nd 3rd 4th
+@function enum($n) {
+  $h: abs($n) % 100; $t: $h % 10;
+  @if $h > 3 and $h < 21 { @return #{$n}th; }
+  @return #{$n}#{if($h == 1, 'st', if($t == 2, 'nd', if($t == 3, 'rd', 'th')))};
+}
+
 @mixin position($pos, $args...) {
   position: $pos;
   @each $arg in $args { #{nth($arg, 1)}: nth($arg, 2); }
@@ -87,6 +94,16 @@
 @function contains-any($list, $items) {
   @each $item in $items { @if index($list, $item) { @return true; } }
   @return false;
+}
+
+@function slice($list, $start: 1, $end: length($list), $sep: 'comma') {
+  $output: ();
+  @if $start >= 1 and $end >= $start {
+    @for $i from $start through $end {
+      $output: append($output, nth($list, $i), $sep);
+    }
+  }
+  @return $output;
 }
 
 //////////
