@@ -11,7 +11,7 @@
 
 $grid-defaults: (
   'margin-x-arg' (0 0),
-  // 'margin-y-arg' (0 0),
+  'margin-y-arg' (0 0),
   'wrap-position' centre,
   'col-count' 12,
 ) !default;
@@ -26,7 +26,7 @@ $grid-defaults: (
     // $margin-y: margin(get($grid-defaults, 'margin-y-arg')...);
 
     // standard output
-    min-height: 1px; // http://css-tricks.com/make-sure-columns-dont-collapse-horizontally/
+    // min-height: 1px; // http://css-tricks.com/make-sure-columns-dont-collapse-horizontally/
     float: left;
     width: 100%;
     padding-left: $margin-x / 2;
@@ -66,10 +66,12 @@ $grid-defaults: (
   @if $output {
     @include clearfix();
     $wrap-position: get($grid-defaults, 'wrap-position');
-
-    // min-height: 1px; // http://css-tricks.com/make-sure-columns-dont-collapse-horizontally/
     @if $wrap-position != 'left' { margin-left: auto; }
     @if $wrap-position != 'right' { margin-right: auto; }
+
+    // min-height: 1px; // http://css-tricks.com/make-sure-columns-dont-collapse-horizontally/
+    padding-top: 1px;
+    padding-bottom: 1px;
   } @else { @extend %bb-grid-wrap; }
 }
 
@@ -118,12 +120,12 @@ $grid-defaults: (
   .row, [class*='row--'], [ln-grid~='row'] { @extend %grid-row; }
   $grid-y-arg: get($grid-defaults, 'margin-y-arg');
   $typo-y-arg: get($typo-defaults, 'margin-arg');
-  [ln-grid~='row'][ln-grid~='typo'], .row--typo {
-    @include query-for('margin-y') { margin-top: margin($typo-y-arg...) - margin($grid-y-arg...)/2; }
-    // @include query-for('margin-y') { margin-top: margin(get($grid-defaults, 'margin-y-arg')...); }
-    // @include query-for('margin-y') { margin-top: margin(get($typo-defaults, 'margin-arg')...); }
-    // margin-top: 0;
-  }
+  // [ln-grid~='row'][ln-grid~='typo'], .row--typo {
+  //   @include query-for('margin-y') { margin-top: margin($typo-y-arg...) - margin($grid-y-arg...)/2; }
+  //   // @include query-for('margin-y') { margin-top: margin(get($grid-defaults, 'margin-y-arg')...); }
+  //   // @include query-for('margin-y') { margin-top: margin(get($typo-defaults, 'margin-arg')...); }
+  //   // margin-top: 0;
+  // }
 
   // wraps
   %grid-wrap { @include bb-grid-wrap(true); }
@@ -149,7 +151,7 @@ $grid-defaults: (
     // test for margins per query, do styles if present
     $query-orig-keys: keys(get($queries-orig, $query-alias));
     $x-test: contains($query-orig-keys, 'margin-x');
-    // $y-test: contains($query-orig-keys, 'margin-y');
+    $y-test: contains($query-orig-keys, 'margin-y');
     @if $x-test or $y-test {
       @include query($query-alias) {
         $margin-x: margin-x(get($grid-defaults, 'margin-x-arg')...);
