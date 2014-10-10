@@ -79,12 +79,63 @@
 // LISTS //
 ///////////
 
-@function reject($list) {
-  $output: (); @each $value in $list { @if $value { $output: append($output, $value); } }
+// convert a list to comma-separated values
+@function csv($list) {
+  $output: ();
+  @each $item in $list {
+    $output: append($output, $item, 'comma');
+  }
   @return $output;
 }
 
-@function reduce($list) { @return reject($list); }
+// convert a list to space-separated values
+@function ssv($list) {
+  $output: ();
+  @each $item in $list {
+    $output: append($output, $item, 'space');
+  }
+  @return $output;
+}
+
+@function remove($list, $tests...) {
+  $out:(); @if length($list) == 1 { $list: nth($list, 1); }
+  @each $item in $list {
+    @if not index($tests, $item) { $out: append($out, $item); } }
+  @return $out;
+}
+
+@function reduce($list) { @return remove($list, null, false); }
+
+
+// collect and reject by type comparison
+@function collect-types($list, $type) {
+  $out: ();
+  @if length($list) == 1 { $list: nth($list, 1); }
+  @each $item in $list {
+      @if type_of($item) == $type {
+          $out: append($out, $item);
+      }
+  }
+  @return if(length($out) == 1, nth($out, 1), $out);
+}
+
+@function reject-types($list, $type) {
+  @if length($list) == 1 { $list: nth($list, 1); }
+  @each $item in $list {
+      @if type_of($item) == $type {
+          $list: reject($list, $item);
+      }
+  }
+  @return if(length($list) == 1, nth($list, 1), $list);
+}
+
+// shortcuts for above
+@function collect-strings($list) { @return collect-types($list, 'string'); }
+@function reject-strings($list) { @return reject-types($list, 'string'); }
+@function collect-numbers($list) { @return collect-types($list, 'number'); }
+@function reject-numbers($list) { @return reject-types($list, 'number'); }
+@function collect-bools($list) { @return collect-types($list, 'bool'); }
+@function reject-bools($list) { @return reject-types($list, 'bool'); }
 
 @function contains($list, $item) {
   @if index($list, $item) { @return true; }
@@ -110,14 +161,24 @@
 // MAPS //
 //////////
 
+@function map-get-all($map, $keys...) {
+  $out: (); @each $key in $keys {
+    $out: append($out, map-get($map, $key)); }
+  @return $out;
+}
+
+@function get-all($args...) { @return map-get-all($args...); }
+
 @function map-prev-key($map, $key) {
   $keys: map-keys($map);
   @return nth($keys, index($keys, $key) - 1)
 }
+
 @function map-next-key($map, $key) {
   $keys: map-keys($map);
   @return nth($keys, index($keys, $key) + 1)
 }
+
 @function map-subkey-sort($list-map, $key) {
   $list-map: list-map-check($list-map);
   @if length($list-map) > 1 {
@@ -130,9 +191,22 @@
     @return join(join(map-subkey-sort($less, $key), $equal), map-subkey-sort($greater, $key)); }
   @return $list-map;
 }
+
 @function map-subvalues($map, $key, $depth) {
   $output: ();
   @if $depth > 1 { @each $tuple in $map { $output: append($output, map-subvalues(value($tuple), $key, $depth - 1)); } }
   @else { $output: get($map, $key); }
   @return $output;
 }
+
+
+/////////////
+// STRINGS //
+/////////////
+
+@function str-remove($str, $sub) {
+  $i: str-index($str, $sub);
+  @if $i == 0 { @return $str; }
+  @else { @return str-remove(str-slice($str, 1, $i - 1) + str-slice($str, $i + 1, str-length($str)), $sub); }
+}
+
