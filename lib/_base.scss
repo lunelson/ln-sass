@@ -61,7 +61,7 @@ $base: () !default;
     *, *:before, *:after { box-sizing: inherit; }
 
     // query alias for js; ref: http://dropshado.ws/post/79494424279/conditional-css-doesnt-work-in-chrome
-    head { font-family: 'base'; }
+    // head { font-family: 'base'; }
 
     // set height to 100%; needed for various shit
     html, body { height: 100%; }
@@ -74,11 +74,11 @@ $base: () !default;
       -webkit-text-size-adjust: 100%;
       // set border box sizing
       box-sizing: border-box;
-      // unify font rendering
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-      // remove webkit tap highlight color
-      -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+      // // unify font rendering
+      // -webkit-font-smoothing: antialiased;
+      // -moz-osx-font-smoothing: grayscale;
+      // // remove webkit tap highlight color
+      // -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
       // set scale
       font-size: percentage(get($base, 'html-scale'));
     }
@@ -87,11 +87,10 @@ $base: () !default;
       line-height: get($base, 'line-height');
       margin: 0; // n3: remove default margin
       padding-top: get($base, 'body-top');
+      padding-right: get($base, 'body-right');
       padding-bottom: get($base, 'body-bottom');
+      padding-left: get($base, 'body-left');
     }
-
-    .body-col { padding-left: get($base, 'body-left'); padding-right: get($base, 'body-right'); }
-    .body-row { padding-left: - get($base, 'body-left'); padding-right: - get($base, 'body-right'); }
 
     // add any additional content
     @content;

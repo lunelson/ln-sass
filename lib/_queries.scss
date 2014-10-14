@@ -79,36 +79,27 @@ $height-queries-orig: ();
       // output values for whatever appeared in query-spec
       @if $output {
 
-        // collect list of keys
-        $spec-keys: map-keys($query-spec);
-        // check for presence of keys
-        $font-size: index($spec-keys, 'font-size');
-        $line-height: index($spec-keys, 'line-height');
-        $margin-x: index($spec-keys, 'margin-x');
-        $margin-y: index($spec-keys, 'margin-y');
-        $body-top: index($spec-keys, 'body-top');
-        $body-right: index($spec-keys, 'body-right');
-        $body-bottom: index($spec-keys, 'body-bottom');
-        $body-left: index($spec-keys, 'body-left');
+        $font-size: get($query-spec, 'font-size');
+        $line-height: get($query-spec, 'line-height');
+        $margin-x: get($query-spec, 'margin-x');
+        $margin-y: get($query-spec, 'margin-y');
+        $body-top: get($query-spec, 'body-top');
+        $body-right: get($query-spec, 'body-right');
+        $body-bottom: get($query-spec, 'body-bottom');
+        $body-left: get($query-spec, 'body-left');
 
         @include query($query-alias) {
 
           // output for JS; ref: http://dropshado.ws/post/79494424279/conditional-css-doesnt-work-in-chrome
-          head { font-family: '#{$query-alias}'; }
+          // head { font-family: '#{$query-alias}'; }
 
           // output CSS if spec'd by user
           @if $font-size { html { font-size: percentage($html-scale); } }
           @if $line-height { body { line-height: $line-height; } }
           @if $body-top { body { margin-top: $body-top; } }
           @if $body-bottom { body { margin-bottom: $body-bottom; } }
-          @if $body-right {
-            .body-col { margin-right: $body-right; }
-            .body-row { margin-right: - $body-right; }
-          }
-          @if $body-left {
-            .body-col { margin-left: $body-left; }
-            .body-row { margin-left: - $body-left; }
-          }
+          @if $body-right { body { margin-right: $body-right; } }
+          @if $body-left { body { margin-left: $body-left; } }
         }
       }
     }

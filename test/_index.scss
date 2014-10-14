@@ -2,19 +2,23 @@
 // HEADINGS //
 //////////////
 
-// %hn { font-weight: normal; font-weight: 400; }
-h1 { @extend %hn; @include typo('h1'); }
-h2 { @extend %hn; @include typo('h2'); }
-h3 { @extend %hn; @include typo('h3'); }
-h4 { @extend %hn; @include typo('h4'); }
-h5 { @extend %hn; @include typo('h5'); }
-h6 { @extend %hn; @include typo('h6'); }
 
-@each $hn in h1 h2 h3 h4 h5 h6 {
-  #{$hn} { @include adjacent(p, ul, ol, dl, table, img, figure) {
-    margin-top: trim-top($hn) + get-margin(1); }
-  }
-}
+h1 { @include typo('h1'); }
+h2 { @include typo('h2'); }
+h3 { @include typo('h3'); }
+h4 { @include typo('h4'); }
+h5 { @include typo('h5'); }
+h6 { @include typo('h6'); }
+
+// @each $hn in h1 h2 h3 h4 h5 h6 {
+//   #{$hn} {
+//     @include typo($hn) {
+//       @include adjacent(p, ul, ol, dl, table, img, figure) {
+//         margin-top: trim-top($hn) + get-margin(1);
+//       }
+//     }
+//   }
+// }
 
 ////////////////
 // PARAGRAPHS //
@@ -45,7 +49,7 @@ p {
 ul, ol, dl, table { @extend %p; }
 
 img, figure {
-  margin-top: get-margin(1);
+  margin-top: margin(1);
   // margin-top: get-margin(0);
   display: block;
   max-width: 100%;
@@ -64,18 +68,23 @@ figure {
 // LAYOUT //
 ////////////
 
+@include query('desktop-lg') {
+  .section {
+    width: 50%;
+  }
+}
+
 .wrap--site {
-  @include wrap();
-  @include query(alpha) { max-width: get(get-query(),'content-width'); }
-  @include query(beta) { max-width: get(get-query(),'content-width'); }
-  @include query(gamma) { max-width: get(get-query(),'content-width'); }
-  @include query(delta) { max-width: get(get-query(),'content-width'); }
-  // padding-top: 2rem;
-  background-color: pink;
-  padding-top: 1px;
+  margin-top: margin();
   // overflow: hidden;
-  margin-top: 2rem;
-  // overflow-y: hidden;
+}
+
+.wrap--test {
+  // height: 20px;
+  padding: 5px;
+  background-color: pink;
+  margin-top: margin();
+  &.wrap--site { background-color: lightblue; }
 }
 
 .trimbox {

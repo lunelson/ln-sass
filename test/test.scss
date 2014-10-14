@@ -3,35 +3,33 @@
 @import "../sass-ln";
 
 $base: (
-  font-size 16px,
-  line-height 1.33,
-  margin-y 1.25rem,
-  body-top 0,
-  body-bottom 40px,
-  body-right 0.75rem,
-  body-left 0.75rem,
+  font-size 14px,
+  line-height 1.25,
+  margin-y 1rem,
+  margin-x 2rem,
+  body-top 1rem,
+  body-bottom 0,
+  body-right 10px,
+  body-left 10px,
 );
 
 $queries: (
-  alpha (
-    min-width 20em,
-  ),
-  beta (
+  mobile (
     min-width 30em,
-    margin-y 1.5rem,
-    line-height 1.4,
+    line-height 1.5,
+    margin-y 1.25rem,
     body-right 1rem,
     body-left 1rem,
   ),
-  gamma (
+  tablet (
     min-width 48em,
     font-size 18px,
   ),
-  delta (
+  desktop-sm (
     min-width 64em,
-    font-size 20px,
+    font-size 22px,
   ),
-  epsilon (
+  desktop-lg (
     min-width 80em,
   )
 );
@@ -53,46 +51,131 @@ $fonts: (
 // 1. setup base; add any particulars as content
 @include setup-base();
 
-// // 2. setup queries; 'false' means no outputs
+// 2. setup queries; 'false' means no outputs
 @include setup-queries();
 
 // 3. setup sizes and margins
-@include setup-sizes(from base, to gamma, factor 1.333, steps 2);
-@include setup-sizes(from gamma, to delta, factor 1.667, steps 2);
-@include setup-sizes(from delta, factor 2, steps 2);
+@include setup-sizes(from base, to tablet, factor 1.333);
 
-@include setup-margins(from base, to gamma, factor 2, steps 2);
-@include setup-margins(from gamma, factor 3, steps 2);
+@include setup-sizes(from tablet, to desktop-sm, factor 1.667);
 
-// 4a. setup typo by class/alias
+@include setup-sizes(from desktop-sm, factor 2);
+
+@include setup-margins(from base, to tablet, factor 2, steps 2);
+@include setup-margins(from tablet, factor 3, steps 2);
+
+// 4. setup typo by class/alias
 @include set-typo('h1', size 3);
 @include set-typo('h2', size 2);
 @include set-typo('h3', size 1);
-@include set-typo('h4' 'p', size 0, from root, to gamma);
-@include set-typo('h4' 'p', size 1, from gamma);
+@include set-typo('h4' 'p', size 0, from base, to tablet);
+@include set-typo('h4', size 1, from tablet);
+@include set-typo('p', size 0, from tablet);
 @include set-typo('h5', size -1);
-@include set-typo('compact', size -1, margin -2, from root);
 @include set-typo('h6', size -1);
-
-// 4b. render typo (WIP)
-// @include render-typo();
 
 // 5. setup grids
 @include setup-grid(); // render-grid();
 
-// ///////////
-// // DEBUG //--------------------------------
-// ///////////
+////////////////
+// DEBUG AREA //
+////////////////
 
-// // .base { debug: map-pretty($base); }
-// // .query { debug: map-pretty($queries); }
-// // .query { debug: map-pretty($queries-orig); }
+// .base { debug: map-pretty($base); }
+// .query { debug: map-pretty($queries); }
+// .query { debug: map-pretty($queries-orig); }
 
-// .debug {
-//   current-query: $current-query-alias;
-//   current-typo: $current-typo-alias;
-//   margin: margin();
-//   alpha-content-width: get($queries, alpha, content-width);
-// }
+//////////////
+// HEADINGS //
+//////////////
 
-// @import 'index';
+
+// h1 { @include typo('h1'); }
+// h2 { @include typo('h2'); }
+// h3 { @include typo('h3'); }
+// h4 { @include typo('h4'); }
+// h5 { @include typo('h5'); }
+// h6 { @include typo('h6'); }
+
+@each $hn in h1 h2 h3 h4 h5 h6 {
+  #{$hn} {
+    @include typo($hn) {
+      @include adjacent(p, ul, ol, dl, table, img, figure) {
+        margin-top: trim-top() + get-margin(2);
+      }
+    }
+  }
+}
+
+////////////////
+// PARAGRAPHS //
+////////////////
+
+p {
+  @include typo('p') {
+    p + & { text-indent: 1em; }
+    @include query-for(line-height) {
+      p + & {
+        margin-top: 0 - trim(bottom);
+      }
+    }
+    @include query-for(margin, line-height) {
+      @include adjacent(img, figure) {
+        margin-top: trim(top) + margin(1);
+      }
+    }
+  }
+}
+
+///////////
+// OTHER //
+///////////
+
+%p { @include typo('p'); }
+
+ul, ol, dl, table { @extend %p; }
+
+img, figure {
+  margin-top: margin(1);
+  // margin-top: get-margin(0);
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+figure {
+  -webkit-margin-before: 0;
+  -webkit-margin-after: 0;
+  -webkit-margin-start: 0;
+  -webkit-margin-end: 0;
+  figcaption { @include typo('compact'); }
+}
+
+////////////
+// LAYOUT //
+////////////
+
+@include query('desktop-lg') {
+  .section {
+    width: 50%;
+  }
+}
+
+.wrap--site {
+  margin-top: margin();
+  // overflow: hidden;
+}
+
+.wrap--test {
+  // height: 20px;
+  padding: 5px;
+  background-color: pink;
+  margin-top: margin();
+  &.wrap--site { background-color: lightblue; }
+}
+
+.trimbox {
+  margin-top: 0.5rem;
+  overflow: hidden;
+  background-color: lightgray;
+}
