@@ -7,8 +7,6 @@ $base: (
   line-height 1.25,
   margin-y 1rem,
   margin-x 2rem,
-  body-top 1rem,
-  body-bottom 0,
   body-right 10px,
   body-left 10px,
 );
@@ -85,97 +83,4 @@ $fonts: (
 // .query { debug: map-pretty($queries); }
 // .query { debug: map-pretty($queries-orig); }
 
-//////////////
-// HEADINGS //
-//////////////
-
-
-// h1 { @include typo('h1'); }
-// h2 { @include typo('h2'); }
-// h3 { @include typo('h3'); }
-// h4 { @include typo('h4'); }
-// h5 { @include typo('h5'); }
-// h6 { @include typo('h6'); }
-
-@each $hn in h1 h2 h3 h4 h5 h6 {
-  #{$hn} {
-    @include typo($hn) {
-      @include adjacent(p, ul, ol, dl, table, img, figure) {
-        margin-top: trim-top() + get-margin(2);
-      }
-    }
-  }
-}
-
-////////////////
-// PARAGRAPHS //
-////////////////
-
-p {
-  @include typo('p') {
-    p + & { text-indent: 1em; }
-    @include query-for(line-height) {
-      p + & {
-        margin-top: 0 - trim(bottom);
-      }
-    }
-    @include query-for(margin, line-height) {
-      @include adjacent(img, figure) {
-        margin-top: trim(top) + margin(1);
-      }
-    }
-  }
-}
-
-///////////
-// OTHER //
-///////////
-
-%p { @include typo('p'); }
-
-ul, ol, dl, table { @extend %p; }
-
-img, figure {
-  margin-top: margin(1);
-  // margin-top: get-margin(0);
-  display: block;
-  max-width: 100%;
-  height: auto;
-}
-
-figure {
-  -webkit-margin-before: 0;
-  -webkit-margin-after: 0;
-  -webkit-margin-start: 0;
-  -webkit-margin-end: 0;
-  figcaption { @include typo('compact'); }
-}
-
-////////////
-// LAYOUT //
-////////////
-
-@include query('desktop-lg') {
-  .section {
-    width: 50%;
-  }
-}
-
-.wrap--site {
-  margin-top: margin();
-  // overflow: hidden;
-}
-
-.wrap--test {
-  // height: 20px;
-  padding: 5px;
-  background-color: pink;
-  margin-top: margin();
-  &.wrap--site { background-color: lightblue; }
-}
-
-.trimbox {
-  margin-top: 0.5rem;
-  overflow: hidden;
-  background-color: lightgray;
-}
+@import 'index';

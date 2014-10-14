@@ -14,7 +14,7 @@ h6 { @include typo('h6'); }
 //   #{$hn} {
 //     @include typo($hn) {
 //       @include adjacent(p, ul, ol, dl, table, img, figure) {
-//         margin-top: trim-top($hn) + get-margin(1);
+//         margin-top: trim-top() + get-margin(2);
 //       }
 //     }
 //   }
@@ -68,22 +68,27 @@ figure {
 // LAYOUT //
 ////////////
 
+@include query-for(margin) {
+  .section-2 {
+    margin-top: margin(2);
+  }
+  [class*="wrap--"] {
+    margin-top: margin();
+  }
+}
+
 @include query('desktop-lg') {
   .section {
     width: 50%;
   }
-}
-
-.wrap--site {
-  margin-top: margin();
-  // overflow: hidden;
+  .section-2 {
+    margin-top: 0;
+  }
 }
 
 .wrap--test {
-  // height: 20px;
   padding: 5px;
   background-color: pink;
-  margin-top: margin();
   &.wrap--site { background-color: lightblue; }
 }
 
