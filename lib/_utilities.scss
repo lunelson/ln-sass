@@ -35,9 +35,12 @@
 @function strip($value) { @return $value / single(unit($value)); }
 @function assert($value, $unit) { @return strip($value) * single($unit); }
 
-///////////
-// LISTS //
-///////////
+//  _ _     _
+// | (_)   | |
+// | |_ ___| |_ ___
+// | | / __| __/ __|
+// | | \__ \ |_\__ \
+// |_|_|___/\__|___/
 
 @function reject($list) {
   $output: (); @each $value in $list { @if $value { $output: append($output, $value); } }
