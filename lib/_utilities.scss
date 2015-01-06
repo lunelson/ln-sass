@@ -64,9 +64,12 @@
   @return pow(nth($basis, 1), $index/nth($basis, 2));
 }
 
-///////////
-// UNITS //
-///////////
+//              _ _
+//             (_) |
+//  _   _ _ __  _| |_ ___
+// | | | | '_ \| | __/ __|
+// | |_| | | | | | |_\__ \
+//  \__,_|_| |_|_|\__|___/
 
 @function single($unit) {
   $units: 'em', 'ex', 'ch', 'rem', '%', 'vw', 'vh', 'vmin', 'vmax', 'cm', 'mm', 'in', 'px', 'pt', 'pc', 'deg', 'grad', 'rad', 'turn', 's', 'ms', 'dpi', 'dpcm', 'dppx';
@@ -160,9 +163,14 @@
   @return $output;
 }
 
-//////////
-// MAPS //
-//////////
+
+
+//  _ __ ___   __ _ _ __  ___
+// | '_ ` _ \ / _` | '_ \/ __|
+// | | | | | | (_| | |_) \__ \
+// |_| |_| |_|\__,_| .__/|___/
+//                 | |
+//                 |_|
 
 @function map-get-all($map, $keys...) {
   $out: (); @each $key in $keys {
