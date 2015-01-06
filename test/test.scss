@@ -80,19 +80,19 @@ $fonts: (
 // 5. setup grids
 @include setup-grid(); // render-grid();
 
-///////////
-// DEBUG //--------------------------------
-///////////
+// ///////////
+// // DEBUG //--------------------------------
+// ///////////
 
-// .base { debug: map-pretty($base); }
-// .query { debug: map-pretty($queries); }
-// .query { debug: map-pretty($queries-orig); }
+// // .base { debug: map-pretty($base); }
+// // .query { debug: map-pretty($queries); }
+// // .query { debug: map-pretty($queries-orig); }
 
-.debug {
-  current-query: $current-query-alias;
-  current-typo: $current-typo-alias;
-  margin: margin();
-  alpha-content-width: get($queries, alpha, content-width);
-}
+// .debug {
+//   current-query: $current-query-alias;
+//   current-typo: $current-typo-alias;
+//   margin: margin();
+//   alpha-content-width: get($queries, alpha, content-width);
+// }
 
-@import 'index';
+// @import 'index';

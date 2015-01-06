@@ -32,6 +32,8 @@ $fonts: (
 
 $typo-defaults: (
   'margin-dir' top,
+  'margin-arg' (0 0),
+  'size-arg' (0 0),
   'min-line-height' 1.1,
   'line-div' 2,
   'font-path' '/public/fonts/',
@@ -46,6 +48,24 @@ $current-typo-alias: null;
     line-height: 1;
     margin-top: 0;
     margin-bottom: 0;
+  }
+}
+
+/////////////
+// HELPERS //
+/////////////
+
+// font-face declarations
+@mixin font-face($family, $file, $style: normal, $weight: normal, $path: $typo-font-path) {
+  @font-face {
+    font-family: $family;
+    font-style: $style;
+    font-weight: $weight; // this should be both word and number values
+    src: url('#{$path}#{$file}.eot'); // IE9 Compat Modes
+    src: url('#{$path}#{$file}.eot?#iefix') format('embedded-opentype'),
+       url('#{$path}#{$file}.woff') format('woff'),
+       url('#{$path}#{$file}.svg##{$file}') format('svg'),
+       url('#{$path}#{$file}.ttf') format('truetype');
   }
 }
 
@@ -94,8 +114,8 @@ $current-typo-alias: null;
 
   // options
   $font-alias: map-get($options, 'font') or tuple-key(nth($fonts, 1));
-  $size-arg: map-get($options, 'size') or 0;
-  $margin-arg: map-get($options, 'margin') or 0;
+  $size-arg: map-get($options, 'size') or get($typo-defaults, 'size-arg');
+  $margin-arg: map-get($options, 'margin') or get($typo-defaults, 'margin-arg');
   $from-query: map-get($options, 'from') or null;
   $to-query: map-get($options, 'to') or null;
 

@@ -28,7 +28,8 @@ $margin-defaults: (
     $spread: get($margin-defaults, 'spread');
     $target: ($index + $offset) * $spread + $sub-index;
     @return nth($margin, $target);
-  } @return $margin;
+  }
+  @return $margin;
 }
 
 // alias
@@ -42,7 +43,8 @@ $margin-defaults: (
     $spread: get($margin-defaults, 'spread');
     $target: ($index + $offset) * $spread + $sub-index;
     @return nth($margin, $target);
-  } @return $margin;
+  }
+  @return $margin;
 }
 
 // alias

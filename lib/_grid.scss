@@ -9,58 +9,94 @@
 
 $grid-defaults: (
   'margin-x-arg' (0 0),
-  'margin-y-arg' (0 0)
+  'margin-y-arg' (0 0),
+  'wrap-position' centre,
+  'col-count' 12,
 ) !default;
 
 //////////////////
 // FUNDAMENTALS //
 //////////////////
 
-@mixin bb-grid-col($output: $query-current-alias){
+@mixin bb-grid-col($output: $current-query-alias){
   @if $output {
     $margin-x: margin-x(get($grid-defaults, 'margin-x-arg')...);
-    $margin-y: margin(get($grid-defaults, 'margin-y-arg')...);
+    // $margin-y: margin(get($grid-defaults, 'margin-y-arg')...);
 
     // standard output
+    // min-height: 1px; // http://css-tricks.com/make-sure-columns-dont-collapse-horizontally/
     float: left;
     width: 100%;
     padding-left: $margin-x / 2;
     padding-right: $margin-x / 2;
-    padding-top: $margin-y / 2;
-    padding-bottom: $margin-y / 2;
+    // padding-top: $margin-y / 2;
+    // padding-bottom: $margin-y / 2;
 
-    // http://css-tricks.com/make-sure-columns-dont-collapse-horizontally/
-    min-height: 1px;
-    // alt to above
-    // margin-top: -1px;
-    // padding-top: 1px;
+    padding-top: 1px;
+    padding-bottom: 1px;
+
+    // optional idea here for nesting
+    &.alpha { padding-left: 0; }
+    &.omega { padding-right: 0; }
+
   } @else { @extend %bb-grid-col; }
 }
 
-@mixin bb-grid-row($output: $query-current-alias){
+@mixin bb-grid-row($output: $current-query-alias){
   @if $output {
     @include clearfix();
     $margin-x: margin-x(get($grid-defaults, 'margin-x-arg')...);
-    $margin-y: margin(get($grid-defaults, 'margin-y-arg')...);
+    // $margin-y: margin(get($grid-defaults, 'margin-y-arg')...);
 
     // standard output
+    min-height: 1px; // http://css-tricks.com/make-sure-columns-dont-collapse-horizontally/
     margin-left: $margin-x / -2;
     margin-right: $margin-x / -2;
-    margin-top: $margin-y / -2;
-    margin-bottom: $margin-y / -2;
+    // margin-top: $margin-y / -2;
+    // margin-bottom: $margin-y / -2;
+    margin-top: -1px;
+    margin-bottom: -1px;
 
-    // counter-action of padding fix above
-    // margin-top: -1px;
   } @else { @extend %bb-grid-row; }
 }
 
-@mixin bb-grid-wrap($output: $query-current-alias){
+@mixin bb-grid-wrap($output: $current-query-alias){
   @if $output {
     @include clearfix();
-    padding-top: 1px; // fix margin collapsing
-    margin-left: auto;
-    margin-right: auto;
+    $wrap-position: get($grid-defaults, 'wrap-position');
+    @if $wrap-position != 'left' { margin-left: auto; }
+    @if $wrap-position != 'right' { margin-right: auto; }
+
+    // min-height: 1px; // http://css-tricks.com/make-sure-columns-dont-collapse-horizontally/
+    padding-top: 1px;
+    padding-bottom: 1px;
   } @else { @extend %bb-grid-wrap; }
+}
+
+@function gcd($a, $b) {
+  @if $b == 0 { @return abs($a); }
+  @return gcd($b, $a % $b);
+}
+
+@function reduce($n, $d) {
+  $g: gcd($n, $d);
+  @return ($n/$g, $d/$g)
+}
+
+@mixin setup-grid-spans($col-count, $ns:'') {
+  // add hyphen to namespace if given
+  $ns: if($ns == "", $ns, "#{$ns}-");
+  // set up span values
+  @for $d from 1 through $col-count {
+    @for $n from 1 through $d {
+      $gcd: gcd($n,$d); $x: $n/$gcd;
+      // regular classes used here just so we can see the output
+      %#{$ns}grid-span-#{$n}-#{$d} {
+        @if $x < $n { @extend %#{$ns}grid-span-#{$x}-#{$d/$gcd}; }
+        @else { width: $n/$d*100%; }
+      }
+    }
+  }
 }
 
 ///////////
@@ -69,32 +105,65 @@ $grid-defaults: (
 
 @mixin setup-grid($args...) {
 
-  // BASE
+  //////////
+  // BASE //
+  //////////
+
+  // cols
   %grid-col { @include bb-grid-col(true); }
   .col, [class*='col--'], [ln-grid~='col'] { @extend %grid-col; }
 
+  // rows
   %grid-row { @include bb-grid-row(true); }
   .row, [class*='row--'], [ln-grid~='row'] { @extend %grid-row; }
+  $grid-y-arg: get($grid-defaults, 'margin-y-arg');
+  $typo-y-arg: get($typo-defaults, 'margin-arg');
+  // [ln-grid~='row'][ln-grid~='typo'], .row--typo {
+  //   @include query-for('margin-y') { margin-top: margin($typo-y-arg...) - margin($grid-y-arg...)/2; }
+  //   // @include query-for('margin-y') { margin-top: margin(get($grid-defaults, 'margin-y-arg')...); }
+  //   // @include query-for('margin-y') { margin-top: margin(get($typo-defaults, 'margin-arg')...); }
+  //   // margin-top: 0;
+  // }
 
+  // wraps
   %grid-wrap { @include bb-grid-wrap(true); }
   .wrap, [class*='wrap--'], [ln-grid~='wrap'] { @extend %grid-wrap; }
-  @each $alias in keys($queries) { [ln-grid~='wrap'][ln-grid~='#{$alias}'], .wrap--#{$alias} { max-width: get($queries, '#{$alias}', 'content-width'); } }
+  @each $query-alias in keys($queries) {
+    @include query($query-alias) { [ln-grid~='wrap'][ln-grid~='site'], .wrap--site { max-width: get(get-query($query-alias),'content-width'); } }
+    [ln-grid~='wrap'][ln-grid~='#{$query-alias}'], .wrap--#{$query-alias} { max-width: get($queries, '#{$query-alias}', 'content-width'); }
+  }
 
-  // PER QUERY
+  // spans
+  @include setup-grid-spans(get($grid-defaults, 'col-count'));
+
+
+  ///////////////
+  // PER QUERY //
+  ///////////////
+
   @each $query-alias in map-keys($queries) {
+
+    // spans
+    @include setup-grid-spans(get($grid-defaults, 'col-count'), $query-alias);
+
+    // test for margins per query, do styles if present
     $query-orig-keys: keys(get($queries-orig, $query-alias));
     $x-test: contains($query-orig-keys, 'margin-x');
     $y-test: contains($query-orig-keys, 'margin-y');
     @if $x-test or $y-test {
       @include query($query-alias) {
         $margin-x: margin-x(get($grid-defaults, 'margin-x-arg')...);
-        $margin-y: margin(get($grid-defaults, 'margin-y-arg')...);
+        // $margin-y: margin(get($grid-defaults, 'margin-y-arg')...);
+
+        // cols
         .col {
-          @if $y-test { padding-top: $margin-y / 2; padding-bottom: $margin-y / 2; }
+          // @if $y-test { padding-top: $margin-y / 2; padding-bottom: $margin-y / 2; }
           @if $x-test { padding-left: $margin-x / 2; padding-right: $margin-x / 2; }
         }
+
+        // rows
         .row {
-          @if $y-test { margin-top: $margin-y / -2; margin-bottom: $margin-y / -2; }
+          // @if $y-test { margin-top: $margin-y / -2; margin-bottom: $margin-y / -2; }
           @if $x-test { margin-left: $margin-x / -2; margin-right: $margin-x / -2; }
         }
       }
@@ -109,17 +178,33 @@ $grid-defaults: (
 // column sizing
 @mixin col-size($span, $offsets...) {
   $n: nth($span, 1); $d: nth($span, 2);
-  width: $n / $d * 100%;
+
+  // direct version
+  // width: $n / $d * 100%;
+
+  // extend version
+  $ns: $current-query-alias;
+  $ns: if($ns, $ns + '-', '');
+  @extend %#{$ns}grid-span-#{$n}-#{$d};
+
+  // offsets: cycle or left/right
   @each $offset in $offsets {
-    $dir: nth($offset, 1); $o: nth($offset, 2);
-    @if length($offset) > 2 { $d: nth($offset, 3); }
-    @if $o == out {
-      margin-#{get($opposite, $dir)}: 100%;
-      margin-#{$dir}: $n / $d * -100%;
-      margin-bottom: -100%; }
-    @else { margin-#{$dir}: $o / $d * 100%; }
+    @if index('cycle' 'repeat', $offset) {
+      &:nth-child(#{$d}n+1) { clear: left; }
+    } @else {
+      $dir: nth($offset, 1); $o: nth($offset, 2);
+      @if length($offset) > 2 { $d: nth($offset, 3); }
+      @if $o == out {
+        margin-#{opposite($dir)}: 100%;
+        margin-#{$dir}: $n / $d * -100%;
+        margin-bottom: -100%; }
+      @else { margin-#{$dir}: $o / $d * 100%; }
+    }
   }
 }
+
+// alias -- effectively a span is a normal block
+@mixin span($args...) { @return col-size($args...); }
 
 // row sizing -- still refers to salvattore
 @mixin row-size($cols: false) {

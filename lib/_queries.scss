@@ -135,3 +135,58 @@ $height-queries-orig: ();
     }
   }
 }
+
+//           88              88
+//           88              88
+//           88              88
+//   ,adPPYb,88   ,adPPYba,  88,dPPYba,   88       88   ,adPPYb,d8
+//  a8"    `Y88  a8P_____88  88P'    "8a  88       88  a8"    `Y88
+//  8b       88  8PP"""""""  88       d8  88       88  8b       88
+//  "8a,   ,d88  "8b,   ,aa  88b,   ,a8"  "8a,   ,a88  "8a,   ,d88
+//   `"8bbdP"Y8   `"Ybbd8"'  8Y"Ybbd8"'    `"YbbdP'Y8   `"YbbdP"Y8
+//                                                      aa,    ,88
+//                                                       "Y8bbdP"
+
+
+// @if $debug-toggle {
+//   $column-count: get($reference-query, column-count);
+//   $margin-x: get($reference-query, margin-x);
+//   body::before { content: '#{$query-alias}'; }
+//   body::after {
+//     $row-width: $content-width + $margin-x;
+//     width: $row-width; margin-left: ($row-width + $margin-x)/-2;
+//     background: linear-gradient(to right,
+//       rgba(0, 0, 0, 0) $margin-x,
+//       $debug-color $margin-x,
+//       $debug-color $row-width / $column-count - $margin-x
+//     );
+//     background-size: $row-width / $column-count;
+//   }
+// }
+
+// // output stuff for the debug
+// @if $debug-toggle {
+//   body {
+//     &:before, &:after {
+//       position: fixed;
+//       pointer-events: none;
+//       user-select: none;
+//       z-index: 999;
+//     }
+//     &:before {
+//       text-align: right;
+//       padding: 0.25rem;
+//       width: 100%;
+//       display: block;
+//       color: black;
+//       bottom: 0;
+//       background-color: $debug-color;
+//     }
+//     &:after {
+//       content: '';
+//       top: 0;
+//       bottom: 0;
+//       left: 50%;
+//     }
+//   }
+// }
