@@ -1,51 +1,51 @@
-@import "../lib/sass-list-maps/sass-list-maps";
-@import "../lib/mathsass/dist/_math";
-@import "../sass-ln";
+@import "lib/sass-maps-plus/sass-maps-plus";
+@import "lib/mathsass/dist/_math";
+@import "sass-ln";
 
-$base: (
-  font-size 16px,
-  line-height 1.33,
-  margin-y 1.25rem,
-  body-top 0,
-  body-bottom 40px,
-  body-right 0.75rem,
-  body-left 0.75rem,
-);
+$base: merge($base, (
 
-$queries: (
-  alpha (
-    min-width 20em,
+  font-size: 16px,
+  line-height: 1.33,
+  margin-y: 1.25rem,
+
+));
+
+$queries: merge($queries, (
+
+  alpha: (
+    min-width: 20em,
   ),
-  beta (
-    min-width 30em,
-    margin-y 1.5rem,
-    line-height 1.4,
-    body-right 1rem,
-    body-left 1rem,
+  beta: (
+    min-width: 30em,
+    margin-y: 1.5rem,
+    line-height: 1.4,
+    page-right: 1rem,
+    page-left: 1rem,
   ),
-  gamma (
-    min-width 48em,
-    font-size 18px,
+  gamma: (
+    min-width: 48em,
+    font-size: 18px,
   ),
-  delta (
-    min-width 64em,
-    font-size 20px,
+  delta: (
+    min-width: 64em,
+    font-size: 20px,
   ),
-  epsilon (
-    min-width 80em,
+  epsilon: (
+    min-width: 80em,
   )
-);
+
+));
 
 $fonts: (
-  main (
-    definition (
-      font-family (sans-serif),
-      letter-spacing 0.0125em
+  main: (
+    definition: (
+      font-family: sans-serif,
+      letter-spacing: 0.0125em
     ),
-    metrics (
-      size-modifier 1,
-      capline (10 0.06, 100 0.12),
-      baseline (10 0.12, 128 0.12)
+    metrics: (
+      size-modifier: 1,
+      capline: (10 0.06, 100 0.12),
+      baseline: (10 0.12, 128 0.12)
     )
   )
 );
@@ -56,29 +56,34 @@ $fonts: (
 // // 2. setup queries; 'false' means no outputs
 @include setup-queries();
 
-// 3. setup sizes and margins
-@include setup-sizes(from base, to gamma, factor 1.333, steps 2);
-@include setup-sizes(from gamma, to delta, factor 1.667, steps 2);
-@include setup-sizes(from delta, factor 2, steps 2);
+/*
+$base: #{map-inspect($base, 0)}
+$queries: #{map-inspect($queries, 0)}
+*/
 
-@include setup-margins(from base, to gamma, factor 2, steps 2);
-@include setup-margins(from gamma, factor 3, steps 2);
+// 3. setup sizes and margins
+// @include setup-sizes(from base, to gamma, factor 1.333, steps 2);
+// @include setup-sizes(from gamma, to delta, factor 1.667, steps 2);
+// @include setup-sizes(from delta, factor 2, steps 2);
+
+// @include setup-margins(from base, to gamma, factor 2, steps 2);
+// @include setup-margins(from gamma, factor 3, steps 2);
 
 // 4a. setup typo by class/alias
-@include set-typo('h1', size 3);
-@include set-typo('h2', size 2);
-@include set-typo('h3', size 1);
-@include set-typo('h4' 'p', size 0, from root, to gamma);
-@include set-typo('h4' 'p', size 1, from gamma);
-@include set-typo('h5', size -1);
-@include set-typo('compact', size -1, margin -2, from root);
-@include set-typo('h6', size -1);
+// @include set-typo('h1', size 3);
+// @include set-typo('h2', size 2);
+// @include set-typo('h3', size 1);
+// @include set-typo('h4' 'p', size 0, from root, to gamma);
+// @include set-typo('h4' 'p', size 1, from gamma);
+// @include set-typo('h5', size -1);
+// @include set-typo('compact', size -1, margin -2, from root);
+// @include set-typo('h6', size -1);
 
 // 4b. render typo (WIP)
 // @include render-typo();
 
 // 5. setup grids
-@include setup-grid(); // render-grid();
+// @include setup-grid(); // render-grid();
 
 // ///////////
 // // DEBUG //--------------------------------

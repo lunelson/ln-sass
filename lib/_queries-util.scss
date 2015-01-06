@@ -42,7 +42,7 @@ $current-height-query-alias: null;
 }
 
 // aliases
-@function q-value($args...) { @return get-query-value($args...); }
+@function query-value($args...) { @return get-query-value($args...); }
 @function qval($args...) { @return get-query-value($args...); }
 
 ////////////////////
@@ -68,7 +68,7 @@ $current-height-query-alias: null;
 }
 
 // aliases
-@function hq-value($args...) { @return get-height-query-value($args...); }
+@function height-query-value($args...) { @return get-height-query-value($args...); }
 @function hqval($args...) { @return get-height-query-value($args...); }
 
 ///////////////////////////////////////////////////
@@ -111,7 +111,9 @@ $current-height-query-alias: null;
   $query-temp: $current-query-alias;
 
   // save current alias or at least the previous one if in max-width query
-  @if length($aliases) > 0 { $current-query-alias: nth($aliases, 1) or map-prev-key($queries, nth($aliases, 2)); }
+  // @if length($aliases) > 0 { $current-query-alias: nth($aliases, 1) or map-prev-key($queries, nth($aliases, 2)); }
+  // TODO: revert the line above, remove line below, when map-prev-key is implemented
+  $current-query-alias: nth($aliases, 1);
 
   // run the content in context
   @media #{query-string($aliases...)} { @content }
@@ -151,7 +153,7 @@ $current-height-query-alias: null;
 }
 
 // multi width query -- combines both query-each() and query-for()
-@mixin queries($options...) {
+@mixin queries($options:()) {
 
   // get 'from', 'to' and 'keys'
   $from-query: get($options, 'from') or null;
@@ -184,7 +186,7 @@ $current-height-query-alias: null;
 }
 
 // do each with query in a from/to range
-@mixin query-each($options) {
+@mixin query-each($options:()) {
 
   // get and correction options
   $from-query: get($options, 'from') or null;
@@ -192,7 +194,7 @@ $current-height-query-alias: null;
   @if contains(root base null, $from-query) { $from-query: null; }
 
   // conditional base action
-  @if $query-alias1 == null { @content; }
+  @if $from-query == null { @content; }
 
   // determine referenced queries
   $query-aliases: map-keys($queries);

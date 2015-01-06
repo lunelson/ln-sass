@@ -3,12 +3,6 @@
   "version": "0.0.1",
   "description": "a framework for modularly-scaled responsive layout and optically-aligned typography",
   "main": "gulpfile.js",
-  "directories": {
-    "test": "test"
-  },
-  "scripts": {
-    "test": "gulp"
-  },
   "repository": {
     "type": "git",
     "url": "https://github.com/lunelson/sass-ln"
@@ -30,11 +24,11 @@
   },
   "homepage": "https://github.com/lunelson/sass-ln",
   "devDependencies": {
-    "browser-sync": "^1.4.0",
-    "gulp": "^3.8.5",
-    "gulp-autoprefixer": "^1.0.0",
-    "gulp-filter": "^1.0.2",
-    "gulp-sass": "^1.0.0",
-    "gulp-sourcemaps": "^1.1.5"
+    "gulp": "^3.8.10",
+    "gulp-plumber": "^0.6.6",
+    "gulp-rename": "^1.2.0",
+    "gulp-run": "^1.6.5",
+    "gulp-util": "^3.0.1",
+    "vinyl-buffer": "^1.0.0"
   }
 }

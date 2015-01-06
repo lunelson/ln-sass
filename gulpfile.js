@@ -1,50 +1,22 @@
- //////////////////
-// definitions //
-//////////////////
-
-var autoprefixer = require('gulp-autoprefixer');
-var browserSync  = require('browser-sync');
-var gulp         = require('gulp');
-var sass         = require('gulp-sass');
-var sourcemaps   = require('gulp-sourcemaps');
-var filter       = require('gulp-filter');
-
-//////////////////////////////////////
-// sass + autoprefixer + sourcemaps //
-//////////////////////////////////////
+var buffer         = require('vinyl-buffer');
+var gulp           = require('gulp');
+var gutil          = require('gulp-util');
+var plumber        = require('gulp-plumber');
+var rename         = require("gulp-rename");
+var run            = require('gulp-run');
 
 gulp.task('sass', function () {
-    gulp.src('test/test.scss')
-        // .pipe(sourcemaps.init())
-        .pipe(sass({
-            errLogToConsole: false,
-            onError: function(err) {
-                browserSync.notify(err, 2000);
-                console.log(err); }
-        }))
-        .pipe(autoprefixer({
-            browsers: ['last 3 versions'],
-            cascade: false
-        }))
-        // .pipe(sourcemaps.write('.'))
-        .pipe(gulp.dest('test'))
-        // .pipe(filter('*.css')) // necessary?
-        .pipe(browserSync.reload({stream:true}));
+  gulp.src('test/test.scss', { buffer: false })
+    .pipe(plumber(function(err) {
+        gutil.beep();
+        var errorTxt = err.message +'\n\n'+ err.source;
+        gutil.log(gutil.colors.red(errorTxt));
+    }))
+    .pipe(run('/applications/libsass/sassc/bin/sassc -s', {verbosity: 1}))
+    .pipe(rename(function (path) { path.extname = ".css"; }))
+    .pipe(buffer())
+    .pipe(gulp.dest('test/'));
 });
-
-/////////////////
-// browsersync //
-/////////////////
-
-// task: browser-sync startup; runs sass--app and jekyll-build then starts server
-gulp.task('browser-sync', ['sass'], function() {
-    browserSync({
-        server: {
-            baseDir: 'test'
-        }
-    });
-});
-
 
 ///////////
 // watch //
@@ -52,15 +24,6 @@ gulp.task('browser-sync', ['sass'], function() {
 
 gulp.task('watch', function () {
     gulp.watch('**/*.scss', ['sass']);
-    gulp.watch(['test/*.html'], browserSync.reload);
 });
 
-gulp.task('watch-sass', function () {
-    gulp.watch('**/*.scss', ['sass']);
-});
-
-// run 'browser-sync' at startup; implicitly run 'sass'
-gulp.task('default', ['browser-sync', 'watch']);
-
-// sass only version
-gulp.task('sass-only', ['sass', 'watch-sass']);
+gulp.task('default', ['watch']);
