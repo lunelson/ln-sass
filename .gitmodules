@@ -4,3 +4,6 @@
 [submodule "lib/mathsass"]
 	path = lib/mathsass
 	url = git@github.com:terkel/mathsass.git
+[submodule "lib/sass-maps-plus"]
+	path = lib/sass-maps-plus
+	url = https://lunelson@github.com/lunelson/sass-maps-plus.git
