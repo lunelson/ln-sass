@@ -46,15 +46,28 @@ $base: (
 
     *, *:before, *:after { box-sizing: inherit; } // inherit box sizing (from html)
 
+    body::before {
+      display:block;
+      width:0;height:0;
+      overflow:hidden;
+      content: '{ "current" : "#{$label}", "all": [#{$label-list}] }';
+    }
+
+    head {
+      font-family: '{ "current" : "#{$label}", "all": [#{$label-list}] }';
+    }
+
+
     head { font-family: 'base'; } // query alias for js; ref: http://dropshado.ws/post/79494424279/conditional-css-doesnt-work-in-chrome
 
     html, body { height: 100%; } // set height to 100%; needed for various shit
 
     html {
-      box-sizing: border-box; // set border box sizing
+      box-sizing: border-box; // will be inherited by all elements
       -webkit-font-smoothing: antialiased; // unify font rendering
       -moz-osx-font-smoothing: grayscale; // ''
       -webkit-tap-highlight-color: rgba(0, 0, 0, 0); // remove webkit tap highlight color
+      text-rendering: optimizespeed; // fixes a webkit bug re: optimizelegibility?
       font-size: percentage(get($base, 'html-scale')); // set scale
     }
 
