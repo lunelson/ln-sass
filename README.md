@@ -1,7 +1,7 @@
 ## Sass-LN
 
-Sass-LN is a framework for modularly-scaled responsive layout and optically-aligned typography. It makes extensive use of maps (or 'list-maps') in Sass.
+A collection of some more opinionated workflows and techniques; imports my other projects as well.
 
-This frame work is still under development, and not documented, but feel free to look around.
+Still under development, and not documented.
 
 ![](ln.jpg)
