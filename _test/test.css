@@ -3,10 +3,10 @@ body::before {
   height: 0;
   display: block;
   overflow: hidden;
-  content: '{ "current" : "default", "all": ["alpha", "beta", "gamma"] }'; }
+  content: '{ "current" : "default", "all": ["alpha", "beta", "gamma", "delta", "epsilon"] }'; }
 
 head {
-  font-family: '{ "current" : "default", "all": ["alpha", "beta", "gamma"] }'; }
+  font-family: '{ "current" : "default", "all": ["alpha", "beta", "gamma", "delta", "epsilon"] }'; }
 
 .util--medium {
   width: 0;
@@ -20,36 +20,135 @@ body {
   padding-top: 1rem;
   padding-bottom: 1rem; }
 
-@media screen and (min-width: 30em) {
+@media screen and (min-width: 20em) {
   body::before {
-    content: '{ "current" : "alpha", "all": ["alpha", "beta", "gamma"] }'; }
+    content: '{ "current" : "alpha", "all": ["alpha", "beta", "gamma", "delta", "epsilon"] }'; }
   head {
-    font-family: '{ "current" : "alpha", "all": ["alpha", "beta", "gamma"] }'; }
+    font-family: '{ "current" : "alpha", "all": ["alpha", "beta", "gamma", "delta", "epsilon"] }'; }
   .util--medium {
     width: 1px; } }
 
-@media screen and (min-width: 48em) {
+@media screen and (min-width: 30em) {
   body::before {
-    content: '{ "current" : "beta", "all": ["alpha", "beta", "gamma"] }'; }
+    content: '{ "current" : "beta", "all": ["alpha", "beta", "gamma", "delta", "epsilon"] }'; }
   head {
-    font-family: '{ "current" : "beta", "all": ["alpha", "beta", "gamma"] }'; }
+    font-family: '{ "current" : "beta", "all": ["alpha", "beta", "gamma", "delta", "epsilon"] }'; }
   .util--medium {
     width: 2px; } }
 
-@media screen and (min-width: 75em) {
+@media screen and (min-width: 48em) {
   body::before {
-    content: '{ "current" : "gamma", "all": ["alpha", "beta", "gamma"] }'; }
+    content: '{ "current" : "gamma", "all": ["alpha", "beta", "gamma", "delta", "epsilon"] }'; }
   head {
-    font-family: '{ "current" : "gamma", "all": ["alpha", "beta", "gamma"] }'; }
+    font-family: '{ "current" : "gamma", "all": ["alpha", "beta", "gamma", "delta", "epsilon"] }'; }
   .util--medium {
-    width: 3px; }
-  html {
-    font-size: 400%; } }
+    width: 3px; } }
+
+@media screen and (min-width: 64em) {
+  body::before {
+    content: '{ "current" : "delta", "all": ["alpha", "beta", "gamma", "delta", "epsilon"] }'; }
+  head {
+    font-family: '{ "current" : "delta", "all": ["alpha", "beta", "gamma", "delta", "epsilon"] }'; }
+  .util--medium {
+    width: 4px; } }
+
+@media screen and (min-width: 80em) {
+  body::before {
+    content: '{ "current" : "epsilon", "all": ["alpha", "beta", "gamma", "delta", "epsilon"] }'; }
+  head {
+    font-family: '{ "current" : "epsilon", "all": ["alpha", "beta", "gamma", "delta", "epsilon"] }'; }
+  .util--medium {
+    width: 5px; } }
+
+.spread, [class*='spread--'], [l='spread'] {
+  padding-left: 1rem;
+  padding-right: 1rem; }
+
+.wrap, [class*='wrap--'], [l='wrap'] {
+  margin-left: auto;
+  margin-right: auto; }
+
+.section, [class*='section--'], [l='section'] {
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem; }
+
+.grid, [class*='grid--'], [l='grid'] {
+  width: calc(100% + 1rem);
+  margin-left: -0.5rem;
+  margin-right: -0.5rem; }
+
+.cell, [class*='cell--'], [l='cell'] {
+  display: block;
+  float: left;
+  width: 100%;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem; }
+
+@media screen and (min-width: 20em) {
+  .wrap--alpha {
+    max-width: 18rem; }
+  .wrap--each, .wrap--each_from--alpha, .wrap--each_to--alpha, .wrap--each_to--beta, .wrap--each_to--gamma, .wrap--each_to--delta, .wrap--each_to--epsilon {
+    max-width: 18rem; } }
+
+@media screen and (min-width: 30em) {
+  .wrap--beta {
+    max-width: 28rem; }
+  .wrap--each, .wrap--each_from--alpha, .wrap--each_from--beta, .wrap--each_to--beta, .wrap--each_to--gamma, .wrap--each_to--delta, .wrap--each_to--epsilon {
+    max-width: 28rem; } }
+
+@media screen and (min-width: 48em) {
+  .wrap--gamma {
+    max-width: 46rem; }
+  .wrap--each, .wrap--each_from--alpha, .wrap--each_from--beta, .wrap--each_from--gamma, .wrap--each_to--gamma, .wrap--each_to--delta, .wrap--each_to--epsilon {
+    max-width: 46rem; } }
+
+@media screen and (min-width: 64em) {
+  .wrap--delta {
+    max-width: 62rem; }
+  .wrap--each, .wrap--each_from--alpha, .wrap--each_from--beta, .wrap--each_from--gamma, .wrap--each_from--delta, .wrap--each_to--delta, .wrap--each_to--epsilon {
+    max-width: 62rem; } }
+
+@media screen and (min-width: 80em) {
+  .wrap--epsilon {
+    max-width: 78rem; }
+  .wrap--each, .wrap--each_from--alpha, .wrap--each_from--beta, .wrap--each_from--gamma, .wrap--each_from--delta, .wrap--each_from--epsilon, .wrap--each_to--epsilon {
+    max-width: 78rem; } }
 
 /*
 
+base: (
+    font-size: 1,
+    font-size-mod: 1.5,
+    line-height: 1.5,
+    margin-x: 1rem,
+    margin-x-mod: 1.5,
+    margin-y: 1.5rem,
+    margin-y-mod: 1.5,
+    body-top: 1rem,
+    body-right: 1rem,
+    body-bottom: 1rem,
+    body-left: 1rem,
+    html-scale: 1
+  )
 media: (
     alpha: (
+      font-size: 1rem,
+      font-size-mod: 1.5,
+      line-height: 1.5,
+      margin-x: 1rem,
+      margin-x-mod: 1.5,
+      margin-y: 1.5rem,
+      margin-y-mod: 1.5,
+      body-top: 1rem,
+      body-right: 1rem,
+      body-bottom: 1rem,
+      body-left: 1rem,
+      html-scale: 1,
+      breakpoint: 20em,
+      device-width: 20rem,
+      content-width: 18rem
+    ),
+    beta: (
       font-size: 1rem,
       font-size-mod: 1.5,
       line-height: 1.5,
@@ -66,7 +165,7 @@ media: (
       device-width: 30rem,
       content-width: 28rem
     ),
-    beta: (
+    gamma: (
       font-size: 1rem,
       font-size-mod: 1.5,
       line-height: 1.5,
@@ -83,8 +182,8 @@ media: (
       device-width: 48rem,
       content-width: 46rem
     ),
-    gamma: (
-      font-size: 4rem,
+    delta: (
+      font-size: 1rem,
       font-size-mod: 1.5,
       line-height: 1.5,
       margin-x: 1rem,
@@ -95,10 +194,27 @@ media: (
       body-right: 1rem,
       body-bottom: 1rem,
       body-left: 1rem,
-      html-scale: 4,
-      breakpoint: 75em,
-      device-width: 18.75rem,
-      content-width: 16.75rem
+      html-scale: 1,
+      breakpoint: 64em,
+      device-width: 64rem,
+      content-width: 62rem
+    ),
+    epsilon: (
+      font-size: 1rem,
+      font-size-mod: 1.5,
+      line-height: 1.5,
+      margin-x: 1rem,
+      margin-x-mod: 1.5,
+      margin-y: 1.5rem,
+      margin-y-mod: 1.5,
+      body-top: 1rem,
+      body-right: 1rem,
+      body-bottom: 1rem,
+      body-left: 1rem,
+      html-scale: 1,
+      breakpoint: 80em,
+      device-width: 80rem,
+      content-width: 78rem
     )
   )
 

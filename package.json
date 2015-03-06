@@ -24,11 +24,7 @@
   },
   "homepage": "https://github.com/lunelson/sass-ln",
   "devDependencies": {
-    "gulp": "^3.8.10",
-    "gulp-plumber": "^0.6.6",
-    "gulp-rename": "^1.2.0",
-    "gulp-run": "^1.6.5",
-    "gulp-util": "^3.0.1",
-    "vinyl-buffer": "^1.0.0"
+    "gulp": "^3.8.11",
+    "gulp-concat": "^2.5.2"
   }
 }

@@ -1,19 +1,23 @@
-@import '../sass-ln';
+@import '../_pkg/sass-ln-pkgd';
+// @import '../_sass-ln';
 
-$media: (
-  alpha: (breakpoint: 30em),
-  beta: (breakpoint: 48em),
-  gamma: (
-    font-size: 4rem,
-    breakpoint: 75em
-  )
-);
+// $media: (
+//   alpha: (breakpoint: 30em),
+//   beta: (breakpoint: 48em),
+//   gamma: (
+//     font-size: 4rem,
+//     breakpoint: 75em
+//   )
+// );
 
 @include parse-media();
+
+@include parse-layout();
 
 
 /*
 
+base: #{map-inspect($base)}
 media: #{map-inspect($media)}
 
 */
