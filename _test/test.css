@@ -1,3 +1,18 @@
+/*
+col mixin spec
+
+@mixin col($span, $margins-and-edge...) {}
+span: 1 or 2 item list
+margins: list-map with right and/or left args
+edge: cycle [d], alpha, omega, both
+.test {
+  @include col(1 2, right 1, left -1);
+  @include col(1 2, cycle);
+  @include col(1 2, right 1, cycle);
+  @include col(1 1)
+  // if no span argp
+}
+*/
 body::before {
   width: 0;
   height: 0;
@@ -51,12 +66,12 @@ body {
 media: (
     alpha: (
       font-size: 16px,
-      font-size-modulation: 1.5,
+      font-size-mod: 1.5,
       line-height: 1.5,
       margin-x: 1rem,
-      margin-x-modulation: 1.5,
+      margin-x-mod: 1.5,
       margin-y: 1.5rem,
-      margin-y-modulation: 1.5,
+      margin-y-mod: 1.5,
       body-top: 1rem,
       body-right: 1rem,
       body-bottom: 1rem,
@@ -68,12 +83,12 @@ media: (
     ),
     beta: (
       font-size: 16px,
-      font-size-modulation: 1.5,
+      font-size-mod: 1.5,
       line-height: 1.5,
       margin-x: 1rem,
-      margin-x-modulation: 1.5,
+      margin-x-mod: 1.5,
       margin-y: 1.5rem,
-      margin-y-modulation: 1.5,
+      margin-y-mod: 1.5,
       body-top: 1rem,
       body-right: 1rem,
       body-bottom: 1rem,
@@ -85,12 +100,12 @@ media: (
     ),
     gamma: (
       font-size: 64px,
-      font-size-modulation: 1.5,
+      font-size-mod: 1.5,
       line-height: 1.5,
       margin-x: 1rem,
-      margin-x-modulation: 1.5,
+      margin-x-mod: 1.5,
       margin-y: 1.5rem,
-      margin-y-modulation: 1.5,
+      margin-y-mod: 1.5,
       body-top: 1rem,
       body-right: 1rem,
       body-bottom: 1rem,

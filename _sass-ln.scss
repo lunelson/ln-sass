@@ -10,14 +10,21 @@
 //  by @lunelson
 //  MIT License
 
-@import "lib/reset";
-@import "lib/base";
+//////////////////
+// DEPENDENCIES //
+//////////////////
 
-@import "lib/queries-util";
-@import "lib/queries";
+@import 'stylesheets/mathsass/dist/math';
+@import 'stylesheets/sass-util/sass-util';
+@import 'stylesheets/sass-maps-plus/sass-maps-plus';
 
-@import "lib/sizes";
-@import "lib/margins";
-@import "lib/typo";
+//////////
+// CORE //
+//////////
 
-@import "lib/grid";
+@import 'stylesheets/reset';
+@import 'stylesheets/media';
+@import 'stylesheets/media-util';
+@import 'stylesheets/layout';
+@import 'stylesheets/layout-util';
+@import 'stylesheets/typo';

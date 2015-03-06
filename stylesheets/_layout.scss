@@ -1,127 +1,103 @@
-//  _                         _                _   _ _
-// | |                       | |              | | (_) |
-// | | __ _ _   _  ___  _   _| |_ ______ _   _| |_ _| |
-// | |/ _` | | | |/ _ \| | | | __|______| | | | __| | |
-// | | (_| | |_| | (_) | |_| | |_       | |_| | |_| | |
-// |_|\__,_|\__, |\___/ \__,_|\__|       \__,_|\__|_|_|
-//           __/ |
-//          |___/
-
-
-
-//  _                         _
-// | |                       | |
-// | | __ _ _   _  ___  _   _| |_
-// | |/ _` | | | |/ _ \| | | | __|
-// | | (_| | |_| | (_) | |_| | |_
-// |_|\__,_|\__, |\___/ \__,_|\__|
-//           __/ |
-//          |___/
-
-/////////////////////////////////
-// spread, wrap, grid and cell //
-/////////////////////////////////
-
-// .spread
-
-// .wrap
-// .wrap--beta
-// .wrap--each
-// .wrap--each_from--beta
-// .wrap--each_to--delta
-
-// .grid, .row
-// .cell, .col
+//                                           _              _     _
+//                                          | |            (_)   | |
+//  _ __   __ _  __ _  ___    __ _ _ __   __| |   __ _ _ __ _  __| |
+// | '_ \ / _` |/ _` |/ _ \  / _` | '_ \ / _` |  / _` | '__| |/ _` |
+// | |_) | (_| | (_| |  __/ | (_| | | | | (_| | | (_| | |  | | (_| |
+// | .__/ \__,_|\__, |\___|  \__,_|_| |_|\__,_|  \__, |_|  |_|\__,_|
+// | |           __/ |                            __/ |
+// |_|          |___/                            |___/
 
 // layout fundaments
-$layout-float: left !default; // right | left | false
+$layout-grid-float: left !default; // right | left | false
 $layout-wrap-alignment: false !default; // right | left | false
 
-// defaults, in case context is not present
-$layout-margin-x: 2rem !default;
-$layout-body-right: 2rem !default;
-$layout-body-left: 2rem !default;
-
-@mixin parse-layouts($output: true){
+@mixin parse-layout($output: true){
 
   @if $output {
 
-    /////////////
-    // DEFAULT //
-    /////////////
+    $margin-x: 2rem;
+    $margin-y: 2rem;
+    $body-right: 2rem;
+    $body-left: 2rem;
 
-    $margin-x: $layout-margin-x;
-    $body-right: $layout-body-right;
-    $body-left: $layout-body-left;
-
-    // get dimensions from '$default-context' if it exists
-    @if variable-exists('default-context') {
-      $margin-x: get($default-context, 'margin-x');
-      $body-right: get($default-context, 'body-right');
-      $body-left: get($default-context, 'body-left');
+    // get dimensions from '$base' if it exists
+    @if variable-exists('base') {
+      $margin-x: get($base, 'margin-x');
+      $margin-y: get($base, 'margin-y');
+      $body-right: get($base, 'body-right');
+      $body-left: get($base, 'body-left');
     }
 
     // SPREAD, WRAP, GRID, CELL
-    %spread, .spread, [class*='spread--'], [layout='spread'] {
+    %spread, .spread, [class*='spread--'], [l='spread'] {
       padding-left: $body-left;
       padding-right: $body-right;
     }
-    %wrap, .wrap, [class*='wrap--'], [layout='wrap'] {
+    %wrap, .wrap, [class*='wrap--'], [l='wrap'] {
       margin-left: auto;
       margin-right: auto;
     }
-    %grid, .grid, [class*='grid--'], [layout='grid'] {
+    %section, .section, [class*='section--'], [l='section'] {
+      padding-top: $margin-y / 2;
+      padding-bottom: $margin-y / 2;
+    }
+    %grid, .grid, [class*='grid--'], [l='grid'] {
       width: calc(100% + #{$margin-x});
       margin-left: $margin-x / -2;
       margin-right: $margin-x / -2;
     }
-    %cell, .cell, [class*='cell--'], [layout='cell'] {
+    %cell, .cell, [class*='cell--'], [l='cell'] {
       display: block; float: left;
       width: 100%;
       padding-left: $margin-x / 2;
       padding-right: $margin-x / 2;
     }
 
-    /////////////
-    // CONTEXT //
-    /////////////
+    @if variable-exists('media') {
 
-    @if variable-exists('contexts') {
+      @each $alias, $medium in $media {
+        $margin-x: get($medium, 'margin-x');
+        $margin-y: get($medium, 'margin-y');
+        $body-right: get($medium, 'body-right');
+        $body-left: get($medium, 'body-left');
 
-      @each $alias, $context in $contexts {
-        $margin-x: get($context, 'margin-x');
-        $body-right: get($context, 'body-right');
-        $body-left: get($context, 'body-left');
+        @include medium($alias) {
 
-        @include context($alias) {
-
-          $orig: context-orig();
+          $orig: medium-orig();
 
           // SPREAD
-          %spread, .spread, [class*='spread--'], [layout='spread'] {
+          %spread, .spread, [class*='spread--'], [l='spread'] {
             @if map-has-key($orig, 'body-left') { padding-left: $body-left; }
             @if map-has-key($orig, 'body-right') { padding-right: $body-right; }
           }
 
+          // SECTION
+          @if map-has-key($orig, 'margin-y') {
+            %section, .section, [class*='section--'], [l='section'] {
+              padding-top: $margin-y / 2;
+              padding-bottom: $margin-y / 2;
+            }
+          }
+
           // WRAP
-          $keys: map-keys($contexts); $wrap-each-to: (); $wrap-each-from: ();
+          $keys: map-keys($media); $wrap-each-to: (); $wrap-each-from: ();
           @each $alias in slice($keys, 1, index($keys, $alias)) {
             $wrap-each-from: append($wrap-each-from, unquote('.wrap--each_from--#{$alias}'), 'comma');
           }
           @each $alias in slice($keys, index($keys, $alias), length($keys)) {
             $wrap-each-to: append($wrap-each-to, unquote('.wrap--each_to--#{$alias}'), 'comma');
           }
-          .wrap--#{$alias} { max-width: context-value('content-width', $alias); }
-          .wrap--each, #{$wrap-each-from}, #{$wrap-each-to} { max-width: context-value('content-width'); }
+          .wrap--#{$alias} { max-width: medium-value('content-width', $alias); }
+          .wrap--each, #{$wrap-each-from}, #{$wrap-each-to} { max-width: medium-value('content-width'); }
 
           // GRID, CELL
           @if map-has-key($orig, 'margin-x') {
-            %grid, .grid, [class*='grid--'], [layout='grid'] {
+            %grid, .grid, [class*='grid--'], [l='grid'] {
               width: calc(100% + #{$margin-x});
               margin-left: $margin-x / -2;
               margin-right: $margin-x / -2;
             }
-            %cell, .cell, [class*='cell--'], [layout='cell'] {
+            %cell, .cell, [class*='cell--'], [l='cell'] {
               padding-left: $margin-x / 2;
               padding-right: $margin-x / 2;
             }
@@ -161,7 +137,7 @@ edge: cycle [d], alpha, omega, both
 //     $right: list-get($margins, right);
 //     $left: list-get($margins, left);
 //   }
-//   $gutter: context-value('margin-x');
+//   $gutter: medium-value('margin-x');
 
 //   $span-n: nth($span, 1);
 //   $span-d: nth($span, 2);
@@ -203,7 +179,7 @@ edge: cycle [d], alpha, omega, both
 //     // @if $right { margin-right: calc(#{$right-width}); }
 //     // require both corrected for nth-child cases
 //     &:nth-child(#{$cycle-d}n+1){
-//       @if $layout-float { clear: left; } // clear if layout is float
+//       @if $layout-grid-float { clear: left; } // clear if layout is float
 //       margin-left: calc(#{$left-corr} + #{$left-width});
 //     }
 //     &:nth-child(#{$cycle-d}n){
@@ -212,7 +188,7 @@ edge: cycle [d], alpha, omega, both
 //   }
 //   @else if $is-alpha {
 //     // clear if layout is float
-//     @if $layout-float { clear: left; }
+//     @if $layout-grid-float { clear: left; }
 //     // require left corrected
 //     margin-left: calc(#{$left-corr} + #{$left-width});
 //     // output right uncorrected if given, or 0

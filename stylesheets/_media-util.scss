@@ -1,0 +1,158 @@
+//                     _ _                    _   _ _
+//                    | (_)                  | | (_) |
+//  _ __ ___   ___  __| |_  __ _ ______ _   _| |_ _| |
+// | '_ ` _ \ / _ \/ _` | |/ _` |______| | | | __| | |
+// | | | | | |  __/ (_| | | (_| |      | |_| | |_| | |
+// |_| |_| |_|\___|\__,_|_|\__,_|       \__,_|\__|_|_|
+
+$current-medium-alias: null;
+
+// [width] medium string function
+@function medium-string($alias1: null, $alias2: null) {
+  @return 'screen'
+    + if($alias1, ' and (min-width: #{get($media, $alias1, breakpoint)})', '')
+    + if($alias2, ' and (max-width: #{get($media, $alias2, breakpoint) - 0.001})', '');
+}
+
+// retrieve current width medium object
+@function medium($medium-alias: $current-medium-alias) {
+  $medium: null;
+  @if $medium-alias { $medium: map-get($media, $medium-alias); }
+  @return if($medium, $medium, $base);
+}
+
+// function to retrieve current medium-data-object based on $current-medium-alias
+@function medium-orig($medium-alias: $current-medium-alias) {
+  $medium: null;
+  @if $medium-alias { $medium: map-get($media-orig, $medium-alias); }
+  @return if($medium, $medium, $base);
+}
+
+// function to retrieve value for current medium
+@function medium-value($key, $alias: $current-medium-alias) {
+  @return map-get(medium($alias), $key);
+}
+
+// ==========================================================================
+// medium() mixins
+// ==========================================================================
+
+// mixin to output width media medium
+@mixin medium($aliases...) {
+
+  // save the medium
+  $prev-medium-alias: $current-medium-alias;
+
+  // get the current alias or at least the previous one if in max-width medium
+  @if length($aliases) > 0 {
+    $current-medium-alias: nth($aliases, 1) or map-prev-key($media, nth($aliases, 2));
+  }
+
+  // run the content in medium
+  @media #{medium-string($aliases...)} { @content }
+
+  // reset the medium (no nesting; could just reset to null)
+  $current-medium-alias: $prev-medium-alias;
+}
+
+// default hd ratio
+$medium-hd-ratio: (3,2);
+
+// hd media query
+@mixin hd($aliases...) {
+
+  $n: nth($medium-hd-ratio, 1);
+  $d: nth($medium-hd-ratio, 2);
+  $ratio: $n/$d;
+
+  // save the medium
+  $prev-medium-alias: $current-medium-alias;
+
+  // get the current alias or at least the previous one if in max-width medium
+  @if length($aliases) > 0 {
+    $current-medium-alias: nth($aliases, 1) or map-prev-key($media, nth($aliases, 2));
+  }
+
+  // run the content in medium
+  @media screen and
+    (-webkit-min-device-pixel-ratio: $ratio),
+    (min--moz-device-pixel-ratio: $ratio),
+    (-o-min-device-pixel-ratio: #{$n}/#{$d}),
+    (min-device-pixel-ratio: $ratio),
+    (min-resolution: $ratio * 96dpi),
+    (min-resolution: $ratio * 1dppx) {
+    @content;
+  }
+
+  // reset the medium (no nesting; could just reset to null)
+  $current-medium-alias: $prev-medium-alias;
+}
+
+// multi width medium -- combines both medium-each() and medium-for()
+@mixin each-medium($options:()) {
+
+  // get 'from', 'to' and 'for'
+  $from: get($options, 'from');
+  $to: get($options, 'to');
+  $for: get($options, 'for');
+
+  // correct 'for' options
+  @if contains(root base default, $from) { $from: null; }
+  @if $for {
+    @if contains($for, margin-y) { $for: append($for, margin-y-modulation)}
+    @if contains($for, margin-x) { $for: append($for, margin-x-modulation)}
+    @if contains($for, font-size) { $for: append($for, font-size-modulation); }
+    @if contains($for, trim) { $for: append($for, line-height); }
+    @if contains($for, line-height) { $for: append($for, trim); }
+  }
+
+  // output the @content raw, if $from is null
+  @if not $from { @content; }
+
+  // determine other referenced media
+  $medium-aliases: map-keys($media);
+  $sliced-aliases: slice($medium-aliases,
+      if($from, index($medium-aliases, $from), 1),
+      if($to, index($medium-aliases, $to) - 1, length($medium-aliases)));
+
+  // conditional per-medium actions
+  @each $medium-alias in $sliced-aliases {
+    @if not $for { @include medium($medium-alias) { @content; } }
+    @else if contains-any(keys(medium-orig($medium-alias)), $for) {
+      @include medium($medium-alias) { @content; }
+    }
+  }
+}
+
+
+// ==========================================================================
+// medium-related units
+// ==========================================================================
+
+// unit preference
+$media-use-rems: true;
+
+// function to convert value(s) to rem, following medium scale
+@function rem($values...) {
+  @if $values == null { @return null; }
+  $scale: medium-value('html-scale');
+  $unit: if($media-use-rems, 'rem', 'em');
+  $result: ();
+  @each $value in $values {
+    @if index('rem' 'em', unit($value)) { $result: append($result, assert($value, $unit), 'space'); }
+    @else { $result: append($result, assert($value / $scale / 16, $unit), 'space'); }
+  }
+  @return if(length($result) > 1, $result, nth($result, 1));
+}
+
+// function to convert value(s) to px, following medium scale
+@function px($values...) {
+  @if $values == null { @return null; }
+  $scale: medium-value('html-scale');
+  $result: ();
+  @each $value in $values {
+    @if unit($value) == 'px' { $result: append($result, $value, 'space'); }
+    @else { $result: append($result, assert($value * $scale * 16, 'px'), 'space'); }
+  }
+  @return if(length($result) > 1, $result, nth($result, 1));
+}

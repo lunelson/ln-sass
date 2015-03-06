@@ -1,0 +1,58 @@
+//  _                                           _
+// | |                                         | |
+// | |_ _   _ _ __   ___   __ _ _ __ __ _ _ __ | |__  _   _
+// | __| | | | '_ \ / _ \ / _` | '__/ _` | '_ \| '_ \| | | |
+// | |_| |_| | |_) | (_) | (_| | | | (_| | |_) | | | | |_| |
+//  \__|\__, | .__/ \___/ \__, |_|  \__,_| .__/|_| |_|\__, |
+//       __/ | |           __/ |         | |           __/ |
+//      |___/|_|          |___/          |_|          |___/
+
+@function mscale($index, $factor, $spread) { @return pow($factor, $index/$spread); }
+
+$font-size: 20px;
+$font-size-mod: 2;
+$margin-x-mod: 1.5;
+$margin-y-mod: 1.5;
+$margin-x: 1rem;
+$margin-y: 2rem;
+
+@function scale($index, $basis: 10) {
+  $factor: $margin-x-mod;
+  $spread: ceil($basis/6);
+  @return pow($factor, $index/$spread);
+}
+
+@function margin-x($index: 0, $basis: 10) {
+  $factor: $margin-x-mod;
+  $spread: ceil($basis/6);
+  @return pow($factor, $index/$spread) * $margin-x;
+}
+
+@function margin-y($index: 0, $basis: 10) {
+  $factor: $margin-y-mod;
+  $spread: ceil($basis/6);
+  @return pow($factor, $index/$spread) * $margin-y;
+}
+
+@function size($index: 0, $basis: 10) {
+  $factor: $font-size-mod;
+  $spread: ceil($basis/6);
+  @return pow($factor, $index/$spread) * $font-size;
+}
+
+// .test {
+//   font-size: size(0);
+//   font-size: size(1);
+//   font-size: size(2);
+//   font-size: size(3);
+//   font-size: size(4);
+//   font-size: size(5);
+
+//   margin: margin-y() margin-x();
+//   margin: margin-y() margin-x(1);
+//   margin: margin-y() margin-x(2);
+//   margin: margin-y() margin-x(3);
+//   margin: margin-y() margin-x(4);
+//   margin: margin-y() margin-x(5);
+
+// }

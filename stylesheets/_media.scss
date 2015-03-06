@@ -1,12 +1,3 @@
-@function one($unit) {
-  $one: ('em': 1em, 'ex': 1ex, 'ch': 1ch, 'rem': 1rem, '%': 1%, 'vw': 1vw, 'vh': 1vh, 'vmin': 1vmin, 'vmax': 1vmax, 'cm': 1cm, 'mm': 1mm, 'in': 1in, 'px': 1px, 'pt': 1pt, 'pc': 1pc, 'deg': 1deg, 'grad': 1grad, 'rad': 1rad, 'turn': 1turn, 's': 1s, 'ms': 1ms, 'dpi': 1dpi, 'dpcm': 1dpcm, 'dppx': 1dppx);
-  @return map-get($one, $unit) or 1;
-}
-
-@function strip($value) { @return if(unitless($value), $value, $value / one(unit($value))); }
-@function assert($value, $unit: '') { @return strip($value) * one($unit); }
-@function strip-alt($value){ @return if(unitless($value), $value, $value / (0 * $value + 1)); }
-
 //                     _ _
 //                    | (_)
 //  _ __ ___   ___  __| |_  __ _
@@ -14,104 +5,55 @@
 // | | | | | |  __/ (_| | | (_| |
 // |_| |_| |_|\___|\__,_|_|\__,_|
 
-$default-medium: (
-  font-size: 16px,
-  line-height: 1.5,
-  margin-x: 1rem,
-  margin-y: 1.5rem,
-  page-top: 1rem,
-  page-right: 1rem,
-  page-bottom: 1rem,
-  page-left: 1rem
-) !default;
+$base: () !default;
+$base-orig: ();
 
 $media: (
-  alpha: (min-width: 20em),
-  beta: (min-width: 30em),
-  gamma: (min-width: 48em),
-  delta: (min-width: 64em),
-  epsilon: (min-width: 80em)
+  alpha: (breakpoint: 20em),
+  beta: (breakpoint: 30em),
+  gamma: (breakpoint: 48em),
+  delta: (breakpoint: 64em),
+  epsilon: (breakpoint: 80em)
 ) !default;
-
-// backup maps
 $media-orig: ();
 
-// ==========================================================================
-// parse-media()
-// ==========================================================================
+@mixin parse-media($output: true) {
 
-@mixin parse-media() {
+  // backup and merge against defaults
+  $base-orig: $base;
 
-  /////////////////////
-  // default-medium //
-  /////////////////////
+  $base: map-merge((
+      font-size: 16px,
+      font-size-mod: 1.5,
+      line-height: 1.5,
+      margin-x: 1rem,
+      margin-x-mod: 1.5,
+      margin-y: 1.5rem,
+      margin-y-mod: 1.5,
+      body-top: 1rem,
+      body-right: 1rem,
+      body-bottom: 1rem,
+      body-left: 1rem,
+    ), $base);
 
-  // control for non-pixel-united font-size value
+  // control for font-size and line-height units/non-units
   $html-scale: 1;
-  $px-font-size: map-get($default-medium, 'font-size');
-  @if unit($px-font-size) != 'px' { $html-scale: strip($px-font-size); $px-font-size: $px-font-size * 16px; }
-  @else { $html-scale: $px-font-size / 16px; }
+  $font-size: map-get($base, 'font-size');
+  $line-height: map-get($base, 'line-height');
+  @if unit($font-size) != 'px' {
+    $html-scale: strip($font-size);
+    $font-size: assert($font-size, px) * 16; }
+  @else { $html-scale: $font-size / 16px; }
+  @if unit($line-height) == 'px' { $line-height: $line-height / $font-size; }
 
   // control for pixel-united other values
-  $normalized-values: ('html-scale': $html-scale, 'font-size': $px-font-size);
-  @each $prop, $value in map-remove($default-medium, 'font-size') {
-    @if unit($value) == 'px' { $normalized-values: map-merge($normalized-values, ($prop: $value / $px-font-size * 1rem)); }
+  $corrected-medium: ('html-scale': $html-scale, 'font-size': $font-size, 'line-height': $line-height);
+  @each $key, $value in map-remove($base, 'font-size', 'line-height') {
+    @if unit($value) == 'px' { $corrected-medium: map-merge($corrected-medium, ($key: $value / $font-size * 1rem)); }
   }
 
   // merge it all back to default
-  $default-medium: map-merge($default-medium, $normalized-values);
-
-  //////////////
-  // media //
-  //////////////
-
-  // backup data first
-  $media-orig: $media;
-
-  @if $media != () {
-
-    // maintain a reference-medium upon which to merge each context in media
-    $reference-medium: $default-medium;
-
-    // collect and sort the min-width media
-    $min-width-media: maps-sort(maps-collect($media, 'min-width'), 'min-width');
-
-    @each $current-alias, $current-medium in $min-width-media {
-
-      // merge context to reference
-      $reference-medium: map-merge($reference-medium, $current-medium);
-
-      // control for non-pixel-united font-size value
-      $html-scale: 1;
-      $px-font-size: map-get($reference-medium, 'font-size');
-      @if unit($px-font-size) != 'px' { $html-scale: $px-font-size; $px-font-size: $px-font-size * 16px; }
-      @else { $html-scale: $px-font-size / 16px; }
-
-      // control for pixel-united other values
-      $normalized-values: ('html-scale': $html-scale, 'font-size': $px-font-size);
-      @each $prop, $value in map-remove($default-medium, 'font-size', 'min-width') {
-        @if unit($value) == 'px' { $normalized-values: map-merge($normalized-values, ($prop: $value / $px-font-size * 1rem)); }
-      }
-      $reference-medium: map-merge($reference-medium, $normalized-values);
-
-      // merge in content-width
-      $reference-medium: map-merge($reference-medium, (
-        'content-width': strip(map-get($reference-medium, 'min-width')) / $html-scale - map-get($reference-medium, 'page-left') - map-get($reference-medium, 'page-right')
-      ));
-
-      // map-merge it all back to media
-      $media: map-merge($media, ($current-alias: $reference-medium));
-    }
-  }
-}
-
-// ==========================================================================
-// media()
-// ==========================================================================
-
-@mixin media($output: true){
-
-  @include parse-media();
+  $base: map-merge($base, $corrected-medium);
 
   @if $output {
 
@@ -121,125 +63,108 @@ $media-orig: ();
 
     // JSON format string output for pickup in JS
 
+    $medium-key-list: ();
+    @each $key in map-keys($media) {
+      $medium-key-list: append($medium-key-list, quote($key), 'comma');
+    }
+
     body::before {
-      display: block;
       width: 0;
       height: 0;
+      display: block;
       overflow: hidden;
-      content: '{ "current" : "default", "all": [#{map-keys($media)}] }';
+      content: '{ "current" : "default", "all": ["#{$medium-key-list}"] }';
     }
-    head { font-family: '{ "current" : "default", "all": [#{map-keys($media)}] }'; }
+
+    // nb: some approaches recommend using html instead of head here, and then resetting real font-family on body
+    head { font-family: '{ "current" : "default", "all": ["#{$medium-key-list}"] }'; }
+
+    .util--medium { width: 0; transition: width 1ms; }
 
     // styles
 
-    html { font-size: percentage(get($default-medium, 'html-scale')); }
+    html { font-size: percentage(map-get($base, 'html-scale')); }
 
     body {
-      line-height: get($default-medium, 'line-height');
-      padding-top: get($default-medium, 'page-top');
-      padding-bottom: get($default-medium, 'page-bottom');
+      line-height: map-get($base, 'line-height');
+      padding-top: map-get($base, 'body-top');
+      padding-bottom: map-get($base, 'body-bottom');
     }
+  }
 
-    //////////////
-    // media //
-    //////////////
+  //////////////
+  // media //
+  //////////////
 
-    @each $current-alias, $current-medium in $media {
+  // backup data first
+  $media-orig: $media;
 
-      $font-size: map-get($current-medium, 'font-size');
-      $html-scale: map-get($current-medium, 'html-scale');
-      $line-height: map-get($current-medium, 'line-height');
-      $margin-x: map-get($current-medium, 'margin-x');
-      $margin-y: map-get($current-medium, 'margin-y');
-      $page-top: map-get($current-medium, 'page-top');
-      $page-bottom: map-get($current-medium, 'page-bottom');
+  // TODO: add a conditional re-assignment here, rather than the default thing above
 
-      @include context($current-alias) {
+  @if $media != () {
 
-        // JSON format string output for pickup in JS
+    // maintain a reference-medium upon which to merge each medium in media
+    $reference-medium: $base;
 
-        body::before {
-          display: block;
-          width: 0;
-          height: 0;
-          overflow: hidden;
-          content: '{ "current" : "#{$current-alias}", "all": [#{map-keys($media)}] }';
+    // collect and sort the breakpoint media
+    $sorted-media: maps-sort(maps-collect($media, 'breakpoint'), 'breakpoint');
+
+    @each $current-alias, $current-medium in $sorted-media {
+
+      // merge medium to reference
+      $reference-medium: map-merge($reference-medium, $current-medium);
+
+      // correct for font-size and line-height units/non-units
+      $html-scale: 1;
+      $font-size: map-get($reference-medium, 'font-size');
+      $line-height: map-get($reference-medium, 'line-height');
+      @if unit($font-size) != 'px' {
+        $html-scale: strip($font-size);
+        $font-size: assert($font-size, px) * 16; }
+      @else { $html-scale: $font-size / 16px; }
+      @if unit($line-height) == 'px' { $line-height: $line-height / $font-size; }
+      // ..and for pixel-united other values
+      $corrected-medium: ('html-scale': $html-scale, 'font-size': $font-size, 'line-height': $line-height);
+      @each $key, $value in map-remove($reference-medium, 'font-size', 'breakpoint', 'line-height') {
+        @if unit($value) == 'px' { $corrected-medium: map-merge($corrected-medium, ($key: $value / $font-size * 1rem)); }
+      }
+      // merge corrections back to reference
+      $reference-medium: map-merge($reference-medium, $corrected-medium);
+
+      // merge some additions to reference
+      $device-width: assert(map-get($reference-medium, 'breakpoint') / $html-scale, rem);
+      $content-width: $device-width - (map-get($reference-medium, 'body-left') + map-get($reference-medium, 'body-right'));
+      $reference-medium: map-merge($reference-medium, ('device-width': $device-width, 'content-width': $content-width));
+
+      // merge reference back to master
+      $media: map-merge($media, ($current-alias: $reference-medium));
+
+      @if $output {
+        $font-size: map-get($current-medium, 'font-size');
+        $line-height: map-get($current-medium, 'line-height');
+        $body-top: map-get($current-medium, 'body-top');
+        $body-bottom: map-get($current-medium, 'body-bottom');
+
+        @include medium($current-alias) {
+
+          body::before { content: '{ "current" : "#{$current-alias}", "all": ["#{$medium-key-list}"] }'; }
+          head { font-family: '{ "current" : "#{$current-alias}", "all": ["#{$medium-key-list}"] }'; }
+
+          .util--medium { width: index(map-keys($media), $current-alias) * 1px; }
+
+          // output CSS if spec'd by user
+
+          @if $font-size { html { font-size: percentage(map-get($reference-medium, 'html-scale')); } }
+          @if $line-height { body { line-height: map-get($reference-medium, 'line-height'); } }
+          @if $body-top { body { margin-top: map-get($reference-medium, 'body-top'); } }
+          @if $body-bottom { body { margin-bottom: map-get($reference-medium, 'body-bottom'); } }
+
         }
-        head { font-family: '{ "current" : "#{$current-alias}", "all": [#{map-keys($media)}] }'; }
 
-        // output CSS if spec'd by user
-
-        @if $font-size { html { font-size: percentage($html-scale); } }
-        @if $line-height { body { line-height: $line-height; } }
-        @if $page-top { body { margin-top: $page-top; } }
-        @if $page-bottom { body { margin-bottom: $page-bottom; } }
-
+        // add any additional content
+        @content;
       }
     }
-
-    // add any additional content
-    @content;
   }
 }
 
-//                  _            _                _   _ _
-//                 | |          | |              | | (_) |
-//   ___ ___  _ __ | |_ _____  _| |_ ______ _   _| |_ _| |
-//  / __/ _ \| '_ \| __/ _ \ \/ / __|______| | | | __| | |
-// | (_| (_) | | | | ||  __/>  <| |_       | |_| | |_| | |
-//  \___\___/|_| |_|\__\___/_/\_\\__|       \__,_|\__|_|_|
-
-// vars to hold current media
-$current-medium-alias: null;
-
-///////////////////
-// WIDTH CONTEXTS //
-///////////////////
-
-// [width] context string function
-@function context-string($alias1: null, $alias2: null) {
-  @return 'screen'
-    + if($alias1, ' and (min-width: #{get($media, $alias1, min-width)})', '')
-    + if($alias2, ' and (max-width: #{get($media, $alias2, min-width) - 0.001})', '');
-}
-
-// retrieve current width context object
-@function get-medium($context-alias: $current-medium-alias) {
-  $context: null;
-  @if $context-alias { $context: get($media, $context-alias); }
-  @return if($context, $context, $default-medium);
-}
-
-// function to retrieve current context-data-object based on $current-medium-alias
-@function get-medium($context-alias: $current-medium-alias) {
-  $context: null;
-  @if $context-alias { $context: get($media-orig, $context-alias); }
-  @return if($context, $context, $default-medium);
-}
-
-// function to retrieve value for current context
-@function get-medium-value($key, $alias: $current-medium-alias) {
-  @return get(get-medium($alias), $key);
-}
-
-// aliases
-@function context-value($args...) { @return get-medium-value($args...); }
-@function qval($args...) { @return get-medium-value($args...); }
-
-// mixin to output width media context
-@mixin context($aliases...) {
-
-  // save the context (not really necessary cause there's no nesting)
-  $context-temp: $current-medium-alias;
-
-  // save current alias or at least the previous one if in max-width context
-  // @if length($aliases) > 0 { $current-medium-alias: nth($aliases, 1) or map-prev-key($media, nth($aliases, 2)); }
-  // TODO: revert the line above, remove line below, when map-prev-key is implemented
-  $current-medium-alias: nth($aliases, 1);
-
-  // run the content in context
-  @media #{context-string($aliases...)} { @content }
-
-  // reset the context (no nesting; could just reset to null)
-  $current-medium-alias: $context-temp;
-}

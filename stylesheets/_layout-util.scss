@@ -1,0 +1,107 @@
+//       _     _ _     _        _                         _
+//      | |   (_) |   | |      | |                       | |
+//   ___| |__  _| | __| |______| | __ _ _   _  ___  _   _| |_
+//  / __| '_ \| | |/ _` |______| |/ _` | | | |/ _ \| | | | __|
+// | (__| | | | | | (_| |      | | (_| | |_| | (_) | |_| | |_
+//  \___|_| |_|_|_|\__,_|      |_|\__,_|\__, |\___/ \__,_|\__|
+//                                       __/ |
+//                                      |___/
+
+// RE peudo elements
+
+// http://nicolasgallagher.com/an-introduction-to-css-pseudo-element-hacks/
+// http://css-tricks.com/pseudo-element-roundup/
+
+// RE table display
+
+// table-layout - CSS | MDN | https://developer.mozilla.org/en-US/docs/Web/CSS/table-layout
+// Fixed Table Layouts | CSS-Tricks | http://css-tricks.com/fixing-tables-long-strings/
+// ungrid - the simplest responsive css grid | https://chrisnager.github.io/ungrid/
+// Pure CSS, equal-width navigation tabs | http://jsfiddle.net/csswizardry/zfSt4/
+
+
+@function child-selector($selector) {
+  @if str-index($selector, '&'){
+    @return '#{$selector}';
+  } @else {
+    @return '& > #{$selector}';
+  }
+}
+
+@mixin child-layout($selector, $type, $options...) {
+
+  ///////////
+  // TABLE //
+  ///////////
+
+  @if index(table-cell table-row cell row, $type) {
+    width: 100%; // force auto size of children
+    display: table;
+    table-layout: fixed;
+    border-collapse: collapse;
+    #{child-selector($selector)} {
+      @if index(table-row row, $type) {
+        display: table-row;
+        height: auto; // base setting
+        @if index($options, center) or index($options, centre) { text-align: center; }
+        @else if index($options, right) { text-align: right;}
+        @else { text-align: left; }
+      }
+      @else {
+        display: table-cell;
+        width: auto; // base setting
+        @if index($options, bottom) { vertical-align: bottom; }
+        @else if index($options, middle) { vertical-align: middle;}
+        @else { vertical-align: top; }
+      }
+      overflow: hidden;
+      @content;
+    }
+  }
+
+  //////////////////
+  // INLINE BLOCK //
+  //////////////////
+
+  @else if index(inline-block iblock ib, $type) {
+    font-size: 0px;
+    @if index($options, justify) {
+      text-align: justify;
+      &:after, #{child-selector($selector)} {
+        display: inline-block;
+        max-width: 100%; // ff bug
+        @if index($options, bottom) { vertical-align: bottom; }
+        @else if index($options, middle) { vertical-align: middle;}
+        @else { vertical-align: top; }
+      }
+      &:after {
+        content: '';
+        width: 100%;
+      }
+      #{child-selector($selector)} {
+        font-size: 1rem;
+        @content;
+      }
+    }
+    @else {
+      &:before, #{child-selector($selector)} {
+        display: inline-block;
+        max-width: 100%; // ff bug
+        @if index($options, bottom) { vertical-align: bottom; }
+        @else if index($options, middle) { vertical-align: middle;}
+        @else { vertical-align: top; }
+      }
+      &:before {
+        content: '';
+        height: 100%;
+      }
+      #{child-selector($selector)} {
+        font-size: 1rem;
+        @content;
+      }
+      @if index($options, center) or index($options, centre) { text-align: center; }
+      @else if index($options, right) { text-align: right;}
+      @else { text-align: left; }
+    }
+  }
+}
