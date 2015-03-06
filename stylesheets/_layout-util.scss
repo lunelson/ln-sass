@@ -105,3 +105,194 @@
     }
   }
 }
+
+// @mixin col($span, $margins-and-edge...) {}
+// span: 1 or 2 item list
+// margins: list-map with right and/or left args
+// edge: cycle [d], alpha, omega, both
+// .test {
+//   @include col(1 2, right 1, left -1);
+//   @include col(1 2, cycle);
+//   @include col(1 2, right 1, cycle);
+//   @include col(1 1)
+//   // if no span argp
+// }
+
+
+
+
+// @mixin cell2($span, $margins-and-edge...){
+//   $margins: null; $edge: cycle;
+//   // $right: null; $left: null;
+//   $args-length: length($margins-and-edge);
+//   @if $args-length > 0 {
+//     $margins: slice($margins-and-edge, 1, $args-length - 1);
+//     $edge: nth($margins-and-edge, $args-length);
+//     $right: list-get($margins, right);
+//     $left: list-get($margins, left);
+//   }
+//   $gutter: medium-value('margin-x');
+
+//   $span-n: nth($span, 1);
+//   $span-d: nth($span, 2);
+//   width: calc((100% + #{$gutter}) * (#{$span-n} / #{$span-d}));
+
+//   $left-n: nth($left, 1);
+//   $left-d: if(length($left) > 1, nth($left, 2), $span-d);
+//   $left-width: if($left, '(100% + #{$gutter}) * (#{$left-n} / #{$left-d})', '0%');
+
+//   $right-n: nth($right, 1);
+//   $right-d: if(length($right) > 1, nth($right, 2), $span-d);
+//   $right-width: if($right, '(100% + #{$gutter}) * (#{$right-n} / #{$right-d})', '0%');
+
+//   $cycle-d: if(length($edge) > 1, nth($edge, 2), $span-d);
+
+//   $is-alpha: $edge == alpha;
+//   $is-omega: $edge == omega;
+//   $is-cycle: nth($edge, 1) == cycle;
+
+//   $left-corr: if($is-alpha or $is-cycle, '#{$gutter / -2}', '0');
+//   $right-corr: if($is-omega or $is-cycle, '#{$gutter / -2}', '0');
+
+//   @if index(out outside, $left-n) {
+//     margin-left: calc(#{$left-corr} + (100% + #{$gutter}) * (-#{$span-n} / #{$span-d}));
+//   }
+//   @else if index(out outside, $right-n) {
+//     margin-right: calc(#{$right-corr} + #{$right-width});
+//   }
+//   @else if $cycle-d == 1 {
+//     // require both corrected
+//     margin-left: calc(#{$left-corr} + #{$left-width});
+//     margin-right: calc(#{$right-corr} + #{$right-width});
+//   }
+//   @else if $is-cycle and $cycle-d > 1 {
+//     // output both uncorrected if given
+//     margin-right: if($right, calc(#{$right-width}), 0);
+//     margin-left: if($left, calc(#{$left-width}), 0);
+//     // @if $left { margin-left: calc(#{$left-width}); }
+//     // @if $right { margin-right: calc(#{$right-width}); }
+//     // require both corrected for nth-child cases
+//     &:nth-child(#{$cycle-d}n+1){
+//       @if $layout-grid-float { clear: left; } // clear if layout is float
+//       margin-left: calc(#{$left-corr} + #{$left-width});
+//     }
+//     &:nth-child(#{$cycle-d}n){
+//       margin-right: calc(#{$right-corr} + #{$right-width});
+//     }
+//   }
+//   @else if $is-alpha {
+//     // clear if layout is float
+//     @if $layout-grid-float { clear: left; }
+//     // require left corrected
+//     margin-left: calc(#{$left-corr} + #{$left-width});
+//     // output right uncorrected if given, or 0
+//     margin-right: if($right, calc(#{$right-width}), 0);
+//   }
+//   @else if $is-omega {
+//     // require right corrected
+//     margin-right: calc(#{$right-corr} + #{$right-width});
+//     // output left uncorrected if given, or 0
+//     margin-left: if($left, calc(#{$left-width}), 0);
+//   }
+//   @else {
+//     // output both uncorrected if given, or 0
+//     margin-right: if($right, calc(#{$right-width}), 0);
+//     margin-left: if($left, calc(#{$left-width}), 0);
+//     // @if $left { margin-left: calc(#{$left-width}); }
+//     // @if $right { margin-right: calc(#{$right-width}); }
+//     // require both corrected for first-/last-child cases
+//     &:first-child, &.alpha { margin-left: calc(#{$gutter / -2} + #{$left-width}); }
+//     &:last-child, &.omega { margin-right: calc(#{$gutter / -2} + #{$right-width}); }
+
+//   }
+
+
+//   .debug {
+//     span: $span;
+//     right: $right;
+//     right-width: $right-width;
+//     left: $left-width;
+//     edge: $edge;
+//     cycle-d: $cycle-d;
+//   }
+
+// }
+
+// @mixin cell($spec: ()) {
+
+//   $span: map-get($spec, span);
+//   $left: map-get($spec, left);
+//   $right: map-get($spec, right);
+//   $edge: map-get($spec, edge) or map-get($spec, edges) or cycle;
+
+//   $is-alpha: $edge == alpha;
+//   $is-omega: $edge == omega;
+//   $is-both: $edge == both;
+//   $is-cycle: nth($edge, 1) == cycle;
+
+//   $span-n: nth($span, 1);
+//   $span-d: nth($span, 2);
+//   width: calc((100% + #{$gutter}) * (#{$span-n} / #{$span-d}));
+
+//   $left-n: nth($left, 1);
+//   $left-d: if(length($left) > 1, nth($left, 2), $span-d);
+//   $left-width: if($left, '(100% + #{$gutter}) * (#{$left-n} / #{$left-d})', '0%');
+
+//   $right-n: nth($right, 1);
+//   $right-d: if(length($right) > 1, nth($right, 2), $span-d);
+//   $right-width: if($right, '(100% + #{$gutter}) * (#{$right-n} / #{$right-d})', '0%');
+
+//   $left-corr: if($is-alpha or $is-both or $is-cycle, '#{$gutter / -2}', '0');
+//   $right-corr: if($is-omega or $is-both or $is-cycle, '#{$gutter / -2}', '0');
+
+//   @if index(out outside, $left-n) {
+//     margin-left: calc(#{$left-corr} + (100% + #{$gutter}) * (-#{$span-n} / #{$span-d}));
+//     // margin-right: 100%;
+//     // margin-bottom: -100%;
+//   }
+//   @else if index(out outside, $right-n) {
+//     margin-right: calc(#{$right-corr} + #{$right-width});
+//     // margin-left: 100%;
+//     // margin-bottom: -100%;
+//   }
+//   @else if $is-cycle and $cycle-d > 1 {
+//     // output both uncorrected if given
+//     // require both corrected for nth-child cases
+//     @if $left { margin-left: calc(#{$left-width}); }
+//     @if $right { margin-right: calc(#{$right-width}); }
+//     &:nth-child(#{$cycle-d}n+1){
+//       @if $float { clear: left; } // clear if layout is float
+//       margin-left: calc(#{$left-corr} + #{$left-width});
+//     }
+//     &:nth-child(#{$cycle-d}n){
+//       margin-right: calc(#{$right-corr} + #{$right-width});
+//     }
+//   }
+//   @else if $cycle-d == 1 or $is-both {
+//     // require both corrected
+//     margin-left: calc(#{$left-corr} + #{$left-width});
+//     margin-right: calc(#{$right-corr} + #{$right-width});
+//   }
+//   @else if $is-alpha {
+//     // require left corrected; output right if given
+//     @if $float { clear: left; } // clear if layout is float
+//     margin-left: calc(#{$left-corr} + #{$left-width});
+//     @if $right { margin-right: calc(#{$right-width}); }
+//   }
+//   @else if $is-omega {
+//     // require right corrected; output left if given
+//     margin-right: calc(#{$right-corr} + #{$right-width});
+//     @if $left { margin-left: calc(#{$left-width}); }
+//   }
+//   @else {
+//     // output both uncorrected if given
+//     // require both corrected for first-/last-child cases
+//     @if $left { margin-left: calc(#{$left-width}); }
+//     @if $right { margin-right: calc(#{$right-width}); }
+//     &:first-child, &.alpha { margin-left: calc(#{$gutter / -2} + #{$left-width}); }
+//     &:last-child, &.omega { margin-right: calc(#{$gutter / -2} + #{$right-width}); }
+
+//   }
+// }
+
+

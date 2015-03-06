@@ -36,24 +36,21 @@ $media-orig: ();
       body-left: 1rem,
     ), $base);
 
-  // control for font-size and line-height units/non-units
-  $html-scale: 1;
+  // correct for font-size and line-height units/non-units
   $font-size: map-get($base, 'font-size');
   $line-height: map-get($base, 'line-height');
-  @if unit($font-size) != 'px' {
-    $html-scale: strip($font-size);
-    $font-size: assert($font-size, px) * 16; }
-  @else { $html-scale: $font-size / 16px; }
+  @if unit($font-size) == 'px' { $font-size: $font-size / 16px; }
+  @else { $font-size: assert($font-size, rem); }
   @if unit($line-height) == 'px' { $line-height: $line-height / $font-size; }
-
-  // control for pixel-united other values
-  $corrected-medium: ('html-scale': $html-scale, 'font-size': $font-size, 'line-height': $line-height);
+  $html-scale: strip($font-size);
+  // .. and for pixel-united other values
+  $corrected-values: ('html-scale': $html-scale, 'font-size': $font-size, 'line-height': $line-height);
   @each $key, $value in map-remove($base, 'font-size', 'line-height') {
-    @if unit($value) == 'px' { $corrected-medium: map-merge($corrected-medium, ($key: $value / $font-size * 1rem)); }
+    @if unit($value) == 'px' { $corrected-values: map-merge($corrected-values, ($key: $value / $font-size * 1rem)); }
   }
 
   // merge it all back to default
-  $base: map-merge($base, $corrected-medium);
+  $base: map-merge($base, $corrected-values);
 
   @if $output {
 
@@ -109,27 +106,25 @@ $media-orig: ();
     // collect and sort the breakpoint media
     $sorted-media: maps-sort(maps-collect($media, 'breakpoint'), 'breakpoint');
 
-    @each $current-alias, $current-medium in $sorted-media {
+    @each $medium-alias, $medium in $sorted-media {
 
       // merge medium to reference
-      $reference-medium: map-merge($reference-medium, $current-medium);
+      $reference-medium: map-merge($reference-medium, $medium);
 
       // correct for font-size and line-height units/non-units
-      $html-scale: 1;
       $font-size: map-get($reference-medium, 'font-size');
       $line-height: map-get($reference-medium, 'line-height');
-      @if unit($font-size) != 'px' {
-        $html-scale: strip($font-size);
-        $font-size: assert($font-size, px) * 16; }
-      @else { $html-scale: $font-size / 16px; }
+      @if unit($font-size) == 'px' { $font-size: $font-size / 16px; }
+      @else { $font-size: assert($font-size, rem); }
       @if unit($line-height) == 'px' { $line-height: $line-height / $font-size; }
+      $html-scale: strip($font-size);
       // ..and for pixel-united other values
-      $corrected-medium: ('html-scale': $html-scale, 'font-size': $font-size, 'line-height': $line-height);
+      $corrected-values: ('html-scale': $html-scale, 'font-size': $font-size, 'line-height': $line-height);
       @each $key, $value in map-remove($reference-medium, 'font-size', 'breakpoint', 'line-height') {
-        @if unit($value) == 'px' { $corrected-medium: map-merge($corrected-medium, ($key: $value / $font-size * 1rem)); }
+        @if unit($value) == 'px' { $corrected-values: map-merge($corrected-values, ($key: $value / $font-size * 1rem)); }
       }
       // merge corrections back to reference
-      $reference-medium: map-merge($reference-medium, $corrected-medium);
+      $reference-medium: map-merge($reference-medium, $corrected-values);
 
       // merge some additions to reference
       $device-width: assert(map-get($reference-medium, 'breakpoint') / $html-scale, rem);
@@ -137,20 +132,20 @@ $media-orig: ();
       $reference-medium: map-merge($reference-medium, ('device-width': $device-width, 'content-width': $content-width));
 
       // merge reference back to master
-      $media: map-merge($media, ($current-alias: $reference-medium));
+      $media: map-merge($media, ($medium-alias: $reference-medium));
 
       @if $output {
-        $font-size: map-get($current-medium, 'font-size');
-        $line-height: map-get($current-medium, 'line-height');
-        $body-top: map-get($current-medium, 'body-top');
-        $body-bottom: map-get($current-medium, 'body-bottom');
+        $font-size: map-get($medium, 'font-size');
+        $line-height: map-get($medium, 'line-height');
+        $body-top: map-get($medium, 'body-top');
+        $body-bottom: map-get($medium, 'body-bottom');
 
-        @include medium($current-alias) {
+        @include medium($medium-alias) {
 
-          body::before { content: '{ "current" : "#{$current-alias}", "all": ["#{$medium-key-list}"] }'; }
-          head { font-family: '{ "current" : "#{$current-alias}", "all": ["#{$medium-key-list}"] }'; }
+          body::before { content: '{ "current" : "#{$medium-alias}", "all": ["#{$medium-key-list}"] }'; }
+          head { font-family: '{ "current" : "#{$medium-alias}", "all": ["#{$medium-key-list}"] }'; }
 
-          .util--medium { width: index(map-keys($media), $current-alias) * 1px; }
+          .util--medium { width: index(map-keys($media), $medium-alias) * 1px; }
 
           // output CSS if spec'd by user
 
@@ -160,9 +155,6 @@ $media-orig: ();
           @if $body-bottom { body { margin-bottom: map-get($reference-medium, 'body-bottom'); } }
 
         }
-
-        // add any additional content
-        @content;
       }
     }
   }
