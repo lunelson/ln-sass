@@ -1,0 +1,26 @@
+//  _                                           _
+// | |                                         | |
+// | |_ _   _ _ __   ___   __ _ _ __ __ _ _ __ | |__  _   _
+// | __| | | | '_ \ / _ \ / _` | '__/ _` | '_ \| '_ \| | | |
+// | |_| |_| | |_) | (_) | (_| | | | (_| | |_) | | | | |_| |
+//  \__|\__, | .__/ \___/ \__, |_|  \__,_| .__/|_| |_|\__, |
+//       __/ | |           __/ |         | |           __/ |
+//      |___/|_|          |___/          |_|          |___/
+
+// extend $contexts object to track modulation factors, per context, for margins and font-sizes
+// to allow size and margin differentials to change on breakpoints
+
+// STEPS
+// - mark contexts as being margin-bp, if margin or margin-modulation changes
+// - mark contexts as being size-bp, if font-size, or font-size-modulation changes
+// - mark contexts as being trim-bp (or line-height-bp), if line-height changes
+
+@function margin($index){ // alt: margin-x(), margin-y()
+  // get: current margin
+  // get: margin modulation factor
+  // return: modular rem value per index, modulation factor, TIMES current margin
+}
+@function font-size($index){ // alt: size()
+  // get: font-size modulation factor
+  // return: modular rem value per index, modulation factor
+}
