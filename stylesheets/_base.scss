@@ -1,0 +1,86 @@
+//  _
+// | |
+// | |__   __ _ ___  ___
+// | '_ \ / _` / __|/ _ \
+// | |_) | (_| \__ \  __/
+// |_.__/ \__,_|___/\___|
+
+$global: (
+  hd-ratio: (3 2),
+  em-for-rem: false,
+  force-rems: true,
+  debug: false,
+  debug-color: rgba(0, 0, 0, 0.05)
+);
+
+$base: (
+  font-size: 16px,
+  line-height: 1.5,
+  margin-x: 1rem,
+  margin-y: 1.5rem,
+  page-top: 1rem,
+  page-right: 1rem,
+  page-bottom: 1rem,
+  page-left: 1rem
+) !default;
+
+@mixin setup-base($output: true){
+
+  // TODO: make this code handle any unit on font-size and line-height
+
+  // prep any values to merge back
+  $font-size: get($base, 'font-size');
+  $base-additions: (
+    'html-scale': $font-size / 16px
+  );
+
+  // proof/convert values other than font-size and line-height
+  @each $key, $value in map-remove($base, 'font-size') {
+    @if unit($value) == 'px' { $base-additions: set($base-additions, $key, $value / $font-size * 1rem); }
+  }
+
+  // merge it all back to base
+  $base: merge($base, $base-additions);
+
+  @if $output {
+
+    *, *:before, *:after { box-sizing: inherit; } // inherit box sizing (from html)
+
+    body::before {
+      display:block;
+      width:0;height:0;
+      overflow:hidden;
+      content: '{ "current" : "#{$label}", "all": [#{$label-list}] }';
+    }
+
+    head {
+      font-family: '{ "current" : "#{$label}", "all": [#{$label-list}] }';
+    }
+
+
+    head { font-family: 'base'; } // query alias for js; ref: http://dropshado.ws/post/79494424279/conditional-css-doesnt-work-in-chrome
+
+    html, body { height: 100%; } // set height to 100%; needed for various shit
+
+    html {
+      box-sizing: border-box; // will be inherited by all elements
+      -webkit-font-smoothing: antialiased; // unify font rendering
+      -moz-osx-font-smoothing: grayscale; // ''
+      -webkit-tap-highlight-color: rgba(0, 0, 0, 0); // remove webkit tap highlight color
+      text-rendering: optimizespeed; // fixes a webkit bug re: optimizelegibility?
+      font-size: percentage(get($base, 'html-scale')); // set scale
+    }
+
+    body {
+      line-height: get($base, 'line-height');
+      padding-top: get($base, 'page-top');
+      padding-bottom: get($base, 'page-bottom');
+    }
+
+    .page-col { padding-left: get($base, 'page-left'); padding-right: get($base, 'page-right'); }
+    .page-row { padding-left: - get($base, 'page-left'); padding-right: - get($base, 'page-right'); }
+
+    // add any additional content
+    @content;
+  }
+}

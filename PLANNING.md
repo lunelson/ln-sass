@@ -1,87 +1,25 @@
-# API overview
+# sass-ln next
 
-## workflow
+## grids
 
-1. global variable overrides
-    - global-defaults, margin-defaults, size-defaults
-    - base-data, query-data, typo-data _TODO: rename to font-data_
-2. setup-base()
-    - _back up base-data to base-orig?_
-    - global-data merged over global-defaults
-    - base-data merged over base-defaults
-    - 'html-scale' and 'line-height' calc'd and merged to base-data
-    - `*` `html` and `body` codes plus `.body_col/_row` styles
-    - any additional @content
-3. setup-queries() _TODO: rename to setup-queries_
-    - back up query-data to query-orig
-    - look at width and height queries separately; following for width only
-    - sort width queries by breakpoint; assume mobile first, mind-width only
-    - store base-data in a reference-spec
-    - parse through each query, merging over reference spec each time
-    - merge these back to width-queries along with values for html-scale, content-width each time
-    - output styles if spec'd in query for `html`, `body`, `.body_col/_row` etc.
-    - merge width-queries back to the main query-data object
-4. setup-sizes-from-to() OR setup-sizes()
-    - latter mixin calls the former with `null` first argument
-    - will run a submixin for each query context specified
-    - _should merge a flag to first context with new properties_
-5. setup-margins-from-to() OR setup-margins()
-    - latter mixin calls the former with `null` first argument
-    - will run a submixin for each query context specified
-    - _should merge a flag to query-orig to first context with new properties_
-6. set-typo-per-query OR set-typo
-    - take an alias and size argument, optional query-argument + options object
-    - options object:
-        + font -- defaults to first in $fonts
-        + margin -- defaults to margin-default
-        + capline -- defaults to value in $fonts for font
-        + baseline -- defaults to value in $fonts for font
-    - output base styles
-    - for each query in query-orig that has-key 'margin-y', 'line-height', 'size-breakpoint' or 'margin-breakpoint', parse out query styles
-    - put the 
+- keep the simple approach with 1px min-height on cols and wraps via padding
+- possibly make it directional
+- build it back in to main thing, blog layout
+- make sure grid class setups are moved out of setup-base() and in to setup-grids()
 
-## global objects and settings
+## typo
 
-$base -> $base
-$queries -> $queries
-$fonts -> $fonts
+- create a setup 'scope' mixin which runs render-query-typo() at the end
+- allow set-typo to take arbitrary size and margin
+    - if rem, leave it alone
+    - if px, convert to rem
+    - if unitless, assume it's a pos/neg index, default 0
 
-$size-defaults
-$size-assignments
+## general
 
-$margin-defaults
-$margin-assignments
-
-## sub-functions
-
-@function calc-sizes($options: ()) -> generate-sizes
-@function 
-
-## functions
-
-@function get-margin
-@function get-size
-
-## mixins
-
-@mixin setup-base()
-@mixin setup-queries() -> setup-queries
-
-@mixin setup-sizes() 
-- _reincorporate calc-sizes()_
-- calls setup-sizes-from-to(null, $args)
-
-@mixin setup-queries-sizes() -> setup-sizes-from-to()
-
-@mixin setup-margins() -> calls setup-margins-from-to(null, $args)
-@mixin setup-queries-margins() -> setup-margins-from-to()
-
-@mixin set-typo()
-@mixin get-typo()
-
-## submixins
-
-@mixin assign-sizes()
-
-@mixin set-margins() -> generate-margins
-@mixin assign-margins()
+-   implement JSON output of query-data to head { font-family }
+-   reset stuff
+    -   font normalization
+    -   svg normalization
+    -   supports for picturefill 2
+    -   other html5 shit

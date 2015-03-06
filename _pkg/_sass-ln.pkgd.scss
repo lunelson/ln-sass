@@ -1,0 +1,1328 @@
+//  _
+// | |
+// | |__   __ _ ___  ___
+// | '_ \ / _` / __|/ _ \
+// | |_) | (_| \__ \  __/
+// |_.__/ \__,_|___/\___|
+
+$global: (
+  hd-ratio: (3 2),
+  em-for-rem: false,
+  force-rems: true,
+  debug: false,
+  debug-color: rgba(0, 0, 0, 0.05)
+);
+
+$base: (
+  font-size: 16px,
+  line-height: 1.5,
+  margin-x: 1rem,
+  margin-y: 1.5rem,
+  page-top: 1rem,
+  page-right: 1rem,
+  page-bottom: 1rem,
+  page-left: 1rem
+) !default;
+
+@mixin setup-base($output: true){
+
+  // TODO: make this code handle any unit on font-size and line-height
+
+  // prep any values to merge back
+  $font-size: get($base, 'font-size');
+  $base-additions: (
+    'html-scale': $font-size / 16px
+  );
+
+  // proof/convert values other than font-size and line-height
+  @each $key, $value in map-remove($base, 'font-size') {
+    @if unit($value) == 'px' { $base-additions: set($base-additions, $key, $value / $font-size * 1rem); }
+  }
+
+  // merge it all back to base
+  $base: merge($base, $base-additions);
+
+  @if $output {
+
+    *, *:before, *:after { box-sizing: inherit; } // inherit box sizing (from html)
+
+    body::before {
+      display:block;
+      width:0;height:0;
+      overflow:hidden;
+      content: '{ "current" : "#{$label}", "all": [#{$label-list}] }';
+    }
+
+    head {
+      font-family: '{ "current" : "#{$label}", "all": [#{$label-list}] }';
+    }
+
+
+    head { font-family: 'base'; } // query alias for js; ref: http://dropshado.ws/post/79494424279/conditional-css-doesnt-work-in-chrome
+
+    html, body { height: 100%; } // set height to 100%; needed for various shit
+
+    html {
+      box-sizing: border-box; // will be inherited by all elements
+      -webkit-font-smoothing: antialiased; // unify font rendering
+      -moz-osx-font-smoothing: grayscale; // ''
+      -webkit-tap-highlight-color: rgba(0, 0, 0, 0); // remove webkit tap highlight color
+      text-rendering: optimizespeed; // fixes a webkit bug re: optimizelegibility?
+      font-size: percentage(get($base, 'html-scale')); // set scale
+    }
+
+    body {
+      line-height: get($base, 'line-height');
+      padding-top: get($base, 'page-top');
+      padding-bottom: get($base, 'page-bottom');
+    }
+
+    .page-col { padding-left: get($base, 'page-left'); padding-right: get($base, 'page-right'); }
+    .page-row { padding-left: - get($base, 'page-left'); padding-right: - get($base, 'page-right'); }
+
+    // add any additional content
+    @content;
+  }
+}
+//  _     _                           _     _
+// | |   | |                         (_)   | |
+// | |__ | |__   ___ ______ __ _ _ __ _  __| |
+// | '_ \| '_ \ / __|______/ _` | '__| |/ _` |
+// | |_) | |_) | (__      | (_| | |  | | (_| |
+// |_.__/|_.__/ \___|      \__, |_|  |_|\__,_|
+//                          __/ |
+//                         |___/
+
+$grid-defaults: (
+  'margin-x-arg' (0 0),
+  'margin-y-arg' (0 0),
+  'wrap-position' centre,
+  'col-count' 12,
+) !default;
+
+//////////////////
+// FUNDAMENTALS //
+//////////////////
+
+@mixin bb-grid-col($output: $current-query-alias){
+  @if $output {
+    $margin-x: margin-x(get($grid-defaults, 'margin-x-arg')...);
+    // $margin-y: margin(get($grid-defaults, 'margin-y-arg')...);
+
+    // standard output
+    // min-height: 1px; // http://css-tricks.com/make-sure-columns-dont-collapse-horizontally/
+    float: left;
+    width: 100%;
+    padding-left: $margin-x / 2;
+    padding-right: $margin-x / 2;
+    // padding-top: $margin-y / 2;
+    // padding-bottom: $margin-y / 2;
+
+    padding-top: 1px;
+    padding-bottom: 1px;
+
+    // optional idea here for nesting
+    &.alpha { padding-left: 0; }
+    &.omega { padding-right: 0; }
+
+  } @else { @extend %bb-grid-col; }
+}
+
+@mixin bb-grid-row($output: $current-query-alias){
+  @if $output {
+    @include clearfix();
+    $margin-x: margin-x(get($grid-defaults, 'margin-x-arg')...);
+    // $margin-y: margin(get($grid-defaults, 'margin-y-arg')...);
+
+    // standard output
+    min-height: 1px; // http://css-tricks.com/make-sure-columns-dont-collapse-horizontally/
+    margin-left: $margin-x / -2;
+    margin-right: $margin-x / -2;
+    // margin-top: $margin-y / -2;
+    // margin-bottom: $margin-y / -2;
+    margin-top: -1px;
+    margin-bottom: -1px;
+
+  } @else { @extend %bb-grid-row; }
+}
+
+@mixin bb-grid-wrap($output: $current-query-alias){
+  @if $output {
+    @include clearfix();
+    $wrap-position: get($grid-defaults, 'wrap-position');
+    @if $wrap-position != 'left' { margin-left: auto; }
+    @if $wrap-position != 'right' { margin-right: auto; }
+
+    // min-height: 1px; // http://css-tricks.com/make-sure-columns-dont-collapse-horizontally/
+    padding-top: 1px;
+    padding-bottom: 1px;
+  } @else { @extend %bb-grid-wrap; }
+}
+
+@function gcd($a, $b) {
+  @if $b == 0 { @return abs($a); }
+  @return gcd($b, $a % $b);
+}
+
+@function reduce($n, $d) {
+  $g: gcd($n, $d);
+  @return ($n/$g, $d/$g)
+}
+
+@mixin setup-grid-spans($col-count, $ns:'') {
+  // add hyphen to namespace if given
+  $ns: if($ns == "", $ns, "#{$ns}-");
+  // set up span values
+  @for $d from 1 through $col-count {
+    @for $n from 1 through $d {
+      $gcd: gcd($n,$d); $x: $n/$gcd;
+      // regular classes used here just so we can see the output
+      %#{$ns}grid-span-#{$n}-#{$d} {
+        @if $x < $n { @extend %#{$ns}grid-span-#{$x}-#{$d/$gcd}; }
+        @else { width: $n/$d*100%; }
+      }
+    }
+  }
+}
+
+///////////
+// SETUP //
+///////////
+
+@mixin setup-grid($args...) {
+
+  //////////
+  // BASE //
+  //////////
+
+  // cols
+  %grid-col { @include bb-grid-col(true); }
+  .col, [class*='col--'], [ln-grid~='col'] { @extend %grid-col; }
+
+  // rows
+  %grid-row { @include bb-grid-row(true); }
+  .row, [class*='row--'], [ln-grid~='row'] { @extend %grid-row; }
+  $grid-y-arg: get($grid-defaults, 'margin-y-arg');
+  $typo-y-arg: get($typo-defaults, 'margin-arg');
+  // [ln-grid~='row'][ln-grid~='typo'], .row--typo {
+  //   @include query-for('margin-y') { margin-top: margin($typo-y-arg...) - margin($grid-y-arg...)/2; }
+  //   // @include query-for('margin-y') { margin-top: margin(get($grid-defaults, 'margin-y-arg')...); }
+  //   // @include query-for('margin-y') { margin-top: margin(get($typo-defaults, 'margin-arg')...); }
+  //   // margin-top: 0;
+  // }
+
+  // wraps
+  %grid-wrap { @include bb-grid-wrap(true); }
+  .wrap, [class*='wrap--'], [ln-grid~='wrap'] { @extend %grid-wrap; }
+  @each $query-alias in keys($queries) {
+    @include query($query-alias) { [ln-grid~='wrap'][ln-grid~='site'], .wrap--site { max-width: get(get-query($query-alias),'content-width'); } }
+    [ln-grid~='wrap'][ln-grid~='#{$query-alias}'], .wrap--#{$query-alias} { max-width: get($queries, '#{$query-alias}', 'content-width'); }
+  }
+
+  // spans
+  @include setup-grid-spans(get($grid-defaults, 'col-count'));
+
+
+  ///////////////
+  // PER QUERY //
+  ///////////////
+
+  @each $query-alias in map-keys($queries) {
+
+    // spans
+    @include setup-grid-spans(get($grid-defaults, 'col-count'), $query-alias);
+
+    // test for margins per query, do styles if present
+    $query-orig-keys: keys(get($queries-orig, $query-alias));
+    $x-test: contains($query-orig-keys, 'margin-x');
+    $y-test: contains($query-orig-keys, 'margin-y');
+    @if $x-test or $y-test {
+      @include query($query-alias) {
+        $margin-x: margin-x(get($grid-defaults, 'margin-x-arg')...);
+        // $margin-y: margin(get($grid-defaults, 'margin-y-arg')...);
+
+        // cols
+        .col {
+          // @if $y-test { padding-top: $margin-y / 2; padding-bottom: $margin-y / 2; }
+          @if $x-test { padding-left: $margin-x / 2; padding-right: $margin-x / 2; }
+        }
+
+        // rows
+        .row {
+          // @if $y-test { margin-top: $margin-y / -2; margin-bottom: $margin-y / -2; }
+          @if $x-test { margin-left: $margin-x / -2; margin-right: $margin-x / -2; }
+        }
+      }
+    }
+  }
+}
+
+//////////////
+// RESIZING //
+//////////////
+
+// column sizing
+@mixin col-size($span, $offsets...) {
+  $n: nth($span, 1); $d: nth($span, 2);
+
+  // direct version
+  // width: $n / $d * 100%;
+
+  // extend version
+  $ns: $current-query-alias;
+  $ns: if($ns, $ns + '-', '');
+  @extend %#{$ns}grid-span-#{$n}-#{$d};
+
+  // offsets: cycle or left/right
+  @each $offset in $offsets {
+    @if index('cycle' 'repeat', $offset) {
+      &:nth-child(#{$d}n+1) { clear: left; }
+    } @else {
+      $dir: nth($offset, 1); $o: nth($offset, 2);
+      @if length($offset) > 2 { $d: nth($offset, 3); }
+      @if $o == out {
+        margin-#{opposite($dir)}: 100%;
+        margin-#{$dir}: $n / $d * -100%;
+        margin-bottom: -100%; }
+      @else { margin-#{$dir}: $o / $d * 100%; }
+    }
+  }
+}
+
+// alias -- effectively a span is a normal block
+@mixin span($args...) { @return col-size($args...); }
+
+// row sizing -- still refers to salvattore
+@mixin row-size($cols: false) {
+  @if $cols {
+    &::before {
+      content: '#{$cols} .col';
+      display: none;
+    }
+  }
+}
+
+////////////////////////////////////////////
+// APPLICATION -- if not declared in html //
+////////////////////////////////////////////
+
+@mixin col($args...) {
+  @include bb-grid-col();
+  @if $args != () { @include col-size($args...); }
+}
+
+@mixin row($args...) {
+  @include bb-grid-row();
+  @if $args != () { @include row-size($args...); }
+}
+
+@mixin wrap() { @include bb-grid-wrap(); }
+//                                                           88
+//                                                           ""
+//
+//  88,dPYba,,adPYba,   ,adPPYYba,  8b,dPPYba,   ,adPPYb,d8  88  8b,dPPYba,
+//  88P'   "88"    "8a  ""     `Y8  88P'   "Y8  a8"    `Y88  88  88P'   `"8a
+//  88      88      88  ,adPPPPP88  88          8b       88  88  88       88
+//  88      88      88  88,    ,88  88          "8a,   ,d88  88  88       88
+//  88      88      88  `"8bbdP"Y8  88           `"YbbdP"Y8  88  88       88
+//                                               aa,    ,88
+//                                                "Y8bbdP"
+
+// GLOBALS
+$margin-defaults: (
+  'offset' 3,
+  'range' 10,
+  'spread' 3,
+) !default;
+
+///////////////
+// FUNCTIONS //
+///////////////
+
+// MAIN for margin-y
+@function get-margin($index: 0, $sub-index: 0, $query-alias: $current-query-alias) {
+  $margin: if($query-alias, get($queries, $query-alias, 'margin-y'), get($base, 'margin-y'));
+  @if length($margin) > 1 {
+    $offset: get($margin-defaults, 'offset');
+    $spread: get($margin-defaults, 'spread');
+    $target: ($index + $offset) * $spread + $sub-index;
+    @return nth($margin, $target);
+  }
+  @return $margin;
+}
+
+// alias
+@function margin($args...) { @return get-margin($args...); }
+
+// ALT for margin-x
+@function get-margin-x($index: 0, $sub-index: 0, $query-alias: $current-query-alias) {
+  $margin: if($query-alias, get($queries, $query-alias, 'margin-x'), get($base, 'margin-x'));
+  @if length($margin) > 1 {
+    $offset: get($margin-defaults, 'offset');
+    $spread: get($margin-defaults, 'spread');
+    $target: ($index + $offset) * $spread + $sub-index;
+    @return nth($margin, $target);
+  }
+  @return $margin;
+}
+
+// alias
+@function margin-x($args...) { @return get-margin-x($args...); }
+
+//////////////////////////////////////
+// ========================= MIXINS //
+//////////////////////////////////////
+
+// SUBMIX
+@mixin merge-margins($margins, $query-alias: null) {
+
+  // get context margin-y value; fallback to line-height or just 1.5rem
+  $context: get-query($query-alias);
+  $margin-y: get($context, 'margin-y') or get($context, 'line-height') * 1rem or 1.5rem;
+  $margin-x: get($context, 'margin-x') or 1rem;
+
+  // calc and hold context margin lists
+  $margins-y: (); $margins-x: ();
+  @each $margin in $margins {
+    $margins-y: append($margins-y, $margin * $margin-y, 'comma');
+    $margins-x: append($margins-x, $margin * $margin-x, 'comma');
+  }
+
+  // put these together
+  $margin-data: ('margin-y' $margins-y, 'margin-x' $margins-x);
+
+  // merge them back to appropriate data
+  @if $query-alias { $queries: merge($queries, $query-alias, $margin-data); }
+  @else { $base: merge($base, $margin-data); }
+}
+
+// MASTER
+@mixin setup-margins($options...) {
+
+  // options and defaults
+  $factor: get($options, 'factor') or 2;
+  $steps: get($options, 'steps') or 3;
+  $range: get($margin-defaults, 'range') or 10;
+  $spread: get($margin-defaults, 'spread') or 3;
+  $offset: get($margin-defaults, 'offset');
+  $from-query: map-get($options, 'from') or null;
+  $to-query: map-get($options, 'to') or null;
+
+  // corrections
+  @if contains(root base null, $from-query) { $from-query: null; }
+  @if not $offset { $offset: floor($range / 3); $size-defaults: merge($size-defaults, 'offset' $offset); }
+
+  // calculate the margin-list, unitless
+  $margins: (); @for $n from 1 through $range * $spread {
+    $margin: m-scale($n - $offset * $spread, $factor, $steps * $spread);
+    $margins: append($margins, $margin, 'comma'); // unitless, at first
+  }
+
+  // conditional: base actions via submixin
+  @if $from-query == null { @include merge-margins($margins); }
+
+  // determine referenced queries
+  $query-aliases: map-keys($queries);
+  $sliced-aliases: slice($query-aliases,
+      if($from-query, index($query-aliases, $from-query), 1),
+      if($to-query, index($query-aliases, $to-query) - 1, length($query-aliases)));
+
+  // per referenced query actions
+  $count: 1; @each $query-alias in $sliced-aliases {
+    @include merge-margins($margins, $query-alias);
+    @if $count == 1 and $from-query != null { $queries-orig: merge($queries-orig, $query-alias, ('margin-bp' true)); }
+    $count: $count + 1;
+  }
+}
+//                                                                                                 88  88
+//                                                                                          ,d     ""  88
+//                                                                                          88         88
+//   ,adPPYb,d8  88       88   ,adPPYba,  8b,dPPYba,  8b       d8            88       88  MM88MMM  88  88
+//  a8"    `Y88  88       88  a8P_____88  88P'   "Y8  `8b     d8'  aaaaaaaa  88       88    88     88  88
+//  8b       88  88       88  8PP"""""""  88           `8b   d8'   """"""""  88       88    88     88  88
+//  "8a    ,d88  "8a,   ,a88  "8b,   ,aa  88            `8b,d8'              "8a,   ,a88    88,    88  88
+//   `"YbbdP'88   `"YbbdP'Y8   `"Ybbd8"'  88              Y88'                `"YbbdP'Y8    "Y888  88  88
+//           88                                           d8'
+//           88                                          d8'
+
+// vars to hold current queries
+$current-query-alias: null;
+$current-height-query-alias: null;
+
+///////////////////
+// WIDTH QUERIES //
+///////////////////
+
+// width query string function
+@function query-string($alias1: null, $alias2: null) {
+  @return 'screen'
+    + if($alias1, ' and (min-width: #{get($queries, $alias1, min-width)})', '')
+    + if($alias2, ' and (max-width: #{get($queries, $alias2, min-width) - 0.001})', '');
+}
+
+// retrieve current width query object
+@function get-query($query-alias: $current-query-alias) {
+  @if $query-alias { @return get($queries, $query-alias); }
+  @return $base;
+}
+
+// function to retrieve current query-data-object based on $current-query-alias
+@function get-orig-query($query-alias: $current-query-alias) {
+  @if $query-alias { @return get($queries-orig, $query-alias); }
+  @return $base;
+}
+
+// function to retrieve value for current query
+@function get-query-value($key, $alias: $current-query-alias) {
+  @return get(get-query($alias), $key);
+}
+
+// aliases
+@function query-value($args...) { @return get-query-value($args...); }
+@function qval($args...) { @return get-query-value($args...); }
+
+////////////////////
+// HEIGHT QUERIES //
+////////////////////
+
+// height query string function
+@function height-query-string($alias1: null, $alias2: null) {
+  @return 'screen'
+    + if($alias1, ' and (min-height: #{get($height-queries, $alias1, min-width)})', '')
+    + if($alias2, ' and (max-height: #{get($height-queries, $alias2, min-width) - 0.001})', '');
+}
+
+// retrieve current height query object
+@function get-height-query($query-alias: $current-height-query-alias) {
+  @if $query-alias { @return get($height-queries, $query-alias); }
+  @return $base;
+}
+
+// function to retrieve value for current query
+@function get-height-query-value($key, $alias: $current-height-query-alias) {
+  @return get(get-query($alias), $key);
+}
+
+// aliases
+@function height-query-value($args...) { @return get-height-query-value($args...); }
+@function hqval($args...) { @return get-height-query-value($args...); }
+
+///////////////////////////////////////////////////
+// UNIT CONVERSION -- DEPENDENT on WIDTH QUERIES //
+///////////////////////////////////////////////////
+
+// function to convert value(s) to rem, following context scale
+@function rem($values...) {
+  @if $values == null { @return null; }
+  $scale: get-query-value('html-scale');
+  $unit: if(get($global, 'em-for-rem'), 'em', 'rem');
+  $out: ();
+  @each $value in $values {
+    @if index('rem' 'em', unit($value)) { $out: append($out, assert($value, $unit), 'space'); }
+    @else { $out: append($out, assert($value / $scale / 16, $unit), 'space'); }
+  }
+  @return if(length($out) > 1, $out, nth($out, 1));
+}
+
+// function to convert value(s) to px, following context scale
+@function px($values...) {
+  @if $values == null { @return null; }
+  $scale: get-query-value('html-scale');
+  $out: ();
+  @each $value in $values {
+    @if unit($value) == 'px' { $out: append($out, $value, 'space'); }
+    @else { $out: append($out, assert($value * $scale * 16, 'px'), 'space'); }
+  }
+  @return if(length($out) > 1, $out, nth($out, 1));
+}
+
+////////////////////////
+// WIDTH QUERY MIXINS //
+////////////////////////
+
+// mixin to output width media query
+@mixin query($aliases...) {
+
+  // save the context (not really necessary cause there's no nesting)
+  $query-temp: $current-query-alias;
+
+  // save current alias or at least the previous one if in max-width query
+  // @if length($aliases) > 0 { $current-query-alias: nth($aliases, 1) or map-prev-key($queries, nth($aliases, 2)); }
+  // TODO: revert the line above, remove line below, when map-prev-key is implemented
+  $current-query-alias: nth($aliases, 1);
+
+  // run the content in context
+  @media #{query-string($aliases...)} { @content }
+
+  // reset the context (no nesting; could just reset to null)
+  $current-query-alias: $query-temp;
+}
+
+// hd width query
+@mixin query-hd($aliases...) {
+
+  // compute the hd-ratio shite
+  $hd-ratio: get($global, 'hd-ratio');
+  $n: nth($hd-ratio, 1);
+  $d: nth($hd-ratio, 2);
+  $ratio: $n/$d;
+
+  // save the context (not really necessary cause there's no nesting)
+  $query-temp: $current-query-alias;
+
+  // save current alias or at least the previous one if in max-width query
+  @if length($aliases) > 0 { $current-query-alias: nth($aliases, 1) or map-prev-key($queries, nth($aliases, 2)); }
+
+  // run the content in context
+  @media
+    #{query-string($aliases...)} and (-webkit-min-device-pixel-ratio: $ratio),
+    #{query-string($aliases...)} and (min--moz-device-pixel-ratio: $ratio),
+    #{query-string($aliases...)} and (-o-min-device-pixel-ratio: #{$n}/#{$d}),
+    #{query-string($aliases...)} and (min-device-pixel-ratio: $ratio),
+    #{query-string($aliases...)} and (min-resolution: $ratio * 96dpi),
+    #{query-string($aliases...)} and (min-resolution: $ratio * 1dppx) {
+    @content;
+  }
+
+  // reset the context (no nesting; could just reset to null)
+  $current-query-alias: $query-temp;
+}
+
+// multi width query -- combines both query-each() and query-for()
+@mixin queries($options:()) {
+
+  // get 'from', 'to' and 'keys'
+  $from-query: get($options, 'from') or null;
+  $to-query: get($options, 'to') or null;
+  $keys: get($options, 'keys') or null;
+
+  // transform/correct options
+  @if contains(root base null, $from-query) { $from-query: null; }
+  @if contains-any($keys, margin margin-y margins) { $keys: join($keys, margin-bp margin-y)}
+  @if contains-any($keys, size sizes) { $keys: join($keys, size-bp font-size); }
+  @if contains-any($keys, trim height line-height) { $keys: join($keys, line-height size-bp); }
+
+  // conditional base action
+  @if $from-query == null {
+    @if $keys == null { @content; }
+    @else if contains-any(keys($base), $keys) { @content; }
+  }
+
+  // determine referenced queries
+  $query-aliases: map-keys($queries);
+  $sliced-aliases: slice($query-aliases,
+      if($from-query, index($query-aliases, $from-query), 1),
+      if($to-query, index($query-aliases, $to-query) - 1, length($query-aliases)));
+
+  // conditional per-query actions
+  @each $query-alias in $sliced-aliases {
+    @if not $keys { @include query($query-alias) { @content; } }
+    @else if contains-any(keys(value($query)), $keys) { @include query($query-alias) { @content; } }
+  }
+}
+
+// do each with query in a from/to range
+@mixin query-each($options:()) {
+
+  // get and correction options
+  $from-query: get($options, 'from') or null;
+  $to-query: get($options, 'to') or null;
+  @if contains(root base null, $from-query) { $from-query: null; }
+
+  // conditional base action
+  @if $from-query == null { @content; }
+
+  // determine referenced queries
+  $query-aliases: map-keys($queries);
+  $sliced-aliases: slice($query-aliases,
+      if($from-query, index($query-aliases, $from-query), 1),
+      if($to-query, index($query-aliases, $to-query) - 1, length($query-aliases)));
+
+  // per referenced query actions
+  @each $query-alias in $sliced-aliases {
+    @include query($query-alias) { @content; }
+  }
+}
+
+// do each query where certain keys exist in original spec
+@mixin query-for($keys...) {
+  @if contains-any($keys, margin margin-y margins) { $keys: join($keys, margin-bp margin-y)}
+  @if contains-any($keys, size sizes) { $keys: join($keys, size-bp font-size); }
+  @if contains-any($keys, trim height line-height) { $keys: join($keys, line-height size-bp); }
+  @content;
+  @each $query in $queries-orig {
+    @if contains-any(keys(value($query)), $keys) {
+      @include query(key($query)) {
+        @content;
+      }
+    }
+  }
+}
+
+/////////////////////////
+// HEIGHT QUERY MIXINS //
+/////////////////////////
+
+// mixin to output height media query
+@mixin height-query($aliases...) {
+  // save the context (not really necessary cause there's no nesting)
+  $query-temp: $current-height-query-alias;
+  @if length($aliases) > 0 {
+    // get current alias or at least the previous one if in max-height query
+    $alias: nth($aliases, 1) or map-prev-key($height-queries, nth($aliases, 2));
+    // set current context to height plus alias
+    $current-height-query-alias: $alias;
+  }
+  // run the content in context
+  @media #{query-string-y($aliases...)} { @content }
+  // reset the context (no nesting; could just reset to null)
+  $current-height-query-alias: $query-temp;
+}
+//                        _
+//                       (_)
+//   __ _ _   _  ___ _ __ _  ___  ___
+//  / _` | | | |/ _ \ '__| |/ _ \/ __|
+// | (_| | |_| |  __/ |  | |  __/\__ \
+//  \__, |\__,_|\___|_|  |_|\___||___/
+//     | |
+//     |_|
+
+$queries: (
+  alpha: (
+    min-width: 20em
+  ),
+  beta: (
+    min-width: 30em
+  ),
+  gamma: (
+    min-width: 48em
+  ),
+  delta: (
+    min-width: 64em
+  ),
+  epsilon: (
+    min-width: 80em
+  )
+) !default;
+
+// height queries
+$height-queries: () !default;
+
+// backup maps
+$queries-orig: ();
+$height-queries-orig: ();
+
+@mixin setup-queries($output: true){
+
+  // backup data first
+  $queries-orig: $queries;
+
+  @if $queries != () {
+
+    // sort
+    // TODO: implement map-sort() for native maps
+    // $queries: map-sort($queries, 'min-width');
+
+    // parse width-queries relative to base properties
+    $reference-spec: $base;
+
+    @each $alias, $spec in $queries {
+
+      // merge query to reference
+      $reference-spec: merge($reference-spec, $spec);
+
+      // get font-size for reference
+      $font-size: get($reference-spec, 'font-size');
+
+      // proof/convert values other than font-size and line-height
+      @each $prop, $value in map-remove($reference-spec, 'font-size', 'min-width') {
+        @if unit($value) == 'px' { $reference-spec: merge($reference-spec, $prop, $value / $font-size * 1rem); }
+      }
+
+      // do other values
+      $html-scale: $font-size / 16px;
+      $min-width: get($reference-spec, 'min-width');
+      $content-width: strip($min-width) / $html-scale - get($reference-spec, 'page-left') - get($reference-spec, 'page-right');
+      $reference-spec: merge($reference-spec, (
+        'html-scale': $html-scale,
+        'content-width': $content-width
+      ));
+
+      // merge it all back to queries
+      $queries: merge($queries, $alias, $reference-spec);
+
+      // output values for whatever appeared in query-spec
+      @if $output {
+
+        $font-size: get($spec, 'font-size');
+        $line-height: get($spec, 'line-height');
+        $margin-x: get($spec, 'margin-x');
+        $margin-y: get($spec, 'margin-y');
+        $page-top: get($spec, 'page-top');
+        $page-right: get($spec, 'page-right');
+        $page-bottom: get($spec, 'page-bottom');
+        $page-left: get($spec, 'page-left');
+
+        @include query($alias) {
+
+          // output for JS; ref: http://dropshado.ws/post/79494424279/conditional-css-doesnt-work-in-chrome
+          head { font-family: '#{$alias}'; }
+
+          // output CSS if spec'd by user
+          @if $font-size { html { font-size: percentage($html-scale); } }
+          @if $line-height { body { line-height: $line-height; } }
+          @if $page-top { body { margin-top: $page-top; } }
+          @if $page-bottom { body { margin-bottom: $page-bottom; } }
+          @if $page-right {
+            .page-col { margin-right: $page-right; }
+            .page-row { margin-right: - $page-right; }
+          }
+          @if $page-left {
+            .page-col { margin-left: $page-left; }
+            .page-row { margin-left: - $page-left; }
+          }
+        }
+      }
+    }
+  }
+}
+
+@mixin setup-height-queries($output: true){
+
+  // backup data first
+  $height-queries-orig: $height-queries;
+
+  @if $height-queries != () {
+
+    // parse height-queries relative to empty properites
+    $height-queries: map-sort($height-queries, 'min-height');
+    $reference-spec: ();
+    @each $query in $height-queries {
+      $alias: tuple-key($query);
+      $spec: tuple-value($query);
+
+      // merge query to reference, merge this back to source
+      $reference-spec: merge($reference-spec, $spec);
+      $height-queries: merge($height-queries, $alias, $reference-spec);
+    }
+  }
+}
+
+//           88              88
+//           88              88
+//           88              88
+//   ,adPPYb,88   ,adPPYba,  88,dPPYba,   88       88   ,adPPYb,d8
+//  a8"    `Y88  a8P_____88  88P'    "8a  88       88  a8"    `Y88
+//  8b       88  8PP"""""""  88       d8  88       88  8b       88
+//  "8a,   ,d88  "8b,   ,aa  88b,   ,a8"  "8a,   ,a88  "8a,   ,d88
+//   `"8bbdP"Y8   `"Ybbd8"'  8Y"Ybbd8"'    `"YbbdP'Y8   `"YbbdP"Y8
+//                                                      aa,    ,88
+//                                                       "Y8bbdP"
+
+
+// @if $debug-toggle {
+//   $column-count: get($reference-query, column-count);
+//   $margin-x: get($reference-query, margin-x);
+//   body::before { content: '#{$alias}'; }
+//   body::after {
+//     $row-width: $content-width + $margin-x;
+//     width: $row-width; margin-left: ($row-width + $margin-x)/-2;
+//     background: linear-gradient(to right,
+//       rgba(0, 0, 0, 0) $margin-x,
+//       $debug-color $margin-x,
+//       $debug-color $row-width / $column-count - $margin-x
+//     );
+//     background-size: $row-width / $column-count;
+//   }
+// }
+
+// // output stuff for the debug
+// @if $debug-toggle {
+//   body {
+//     &:before, &:after {
+//       position: fixed;
+//       pointer-events: none;
+//       user-select: none;
+//       z-index: 999;
+//     }
+//     &:before {
+//       text-align: right;
+//       padding: 0.25rem;
+//       width: 100%;
+//       display: block;
+//       color: black;
+//       bottom: 0;
+//       background-color: $debug-color;
+//     }
+//     &:after {
+//       content: '';
+//       top: 0;
+//       bottom: 0;
+//       left: 50%;
+//     }
+//   }
+// }
+
+//                     _
+//                    | |
+//  _ __ ___  ___  ___| |_ ___
+// | '__/ _ \/ __|/ _ \ __/ __|
+// | | |  __/\__ \  __/ |_\__ \
+// |_|  \___||___/\___|\__|___/
+
+@mixin normalize3(){
+  // normalize.css v3.0.2 | MIT License | git.io/normalize
+  html{font-family:sans-serif;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%}
+  body{margin:0}
+  article,aside,details,figcaption,figure,footer,header,hgroup,main,menu,nav,section,summary{display:block}
+  audio,canvas,progress,video{display:inline-block;vertical-align:baseline}
+  audio:not([controls]){display:none;height:0}
+  [hidden],template{display:none}
+  a{background-color:transparent}
+  a:active,a:hover{outline:0}
+  abbr[title]{border-bottom:1px dotted}
+  b,strong{font-weight:bold}
+  dfn{font-style:italic}
+  h1{font-size:2em;margin:.67em 0}
+  mark{background:#ff0;color:#000}
+  small{font-size:80%}
+  sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}
+  sup{top:-0.5em}
+  sub{bottom:-0.25em}
+  img{border:0}
+  svg:not(:root){overflow:hidden}
+  figure{margin:1em 40px}
+  hr{-moz-box-sizing:content-box;box-sizing:content-box;height:0}
+  pre{overflow:auto}
+  code,kbd,pre,samp{font-family:monospace,monospace;font-size:1em}
+  button,input,optgroup,select,textarea{color:inherit;font:inherit;margin:0}
+  button{overflow:visible}
+  button,select{text-transform:none}
+  button,html input[type="button"],input[type="reset"],input[type="submit"]{-webkit-appearance:button;cursor:pointer}
+  button[disabled],html input[disabled]{cursor:default}
+  button::-moz-focus-inner,input::-moz-focus-inner{border:0;padding:0}
+  input{line-height:normal}
+  input[type="checkbox"],input[type="radio"]{box-sizing:border-box;padding:0}
+  input[type="number"]::-webkit-inner-spin-button,input[type="number"]::-webkit-outer-spin-button{height:auto}
+  input[type="search"]{-webkit-appearance:textfield;-moz-box-sizing:content-box;-webkit-box-sizing:content-box;box-sizing:content-box}
+  input[type="search"]::-webkit-search-cancel-button,input[type="search"]::-webkit-search-decoration{-webkit-appearance:none}
+  fieldset{border:1px solid silver;margin:0 2px;padding:.35em .625em .75em}
+  legend{border:0;padding:0}
+  textarea{overflow:auto}
+  optgroup{font-weight:bold}
+  table{border-collapse:collapse;border-spacing:0}
+  td,th{padding:0}
+}
+//             88
+//             ""
+//
+//  ,adPPYba,  88  888888888   ,adPPYba,
+//  I8[    ""  88       a8P"  a8P_____88
+//   `"Y8ba,   88    ,d8P'    8PP"""""""
+//  aa    ]8I  88  ,d8"       "8b,   ,aa
+//  `"YbbdP"'  88  888888888   `"Ybbd8"'
+
+//////////
+// VARS //
+//////////
+
+$size-defaults: (
+  'offset' 3,
+  'range' 10,
+  'spread' 3,
+) !default;
+
+///////////////
+// FUNCTIONS //
+///////////////
+
+// MAIN
+@function get-size($index: 0, $sub-index: 0, $query-alias: $current-query-alias) {
+  $size: if($query-alias, get($queries, $query-alias, 'font-size'), get($base, 'font-size'));
+  @if type-of($size) == 'list' {
+    $offset: get($size-defaults, 'offset');
+    $spread: get($size-defaults, 'spread');
+    $target-index: ($index + $offset) * $spread + $sub-index;
+    @return nth($size, $target-index);
+  } @return $size;
+}
+
+// alias
+@function size($args...) { @return get-size($args...); }
+
+////////////
+// MIXINS //
+////////////
+
+// MASTER
+@mixin setup-sizes($options...) {
+
+  // options and defaults
+  $factor: get($options, 'factor') or 2;
+  $steps: get($options, 'steps') or 2;
+  $range: get($size-defaults, 'range') or 10;
+  $spread: get($size-defaults, 'spread') or 3;
+  $offset: get($size-defaults, 'offset');
+  $from-query: map-get($options, 'from') or null;
+  $to-query: map-get($options, 'to') or null;
+
+  // corrections
+  @if contains(root base null, $from-query) { $from-query: null; }
+  @if not $offset { $offset: floor($range / 3); $size-defaults: merge($size-defaults, 'offset' $offset); }
+
+  // calculate the size list
+  $sizes: (); @for $n from 1 through $range * $spread {
+    $size: m-scale($n - $offset * $spread, $factor, $steps * $spread);
+    $sizes: append($sizes, $size * 1rem, 'comma');
+  }
+
+  // conditional base action
+  @if $from-query == null { $base: merge($base, ('font-size' $sizes)); }
+
+  // determine referenced queries
+  $query-aliases: map-keys($queries);
+  $sliced-aliases: slice($query-aliases,
+      if($from-query, index($query-aliases, $from-query), 1),
+      if($to-query, index($query-aliases, $to-query) - 1, length($query-aliases)));
+
+  // per referenced query actions
+  $count: 1; @each $query-alias in $sliced-aliases {
+    $queries: merge($queries, $query-alias, ('font-size' $sizes));
+    @if $count == 1 and $from-query != null { $queries-orig: merge($queries-orig, $query-alias, ('size-bp' true)); }
+    $count: $count + 1;
+  }
+}
+//    ,d
+//    88
+//  MM88MMM  8b       d8  8b,dPPYba,    ,adPPYba,
+//    88     `8b     d8'  88P'    "8a  a8"     "8a
+//    88      `8b   d8'   88       d8  8b       d8
+//    88,      `8b,d8'    88b,   ,a8"  "8a,   ,a8"
+//    "Y888      Y88'     88`YbbdP"'    `"YbbdP"'
+//               d8'      88
+//              d8'       88
+
+// TODO
+// - have set-typo function just populate data
+// - create a render-typography() mixin to render the data, keeping mq's together
+
+$fonts: (
+  default (
+    definition (
+      font-family ('Helvetica Neue' Helvetica sans-serif),
+      letter-spacing 0.0125em
+    ),
+    metrics (
+      size-modifier 1,
+      capline (50 0.125, 200 0.2),
+      baseline (50 0.175, 200 0.25)
+    )
+  )
+) !default;
+
+//////////////////////////
+// VARs and PLACEHOLDER //
+//////////////////////////
+
+$typo-defaults: (
+  'margin-dir' top,
+  'margin-arg' (0 0),
+  'size-arg' (0 0),
+  'min-line-height' 1.1,
+  'line-div' 2,
+  'font-path' '/public/fonts/',
+);
+
+// var to hold typo context
+$current-typo-alias: null;
+
+// placeholder for universal typo styles
+%typo-all {
+  &.single {
+    line-height: 1;
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+}
+
+/////////////
+// HELPERS //
+/////////////
+
+// font-face declarations
+@mixin font-face($family, $file, $style: normal, $weight: normal, $path: $typo-font-path) {
+  @font-face {
+    font-family: $family;
+    font-style: $style;
+    font-weight: $weight; // this should be both word and number values
+    src: url('#{$path}#{$file}.eot'); // IE9 Compat Modes
+    src: url('#{$path}#{$file}.eot?#iefix') format('embedded-opentype'),
+       url('#{$path}#{$file}.woff') format('woff'),
+       url('#{$path}#{$file}.svg##{$file}') format('svg'),
+       url('#{$path}#{$file}.ttf') format('truetype');
+  }
+}
+
+///////////////
+// FUNCTIONS //
+///////////////
+
+// typo-value retrieves value for current or given typo alias
+@function typo-value($key, $typo-alias: $current-typo-alias, $query-alias: $current-query-alias) {
+  $result: get(get-query($query-alias), 'typo', $typo-alias);
+  @if type-of($result) == 'string' { @return typo-value($key, $result); }
+  @return get($result, $key);
+}
+
+// aliases
+@function t-value($args...) { @return typo-value($args...); }
+@function tval($args...) { @return typo-value($args...); }
+
+// trim -- special use
+@function trim($direction, $typo-alias: $current-typo-alias, $query-alias: $current-query-alias) {
+  $result: get(get-query($query-alias), 'typo', $typo-alias);
+  @if type-of($result) == 'string' { @return trim($direction, $result); }
+  @return get($result, 'trim-#{$direction}');
+}
+
+// trim-top - alt to above
+@function trim-top($typo-alias: $current-typo-alias) {
+  $typo: get(get-query(), 'typo', $typo-alias);
+  @if type-of($typo) == 'string' { @return trim-top($typo); }
+  @return get($typo, 'trim-top');
+}
+
+// trim-bottom - alt to above
+@function trim-bottom($typo-alias: $current-typo-alias) {
+  $typo: get(get-query(), 'typo', $typo-alias);
+  @if type-of($typo) == 'string' { @return trim-bottom($typo); }
+  @return get($typo, 'trim-bottom');
+}
+
+////////////
+// MIXINS //
+////////////
+
+// master setup -- creates data and placeholders
+@mixin set-typo($typo-aliases, $options...) {
+
+  // options
+  $font-alias: map-get($options, 'font') or tuple-key(nth($fonts, 1));
+  $size-arg: map-get($options, 'size') or get($typo-defaults, 'size-arg');
+  $margin-arg: map-get($options, 'margin') or get($typo-defaults, 'margin-arg');
+  $from-query: map-get($options, 'from') or null;
+  $to-query: map-get($options, 'to') or null;
+
+  // corrections
+  @if length($size-arg) < 2 { $size-arg: append($size-arg, 0); }
+  @if length($margin-arg) < 2 { $margin-arg: append($margin-arg, 0); }
+  @if contains(root base null, $from-query) { $from-query: null; }
+
+  // globals
+  $min-height: get($typo-defaults, 'min-line-height');
+  $margin-dir: get($typo-defaults, 'margin-dir') or 'top';
+  $line-div: get($typo-defaults, 'line-div');
+
+  // typo-aliases
+  $typo-alias-main: nth($typo-aliases, 1);
+  $typo-alias-alts: slice($typo-aliases, 2);
+
+  // populate typo-alt-aliases object and compute placeholder string
+  $typo-alt: (); $placeholder: '%typo-#{$typo-alias-main}';
+  @each $alias in $typo-alias-alts {
+    $typo-alt: append($typo-alt, $alias $typo-alias-main);
+    $placeholder: $placeholder + ', %typo-#{$alias}';
+  }
+
+  // BASE
+  @if $from-query == null {
+
+    // get query object + corresp. size, margin
+    $context: $base;
+    $size: get-size($size-arg...);
+    $margin: get-margin($margin-arg...);
+
+    // get trims
+    $px-size: strip(px($size)); // better! works per html-scale
+    $capline-trim: map-get($options, 'capline') or trend($px-size, get($fonts, $font-alias, 'metrics', 'capline'));
+    $baseline-trim: map-get($options, 'baseline') or trend($px-size, get($fonts, $font-alias, 'metrics', 'baseline'));
+
+    // global / default stuff
+    $line-div: $line-div or ceil($size) + 1; // set global value to null to automate
+
+    // calc the values
+    $ref-height: get($context, 'line-height') / strip($size);
+    $line-height: $ref-height * ceil($min-height / $ref-height * $line-div) / $line-div;
+    $line-trim: (1 - $line-height) / 2;
+    $trim-top: ($line-trim - $capline-trim) * $size;
+    $trim-bottom: ($line-trim - $baseline-trim) * $size;
+    $margin-top: $trim-top + $margin * if($margin-dir == 'top', 1, 0);
+    $margin-bottom: $trim-bottom + $margin * if($margin-dir == 'bottom', 1, 0);
+
+    // merge main and alts to base data
+    $typo-main: (
+      'font-size' $size,
+      'line-height' $line-height,
+      'margin-top' $margin-top,
+      'margin-bottom' $margin-bottom,
+      'trim-top' $trim-top,
+      'trim-bottom' $trim-bottom,
+    );
+    $typo-full: join($typo-alt, ($typo-alias-main $typo-main,));
+    $base: merge($base, 'typo', $typo-full);
+
+    // output
+    #{$placeholder} {
+      @extend %typo-all;
+      font-size: $size;
+      line-height: $line-height;
+      margin-top: $margin-top;
+      margin-bottom: $margin-bottom;
+      @if $margin-dir == 'top' { &:first-child, &.trim { margin-top: $trim-top; } }
+      @else { &:last-child, &.trim { margin-bottom: $trim-bottom; } }
+    }
+  }
+
+  // QUERIES
+  $query-aliases: map-keys($queries);
+  $sliced-aliases: slice($query-aliases,
+    if($from-query, index($query-aliases, $from-query), 1),
+    if($to-query, index($query-aliases, $to-query) - 1, length($query-aliases))
+  );
+  @each $query-alias in $sliced-aliases {
+
+    // get query object + corresp. size, margin
+    $context: get-query($query-alias);
+    $size: get-size(nth($size-arg, 1), nth($size-arg, 2), $query-alias);
+    $margin: get-margin(nth($margin-arg, 1), nth($margin-arg, 2), $query-alias);
+
+    // get trims
+    $px-size: strip(px($size)); // better! works per html-scale
+    $capline-trim: map-get($options, 'capline') or trend($px-size, get($fonts, $font-alias, 'metrics', 'capline'));
+    $baseline-trim: map-get($options, 'baseline') or trend($px-size, get($fonts, $font-alias, 'metrics', 'baseline'));
+
+    // global / default stuff
+    $line-div: get($typo-defaults, 'line-div') or ceil($size) + 1; // set global value to null to automate
+
+    // calc the values
+    $ref-height: get($context, 'line-height') / strip($size);
+    $line-height: $ref-height * ceil($min-height / $ref-height * $line-div) / $line-div;
+    $line-trim: (1 - $line-height) / 2;
+    $trim-top: ($line-trim - $capline-trim) * $size;
+    $trim-bottom: ($line-trim - $baseline-trim) * $size;
+    $margin-top: $trim-top + $margin * if($margin-dir == 'top', 1, 0);
+    $margin-bottom: $trim-bottom + $margin * if($margin-dir == 'bottom', 1, 0);
+
+    // merge them to current query under t-alias
+    $query-bp: if($from-query == $query-alias, ('query-bp' true,),());
+    $typo-main: merge($query-bp, (
+      'font-size' $size,
+      'line-height' $line-height,
+      'margin-top' $margin-top,
+      'margin-bottom' $margin-bottom,
+      'trim-top' $trim-top,
+      'trim-bottom' $trim-bottom,
+    ));
+    $typo-full: join($typo-alt, ($typo-alias-main $typo-main,));
+    $queries: merge($queries, $query-alias, 'typo', $typo-full);
+
+    // conditionally, output
+    $orig-query-keys: map-keys(get($queries-orig, $query-alias));
+    $spec-check: contains-any($orig-query-keys, ('margin-y', 'line-height'));
+    $size-check: contains($orig-query-keys, 'size-bp') and $size-arg != (0);
+    $margin-check: contains($orig-query-keys, 'margin-bp') and $margin-arg != (0);
+    $first-query: $query-alias == $from-query;
+
+    @if $spec-check or $size-check or $margin-check or $first-query {
+      @media #{query-string($query-alias)} {
+        #{$placeholder} {
+          font-size: $size;
+          line-height: $line-height;
+          margin-top: $margin-top;
+          margin-bottom: $margin-bottom;
+          @if $margin-dir == 'top' { &:first-child, &.trim { margin-top: $trim-top; } }
+          @else { &:last-child, &.trim { margin-bottom: $trim-bottom; } }
+        }
+      }
+    }
+  }
+}
+
+// output -- apply placeholder and create data context
+@mixin typo($typo-alias) {
+  @extend %typo-#{$typo-alias};
+  $temp-typo-alias: $current-typo-alias;
+  $current-typo-alias: $typo-alias;
+  @content;
+  $current-typo-alias: $temp-typo-alias;
+}
+
+//  88
+//  88                         ,d
+//  88                         88
+//  88,dPPYba,    ,adPPYba,  MM88MMM  ,adPPYYba,
+//  88P'    "8a  a8P_____88    88     ""     `Y8
+//  88       d8  8PP"""""""    88     ,adPPPPP88
+//  88b,   ,a8"  "8b,   ,aa    88,    88,    ,88
+//  8Y"Ybbd8"'    `"Ybbd8"'    "Y888  `"8bbdP"Y8
+
+@mixin render-typo() {
+
+  $margin-dir: get($typo-defaults, 'margin-dir') or top;
+
+  $base-typos: get($base, 'typo');
+  @each $typo in $base-typos {
+    $typo-spec: value($typo);
+    @if type-of($typo-spec) != 'string' {
+      #{key($typo)} {
+        @extend %typo-all;
+        font-size: get($typo-spec, 'font-size');
+        line-height: get($typo-spec, 'line-height');
+        margin-top: get($typo-spec, 'margin-top');
+        margin-bottom: get($typo-spec, 'margin-bottom');
+        @if $margin-dir == 'top' { &:first-child, &.trim { margin-top: get($typo-spec, 'trim-top'); } }
+        @else { &:last-child, &.trim { margin-bottom: get($typo-spec, 'trim-bottom'); } }
+      }
+    }
+  }
+
+  @each $query in $queries {
+
+    $query-alias: key($query);
+    $query-spec: value($query);
+
+    $orig-query-keys: keys(get($queries-orig, $query-alias));
+    $spec-check: contains-any($orig-query-keys, ('margin-y', 'line-height'));
+
+    // TODO: size and margin checks should return false of their resp. args == 0
+    // setup mixin has to add a flag for this
+    $size-check: contains($orig-query-keys, 'size-bp');
+    $margin-check: contains($orig-query-keys, 'margin-bp');
+
+    // TODO: setup mixin has to add a flag for this too
+    $first-query: $query-alias == $from-query;
+
+    @if $spec-check or $size-check or $margin-check or $first-query {
+      @media #{query-string($query-alias)} {
+
+        $query-typos: get($query-spec, 'typo');
+        @each $typo in $query-typos {
+          $typo-spec: value($typo);
+          @if type-of($typo-spec) != 'string' {
+            #{key($typo)} {
+              @extend %typo-all;
+              font-size: get($typo-spec, 'font-size');
+              line-height: get($typo-spec, 'line-height');
+              margin-top: get($typo-spec, 'margin-top');
+              margin-bottom: get($typo-spec, 'margin-bottom');
+              @if $margin-dir == 'top' { &:first-child, &.trim { margin-top: get($typo-spec, 'trim-top'); } }
+              @else { &:last-child, &.trim { margin-bottom: get($typo-spec, 'trim-bottom'); } }
+            }
+          }
+        }
+
+      }
+    }
+
+  }
+}

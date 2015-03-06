@@ -1,0 +1,79 @@
+//             88
+//             ""
+//
+//  ,adPPYba,  88  888888888   ,adPPYba,
+//  I8[    ""  88       a8P"  a8P_____88
+//   `"Y8ba,   88    ,d8P'    8PP"""""""
+//  aa    ]8I  88  ,d8"       "8b,   ,aa
+//  `"YbbdP"'  88  888888888   `"Ybbd8"'
+
+//////////
+// VARS //
+//////////
+
+$size-defaults: (
+  'offset' 3,
+  'range' 10,
+  'spread' 3,
+) !default;
+
+///////////////
+// FUNCTIONS //
+///////////////
+
+// MAIN
+@function get-size($index: 0, $sub-index: 0, $query-alias: $current-query-alias) {
+  $size: if($query-alias, get($queries, $query-alias, 'font-size'), get($base, 'font-size'));
+  @if type-of($size) == 'list' {
+    $offset: get($size-defaults, 'offset');
+    $spread: get($size-defaults, 'spread');
+    $target-index: ($index + $offset) * $spread + $sub-index;
+    @return nth($size, $target-index);
+  } @return $size;
+}
+
+// alias
+@function size($args...) { @return get-size($args...); }
+
+////////////
+// MIXINS //
+////////////
+
+// MASTER
+@mixin setup-sizes($options...) {
+
+  // options and defaults
+  $factor: get($options, 'factor') or 2;
+  $steps: get($options, 'steps') or 2;
+  $range: get($size-defaults, 'range') or 10;
+  $spread: get($size-defaults, 'spread') or 3;
+  $offset: get($size-defaults, 'offset');
+  $from-query: map-get($options, 'from') or null;
+  $to-query: map-get($options, 'to') or null;
+
+  // corrections
+  @if contains(root base null, $from-query) { $from-query: null; }
+  @if not $offset { $offset: floor($range / 3); $size-defaults: merge($size-defaults, 'offset' $offset); }
+
+  // calculate the size list
+  $sizes: (); @for $n from 1 through $range * $spread {
+    $size: m-scale($n - $offset * $spread, $factor, $steps * $spread);
+    $sizes: append($sizes, $size * 1rem, 'comma');
+  }
+
+  // conditional base action
+  @if $from-query == null { $base: merge($base, ('font-size' $sizes)); }
+
+  // determine referenced queries
+  $query-aliases: map-keys($queries);
+  $sliced-aliases: slice($query-aliases,
+      if($from-query, index($query-aliases, $from-query), 1),
+      if($to-query, index($query-aliases, $to-query) - 1, length($query-aliases)));
+
+  // per referenced query actions
+  $count: 1; @each $query-alias in $sliced-aliases {
+    $queries: merge($queries, $query-alias, ('font-size' $sizes));
+    @if $count == 1 and $from-query != null { $queries-orig: merge($queries-orig, $query-alias, ('size-bp' true)); }
+    $count: $count + 1;
+  }
+}

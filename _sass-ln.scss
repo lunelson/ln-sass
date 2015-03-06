@@ -1,22 +1,16 @@
-//                                                         88
-//                                                         88
-//                                                         88
-//  ,adPPYba,  ,adPPYYba,  ,adPPYba,  ,adPPYba,            88  8b,dPPYba,
-//  I8[    ""  ""     `Y8  I8[    ""  I8[    ""  aaaaaaaa  88  88P'   `"8a
-//   `"Y8ba,   ,adPPPPP88   `"Y8ba,    `"Y8ba,   """"""""  88  88       88
-//  aa    ]8I  88,    ,88  aa    ]8I  aa    ]8I            88  88       88
-//  `"YbbdP"'  `"8bbdP"Y8  `"YbbdP"'  `"YbbdP"'            88  88       88
+//                           _
+//                          | |
+//  ___  __ _ ___ ___ ______| |_ __
+// / __|/ _` / __/ __|______| | '_ \
+// \__ \ (_| \__ \__ \      | | | | |
+// |___/\__,_|___/___/      |_|_| |_|
 
-//  Sass LN 0.5.0
+//  Sass LN 0.6.0
 //  a framework for modularly-scaled responsive layout and optically-aligned typography
 //  by @lunelson
 //  MIT License
 
-
-/////////////
-// IMPORTS //
-/////////////
-
+@import "lib/reset";
 @import "lib/base";
 
 @import "lib/queries-util";
@@ -27,5 +21,3 @@
 @import "lib/typo";
 
 @import "lib/grid";
-
-@import "lib/utilities";

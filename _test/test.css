@@ -1,0 +1,143 @@
+*, *:before, *:after {
+  box-sizing: inherit; }
+
+head {
+  font-family: 'base'; }
+
+html, body {
+  height: 100%; }
+
+html {
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-tap-highlight-color: transparent;
+  font-size: 100%; }
+
+body {
+  line-height: 1.33;
+  padding-top: 1rem;
+  padding-bottom: 1rem; }
+
+.page-col {
+  padding-left: 1rem;
+  padding-right: 1rem; }
+
+.page-row {
+  padding-left: -1rem;
+  padding-right: -1rem; }
+
+@media screen and (min-width: 20em) {
+  head {
+    font-family: 'alpha'; } }
+
+@media screen and (min-width: 30em) {
+  head {
+    font-family: 'beta'; }
+  body {
+    line-height: 1.4; }
+  .page-col {
+    margin-right: 1rem; }
+  .page-row {
+    margin-right: -1rem; }
+  .page-col {
+    margin-left: 1rem; }
+  .page-row {
+    margin-left: -1rem; } }
+
+@media screen and (min-width: 48em) {
+  head {
+    font-family: 'gamma'; }
+  html {
+    font-size: 112.5%; } }
+
+@media screen and (min-width: 64em) {
+  head {
+    font-family: 'delta'; }
+  html {
+    font-size: 125%; } }
+
+@media screen and (min-width: 80em) {
+  head {
+    font-family: 'epsilon'; } }
+
+/*
+$base: (
+  font-size: 16px,
+  line-height: 1.33,
+  margin-x: 1rem,
+  margin-y: 1.25rem,
+  page-top: 1rem,
+  page-right: 1rem,
+  page-bottom: 1rem,
+  page-left: 1rem,
+  html-scale: 1
+)
+$queries: (
+  alpha: (
+    min-width: 20em,
+    font-size: 16px,
+    line-height: 1.33,
+    margin-x: 1rem,
+    margin-y: 1.25rem,
+    page-top: 1rem,
+    page-right: 1rem,
+    page-bottom: 1rem,
+    page-left: 1rem,
+    html-scale: 1,
+    content-width: 18rem
+  ),
+  beta: (
+    min-width: 30em,
+    margin-y: 1.5rem,
+    line-height: 1.4,
+    page-right: 1rem,
+    page-left: 1rem,
+    font-size: 16px,
+    margin-x: 1rem,
+    page-top: 1rem,
+    page-bottom: 1rem,
+    html-scale: 1,
+    content-width: 28rem
+  ),
+  gamma: (
+    min-width: 48em,
+    font-size: 18px,
+    line-height: 1.4,
+    margin-x: 1rem,
+    margin-y: 1.5rem,
+    page-top: 1rem,
+    page-right: 1rem,
+    page-bottom: 1rem,
+    page-left: 1rem,
+    html-scale: 1.125,
+    content-width: 40.66667rem
+  ),
+  delta: (
+    min-width: 64em,
+    font-size: 20px,
+    line-height: 1.4,
+    margin-x: 1rem,
+    margin-y: 1.5rem,
+    page-top: 1rem,
+    page-right: 1rem,
+    page-bottom: 1rem,
+    page-left: 1rem,
+    html-scale: 1.25,
+    content-width: 49.2rem
+  ),
+  epsilon: (
+    min-width: 80em,
+    font-size: 20px,
+    line-height: 1.4,
+    margin-x: 1rem,
+    margin-y: 1.5rem,
+    page-top: 1rem,
+    page-right: 1rem,
+    page-bottom: 1rem,
+    page-left: 1rem,
+    html-scale: 1.25,
+    content-width: 62rem
+  )
+)
+*/
