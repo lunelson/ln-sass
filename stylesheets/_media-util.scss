@@ -5,7 +5,15 @@
 // | | | | | |  __/ (_| | | (_| |      | |_| | |_| | |
 // |_| |_| |_|\___|\__,_|_|\__,_|       \__,_|\__|_|_|
 
+/////////////
+// GLOBALS //
+/////////////
+
 $current-medium-alias: null;
+
+///////////////
+// FUNCTIONS //
+///////////////
 
 // [width] medium string function
 @function medium-string($alias1: null, $alias2: null) {
@@ -13,6 +21,9 @@ $current-medium-alias: null;
     + if($alias1, ' and (min-width: #{get($media, $alias1, breakpoint)})', '')
     + if($alias2, ' and (max-width: #{get($media, $alias2, breakpoint) - 0.001})', '');
 }
+// alias
+@function m-string($args...) { @return medium-string($args...); }
+
 
 // retrieve current width medium object
 @function medium($medium-alias: $current-medium-alias) {
@@ -20,6 +31,8 @@ $current-medium-alias: null;
   @if $medium-alias { $medium: map-get($media, $medium-alias); }
   @return if($medium, $medium, $base);
 }
+// alias
+@function m($args...) { @return medium($args...); }
 
 // function to retrieve current medium-data-object based on $current-medium-alias
 @function medium-orig($medium-alias: $current-medium-alias) {
@@ -27,15 +40,19 @@ $current-medium-alias: null;
   @if $medium-alias { $medium: map-get($media-orig, $medium-alias); }
   @return if($medium, $medium, $base);
 }
+// alias
+@function m-orig($args...) { @return medium-orig($args...); }
 
 // function to retrieve value for current medium
 @function medium-value($key, $alias: $current-medium-alias) {
   @return map-get(medium($alias), $key);
 }
+// alias
+@function m-value($args...) { @return medium-value($args...); }
 
-// ==========================================================================
-// medium() mixins
-// ==========================================================================
+////////////
+// MIXINS //
+////////////
 
 // mixin to output width media medium
 @mixin medium($aliases...) {
@@ -54,12 +71,14 @@ $current-medium-alias: null;
   // reset the medium (no nesting; could just reset to null)
   $current-medium-alias: $prev-medium-alias;
 }
+// alias
+@mixin m($args...) { @include medium($args...); }
 
 // default hd ratio
 $medium-hd-ratio: (3,2);
 
 // hd media query
-@mixin hd($aliases...) {
+@mixin hidpi($aliases...) {
 
   $n: nth($medium-hd-ratio, 1);
   $d: nth($medium-hd-ratio, 2);
@@ -87,6 +106,8 @@ $medium-hd-ratio: (3,2);
   // reset the medium (no nesting; could just reset to null)
   $current-medium-alias: $prev-medium-alias;
 }
+// alias
+@mixin hd($args...) { @include hidpi($args...); }
 
 // multi width medium -- combines both medium-each() and medium-for()
 @mixin each-medium($options:()) {
@@ -107,7 +128,7 @@ $medium-hd-ratio: (3,2);
   }
 
   // output the @content raw, if $from is null
-  @if not $from { @content; }
+  @if $from == null { @content; }
 
   // determine other referenced media
   $medium-aliases: map-keys($media);
@@ -123,36 +144,5 @@ $medium-hd-ratio: (3,2);
     }
   }
 }
-
-
-// ==========================================================================
-// medium-related units
-// ==========================================================================
-
-// unit preference
-$media-use-rems: true;
-
-// function to convert value(s) to rem, following medium scale
-@function rem($values...) {
-  @if $values == null { @return null; }
-  $scale: medium-value('html-scale');
-  $unit: if($media-use-rems, 'rem', 'em');
-  $result: ();
-  @each $value in $values {
-    @if index('rem' 'em', unit($value)) { $result: append($result, assert($value, $unit), 'space'); }
-    @else { $result: append($result, assert($value / $scale / 16, $unit), 'space'); }
-  }
-  @return if(length($result) > 1, $result, nth($result, 1));
-}
-
-// function to convert value(s) to px, following medium scale
-@function px($values...) {
-  @if $values == null { @return null; }
-  $scale: medium-value('html-scale');
-  $result: ();
-  @each $value in $values {
-    @if unit($value) == 'px' { $result: append($result, $value, 'space'); }
-    @else { $result: append($result, assert($value * $scale * 16, 'px'), 'space'); }
-  }
-  @return if(length($result) > 1, $result, nth($result, 1));
-}
+// alias
+@mixin media($args...) { @include each-medium($args...); }

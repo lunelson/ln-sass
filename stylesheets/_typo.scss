@@ -7,52 +7,63 @@
 //       __/ | |           __/ |         | |           __/ |
 //      |___/|_|          |___/          |_|          |___/
 
-@function mscale($index, $factor, $spread) { @return pow($factor, $index/$spread); }
+/////////////
+// GLOBALS //
+/////////////
 
-$font-size: 20px;
-$font-size-mod: 2;
-$margin-x-mod: 1.5;
-$margin-y-mod: 1.5;
-$margin-x: 1rem;
-$margin-y: 2rem;
+$typo-current-size: null;
+$typo-current-height: null;
+$typo-min-height: 1.125;
+$typo-line-div: 2;
 
-@function scale($index, $basis: 10) {
-  $factor: $margin-x-mod;
-  $spread: ceil($basis/6);
-  @return pow($factor, $index/$spread);
+///////////
+// MIXIN //
+///////////
+
+@mixin typo($size, $height: auto){
+  $size: if(unit($size) == 'px', rem($size), $size);
+  @if $height == 'auto' {
+    $line-div: $typo-line-div or ceil($size);
+    $rel-height: medium-value('line-height') / strip($size);
+    $height: $rel-height * ceil($typo-min-height / $rel-height * $typo-line-div) / $typo-line-div;
+    $trim: (1 - $height) / 2;
+  }
+  $typo-current-size: $size !global;
+  $typo-current-height: $height !global;
+  font-size: $size;
+  line-height: $height;
+  @content;
+  $typo-current-size: null !global;
+  $typo-current-height: null !global;
 }
 
-@function margin-x($index: 0, $basis: 10) {
-  $factor: $margin-x-mod;
+///////////////
+// FUNCTIONS //
+///////////////
+
+@function margin-x($index: 1, $basis: 10) {
+  $factor: medium-value('margin-x-mod');
   $spread: ceil($basis/6);
-  @return pow($factor, $index/$spread) * $margin-x;
+  @return if($index == 0, 0rem, pow($factor, ($index - 1)/$spread) * medium-value('margin-x'));
 }
 
-@function margin-y($index: 0, $basis: 10) {
-  $factor: $margin-y-mod;
+@function margin-y($index: 1, $basis: 10) {
+  $factor: medium-value('margin-y-mod');
   $spread: ceil($basis/6);
-  @return pow($factor, $index/$spread) * $margin-y;
+  @return if($index == 0, 0rem, pow($factor, ($index - 1)/$spread) * medium-value('margin-y'));
 }
 
-@function size($index: 0, $basis: 10) {
-  $factor: $font-size-mod;
+@function size($index: 1, $basis: 10) {
+  $factor: medium-value('font-size-mod');
   $spread: ceil($basis/6);
-  @return pow($factor, $index/$spread) * $font-size;
+  @return if($index == 0, 0rem, pow($factor, ($index - 1)/$spread) * medium-value('font-size'));
 }
 
-// .test {
-//   font-size: size(0);
-//   font-size: size(1);
-//   font-size: size(2);
-//   font-size: size(3);
-//   font-size: size(4);
-//   font-size: size(5);
-
-//   margin: margin-y() margin-x();
-//   margin: margin-y() margin-x(1);
-//   margin: margin-y() margin-x(2);
-//   margin: margin-y() margin-x(3);
-//   margin: margin-y() margin-x(4);
-//   margin: margin-y() margin-x(5);
-
-// }
+@function typo-margin($margin, $line-height: null){
+  $margin: if(unitless($margin), margin-y($margin), $margin);
+  $line-height: $line-height or $typo-current-height or medium-value('line-height');
+  @return calc(#{$margin} - #{($line-height - 1em)/2});
+}
+// alias
+@function t-margin($args...) { @return typo-margin($args...); }
+@function margin-t($args...) { @return typo-margin($args...); }

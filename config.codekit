@@ -84,6 +84,31 @@
 		"shouldRunBless": 0,
 		"useLibsass": 1
 		},
+	"\/_test\/test_typo.css": {
+		"fileType": 16,
+		"ignore": 1,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/_test\/test_typo.css",
+		"outputAbbreviatedPath": "No Output Path",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0
+		},
+	"\/_test\/test_typo.scss": {
+		"createSourceMap": 0,
+		"debugStyle": 0,
+		"decimalPrecision": 10,
+		"fileType": 4,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/_test\/test_typo.scss",
+		"outputAbbreviatedPath": "\/_test\/test_typo.css",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"outputStyle": 0,
+		"shouldRunAutoprefixer": 0,
+		"shouldRunBless": 0,
+		"useLibsass": 1
+		},
 	"\/gulpfile.js": {
 		"fileType": 64,
 		"ignore": 1,
@@ -162,6 +187,22 @@
 		"shouldRunBless": 0,
 		"useLibsass": 1
 		},
+	"\/stylesheets\/_media-units.scss": {
+		"createSourceMap": 0,
+		"debugStyle": 0,
+		"decimalPrecision": 10,
+		"fileType": 4,
+		"ignore": 1,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/stylesheets\/_media-units.scss",
+		"outputAbbreviatedPath": "\/stylesheets\/_media-units.css",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"outputStyle": 0,
+		"shouldRunAutoprefixer": 0,
+		"shouldRunBless": 0,
+		"useLibsass": 1
+		},
 	"\/stylesheets\/_media-util.scss": {
 		"createSourceMap": 0,
 		"debugStyle": 0,
@@ -219,6 +260,22 @@
 		"ignoreWasSetByUser": 0,
 		"inputAbbreviatedPath": "\/stylesheets\/_typo.scss",
 		"outputAbbreviatedPath": "\/stylesheets\/_typo.css",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"outputStyle": 0,
+		"shouldRunAutoprefixer": 0,
+		"shouldRunBless": 0,
+		"useLibsass": 1
+		},
+	"\/stylesheets\/_typo2.scss": {
+		"createSourceMap": 0,
+		"debugStyle": 0,
+		"decimalPrecision": 10,
+		"fileType": 4,
+		"ignore": 1,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/stylesheets\/_typo2.scss",
+		"outputAbbreviatedPath": "\/stylesheets\/_typo2.css",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
 		"outputStyle": 0,
@@ -3426,6 +3483,15 @@
 		"shouldRunBless": 0,
 		"useLibsass": 1
 		},
+	"\/stylesheets\/sass-util\/_test\/transtions-3b.css": {
+		"fileType": 16,
+		"ignore": 1,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/stylesheets\/sass-util\/_test\/transtions-3b.css",
+		"outputAbbreviatedPath": "No Output Path",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0
+		},
 	"\/stylesheets\/sass-util\/_test\/transtions-3b.scss": {
 		"createSourceMap": 0,
 		"debugStyle": 0,
@@ -3594,8 +3660,8 @@
 	},
 "projectAttributes": {
 	"bowerAbbreviatedPath": "",
-	"displayValue": "Sass-LN",
-	"displayValueWasSetByUser": 0,
+	"displayValue": "sass-ln",
+	"displayValueWasSetByUser": 1,
 	"iconImageName": "brackets_yellow"
 	},
 "projectSettings": {

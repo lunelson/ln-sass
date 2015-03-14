@@ -40,7 +40,7 @@ $media-orig: ();
   $font-size: map-get($base, 'font-size');
   $line-height: map-get($base, 'line-height');
   @if unit($font-size) == 'px' { $font-size: $font-size / 16px; }
-  @else { $font-size: assert($font-size, rem); }
+  $font-size: assert($font-size, rem);
   @if unit($line-height) == 'px' { $line-height: $line-height / $font-size; }
   $html-scale: strip($font-size);
   // .. and for pixel-united other values
@@ -127,9 +127,9 @@ $media-orig: ();
       $reference-medium: map-merge($reference-medium, $corrected-values);
 
       // merge some additions to reference
-      $device-width: assert(map-get($reference-medium, 'breakpoint') / $html-scale, rem);
-      $content-width: $device-width - (map-get($reference-medium, 'body-left') + map-get($reference-medium, 'body-right'));
-      $reference-medium: map-merge($reference-medium, ('device-width': $device-width, 'content-width': $content-width));
+      $body-width: assert(map-get($reference-medium, 'breakpoint') / $html-scale, rem);
+      $content-width: $body-width - (map-get($reference-medium, 'body-left') + map-get($reference-medium, 'body-right'));
+      $reference-medium: map-merge($reference-medium, ('body-width': $body-width, 'content-width': $content-width));
 
       // merge reference back to master
       $media: map-merge($media, ($medium-alias: $reference-medium));
