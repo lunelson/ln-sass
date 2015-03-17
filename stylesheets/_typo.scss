@@ -20,8 +20,8 @@ $typo-line-div: 2;
 // MIXIN //
 ///////////
 
-@mixin typo($size, $height: auto){
-  $size: if(unit($size) == 'px', rem($size), $size);
+@mixin typo($size: 1, $height: auto){
+  $size: if(unitless($size), size($size), if(unit($size) == 'px', rem($size), $size));
   @if $height == 'auto' {
     $line-div: $typo-line-div or ceil($size);
     $rel-height: medium-value('line-height') / strip($size);
@@ -36,6 +36,9 @@ $typo-line-div: 2;
   $typo-current-size: null !global;
   $typo-current-height: null !global;
 }
+
+// alias
+@mixin t($args...) { @include typo($args...) { @content; } }
 
 ///////////////
 // FUNCTIONS //

@@ -1,45 +1,125 @@
+//  _                         _
+// | |                       | |
+// | | __ _ _   _  ___  _   _| |_
+// | |/ _` | | | |/ _ \| | | | __|
+// | | (_| | |_| | (_) | |_| | |_
+// |_|\__,_|\__, |\___/ \__,_|\__|
+//           __/ |
+//          |___/
 
-// layout fundaments
-$layout-grid-float: left !default; // right | left | false
-$layout-wrap-alignment: false !default; // right | left | false
+/////////////
+// GLOBALS //
+/////////////
+
+$layout-body-class: 'l_page' !default;
+$layout-wrap-class: 'l_wrap' !default;
+$layout-sect-class: 'l_sect' !default;
+$layout-grid-class: 'l_grid' !default;
+$layout-col-class: 'l_col' !default;
+
+$layout-grid-is-float: false !default; // true | false
+$layout-grid-align: left !default; // right | left
+$layout-wrap-align: false !default; // right | left | false
+
+$layout-margin-x: 1rem !default;
+$layout-margin-y: 1rem !default;
+
+$layout-body-top: 1rem !default;
+$layout-body-right: 1rem !default;
+$layout-body-bottom: 1rem !default;
+$layout-body-left: 1rem !default;
+
+/////////////////
+// SETUP MIXIN //
+/////////////////
 
 @mixin parse-layout($output: true){
 
   @if $output {
 
-    $margin-x: 2rem;
-    $margin-y: 2rem;
-    $body-right: 2rem;
-    $body-left: 2rem;
+    $margin-x: $layout-margin-x;
+    $margin-y: $layout-margin-y;
+
+    $body-top: $layout-body-top;
+    $body-right: $layout-body-right;
+    $body-bottom: $layout-body-bottom;
+    $body-left: $layout-body-left;
 
     // get dimensions from '$base' if it exists
     @if variable-exists('base') {
       $margin-x: get($base, 'margin-x');
       $margin-y: get($base, 'margin-y');
+      $body-top: get($base, 'body-top');
       $body-right: get($base, 'body-right');
+      $body-bottom: get($base, 'body-bottom');
       $body-left: get($base, 'body-left');
     }
 
     // SPREAD, WRAP, GRID, CELL
-    %spread, .spread, [class*='spread--'], [l='spread'] {
+    // %#{$layout-body-class}, .#{$layout-body-class}, [class*='#{$layout-body-class}--'] {
+    //   padding-top: $body-top;
+    //   padding-right: $body-right;
+    //   padding-bottom: $body-bottom;
+    //   padding-left: $body-left;
+    // }
+
+    // PAGE
+    .#{$layout-body-class}--top {
+      padding-top: $body-top;
+    }
+    .#{$layout-body-class}--right {
+      padding-right: $body-right;
+    }
+    .#{$layout-body-class}--bottom {
+      padding-bottom: $body-bottom;
+    }
+    .#{$layout-body-class}--left {
+      padding-left: $body-left;
+    }
+    .#{$layout-body-class}--x {
       padding-left: $body-left;
       padding-right: $body-right;
     }
-    %wrap, .wrap, [class*='wrap--'], [l='wrap'] {
-      margin-left: auto;
-      margin-right: auto;
+    .#{$layout-body-class}--y {
+      padding-top: $body-top;
+      padding-bottom: $body-bottom;
     }
-    %section, .section, [class*='section--'], [l='section'] {
+    // WRAP
+    %#{$layout-wrap-class}, .#{$layout-wrap-class}, [class*='#{$layout-wrap-class}--'] {
+      @if $layout-wrap-align != left { margin-left: auto; }
+      @if $layout-wrap-align != right { margin-right: auto; }
+    }
+    .#{$layout-wrap-class}--left { margin-left: 0; }
+    .#{$layout-wrap-class}--right { margin-right: 0; }
+    // SECT
+    %#{$layout-sect-class}, .#{$layout-sect-class}, [class*='#{$layout-sect-class}--'] {
       padding-top: $margin-y / 2;
       padding-bottom: $margin-y / 2;
+      // &:first-child { padding-top: 0; }
+      // &:last-child { padding-top: 0; }
     }
-    %grid, .grid, [class*='grid--'], [l='grid'] {
-      width: calc(100% + #{$margin-x});
+    .#{$layout-sect-class}--top { padding-top: 0; }
+    .#{$layout-sect-class}--bottom { padding-bottom: 0; }
+    // GRID
+    %#{$layout-grid-class}, .#{$layout-grid-class}, [class*='#{$layout-grid-class}--'] {
+      // width: calc(100% + #{$margin-x}); // necessary?
       margin-left: $margin-x / -2;
       margin-right: $margin-x / -2;
+      @if not $layout-grid-is-float {
+        font-size: 0rem;
+        & > * { font-size: 1rem; }
+      }
     }
-    %cell, .cell, [class*='cell--'], [l='cell'] {
-      display: block; float: left;
+    // COL
+    %#{$layout-col-class}, .#{$layout-col-class}, [class*='#{$layout-col-class}--'] {
+      @if $layout-grid-is-float {
+        display: block;
+        float: $layout-grid-align;
+      } @else {
+        display: inline-block;
+        text-align: $layout-grid-align;
+        vertical-align: top;
+      }
       width: 100%;
       padding-left: $margin-x / 2;
       padding-right: $margin-x / 2;
@@ -50,46 +130,48 @@ $layout-wrap-alignment: false !default; // right | left | false
       @each $alias, $medium in $media {
         $margin-x: get($medium, 'margin-x');
         $margin-y: get($medium, 'margin-y');
+        $body-top: get($medium, 'body-top');
         $body-right: get($medium, 'body-right');
+        $body-bottom: get($medium, 'body-bottom');
         $body-left: get($medium, 'body-left');
 
         @include medium($alias) {
 
           $orig: medium-orig();
 
-          // SPREAD
-          %spread, .spread, [class*='spread--'], [l='spread'] {
+          // PAGE
+          %#{$layout-body-class}, .#{$layout-body-class}, [class*='#{$layout-body-class}--'] {
             @if map-has-key($orig, 'body-left') { padding-left: $body-left; }
             @if map-has-key($orig, 'body-right') { padding-right: $body-right; }
           }
 
-          // SECTION
+          // SECT
           @if map-has-key($orig, 'margin-y') {
-            %section, .section, [class*='section--'], [l='section'] {
+            %#{$layout-sect-class}, .#{$layout-sect-class}, [class*='#{$layout-sect-class}--'] {
               padding-top: $margin-y / 2;
               padding-bottom: $margin-y / 2;
             }
           }
 
           // WRAP
-          $keys: map-keys($media); $wrap-each-to: (); $wrap-each-from: ();
-          @each $alias in slice($keys, 1, index($keys, $alias)) {
-            $wrap-each-from: append($wrap-each-from, unquote('.wrap--each_from--#{$alias}'), 'comma');
-          }
-          @each $alias in slice($keys, index($keys, $alias), length($keys)) {
-            $wrap-each-to: append($wrap-each-to, unquote('.wrap--each_to--#{$alias}'), 'comma');
-          }
-          .wrap--#{$alias} { max-width: medium-value('content-width', $alias); }
-          .wrap--each, #{$wrap-each-from}, #{$wrap-each-to} { max-width: medium-value('content-width'); }
+          .#{$layout-wrap-class}--#{$alias}, .#{$layout-wrap-class}--each { max-width: medium-value('content-width'); }
+          // $keys: map-keys($media); $wrap-each-to: (); $wrap-each-from: ();
+          // @each $alias in slice($keys, 1, index($keys, $alias)) {
+          //   $wrap-each-from: append($wrap-each-from, unquote('.wrap--each_from--#{$alias}'), 'comma');
+          // }
+          // @each $alias in slice($keys, index($keys, $alias), length($keys)) {
+          //   $wrap-each-to: append($wrap-each-to, unquote('.wrap--each_to--#{$alias}'), 'comma');
+          // }
+          // .wrap--each, #{$wrap-each-from}, #{$wrap-each-to} { max-width: medium-value('content-width'); }
 
           // GRID, CELL
           @if map-has-key($orig, 'margin-x') {
-            %grid, .grid, [class*='grid--'], [l='grid'] {
-              width: calc(100% + #{$margin-x});
+            %#{$layout-grid-class}, .#{$layout-grid-class}, [class*='#{$layout-grid-class}--'] {
+              // width: calc(100% + #{$margin-x}); // necessary?
               margin-left: $margin-x / -2;
               margin-right: $margin-x / -2;
             }
-            %cell, .cell, [class*='cell--'], [l='cell'] {
+            %#{$layout-col-class}, .#{$layout-col-class}, [class*='#{$layout-col-class}--'] {
               padding-left: $margin-x / 2;
               padding-right: $margin-x / 2;
             }

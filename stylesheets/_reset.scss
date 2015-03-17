@@ -5,7 +5,7 @@
 // | | |  __/\__ \  __/ |_\__ \
 // |_|  \___||___/\___|\__|___/
 
-@mixin resets() {
+@mixin parse-resets() {
   @include reset-n3();
   @include reset-ln();
 }

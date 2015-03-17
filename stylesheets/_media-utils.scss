@@ -24,21 +24,18 @@ $current-medium-alias: null;
 // alias
 @function m-string($args...) { @return medium-string($args...); }
 
-
 // retrieve current width medium object
-@function medium($medium-alias: $current-medium-alias) {
-  $medium: null;
-  @if $medium-alias { $medium: map-get($media, $medium-alias); }
-  @return if($medium, $medium, $base);
+@function medium($alias: $current-medium-alias) {
+  @if $alias { @return map-get($media, $alias); }
+  @return $base;
 }
 // alias
 @function m($args...) { @return medium($args...); }
 
 // function to retrieve current medium-data-object based on $current-medium-alias
-@function medium-orig($medium-alias: $current-medium-alias) {
-  $medium: null;
-  @if $medium-alias { $medium: map-get($media-orig, $medium-alias); }
-  @return if($medium, $medium, $base);
+@function medium-orig($alias: $current-medium-alias) {
+  @if $alias { @return map-get($media-orig, $alias); }
+  @return $base-orig;
 }
 // alias
 @function m-orig($args...) { @return medium-orig($args...); }
@@ -72,7 +69,8 @@ $current-medium-alias: null;
   $current-medium-alias: $prev-medium-alias;
 }
 // alias
-@mixin m($args...) { @include medium($args...); }
+@mixin media($args...) { @include medium($args...) { @content; } }
+@mixin m($args...) { @include medium($args...) { @content; } }
 
 // default hd ratio
 $medium-hd-ratio: (3,2);
@@ -107,7 +105,7 @@ $medium-hd-ratio: (3,2);
   $current-medium-alias: $prev-medium-alias;
 }
 // alias
-@mixin hd($args...) { @include hidpi($args...); }
+@mixin hd($args...) { @include hidpi($args...) { @content; } }
 
 // multi width medium -- combines both medium-each() and medium-for()
 @mixin each-medium($options:()) {
@@ -118,13 +116,11 @@ $medium-hd-ratio: (3,2);
   $for: get($options, 'for');
 
   // correct 'for' options
-  @if contains(root base default, $from) { $from: null; }
   @if $for {
-    @if contains($for, margin-y) { $for: append($for, margin-y-modulation)}
-    @if contains($for, margin-x) { $for: append($for, margin-x-modulation)}
-    @if contains($for, font-size) { $for: append($for, font-size-modulation); }
-    @if contains($for, trim) { $for: append($for, line-height); }
-    @if contains($for, line-height) { $for: append($for, trim); }
+    @if contains($for, typo) { $for: join($for, margin-y font-size line-height)}
+    @if contains($for, margin-y) { $for: join($for, margin-y-mod)}
+    @if contains($for, font-size) { $for: join($for, font-size-mod); }
+    @if contains($for, margin-x) { $for: join($for, margin-x-mod)}
   }
 
   // output the @content raw, if $from is null
@@ -138,11 +134,12 @@ $medium-hd-ratio: (3,2);
 
   // conditional per-medium actions
   @each $medium-alias in $sliced-aliases {
+    $orig-keys: map-keys(medium-orig($medium-alias));
     @if not $for { @include medium($medium-alias) { @content; } }
-    @else if contains-any(keys(medium-orig($medium-alias)), $for) {
+    @else if contains-any($orig-keys, $for) {
       @include medium($medium-alias) { @content; }
     }
   }
 }
 // alias
-@mixin media($args...) { @include each-medium($args...); }
+@mixin all-media($args...) { @include each-medium($args...) { @content; } }

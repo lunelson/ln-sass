@@ -5,6 +5,10 @@
 // | | | | | |  __/ (_| | | (_| |
 // |_| |_| |_|\___|\__,_|_|\__,_|
 
+/////////////
+// GLOBALS //
+/////////////
+
 $base: () !default;
 $base-orig: ();
 
@@ -16,6 +20,10 @@ $media: (
   epsilon: (breakpoint: 80em)
 ) !default;
 $media-orig: ();
+
+/////////////////
+// SETUP MIXIN //
+/////////////////
 
 @mixin parse-media($output: true) {
 
@@ -43,6 +51,7 @@ $media-orig: ();
   $font-size: assert($font-size, rem);
   @if unit($line-height) == 'px' { $line-height: $line-height / $font-size; }
   $html-scale: strip($font-size);
+
   // .. and for pixel-united other values
   $corrected-values: ('html-scale': $html-scale, 'font-size': $font-size, 'line-height': $line-height);
   @each $key, $value in map-remove($base, 'font-size', 'line-height') {
@@ -118,6 +127,7 @@ $media-orig: ();
       @else { $font-size: assert($font-size, rem); }
       @if unit($line-height) == 'px' { $line-height: $line-height / $font-size; }
       $html-scale: strip($font-size);
+
       // ..and for pixel-united other values
       $corrected-values: ('html-scale': $html-scale, 'font-size': $font-size, 'line-height': $line-height);
       @each $key, $value in map-remove($reference-medium, 'font-size', 'breakpoint', 'line-height') {

@@ -73,6 +73,10 @@
 // | | | | | |  __/ (_| | | (_| |
 // |_| |_| |_|\___|\__,_|_|\__,_|
 
+/////////////
+// GLOBALS //
+/////////////
+
 $base: () !default;
 $base-orig: ();
 
@@ -84,6 +88,10 @@ $media: (
   epsilon: (breakpoint: 80em)
 ) !default;
 $media-orig: ();
+
+/////////////////
+// SETUP MIXIN //
+/////////////////
 
 @mixin parse-media($output: true) {
 
@@ -437,10 +445,31 @@ $media-use-rems: true;
   @return unit-strip($val) / $ref;
 }
 
+//  _                         _
+// | |                       | |
+// | | __ _ _   _  ___  _   _| |_
+// | |/ _` | | | |/ _ \| | | | __|
+// | | (_| | |_| | (_) | |_| | |_
+// |_|\__,_|\__, |\___/ \__,_|\__|
+//           __/ |
+//          |___/
 
-// layout fundaments
-$layout-grid-float: left !default; // right | left | false
-$layout-wrap-alignment: false !default; // right | left | false
+/////////////
+// GLOBALS //
+/////////////
+
+$layout-spread-class: 'spread';
+$layout-wrap-class: 'wrap';
+$layout-sect-class: 'sect';
+$layout-grid-class: 'row'; // 'grid';
+$layout-cell-class: 'col'; // 'cell';
+
+$layout-float-align: left !default; // right | left | false
+$layout-wrap-align: false !default; // right | left | false
+
+/////////////////
+// SETUP MIXIN //
+/////////////////
 
 @mixin parse-layout($output: true){
 
@@ -460,25 +489,28 @@ $layout-wrap-alignment: false !default; // right | left | false
     }
 
     // SPREAD, WRAP, GRID, CELL
-    %spread, .spread, [class*='spread--'], [l='spread'] {
+    %#{$layout-spread-class}, .#{$layout-spread-class}, [class*='#{$layout-spread-class}--'] {
       padding-left: $body-left;
       padding-right: $body-right;
     }
-    %wrap, .wrap, [class*='wrap--'], [l='wrap'] {
-      margin-left: auto;
-      margin-right: auto;
+    %#{$layout-wrap-class}, .#{$layout-wrap-class}, [class*='#{$layout-wrap-class}--'] {
+      @if $layout-wrap-align != left { margin-left: auto; }
+      @if $layout-wrap-align != right { margin-right: auto; }
+      &.left { margin-left: 0 }
+      &.right { margin-right: 0 }
     }
-    %section, .section, [class*='section--'], [l='section'] {
+    %#{$layout-sect-class}, .#{$layout-sect-class}, [class*='#{$layout-sect-class}--'] {
       padding-top: $margin-y / 2;
       padding-bottom: $margin-y / 2;
     }
-    %grid, .grid, [class*='grid--'], [l='grid'] {
+    %#{$layout-grid-class}, .#{$layout-grid-class}, [class*='#{$layout-grid-class}--'] {
       width: calc(100% + #{$margin-x});
       margin-left: $margin-x / -2;
       margin-right: $margin-x / -2;
     }
-    %cell, .cell, [class*='cell--'], [l='cell'] {
-      display: block; float: left;
+    %#{$layout-cell-class}, .#{$layout-cell-class}, [class*='#{$layout-cell-class}--'] {
+      display: block;
+      float: $layout-float-align;
       width: 100%;
       padding-left: $margin-x / 2;
       padding-right: $margin-x / 2;
@@ -497,38 +529,38 @@ $layout-wrap-alignment: false !default; // right | left | false
           $orig: medium-orig();
 
           // SPREAD
-          %spread, .spread, [class*='spread--'], [l='spread'] {
+          %spread, .spread, [class*='spread--'] {
             @if map-has-key($orig, 'body-left') { padding-left: $body-left; }
             @if map-has-key($orig, 'body-right') { padding-right: $body-right; }
           }
 
           // SECTION
           @if map-has-key($orig, 'margin-y') {
-            %section, .section, [class*='section--'], [l='section'] {
+            %section, .section, [class*='section--'] {
               padding-top: $margin-y / 2;
               padding-bottom: $margin-y / 2;
             }
           }
 
           // WRAP
-          $keys: map-keys($media); $wrap-each-to: (); $wrap-each-from: ();
-          @each $alias in slice($keys, 1, index($keys, $alias)) {
-            $wrap-each-from: append($wrap-each-from, unquote('.wrap--each_from--#{$alias}'), 'comma');
-          }
-          @each $alias in slice($keys, index($keys, $alias), length($keys)) {
-            $wrap-each-to: append($wrap-each-to, unquote('.wrap--each_to--#{$alias}'), 'comma');
-          }
-          .wrap--#{$alias} { max-width: medium-value('content-width', $alias); }
-          .wrap--each, #{$wrap-each-from}, #{$wrap-each-to} { max-width: medium-value('content-width'); }
+          // $keys: map-keys($media); $wrap-each-to: (); $wrap-each-from: ();
+          // @each $alias in slice($keys, 1, index($keys, $alias)) {
+          //   $wrap-each-from: append($wrap-each-from, unquote('.wrap--each_from--#{$alias}'), 'comma');
+          // }
+          // @each $alias in slice($keys, index($keys, $alias), length($keys)) {
+          //   $wrap-each-to: append($wrap-each-to, unquote('.wrap--each_to--#{$alias}'), 'comma');
+          // }
+          .wrap--#{$alias}, .wrap--each { max-width: medium-value('content-width', $alias); }
+          // .wrap--each, #{$wrap-each-from}, #{$wrap-each-to} { max-width: medium-value('content-width'); }
 
           // GRID, CELL
           @if map-has-key($orig, 'margin-x') {
-            %grid, .grid, [class*='grid--'], [l='grid'] {
-              width: calc(100% + #{$margin-x});
+            %#{$layout-grid-class}, .#{$layout-grid-class}, [class*='#{$layout-grid-class}--'] {
+              // width: calc(100% + #{$margin-x});
               margin-left: $margin-x / -2;
               margin-right: $margin-x / -2;
             }
-            %cell, .cell, [class*='cell--'], [l='cell'] {
+            %cell, .cell, [class*='cell--'] {
               padding-left: $margin-x / 2;
               padding-right: $margin-x / 2;
             }
@@ -862,7 +894,7 @@ $typo-line-div: 2;
 ///////////
 
 @mixin typo($size, $height: auto){
-  $size: if(unit($size) == 'px', rem($size), $size);
+  $size: if(unitless($size), size($size), if(unit($size) == 'px', rem($size), $size));
   @if $height == 'auto' {
     $line-div: $typo-line-div or ceil($size);
     $rel-height: medium-value('line-height') / strip($size);

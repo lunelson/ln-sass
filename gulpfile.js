@@ -53,7 +53,7 @@ gulp.task('sass-ln',[], function() {
     gulp.src([
         'stylesheets/_reset.scss',
         'stylesheets/_media.scss',
-        'stylesheets/_media-util.scss',
+        'stylesheets/_media-utils.scss',
         'stylesheets/_media-units.scss',
         'stylesheets/_layout.scss',
         'stylesheets/_layout-util.scss',
