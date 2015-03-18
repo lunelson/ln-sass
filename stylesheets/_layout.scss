@@ -37,6 +37,38 @@ $l_page-bottom: 1rem !default;
 $l_page-left: 1rem !default;
 
 /////////////////
+// GRID MIXINS //
+/////////////////
+
+@mixin grid-size($cols) {
+  &::before { content: '#{$cols} .col'; }
+}
+
+@mixin grid-set($args...) {
+  @extend %#{$l_grid-class};
+  @if length($args) > 0 { @include grid-size($args...); }
+}
+
+@mixin col-size($span: 1 1, $right: null, $left: null, $cycle: null, $out: null) {
+  @if type-of($span) == 'map' { @include col-size($span...); } @else {
+
+  $n: nth($span, 1); $d: nth($span, 2);
+  width: $n / $d * 100%;
+
+  @if $right { margin-right: nth($right, 1) / if(length($right) > 1, nth($right, 2), $d) * 100%; }
+  @if $left { margin-left: nth($left, 1) / if(length($left) > 1, nth($left, 2), $d) * 100%; }
+  @if $cycle { &:nth-child(#{$cycle}n+1) { clear: left; } }
+  @else if $out { position: absolute; #{opposite($out)}: 100%; }
+
+  }
+}
+
+@mixin col-set($args...) {
+  @extend %#{$l_col-class};
+  @if length($args) > 0 { @include col-size($args...); }
+}
+
+/////////////////
 // SETUP MIXIN //
 /////////////////
 
@@ -60,14 +92,6 @@ $l_page-left: 1rem !default;
       $page-bottom: get($base, 'page-bottom');
       $page-left: get($base, 'page-left');
     }
-
-    // SPREAD, WRAP, GRID, CELL
-    // .#{$l_page-class}, [class*='#{$l_page-class}--'] {
-    //   padding-top: $page-top;
-    //   padding-right: $page-right;
-    //   padding-bottom: $page-bottom;
-    //   padding-left: $page-left;
-    // }
 
     // PAGE
     .#{$l_page-class}_top {
@@ -93,6 +117,7 @@ $l_page-left: 1rem !default;
 
     // WRAP
     .#{$l_wrap-class}, [class*='#{$l_wrap-class}_'], [class*='#{$l_wrap-class}--'] {
+      @include clearfix();
       @if $l_wrap-align != left { margin-left: auto; }
       @if $l_wrap-align != right { margin-right: auto; }
     }
@@ -100,22 +125,14 @@ $l_page-left: 1rem !default;
     .#{$l_wrap-class}--right { margin-right: 0; }
 
     // SECT
-    // .#{$l_sect-class}_sm {
-    //   padding-top: $margin-y / 2;
-    //   padding-bottom: $margin-y / 2;
-    // }
     .#{$l_sect-class} {
       padding-top: $margin-y / 2;
       padding-bottom: $margin-y / 2;
     }
-    // .#{$l_sect-class}_lg {
-    //   padding-top: $margin-y / 2;
-    //   padding-bottom: $margin-y / 2;
-    // }
-    // .#{$l_sect-class}--top { padding-top: 0; }
-    // .#{$l_sect-class}--bottom { padding-bottom: 0; }
+
     // GRID
     %#{$l_grid-class}, .#{$l_grid-class}, [class*='#{$l_grid-class}_'] {
+      &:before { display: none; }
       width: calc(100% + #{$margin-x}); // necessary?
       position: relative; // avoidable?
       margin-left: $margin-x / -2;
@@ -127,8 +144,13 @@ $l_page-left: 1rem !default;
         & > * { font-size: 1rem; }
       }
     }
+
     // COL
     %#{$l_col-class}, .#{$l_col-class}, [class*='#{$l_col-class}_'] {
+      width: 100%;
+      min-height: 1px; // http://css-tricks.com/make-sure-columns-dont-collapse-horizontally/
+      padding-left: $margin-x / 2;
+      padding-right: $margin-x / 2;
       @if $l_grid-is-float {
         display: block;
         float: $l_grid-align;
@@ -137,9 +159,6 @@ $l_page-left: 1rem !default;
         text-align: $l_grid-align;
         vertical-align: top;
       }
-      width: 100%;
-      padding-left: $margin-x / 2;
-      padding-right: $margin-x / 2;
     }
 
     @if variable-exists('media') {
@@ -169,11 +188,6 @@ $l_page-left: 1rem !default;
             @if map-has-key($orig, 'page-top') { padding-top: $page-top; }
             @if map-has-key($orig, 'page-bottom') { padding-bottom: $page-bottom; }
           }
-
-          // .#{$l_page-class}, [class*='#{$l_page-class}--'] {
-          //   @if map-has-key($orig, 'page-left') { padding-left: $page-left; }
-          //   @if map-has-key($orig, 'page-right') { padding-right: $page-right; }
-          // }
 
           // SECT
           @if map-has-key($orig, 'margin-y') {

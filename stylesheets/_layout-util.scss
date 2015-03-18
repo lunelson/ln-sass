@@ -16,39 +16,6 @@
 @mixin cf() { @include clearfix(); }
 
 
-//             _     _
-//            (_)   | |
-//   __ _ _ __ _  __| |
-//  / _` | '__| |/ _` |
-// | (_| | |  | | (_| |
-//  \__, |_|  |_|\__,_|
-//   __/ |
-//  |___/
-
-@mixin grid-set($args...) {
-  @extend %#{$l_grid-class};
-  // @include grid-size($args...);
-}
-
-@mixin col-size($span: 1 1, $right: null, $left: null, $cycle: null, $out: null) {
-  @if type-of($span) == 'map' { @include col-size($span...); } @else {
-
-  $n: nth($span, 1); $d: nth($span, 2);
-  width: $n / $d * 100%;
-
-  @if $right { margin-right: nth($right, 1) / if(length($right) > 1, nth($right, 2), $d) * 100%; }
-  @if $left { margin-left: nth($left, 1) / if(length($left) > 1, nth($left, 2), $d) * 100%; }
-  @if $cycle { &:nth-child(#{$cycle}n+1) { clear: left; } }
-  @else if $out { position: absolute; #{opposite($out)}: 100%; }
-
-  }
-}
-
-@mixin col-set($args...) {
-  @extend %#{$l_col-class};
-  @include col-size($args...);
-}
-
 //       _     _ _     _        _                         _
 //      | |   (_) |   | |      | |                       | |
 //   ___| |__  _| | __| |______| | __ _ _   _  ___  _   _| |_
