@@ -5,13 +5,6 @@
 // | | | | | |  __/ (_| | | (_| |      | |_| | | | | | |_\__ \
 // |_| |_| |_|\___|\__,_|_|\__,_|       \__,_|_| |_|_|\__|___/
 
-/////////////
-// GLOBALS //
-/////////////
-
-// unit preference
-$media-use-rems: true;
-
 ///////////////
 // FUNCTIONS //
 ///////////////
@@ -19,12 +12,11 @@ $media-use-rems: true;
 // function to convert value(s) to rem, following medium scale
 @function rem($values...) {
   @if $values == null { @return null; }
-  $scale: medium-value('html-scale');
-  $unit: if($media-use-rems, 'rem', 'em');
-  $result: ();
+  @if type-of(nth($values, 1)) == 'list' { $values: nth($values, 1); }
+  $size: strip(medium-value('html-size')); $result: ();
   @each $value in $values {
-    @if index('rem' 'em', unit($value)) { $result: append($result, assert($value, $unit), 'space'); }
-    @else { $result: append($result, assert($value / $scale / 16, $unit), 'space'); }
+    @if index('rem' 'em', unit($value)) { $result: append($result, assert($value, rem), 'space'); }
+    @else { $result: append($result, assert($value / $size, rem), 'space'); }
   }
   @return if(length($result) > 1, $result, nth($result, 1));
 }
@@ -32,16 +24,16 @@ $media-use-rems: true;
 // function to convert value(s) to px, following medium scale
 @function px($values...) {
   @if $values == null { @return null; }
-  $scale: medium-value('html-scale');
-  $result: ();
+  @if type-of(nth($values, 1)) == 'list' { $values: nth($values, 1); }
+  $size: strip(medium-value('html-size')); $result: ();
   @each $value in $values {
     @if unit($value) == 'px' { $result: append($result, $value, 'space'); }
-    @else { $result: append($result, assert($value * $scale * 16, 'px'), 'space'); }
+    @else { $result: append($result, assert($value * $size, 'px'), 'space'); }
   }
   @return if(length($result) > 1, $result, nth($result, 1));
 }
 
-@function unit-strip($value){ @return if(unitless($value), $value, $value / (0 * $value + 1)); }
+@function strip-lite($value){ @return if(unitless($value), $value, $value / (0 * $value + 1)); }
 
 @function relativize($val, $ref: 1) {
   $val-unit: unit($val); $ref-unit: unit($ref);
@@ -51,8 +43,8 @@ $media-use-rems: true;
   @if index($ref-unit $val-unit, 'em') { @warn 'cannot reliably relativize to em reference; plz use rem'; }
   // corrections
   @if $val-unit == '%' { $ref: 100; }
-  @else if $val-unit == 'px' and index('em' 'rem', $ref-unit) { $ref: unit-strip($ref) * 16 * $scale; }
-  @else if $ref-unit == 'px' and index('em' 'rem', $val-unit) { $ref: unit-strip($ref) / 16 / $scale; }
-  @else if not unitless($ref) { $ref: unit-strip($ref); }
-  @return unit-strip($val) / $ref;
+  @else if $val-unit == 'px' and index('em' 'rem', $ref-unit) { $ref: strip-lite($ref) * 16 * $scale; }
+  @else if $ref-unit == 'px' and index('em' 'rem', $val-unit) { $ref: strip-lite($ref) / 16 / $scale; }
+  @else if not unitless($ref) { $ref: strip-lite($ref); }
+  @return strip-lite($val) / $ref;
 }

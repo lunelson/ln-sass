@@ -11,7 +11,7 @@
 // GLOBALS //
 /////////////
 
-$l_body-class: 'l_page' !default;
+$l_page-class: 'l_page' !default;
 $l_wrap-class: 'l_wrap' !default;
 $l_sect-class: 'l_sect' !default;
 $l_grid-class: 'l_grid' !default;
@@ -24,10 +24,10 @@ $l_wrap-align: false !default; // right | left | false
 $l_margin-x: 1rem !default;
 $l_margin-y: 1rem !default;
 
-$l_body-top: 1rem !default;
-$l_body-right: 1rem !default;
-$l_body-bottom: 1rem !default;
-$l_body-left: 1rem !default;
+$l_page-top: 1rem !default;
+$l_page-right: 1rem !default;
+$l_page-bottom: 1rem !default;
+$l_page-left: 1rem !default;
 
 /////////////////
 // SETUP MIXIN //
@@ -39,50 +39,49 @@ $l_body-left: 1rem !default;
 
     $margin-x: $l_margin-x;
     $margin-y: $l_margin-y;
-
-    $body-top: $l_body-top;
-    $body-right: $l_body-right;
-    $body-bottom: $l_body-bottom;
-    $body-left: $l_body-left;
+    $page-top: $l_page-top;
+    $page-right: $l_page-right;
+    $page-bottom: $l_page-bottom;
+    $page-left: $l_page-left;
 
     // get dimensions from '$base' if it exists
     @if variable-exists('base') {
       $margin-x: get($base, 'margin-x');
       $margin-y: get($base, 'margin-y');
-      $body-top: get($base, 'body-top');
-      $body-right: get($base, 'body-right');
-      $body-bottom: get($base, 'body-bottom');
-      $body-left: get($base, 'body-left');
+      $page-top: get($base, 'page-top');
+      $page-right: get($base, 'page-right');
+      $page-bottom: get($base, 'page-bottom');
+      $page-left: get($base, 'page-left');
     }
 
     // SPREAD, WRAP, GRID, CELL
-    // %#{$l_body-class}, .#{$l_body-class}, [class*='#{$l_body-class}--'] {
-    //   padding-top: $body-top;
-    //   padding-right: $body-right;
-    //   padding-bottom: $body-bottom;
-    //   padding-left: $body-left;
+    // %#{$l_page-class}, .#{$l_page-class}, [class*='#{$l_page-class}--'] {
+    //   padding-top: $page-top;
+    //   padding-right: $page-right;
+    //   padding-bottom: $page-bottom;
+    //   padding-left: $page-left;
     // }
 
     // PAGE
-    .#{$l_body-class}--top {
-      padding-top: $body-top;
+    .#{$l_page-class}--top {
+      padding-top: $page-top;
     }
-    .#{$l_body-class}--right {
-      padding-right: $body-right;
+    .#{$l_page-class}--right {
+      padding-right: $page-right;
     }
-    .#{$l_body-class}--bottom {
-      padding-bottom: $body-bottom;
+    .#{$l_page-class}--bottom {
+      padding-bottom: $page-bottom;
     }
-    .#{$l_body-class}--left {
-      padding-left: $body-left;
+    .#{$l_page-class}--left {
+      padding-left: $page-left;
     }
-    .#{$l_body-class}--x {
-      padding-left: $body-left;
-      padding-right: $body-right;
+    .#{$l_page-class}--x {
+      padding-left: $page-left;
+      padding-right: $page-right;
     }
-    .#{$l_body-class}--y {
-      padding-top: $body-top;
-      padding-bottom: $body-bottom;
+    .#{$l_page-class}--y {
+      padding-top: $page-top;
+      padding-bottom: $page-bottom;
     }
     // WRAP
     %#{$l_wrap-class}, .#{$l_wrap-class}, [class*='#{$l_wrap-class}--'] {
@@ -130,19 +129,19 @@ $l_body-left: 1rem !default;
       @each $alias, $medium in $media {
         $margin-x: get($medium, 'margin-x');
         $margin-y: get($medium, 'margin-y');
-        $body-top: get($medium, 'body-top');
-        $body-right: get($medium, 'body-right');
-        $body-bottom: get($medium, 'body-bottom');
-        $body-left: get($medium, 'body-left');
+        $page-top: get($medium, 'page-top');
+        $page-right: get($medium, 'page-right');
+        $page-bottom: get($medium, 'page-bottom');
+        $page-left: get($medium, 'page-left');
 
         @include medium($alias) {
 
           $orig: medium-orig();
 
           // PAGE
-          %#{$l_body-class}, .#{$l_body-class}, [class*='#{$l_body-class}--'] {
-            @if map-has-key($orig, 'body-left') { padding-left: $body-left; }
-            @if map-has-key($orig, 'body-right') { padding-right: $body-right; }
+          %#{$l_page-class}, .#{$l_page-class}, [class*='#{$l_page-class}--'] {
+            @if map-has-key($orig, 'page-left') { padding-left: $page-left; }
+            @if map-has-key($orig, 'page-right') { padding-right: $page-right; }
           }
 
           // SECT

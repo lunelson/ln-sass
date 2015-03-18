@@ -32,31 +32,31 @@ $media-orig: ();
   $base-orig: $base;
 
   $base: map-merge((
-      font-size: 16px,
-      font-size-mod: 1.5,
+      html-size: 16px,
       line-height: 1.5,
+      font-size-mod: 1.5,
       margin-x: 1rem,
       margin-x-mod: 1.5,
       margin-y: 1.5rem,
       margin-y-mod: 1.5,
-      body-top: 1rem,
-      body-right: 1rem,
-      body-bottom: 1rem,
-      body-left: 1rem,
+      page-top: 1rem,
+      page-right: 1rem,
+      page-bottom: 1rem,
+      page-left: 1rem,
     ), $base);
 
-  // correct for font-size and line-height units/non-units
-  $font-size: map-get($base, 'font-size');
+  // correct for html-size and line-height units/non-units
+  $html-size: map-get($base, 'html-size');
   $line-height: map-get($base, 'line-height');
-  @if unit($font-size) == 'px' { $font-size: $font-size / 16px; }
-  $font-size: assert($font-size, rem);
-  @if unit($line-height) == 'px' { $line-height: $line-height / $font-size; }
-  $html-scale: strip($font-size);
+  @if unit($html-size) != 'px' { $html-size: strip($html-size) * 16px; }
+  @if unit($line-height) == 'px' { $line-height: $line-height / $html-size; }
+  // $html-size: assert($html-size, rem);
+  $html-scale: strip($html-size / 16px);
 
   // .. and for pixel-united other values
-  $corrected-values: ('html-scale': $html-scale, 'font-size': $font-size, 'line-height': $line-height);
-  @each $key, $value in map-remove($base, 'font-size', 'line-height') {
-    @if unit($value) == 'px' { $corrected-values: map-merge($corrected-values, ($key: $value / $font-size * 1rem)); }
+  $corrected-values: ('html-scale': $html-scale, 'html-size': $html-size, 'line-height': $line-height);
+  @each $key, $value in map-remove($base, 'html-size', 'line-height') {
+    @if unit($value) == 'px' { $corrected-values: map-merge($corrected-values, ($key: $value / $html-size * 1rem)); }
   }
 
   // merge it all back to default
@@ -90,12 +90,10 @@ $media-orig: ();
 
     // styles
 
-    html { font-size: percentage(map-get($base, 'html-scale')); }
-
-    body {
-      line-height: map-get($base, 'line-height');
-      // padding-top: map-get($base, 'body-top');
-      // padding-bottom: map-get($base, 'body-bottom');
+    html { html-size: assert(map-get($base, 'html-scale'), em); }
+    body { line-height: map-get($base, 'line-height');
+      // padding-top: map-get($base, 'page-top');
+      // padding-bottom: map-get($base, 'page-bottom');
     }
   }
 
@@ -121,35 +119,35 @@ $media-orig: ();
       // merge medium to reference
       $reference-medium: map-merge($reference-medium, $medium);
 
-      // correct for font-size and line-height units/non-units
-      $font-size: map-get($reference-medium, 'font-size');
+      // correct for html-size and line-height units/non-units
+      $html-size: map-get($reference-medium, 'html-size');
       $line-height: map-get($reference-medium, 'line-height');
-      @if unit($font-size) == 'px' { $font-size: $font-size / 16px; }
-      @else { $font-size: assert($font-size, rem); }
-      @if unit($line-height) == 'px' { $line-height: $line-height / $font-size; }
-      $html-scale: strip($font-size);
+      @if unit($html-size) != 'px' { $html-size: strip($html-size) * 16px; }
+      @if unit($line-height) == 'px' { $line-height: $line-height / $html-size; }
+      // $html-size: assert($html-size, rem);
+      $html-scale: strip($html-size / 16px);
 
       // ..and for pixel-united other values
-      $corrected-values: ('html-scale': $html-scale, 'font-size': $font-size, 'line-height': $line-height);
-      @each $key, $value in map-remove($reference-medium, 'font-size', 'breakpoint', 'line-height') {
-        @if unit($value) == 'px' { $corrected-values: map-merge($corrected-values, ($key: $value / $font-size * 1rem)); }
+      $corrected-values: ('html-scale': $html-scale, 'html-size': $html-size, 'line-height': $line-height);
+      @each $key, $value in map-remove($reference-medium, 'html-size', 'breakpoint', 'line-height') {
+        @if unit($value) == 'px' { $corrected-values: map-merge($corrected-values, ($key: $value / $html-size * 1rem)); }
       }
       // merge corrections back to reference
       $reference-medium: map-merge($reference-medium, $corrected-values);
 
       // merge some additions to reference
       $body-width: assert(map-get($reference-medium, 'breakpoint') / $html-scale, rem);
-      $content-width: $body-width - (map-get($reference-medium, 'body-left') + map-get($reference-medium, 'body-right'));
+      $content-width: $body-width - (map-get($reference-medium, 'page-left') + map-get($reference-medium, 'page-right'));
       $reference-medium: map-merge($reference-medium, ('body-width': $body-width, 'content-width': $content-width));
 
       // merge reference back to master
       $media: map-merge($media, ($medium-alias: $reference-medium));
 
       @if $output {
-        $font-size: map-get($medium, 'font-size');
+        $html-size: map-get($medium, 'html-size');
         $line-height: map-get($medium, 'line-height');
-        $body-top: map-get($medium, 'body-top');
-        $body-bottom: map-get($medium, 'body-bottom');
+        // $page-top: map-get($medium, 'page-top');
+        // $page-bottom: map-get($medium, 'page-bottom');
 
         @include medium($medium-alias) {
 
@@ -160,10 +158,10 @@ $media-orig: ();
 
           // output CSS if spec'd by user
 
-          @if $font-size { html { font-size: percentage(map-get($reference-medium, 'html-scale')); } }
+          @if $html-size { html { html-size: assert(map-get($reference-medium, 'html-scale'), em); } }
           @if $line-height { body { line-height: map-get($reference-medium, 'line-height'); } }
-          // @if $body-top { body { margin-top: map-get($reference-medium, 'body-top'); } }
-          // @if $body-bottom { body { margin-bottom: map-get($reference-medium, 'body-bottom'); } }
+          // @if $page-top { body { margin-top: map-get($reference-medium, 'page-top'); } }
+          // @if $page-bottom { body { margin-bottom: map-get($reference-medium, 'page-bottom'); } }
 
         }
       }

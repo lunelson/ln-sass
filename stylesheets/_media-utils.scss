@@ -37,7 +37,8 @@ $current-medium-alias: null;
   @if not unitless($index) { @return $index; }
   $factor: medium-value('font-size-mod'); $spread: ceil($basis/6);
   // @return if($index == 0, 0rem, pow($factor, ($index - 1)/$spread) * medium-value('font-size'));
-  @return pow($factor, $index/$spread) * medium-value('font-size');
+  // @return pow($factor, $index/$spread) * medium-value('font-size');
+  @return pow($factor, $index/$spread) * 1rem;
 }
 
 ///////////////
@@ -139,10 +140,10 @@ $medium-hd-ratio: (3,2);
 
   // correct 'for' options
   @if $for {
-    @if contains($for, typo) { $for: join($for, margin-y font-size line-height)}
-    @if contains($for, margin-y) { $for: join($for, margin-y-mod)}
-    @if contains($for, font-size) { $for: join($for, font-size-mod); }
-    @if contains($for, margin-x) { $for: join($for, margin-x-mod)}
+    @if contains($for, typo) { $for: join($for, margin-y line-height font-size-mod); }
+    @if contains($for, margin-y) { $for: join($for, margin-y-mod); }
+    // @if contains($for, font-size) { $for: join($for, font-size-mod); }
+    @if contains($for, margin-x) { $for: join($for, margin-x-mod); }
   }
 
   // output the @content raw, if $from is null
