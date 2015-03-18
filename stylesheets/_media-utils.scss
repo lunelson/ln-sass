@@ -15,6 +15,35 @@ $current-medium-alias: null;
 // FUNCTIONS //
 ///////////////
 
+@function medium-value($key, $alias: $current-medium-alias) { @return map-get(medium($alias), $key); }
+@function media-value($args...) { @return medium-value($args...); } // alias
+@function m-value($args...) { @return medium-value($args...); } // alias
+
+@function margin-x($index: 0, $basis: 10) {
+  @if not unitless($index) { @return $index; }
+  $factor: medium-value('margin-x-mod'); $spread: ceil($basis/6);
+  // @return if($index == 0, 0rem, pow($factor, ($index - 1)/$spread) * medium-value('margin-x'));
+  @return pow($factor, $index/$spread) * medium-value('margin-x');
+}
+
+@function margin-y($index: 0, $basis: 10) {
+  @if not unitless($index) { @return $index; }
+  $factor: medium-value('margin-y-mod'); $spread: ceil($basis/6);
+  // @return if($index == 0, 0rem, pow($factor, ($index - 1)/$spread) * medium-value('margin-y'));
+  @return pow($factor, $index/$spread) * medium-value('margin-y');
+}
+
+@function size($index: 0, $basis: 10) {
+  @if not unitless($index) { @return $index; }
+  $factor: medium-value('font-size-mod'); $spread: ceil($basis/6);
+  // @return if($index == 0, 0rem, pow($factor, ($index - 1)/$spread) * medium-value('font-size'));
+  @return pow($factor, $index/$spread) * medium-value('font-size');
+}
+
+///////////////
+// FUNCTIONS //
+///////////////
+
 // [width] medium string function
 @function medium-string($alias1: null, $alias2: null) {
   @return 'screen'
@@ -39,13 +68,6 @@ $current-medium-alias: null;
 }
 // alias
 @function m-orig($args...) { @return medium-orig($args...); }
-
-// function to retrieve value for current medium
-@function medium-value($key, $alias: $current-medium-alias) {
-  @return map-get(medium($alias), $key);
-}
-// alias
-@function m-value($args...) { @return medium-value($args...); }
 
 ////////////
 // MIXINS //

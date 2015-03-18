@@ -11,23 +11,23 @@
 // GLOBALS //
 /////////////
 
-$layout-body-class: 'l_page' !default;
-$layout-wrap-class: 'l_wrap' !default;
-$layout-sect-class: 'l_sect' !default;
-$layout-grid-class: 'l_grid' !default;
-$layout-col-class: 'l_col' !default;
+$l_body-class: 'l_page' !default;
+$l_wrap-class: 'l_wrap' !default;
+$l_sect-class: 'l_sect' !default;
+$l_grid-class: 'l_grid' !default;
+$l_col-class: 'l_col' !default;
 
-$layout-grid-is-float: false !default; // true | false
-$layout-grid-align: left !default; // right | left
-$layout-wrap-align: false !default; // right | left | false
+$l_grid-is-float: false !default; // true | false
+$l_grid-align: left !default; // right | left
+$l_wrap-align: false !default; // right | left | false
 
-$layout-margin-x: 1rem !default;
-$layout-margin-y: 1rem !default;
+$l_margin-x: 1rem !default;
+$l_margin-y: 1rem !default;
 
-$layout-body-top: 1rem !default;
-$layout-body-right: 1rem !default;
-$layout-body-bottom: 1rem !default;
-$layout-body-left: 1rem !default;
+$l_body-top: 1rem !default;
+$l_body-right: 1rem !default;
+$l_body-bottom: 1rem !default;
+$l_body-left: 1rem !default;
 
 /////////////////
 // SETUP MIXIN //
@@ -37,13 +37,13 @@ $layout-body-left: 1rem !default;
 
   @if $output {
 
-    $margin-x: $layout-margin-x;
-    $margin-y: $layout-margin-y;
+    $margin-x: $l_margin-x;
+    $margin-y: $l_margin-y;
 
-    $body-top: $layout-body-top;
-    $body-right: $layout-body-right;
-    $body-bottom: $layout-body-bottom;
-    $body-left: $layout-body-left;
+    $body-top: $l_body-top;
+    $body-right: $l_body-right;
+    $body-bottom: $l_body-bottom;
+    $body-left: $l_body-left;
 
     // get dimensions from '$base' if it exists
     @if variable-exists('base') {
@@ -56,7 +56,7 @@ $layout-body-left: 1rem !default;
     }
 
     // SPREAD, WRAP, GRID, CELL
-    // %#{$layout-body-class}, .#{$layout-body-class}, [class*='#{$layout-body-class}--'] {
+    // %#{$l_body-class}, .#{$l_body-class}, [class*='#{$l_body-class}--'] {
     //   padding-top: $body-top;
     //   padding-right: $body-right;
     //   padding-bottom: $body-bottom;
@@ -64,60 +64,60 @@ $layout-body-left: 1rem !default;
     // }
 
     // PAGE
-    .#{$layout-body-class}--top {
+    .#{$l_body-class}--top {
       padding-top: $body-top;
     }
-    .#{$layout-body-class}--right {
+    .#{$l_body-class}--right {
       padding-right: $body-right;
     }
-    .#{$layout-body-class}--bottom {
+    .#{$l_body-class}--bottom {
       padding-bottom: $body-bottom;
     }
-    .#{$layout-body-class}--left {
+    .#{$l_body-class}--left {
       padding-left: $body-left;
     }
-    .#{$layout-body-class}--x {
+    .#{$l_body-class}--x {
       padding-left: $body-left;
       padding-right: $body-right;
     }
-    .#{$layout-body-class}--y {
+    .#{$l_body-class}--y {
       padding-top: $body-top;
       padding-bottom: $body-bottom;
     }
     // WRAP
-    %#{$layout-wrap-class}, .#{$layout-wrap-class}, [class*='#{$layout-wrap-class}--'] {
-      @if $layout-wrap-align != left { margin-left: auto; }
-      @if $layout-wrap-align != right { margin-right: auto; }
+    %#{$l_wrap-class}, .#{$l_wrap-class}, [class*='#{$l_wrap-class}--'] {
+      @if $l_wrap-align != left { margin-left: auto; }
+      @if $l_wrap-align != right { margin-right: auto; }
     }
-    .#{$layout-wrap-class}--left { margin-left: 0; }
-    .#{$layout-wrap-class}--right { margin-right: 0; }
+    .#{$l_wrap-class}--left { margin-left: 0; }
+    .#{$l_wrap-class}--right { margin-right: 0; }
     // SECT
-    %#{$layout-sect-class}, .#{$layout-sect-class}, [class*='#{$layout-sect-class}--'] {
+    %#{$l_sect-class}, .#{$l_sect-class}, [class*='#{$l_sect-class}--'] {
       padding-top: $margin-y / 2;
       padding-bottom: $margin-y / 2;
       // &:first-child { padding-top: 0; }
       // &:last-child { padding-top: 0; }
     }
-    .#{$layout-sect-class}--top { padding-top: 0; }
-    .#{$layout-sect-class}--bottom { padding-bottom: 0; }
+    .#{$l_sect-class}--top { padding-top: 0; }
+    .#{$l_sect-class}--bottom { padding-bottom: 0; }
     // GRID
-    %#{$layout-grid-class}, .#{$layout-grid-class}, [class*='#{$layout-grid-class}--'] {
+    %#{$l_grid-class}, .#{$l_grid-class}, [class*='#{$l_grid-class}--'] {
       // width: calc(100% + #{$margin-x}); // necessary?
       margin-left: $margin-x / -2;
       margin-right: $margin-x / -2;
-      @if not $layout-grid-is-float {
+      @if not $l_grid-is-float {
         font-size: 0rem;
         & > * { font-size: 1rem; }
       }
     }
     // COL
-    %#{$layout-col-class}, .#{$layout-col-class}, [class*='#{$layout-col-class}--'] {
-      @if $layout-grid-is-float {
+    %#{$l_col-class}, .#{$l_col-class}, [class*='#{$l_col-class}--'] {
+      @if $l_grid-is-float {
         display: block;
-        float: $layout-grid-align;
+        float: $l_grid-align;
       } @else {
         display: inline-block;
-        text-align: $layout-grid-align;
+        text-align: $l_grid-align;
         vertical-align: top;
       }
       width: 100%;
@@ -140,21 +140,21 @@ $layout-body-left: 1rem !default;
           $orig: medium-orig();
 
           // PAGE
-          %#{$layout-body-class}, .#{$layout-body-class}, [class*='#{$layout-body-class}--'] {
+          %#{$l_body-class}, .#{$l_body-class}, [class*='#{$l_body-class}--'] {
             @if map-has-key($orig, 'body-left') { padding-left: $body-left; }
             @if map-has-key($orig, 'body-right') { padding-right: $body-right; }
           }
 
           // SECT
           @if map-has-key($orig, 'margin-y') {
-            %#{$layout-sect-class}, .#{$layout-sect-class}, [class*='#{$layout-sect-class}--'] {
+            %#{$l_sect-class}, .#{$l_sect-class}, [class*='#{$l_sect-class}--'] {
               padding-top: $margin-y / 2;
               padding-bottom: $margin-y / 2;
             }
           }
 
           // WRAP
-          .#{$layout-wrap-class}--#{$alias}, .#{$layout-wrap-class}--each { max-width: medium-value('content-width'); }
+          .#{$l_wrap-class}--#{$alias}, .#{$l_wrap-class}--each { max-width: medium-value('content-width'); }
           // $keys: map-keys($media); $wrap-each-to: (); $wrap-each-from: ();
           // @each $alias in slice($keys, 1, index($keys, $alias)) {
           //   $wrap-each-from: append($wrap-each-from, unquote('.wrap--each_from--#{$alias}'), 'comma');
@@ -166,12 +166,12 @@ $layout-body-left: 1rem !default;
 
           // GRID, CELL
           @if map-has-key($orig, 'margin-x') {
-            %#{$layout-grid-class}, .#{$layout-grid-class}, [class*='#{$layout-grid-class}--'] {
+            %#{$l_grid-class}, .#{$l_grid-class}, [class*='#{$l_grid-class}--'] {
               // width: calc(100% + #{$margin-x}); // necessary?
               margin-left: $margin-x / -2;
               margin-right: $margin-x / -2;
             }
-            %#{$layout-col-class}, .#{$layout-col-class}, [class*='#{$layout-col-class}--'] {
+            %#{$l_col-class}, .#{$l_col-class}, [class*='#{$l_col-class}--'] {
               padding-left: $margin-x / 2;
               padding-right: $margin-x / 2;
             }

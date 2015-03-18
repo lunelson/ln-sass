@@ -10,7 +10,6 @@
 /////////////
 
 $base: () !default;
-$base-orig: ();
 
 $media: (
   alpha: (breakpoint: 20em),
@@ -19,6 +18,8 @@ $media: (
   delta: (breakpoint: 64em),
   epsilon: (breakpoint: 80em)
 ) !default;
+
+$base-orig: ();
 $media-orig: ();
 
 /////////////////
@@ -93,8 +94,8 @@ $media-orig: ();
 
     body {
       line-height: map-get($base, 'line-height');
-      padding-top: map-get($base, 'body-top');
-      padding-bottom: map-get($base, 'body-bottom');
+      // padding-top: map-get($base, 'body-top');
+      // padding-bottom: map-get($base, 'body-bottom');
     }
   }
 
@@ -161,8 +162,8 @@ $media-orig: ();
 
           @if $font-size { html { font-size: percentage(map-get($reference-medium, 'html-scale')); } }
           @if $line-height { body { line-height: map-get($reference-medium, 'line-height'); } }
-          @if $body-top { body { margin-top: map-get($reference-medium, 'body-top'); } }
-          @if $body-bottom { body { margin-bottom: map-get($reference-medium, 'body-bottom'); } }
+          // @if $body-top { body { margin-top: map-get($reference-medium, 'body-top'); } }
+          // @if $body-bottom { body { margin-bottom: map-get($reference-medium, 'body-bottom'); } }
 
         }
       }
