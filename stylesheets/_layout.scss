@@ -115,17 +115,20 @@ $l_page-left: 1rem !default;
     // .#{$l_sect-class}--top { padding-top: 0; }
     // .#{$l_sect-class}--bottom { padding-bottom: 0; }
     // GRID
-    .#{$l_grid-class}, [class*='#{$l_grid-class}_'] {
-      // width: calc(100% + #{$margin-x}); // necessary?
+    %#{$l_grid-class}, .#{$l_grid-class}, [class*='#{$l_grid-class}_'] {
+      width: calc(100% + #{$margin-x}); // necessary?
+      position: relative; // avoidable?
       margin-left: $margin-x / -2;
       margin-right: $margin-x / -2;
-      @if not $l_grid-is-float {
+      @if $l_grid-is-float {
+        @include clearfix();
+      } @else {
         font-size: 0rem;
         & > * { font-size: 1rem; }
       }
     }
     // COL
-    .#{$l_col-class}, [class*='#{$l_col-class}_'] {
+    %#{$l_col-class}, .#{$l_col-class}, [class*='#{$l_col-class}_'] {
       @if $l_grid-is-float {
         display: block;
         float: $l_grid-align;
@@ -194,12 +197,12 @@ $l_page-left: 1rem !default;
 
           // GRID, CELL
           @if map-has-key($orig, 'margin-x') {
-            .#{$l_grid-class}, [class*='#{$l_grid-class}_'] {
-              // width: calc(100% + #{$margin-x}); // necessary?
+            %#{$l_grid-class}, .#{$l_grid-class}, [class*='#{$l_grid-class}_'] {
+              width: calc(100% + #{$margin-x}); // necessary?
               margin-left: $margin-x / -2;
               margin-right: $margin-x / -2;
             }
-            .#{$l_col-class}, [class*='#{$l_col-class}_'] {
+            %#{$l_col-class}, .#{$l_col-class}, [class*='#{$l_col-class}_'] {
               padding-left: $margin-x / 2;
               padding-right: $margin-x / 2;
             }

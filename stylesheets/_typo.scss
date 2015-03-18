@@ -28,10 +28,10 @@ $t_line-div: 2 !default;
     $height: $rel-height * ceil($t_min-height / $rel-height * $t_line-div) / $t_line-div;
     $trim: (1 - $height) / 2;
   }
-  $t_current-size: $size !global;
-  $t_current-height: $height !global;
   font-size: $size;
   line-height: $height;
+  $t_current-size: $size !global;
+  $t_current-height: $height !global;
   @content;
   $t_current-size: null !global;
   $t_current-height: null !global;
@@ -44,10 +44,15 @@ $t_line-div: 2 !default;
 // FUNCTIONS //
 ///////////////
 
+@function line-trim($line-height: null){
+  $line-height: $line-height or $t_current-height or medium-value('line-height');
+  @return ($line-height - 1em) / 2;
+}
+
 @function typo-margin($margin, $line-height: null){
   $margin: if(unitless($margin), margin-y($margin), $margin);
-  $line-height: $line-height or $t_current-height or medium-value('line-height');
-  @return calc(#{$margin} - #{($line-height - 1em)/2});
+  @if strip($margin) == 0 { @return - line-trim($line-height); }
+  @return calc(#{$margin} - #{line-trim($line-height)});
 }
 
 // aliases

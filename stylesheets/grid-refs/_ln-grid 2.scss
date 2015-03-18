@@ -1,0 +1,55 @@
+$opposite: (
+  'left' 'right',
+  'right' 'left',
+  'top' 'bottom',
+  'bottom' 'top'
+);
+
+// BASIC GRID CLASSES
+
+$margin-x: get($base-data, 'margin-x');
+
+// .col, [class^="col--"] {
+.col, .column {
+  float: left;
+  width: 100%;
+  padding-left: $margin-x / 2;
+  padding-right: $margin-x / 2;
+}
+// .row, [class^="row--"] {
+.row {
+  @include clearfix();
+  margin-left: - $margin-x / 2;
+  margin-right: - $margin-x / 2;
+}
+.wrap, [class*="wrap--"] {
+// .wrap {
+  @include clearfix();
+  margin-left: auto;
+  margin-right: auto;
+}
+
+@mixin col-size($span, $offsets...) {
+  $n: nth($span, 1); $d: nth($span, 2);
+  width: $n / $d * 100%;
+  @each $offset in $offsets {
+    $dir: nth($offset, 1); $o: nth($offset, 2);
+    @if length($offset) > 2 { $d: nth($offset, 3); }
+    @if $o == out {
+      margin-#{get($opposite, $dir)}: 100%;
+      margin-#{$dir}: $n / $d * -100%;
+      margin-bottom: -100%; }
+    @else { margin-#{$dir}: $o / $d * 100%; }
+  }
+}
+@mixin gs($args...) { @include col-size($args...); }
+
+@mixin row-size($cols: false) {
+  @if $cols {
+    &::before {
+      content: '#{$cols} .col';
+      display: none;
+    }
+  }
+}
+@mixin rs($args...) { @include row-size($args...); }

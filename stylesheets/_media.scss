@@ -36,9 +36,9 @@ $media-orig: ();
       line-height: 1.5,
       font-size-mod: 1.5,
       margin-x: 1rem,
-      margin-x-mod: 1.5,
-      margin-y: 1.5rem,
-      margin-y-mod: 1.5,
+      margin-x-mod: 2,
+      margin-y: 1rem,
+      margin-y-mod: 2,
       page-top: 1rem,
       page-right: 1rem,
       page-bottom: 1rem,
@@ -90,7 +90,7 @@ $media-orig: ();
 
     // styles
 
-    html { html-size: assert(map-get($base, 'html-scale'), em); }
+    html { font-size: assert(map-get($base, 'html-scale'), em); }
     body { line-height: map-get($base, 'line-height');
       // padding-top: map-get($base, 'page-top');
       // padding-bottom: map-get($base, 'page-bottom');
@@ -158,7 +158,7 @@ $media-orig: ();
 
           // output CSS if spec'd by user
 
-          @if $html-size { html { html-size: assert(map-get($reference-medium, 'html-scale'), em); } }
+          @if $html-size { html { font-size: assert(map-get($reference-medium, 'html-scale'), em); } }
           @if $line-height { body { line-height: map-get($reference-medium, 'line-height'); } }
           // @if $page-top { body { margin-top: map-get($reference-medium, 'page-top'); } }
           // @if $page-bottom { body { margin-bottom: map-get($reference-medium, 'page-bottom'); } }
