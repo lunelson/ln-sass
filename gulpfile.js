@@ -1,5 +1,9 @@
 var gulp   = require('gulp');
 var concat = require('gulp-concat');
+var stripComments  = require('gulp-strip-json-comments');
+var removeEmptyLines = require('gulp-remove-empty-lines');
+
+// TODO: need to strip lines, based on regex ^(?:[\t ]*(?:\r?\n|\r))+
 
 gulp.task('mathsass',[], function() {
     gulp.src([
@@ -26,12 +30,16 @@ gulp.task('mathsass',[], function() {
         'stylesheets/mathsass/dist/helpers/_rad-to-deg.scss',
         'stylesheets/mathsass/dist/helpers/_unitless-rad.scss'
         ])
+.pipe(stripComments())
+.pipe(removeEmptyLines())
 .pipe(concat('_mathsass-pkgd.scss'))
 .pipe(gulp.dest('stylesheets/mathsass/_pkg/'));
 });
 
 gulp.task('sass-util',[], function() {
     gulp.src(['stylesheets/sass-util/stylesheets/*.scss'])
+    .pipe(stripComments())
+    .pipe(removeEmptyLines())
     .pipe(concat('_sass-util-pkgd.scss'))
     .pipe(gulp.dest('stylesheets/sass-util/_pkg/'));
 });
@@ -45,6 +53,8 @@ gulp.task('sass-maps-plus',[], function() {
         'stylesheets/sass-maps-plus/stylesheets/_list-maps.scss',
         'stylesheets/sass-maps-plus/stylesheets/_aliases.scss'
         ])
+    .pipe(stripComments())
+    .pipe(removeEmptyLines())
     .pipe(concat('_sass-maps-plus-pkgd.scss'))
     .pipe(gulp.dest('stylesheets/sass-maps-plus/_pkg/'));
 });
@@ -53,12 +63,15 @@ gulp.task('sass-ln',[], function() {
     gulp.src([
         'stylesheets/_reset.scss',
         'stylesheets/_media.scss',
+        'stylesheets/_media-debug.scss',
         'stylesheets/_media-utils.scss',
         'stylesheets/_media-units.scss',
         'stylesheets/_layout.scss',
         'stylesheets/_layout-util.scss',
         'stylesheets/_typo.scss'
         ])
+    .pipe(stripComments())
+    .pipe(removeEmptyLines())
     .pipe(concat('_sass-ln-pkgd.scss'))
     .pipe(gulp.dest('_pkg/'));
 });
@@ -90,9 +103,7 @@ gulp.task('sass-master-compass',[], function() {
 ///////////
 
 gulp.task('watch', function () {
-  // gulp.watch('sass-maps-plus/stylesheets/*.scss', ['sass-maps-plus']);
-  // gulp.watch('sass-ln/stylesheets/*.scss', ['sass-ln']);
-  gulp.watch(['stylesheets/**/*.scss', '!**/_pkg/**/*'], [
+  gulp.watch(['**/*.scss', '!**/_pkg/**/*'], [
     'mathsass',
     'sass-util',
     'sass-maps-plus',

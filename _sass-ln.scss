@@ -5,22 +5,10 @@
 // \__ \ (_| \__ \__ \      | | | | |
 // |___/\__,_|___/___/      |_|_| |_|
 
-//  Sass LN 0.6.0
+//  Sass LN 0.8.0
 //  a framework for modularly-scaled responsive layout and optically-aligned typography
 //  by @lunelson
 //  MIT License
-
-//////////////////
-// DEPENDENCIES //
-//////////////////
-
-@import 'stylesheets/mathsass/dist/math';
-@import 'stylesheets/sass-util/sass-util';
-@import 'stylesheets/sass-maps-plus/sass-maps-plus';
-
-//////////
-// CORE //
-//////////
 
 @import 'stylesheets/reset';
 @import 'stylesheets/media';

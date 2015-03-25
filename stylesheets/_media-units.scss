@@ -13,7 +13,7 @@
 @function rem($values...) {
   @if $values == null { @return null; }
   @if type-of(nth($values, 1)) == 'list' { $values: nth($values, 1); }
-  $size: strip(medium-value('html-size')); $result: ();
+  $size: strip(medium-value('font-size')); $result: ();
   @each $value in $values {
     @if index('rem' 'em', unit($value)) { $result: append($result, assert($value, rem), 'space'); }
     @else { $result: append($result, assert($value / $size, rem), 'space'); }
@@ -25,7 +25,7 @@
 @function px($values...) {
   @if $values == null { @return null; }
   @if type-of(nth($values, 1)) == 'list' { $values: nth($values, 1); }
-  $size: strip(medium-value('html-size')); $result: ();
+  $size: strip(medium-value('font-size')); $result: ();
   @each $value in $values {
     @if unit($value) == 'px' { $result: append($result, $value, 'space'); }
     @else { $result: append($result, assert($value * $size, 'px'), 'space'); }

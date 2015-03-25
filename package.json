@@ -25,6 +25,8 @@
   "homepage": "https://github.com/lunelson/sass-ln",
   "devDependencies": {
     "gulp": "^3.8.11",
-    "gulp-concat": "^2.5.2"
+    "gulp-concat": "^2.5.2",
+    "gulp-remove-empty-lines": "0.0.2",
+    "gulp-strip-json-comments": "^1.0.2"
   }
 }
