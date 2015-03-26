@@ -2,8 +2,7 @@ var gulp   = require('gulp');
 var concat = require('gulp-concat');
 var stripComments  = require('gulp-strip-json-comments');
 var removeEmptyLines = require('gulp-remove-empty-lines');
-
-// TODO: need to strip lines, based on regex ^(?:[\t ]*(?:\r?\n|\r))+
+// alternative: strip lines based on this regex ^(?:[\t ]*(?:\r?\n|\r))+
 
 gulp.task('mathsass',[], function() {
     gulp.src([
@@ -30,10 +29,10 @@ gulp.task('mathsass',[], function() {
         'stylesheets/mathsass/dist/helpers/_rad-to-deg.scss',
         'stylesheets/mathsass/dist/helpers/_unitless-rad.scss'
         ])
-.pipe(stripComments())
-.pipe(removeEmptyLines())
-.pipe(concat('_mathsass-pkgd.scss'))
-.pipe(gulp.dest('stylesheets/mathsass/_pkg/'));
+    .pipe(stripComments())
+    .pipe(removeEmptyLines())
+    .pipe(concat('_mathsass-pkgd.scss'))
+    .pipe(gulp.dest('stylesheets/mathsass/_pkg/'));
 });
 
 gulp.task('sass-util',[], function() {

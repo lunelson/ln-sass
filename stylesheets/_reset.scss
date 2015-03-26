@@ -69,4 +69,14 @@
     max-width: 100%;
     height: auto;
   }
+  a {
+    &:link,
+    &:visited,
+    &:hover,
+    &:focus,
+    &:active { text-decoration: none !important; }
+    &.block { display: block !important; }
+    &.inline-block { display: inline-block !important; }
+    span.target { text-decoration: underline !important; }
+  }
 }
