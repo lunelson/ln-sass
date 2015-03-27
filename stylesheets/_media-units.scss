@@ -9,7 +9,7 @@
 // FUNCTIONS //
 ///////////////
 
-// function to convert value(s) to rem, following medium scale
+// PX TO REM wrt MEDIA
 @function rem($values...) {
   @if $values == null { @return null; }
   @if type-of(nth($values, 1)) == 'list' { $values: nth($values, 1); }
@@ -21,7 +21,7 @@
   @return if(length($result) > 1, $result, nth($result, 1));
 }
 
-// function to convert value(s) to px, following medium scale
+// REM TO PX wrt MEDIA
 @function px($values...) {
   @if $values == null { @return null; }
   @if type-of(nth($values, 1)) == 'list' { $values: nth($values, 1); }
@@ -33,11 +33,11 @@
   @return if(length($result) > 1, $result, nth($result, 1));
 }
 
+// RELATIVIZE wrt MEDIA
 @function strip-lite($value){ @return if(unitless($value), $value, $value / (0 * $value + 1)); }
-
 @function relativize($val, $ref: 1) {
   $val-unit: unit($val); $ref-unit: unit($ref);
-  $scale: medium-value('html-scale');
+  $scale: medium-value('html-scale') or 1;
   // checks
   @if $ref-unit == '%' { @warn 'cannot relativize value to a relative reference; exiting'; @return $val; }
   @if index($ref-unit $val-unit, 'em') { @warn 'cannot reliably relativize to em reference; plz use rem'; }
@@ -48,3 +48,30 @@
   @else if not unitless($ref) { $ref: strip-lite($ref); }
   @return strip-lite($val) / $ref;
 }
+
+// VIEWPORT UNIT INTERPOLATION
+// TODO: make the $unit argument functional
+@function vx($base, $rate, $unit: 'vw') {
+  $rel1: null;
+  $brk1: null;
+  $rel2: null;
+  $brk2: null;
+
+  @if type-of($base) == 'list' and length($base) > 1 {
+    $brk1: nth($base, 2);
+    $rel1: relativize(nth($base, 1), $brk1);
+
+    @if type-of($rate) == 'list' {
+      $brk2: relativize(nth($rate, 2), $brk1) * $brk1;
+      $rel2: relativize(nth($rate, 1), $brk1);
+      $rate: ($rel2 - $rel1) * $brk1 / ($brk2 - $brk1) * 100;
+
+    }
+    $rate: strip-lite($rate);
+    $base: ($rel1 - $rate/100) * $brk1;
+
+  }
+  $op: if($base < 0, '-', '+');
+  @return calc(#{$rate * 1vw} #{$op} #{abs($base)});
+}
+

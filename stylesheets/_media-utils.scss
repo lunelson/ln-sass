@@ -19,23 +19,28 @@ $current-medium-alias: null;
 @function media-value($args...) { @return medium-value($args...); } // alias
 @function m-value($args...) { @return medium-value($args...); } // alias
 
-@function margin-x($index: 0, $basis: 10) {
+@function margin-x($index: 0, $unit: true, $basis: 10) {
+  @if type-of($index) == 'string' { @return medium-value('margin-x', $index); }
   @if not unitless($index) { @return $index; }
-  $factor: medium-value('margin-x-mod'); $spread: ceil($basis/6);
-  @return pow($factor, $index/$spread) * medium-value('margin-x');
+  $mod: medium-value('margin-x-mod'); $spread: ceil($basis/6);
+  @return pow($mod, $index/$spread) * if($unit, medium-value('margin-x'), strip(medium-value('margin-x')));
 }
 
-@function margin-y($index: 0, $basis: 10) {
+@function margin-y($index: 0, $unit: true, $basis: 10) {
+  @if type-of($index) == 'string' { @return medium-value('margin-y', $index); }
   @if not unitless($index) { @return $index; }
-  $factor: medium-value('margin-y-mod'); $spread: ceil($basis/6);
-  @return pow($factor, $index/$spread) * medium-value('margin-y');
+  $mod: medium-value('margin-y-mod'); $spread: ceil($basis/6);
+  @return pow($mod, $index/$spread) * if($unit, medium-value('margin-y'), strip(medium-value('margin-y')));
 }
 
-@function size($index: 0, $basis: 10) {
+@function font-size($index: 0, $unit: true, $basis: 10) {
+  @if type-of($index) == 'string' { @return medium-value('font-size', $index); }
   @if not unitless($index) { @return $index; }
-  $factor: medium-value('font-size-mod'); $spread: ceil($basis/6);
-  @return pow($factor, $index/$spread) * 1rem;
+  $mod: medium-value('font-size-mod'); $spread: ceil($basis/6);
+  @return pow($mod, $index/$spread) * if($unit, 1rem, strip(1rem));
 }
+// alias of above
+@function size($args...) { @return font-size($args...); }
 
 ///////////////
 // FUNCTIONS //

@@ -62,30 +62,6 @@ $t_container-class: 'contain' !default;
 // alias
 @mixin t($args...) { @include typo($args...) { @content; } }
 
-// .#{$t_pre}#{$t_single-class}, [typo~='#{$t_single-class}'] {
-//   line-height: 1;
-//   margin-top: 0;
-//   margin-bottom: 0;
-// }
-
-// @mixin typo-margins {
-//   margin-top: 0;
-//   margin-bottom: 0;
-//   &.#{$t_pre}#{$t_single-class}, [typo~='#{$t_single-class}'] {
-//     line-height: 1;
-//   }
-//   &.#{$t_pre}#{$t_block-class}, &[typo~='#{$t_block-class}'] {
-//     margin-top: margin-t(0rem);
-//     margin-bottom: margin-t(0rem);
-//   }
-//   .#{$t_pre}#{$t_container-class} &, [typo~='#{$t_container-class}'] & {
-//     @content;
-//     &:first-child { margin-top: margin-t(0rem); }
-//   }
-// }
-
-
-
 ///////////////
 // FUNCTIONS //
 ///////////////
