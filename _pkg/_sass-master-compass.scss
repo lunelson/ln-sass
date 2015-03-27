@@ -1,8 +1,79 @@
-@function gray($n) {
-  $c: $n/100*255;
-  @return rgb($c,$c,$c);
+@function set-hue($c, $h) {
+  $s: saturation($c);
+  $l: lightness($c);
+  $a: alpha($c);
+  @return hsla($h, $s, $l, $a);
 }
-
+@function set-saturation($c, $s) {
+  $h: hue($c);
+  $l: lightness($c);
+  $a: alpha($c);
+  @return hsla($h, $s, $l, $a);
+}
+@function set-lightness($c, $l) {
+  $h: hue($c);
+  $s: saturation($c);
+  $a: alpha($c);
+  @return hsla($h, $s, $l, $a);
+}
+@function set-alpha($c, $a) {
+  $h: hue($c);
+  $s: saturation($c);
+  $l: lightness($c);
+  @return hsla($h, $s, $l, $a);
+}
+@function set-brightness($c, $y) {
+  $h: hue($c);
+  $s: saturation($c);
+  $a: alpha($c);
+  @return set-alpha(hsy($h, $s, $y), $a);
+}
+@function shade($color, $percent){ @return mix($color, black, $percent); }
+@function blacken($args...) { @return shade($args...); }
+@function tint($color, $percent){ @return mix($color, white, $percent); }
+@function whiten($args...) { @return tint($args...); }
+@function gray($n) { $c: $n/100*255; @return rgb($c, $c, $c); }
+@function grey($args...) { @return gray($args...); }
+@function re-gamma($n) { @if $n <= 0.0031308 { @return $n * 12.92; } @else { @return 1.055 * pow($n, 1/2.4) - 0.055; } }
+@function de-gamma($n) { @if $n <= 0.04045 { @return $n / 12.92; } @else { @return pow((($n + 0.055)/1.055), 2.4); } }
+@function brightness($c) {
+  $rlin: de-gamma(red($c)/255);
+  $glin: de-gamma(green($c)/255);
+  $blin: de-gamma(blue($c)/255);
+  @return re-gamma(0.2126 * $rlin + 0.7152 * $glin + 0.0722 * $blin) * 100;
+}
+@function hsy($h, $s, $y) {
+  @if $s == 0 { @return gray($y); }
+  @if $y == 0 { @return rgb(0, 0,0); }
+  @else if $y == 100 { @return rgb(255, 255, 255); }
+  @else { $min-l: 0; $max-l: 100; $mid-l: 50;
+    @while ($max-l - $min-l) > 0.01 {
+      $mid-y: brightness(hsl($h, $s, $mid-l));
+      @if $mid-y > $y { $max-l: $mid-l; } @else { $min-l: $mid-l; }
+      $mid-l: ($min-l + $max-l) / 2;
+    } @return hsl($h, $s, $mid-l);
+  }
+}
+@function hsya($h, $s, $y, $a: 1) {
+  @return set-alpha(hsy($h, $s, $y), $a);
+}
+@function weight($n1, $n2, $w) {
+  @return ($n2 - $n1) * $w + $n1;
+}
+@function hsy-mix($c1, $c2, $w) {
+  $h1: hue($c1); $h2: hue($c2);
+  @if $h1 - $h2 > 180deg { $h2: $h2 + 360; }
+  @if $h2 - $h1 > 180deg { $h1: $h1 + 360; }
+  $s1: saturation($c1); $s2: saturation($c2);
+  @if $s1 == 0 { $h1: $h2; }
+  @if $s2 == 0 { $h2: $h1; }
+  $h: weight($h1, $h2, $w);
+  $s: weight($s1, $s2, $w);
+  $y: re-gamma(weight(de-gamma(brightness($c1)/100), de-gamma(brightness($c2)/100), $w)) * 100;
+  $a: weight(alpha($c1), alpha($c2), $w);
+  @return hsya($h, $s, $y, $a);
+}
+@function hsya-mix($args...) { @return hsy-mix($args...); }
 @mixin child-counter($child-selector: '> li', $content-before:'', $content-after:''){
   $counter: unique-id();
   list-style-type: none;
@@ -156,6 +227,7 @@
 }
 @function strip($value) { @return if(unitless($value), $value, $value / one(unit($value))); }
 @function assert($value, $unit: '') { @return strip($value) * one($unit); }
+@function convert($value, $unit: '') { @return one($unit) + $value; }
 @function strip-alt($value){ @return if(unitless($value), $value, $value / (0 * $value + 1)); }
 
 @function vx($rate, $base: 0, $vunit: 1vw) {
@@ -655,6 +727,16 @@ $list-map-sort-dir: 'asc';
     max-width: 100%;
     height: auto;
   }
+  a {
+    &:link,
+    &:visited,
+    &:hover,
+    &:focus,
+    &:active { text-decoration: none !important; }
+    &.block { display: block !important; }
+    &.inline-block { display: inline-block !important; }
+    span.target { text-decoration: underline !important; }
+  }
 }
 
 $base: () !default;
@@ -750,21 +832,25 @@ $current-medium-alias: null;
 @function medium-value($key, $alias: $current-medium-alias) { @return map-get(medium($alias), $key); }
 @function media-value($args...) { @return medium-value($args...); } 
 @function m-value($args...) { @return medium-value($args...); } 
-@function margin-x($index: 0, $basis: 10) {
+@function margin-x($index: 0, $unit: true, $basis: 10) {
+  @if type-of($index) == 'string' { @return medium-value('margin-x', $index); }
   @if not unitless($index) { @return $index; }
-  $factor: medium-value('margin-x-mod'); $spread: ceil($basis/6);
-  @return pow($factor, $index/$spread) * medium-value('margin-x');
+  $mod: medium-value('margin-x-mod'); $spread: ceil($basis/6);
+  @return pow($mod, $index/$spread) * if($unit, medium-value('margin-x'), strip(medium-value('margin-x')));
 }
-@function margin-y($index: 0, $basis: 10) {
+@function margin-y($index: 0, $unit: true, $basis: 10) {
+  @if type-of($index) == 'string' { @return medium-value('margin-y', $index); }
   @if not unitless($index) { @return $index; }
-  $factor: medium-value('margin-y-mod'); $spread: ceil($basis/6);
-  @return pow($factor, $index/$spread) * medium-value('margin-y');
+  $mod: medium-value('margin-y-mod'); $spread: ceil($basis/6);
+  @return pow($mod, $index/$spread) * if($unit, medium-value('margin-y'), strip(medium-value('margin-y')));
 }
-@function size($index: 0, $basis: 10) {
+@function font-size($index: 0, $unit: true, $basis: 10) {
+  @if type-of($index) == 'string' { @return medium-value('font-size', $index); }
   @if not unitless($index) { @return $index; }
-  $factor: medium-value('font-size-mod'); $spread: ceil($basis/6);
-  @return pow($factor, $index/$spread) * 1rem;
+  $mod: medium-value('font-size-mod'); $spread: ceil($basis/6);
+  @return pow($mod, $index/$spread) * if($unit, 1rem, strip(1rem));
 }
+@function size($args...) { @return font-size($args...); }
 @function medium-string($alias1: null, $alias2: null) {
   @return 'screen'
     + if($alias1, ' and (min-width: #{get($media, $alias1, breakpoint)})', '')
@@ -859,7 +945,7 @@ $medium-hd-ratio: (3,2);
 @function strip-lite($value){ @return if(unitless($value), $value, $value / (0 * $value + 1)); }
 @function relativize($val, $ref: 1) {
   $val-unit: unit($val); $ref-unit: unit($ref);
-  $scale: medium-value('html-scale');
+  $scale: medium-value('html-scale') or 1;
   @if $ref-unit == '%' { @warn 'cannot relativize value to a relative reference; exiting'; @return $val; }
   @if index($ref-unit $val-unit, 'em') { @warn 'cannot reliably relativize to em reference; plz use rem'; }
   @if $val-unit == '%' { $ref: 100; }
@@ -867,6 +953,25 @@ $medium-hd-ratio: (3,2);
   @else if $ref-unit == 'px' and index('em' 'rem', $val-unit) { $ref: strip-lite($ref) / 16 / $scale; }
   @else if not unitless($ref) { $ref: strip-lite($ref); }
   @return strip-lite($val) / $ref;
+}
+@function vx($base, $rate, $unit: 'vw') {
+  $rel1: null;
+  $brk1: null;
+  $rel2: null;
+  $brk2: null;
+  @if type-of($base) == 'list' and length($base) > 1 {
+    $brk1: nth($base, 2);
+    $rel1: relativize(nth($base, 1), $brk1);
+    @if type-of($rate) == 'list' {
+      $brk2: relativize(nth($rate, 2), $brk1) * $brk1;
+      $rel2: relativize(nth($rate, 1), $brk1);
+      $rate: ($rel2 - $rel1) * $brk1 / ($brk2 - $brk1) * 100;
+    }
+    $rate: strip-lite($rate);
+    $base: ($rel1 - $rate/100) * $brk1;
+  }
+  $op: if($base < 0, '-', '+');
+  @return calc(#{$rate * 1vw} #{$op} #{abs($base)});
 }
 
 $l_pre: 'l_' !default;
@@ -1065,10 +1170,14 @@ $l_page-left: 1rem !default;
 }
 @mixin cf() { @include clearfix(); }
 @function child-selector($selector) {
-  @if str-index($selector, '&'){
-    @return '#{$selector}';
+  @if $selector {
+    @if str-index($selector, '&'){
+      @return '#{$selector}';
+    } @else {
+      @return '& > #{$selector}';
+    }
   } @else {
-    @return '& > #{$selector}';
+    @return '& > *';
   }
 }
 @mixin child-layout($selector, $type, $options...) {

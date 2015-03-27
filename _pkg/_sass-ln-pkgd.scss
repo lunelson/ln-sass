@@ -59,6 +59,16 @@
     max-width: 100%;
     height: auto;
   }
+  a {
+    &:link,
+    &:visited,
+    &:hover,
+    &:focus,
+    &:active { text-decoration: none !important; }
+    &.block { display: block !important; }
+    &.inline-block { display: inline-block !important; }
+    span.target { text-decoration: underline !important; }
+  }
 }
 
 $base: () !default;
@@ -154,21 +164,25 @@ $current-medium-alias: null;
 @function medium-value($key, $alias: $current-medium-alias) { @return map-get(medium($alias), $key); }
 @function media-value($args...) { @return medium-value($args...); } 
 @function m-value($args...) { @return medium-value($args...); } 
-@function margin-x($index: 0, $basis: 10) {
+@function margin-x($index: 0, $unit: true, $basis: 10) {
+  @if type-of($index) == 'string' { @return medium-value('margin-x', $index); }
   @if not unitless($index) { @return $index; }
-  $factor: medium-value('margin-x-mod'); $spread: ceil($basis/6);
-  @return pow($factor, $index/$spread) * medium-value('margin-x');
+  $mod: medium-value('margin-x-mod'); $spread: ceil($basis/6);
+  @return pow($mod, $index/$spread) * if($unit, medium-value('margin-x'), strip(medium-value('margin-x')));
 }
-@function margin-y($index: 0, $basis: 10) {
+@function margin-y($index: 0, $unit: true, $basis: 10) {
+  @if type-of($index) == 'string' { @return medium-value('margin-y', $index); }
   @if not unitless($index) { @return $index; }
-  $factor: medium-value('margin-y-mod'); $spread: ceil($basis/6);
-  @return pow($factor, $index/$spread) * medium-value('margin-y');
+  $mod: medium-value('margin-y-mod'); $spread: ceil($basis/6);
+  @return pow($mod, $index/$spread) * if($unit, medium-value('margin-y'), strip(medium-value('margin-y')));
 }
-@function size($index: 0, $basis: 10) {
+@function font-size($index: 0, $unit: true, $basis: 10) {
+  @if type-of($index) == 'string' { @return medium-value('font-size', $index); }
   @if not unitless($index) { @return $index; }
-  $factor: medium-value('font-size-mod'); $spread: ceil($basis/6);
-  @return pow($factor, $index/$spread) * 1rem;
+  $mod: medium-value('font-size-mod'); $spread: ceil($basis/6);
+  @return pow($mod, $index/$spread) * if($unit, 1rem, strip(1rem));
 }
+@function size($args...) { @return font-size($args...); }
 @function medium-string($alias1: null, $alias2: null) {
   @return 'screen'
     + if($alias1, ' and (min-width: #{get($media, $alias1, breakpoint)})', '')
@@ -263,7 +277,7 @@ $medium-hd-ratio: (3,2);
 @function strip-lite($value){ @return if(unitless($value), $value, $value / (0 * $value + 1)); }
 @function relativize($val, $ref: 1) {
   $val-unit: unit($val); $ref-unit: unit($ref);
-  $scale: medium-value('html-scale');
+  $scale: medium-value('html-scale') or 1;
   @if $ref-unit == '%' { @warn 'cannot relativize value to a relative reference; exiting'; @return $val; }
   @if index($ref-unit $val-unit, 'em') { @warn 'cannot reliably relativize to em reference; plz use rem'; }
   @if $val-unit == '%' { $ref: 100; }
@@ -271,6 +285,25 @@ $medium-hd-ratio: (3,2);
   @else if $ref-unit == 'px' and index('em' 'rem', $val-unit) { $ref: strip-lite($ref) / 16 / $scale; }
   @else if not unitless($ref) { $ref: strip-lite($ref); }
   @return strip-lite($val) / $ref;
+}
+@function vx($base, $rate, $unit: 'vw') {
+  $rel1: null;
+  $brk1: null;
+  $rel2: null;
+  $brk2: null;
+  @if type-of($base) == 'list' and length($base) > 1 {
+    $brk1: nth($base, 2);
+    $rel1: relativize(nth($base, 1), $brk1);
+    @if type-of($rate) == 'list' {
+      $brk2: relativize(nth($rate, 2), $brk1) * $brk1;
+      $rel2: relativize(nth($rate, 1), $brk1);
+      $rate: ($rel2 - $rel1) * $brk1 / ($brk2 - $brk1) * 100;
+    }
+    $rate: strip-lite($rate);
+    $base: ($rel1 - $rate/100) * $brk1;
+  }
+  $op: if($base < 0, '-', '+');
+  @return calc(#{$rate * 1vw} #{$op} #{abs($base)});
 }
 
 $l_pre: 'l_' !default;
@@ -469,10 +502,14 @@ $l_page-left: 1rem !default;
 }
 @mixin cf() { @include clearfix(); }
 @function child-selector($selector) {
-  @if str-index($selector, '&'){
-    @return '#{$selector}';
+  @if $selector {
+    @if str-index($selector, '&'){
+      @return '#{$selector}';
+    } @else {
+      @return '& > #{$selector}';
+    }
   } @else {
-    @return '& > #{$selector}';
+    @return '& > *';
   }
 }
 @mixin child-layout($selector, $type, $options...) {
