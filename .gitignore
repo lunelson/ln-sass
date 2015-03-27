@@ -2,4 +2,3 @@
 *-cache
 *.sublime-*
 node_modules
-_test

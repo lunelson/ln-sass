@@ -5,28 +5,34 @@
 // | (_| (_) | | (_) | |  \__ \
 //  \___\___/|_|\___/|_|  |___/
 
+////////////
+// GLOBAL //
+////////////
+
 $colors: (
 
-  // color names
-
-  // semantic names
-
-  body_bg: '',
-  body: '',
-  link_bg: '',
-  link: '',
-  link_bg-active: '',
-  link-active: '',
-
-  bg-base: white,
-  txt-base: black,
-  txt-link: velvet-eggplant
+  body: black,
+  body_bg: white,
+  link: blue,
+  link--active: red,
+  link_bg: null,
+  link_bg--active: null,
 
 ) !default;
 
 $color-keys: map-keys($colors);
 
+//////////////
+// FUNCTION //
+//////////////
+
 @function color($key) {
   $value: map-get($colors, $key);
   @return if(index($color-keys, $value), color($value), $value);
 }
+
+///////////
+// MIXIN //
+///////////
+
+@mixin parse-colors($output: true) {}
