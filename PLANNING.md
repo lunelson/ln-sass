@@ -10,6 +10,7 @@
 - bring the util library in to the main one; rename / re-org wrt other '-util' named files
 - expand layout.scss to provide both 'float' and 'inline' grid and col classes (fgrid, igrid, etc.)
 
+```
 _colors-util.scss -> _util-color
 _colors.scss -> color
 
@@ -32,6 +33,7 @@ _util-sass
 	_util-ss-lists
 	_util-ss-strings
 	_util-ss-numbers
+```
 
 ## grids
 

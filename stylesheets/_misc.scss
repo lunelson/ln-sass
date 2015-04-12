@@ -1,0 +1,50 @@
+//            _
+//           (_)
+//  _ __ ___  _ ___  ___ ___ ___
+// | '_ ` _ \| / __|/ __/ __/ __|
+// | | | | | | \__ \ (__\__ \__ \
+// |_| |_| |_|_|___/\___|___/___/
+
+// output stringified number w/ suffix e.g. 1st 2nd 3rd 4th
+// not compatible with libsass
+// @function enum($n) {
+//   $h: abs($n) % 100; $t: $h % 10;
+//   @if $h > 3 and $h < 21 { @return #{$n}th; }
+//   @return #{$n}#{if($h == 1, 'st', if($t == 2, 'nd', if($t == 3, 'rd', 'th')))};
+// }
+
+@function opposite($dirs...) {
+  @if length($dirs) == 1 and type-of(nth($dirs, 1)) == 'list' { @return opposite(nth($dirs, 1)...); }
+  $out: (); $sep: list-separator($dirs);
+  $opposites: ('top': bottom, 'right': left, 'bottom': top, 'left': right, 'ltr': rtl, 'rtl': ltr);
+  @each $dir in $dirs {
+    $opposite: if(type-of($dir) != 'list', map-get($opposites, $dir), opposite($dir...));
+    @if $opposite {$out: append($out, $opposite, $sep); } }
+  @return $out;
+}
+
+@mixin adjacent-to($args...) {
+  @if length($args) == 0 {
+    & + & { @content; }
+  } @else {
+    @if type-of(nth($args, 1)) == list { $args: join((), $args...); }
+    $arr: '';
+    @for $n from 1 through length($args) {
+      $arr: if($n == 1, unquote('#{nth($args, 1)} + &'), append($arr, unquote(', #{nth($args,$n)} + &')));
+    }
+    #{$arr} { @content; }
+  }
+}
+
+@mixin child-counter($child-selector: '> li', $content-before:'', $content-after:''){
+  $counter: unique-id();
+  list-style-type: none;
+  counter-reset: $counter;
+  & #{$child-selector} {
+    counter-increment: $counter;
+    &:before {
+      content: '#{$content-before}' counter($counter) '#{$content-after}';
+      @content;
+    }
+  }
+}
