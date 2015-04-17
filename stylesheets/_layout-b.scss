@@ -7,6 +7,23 @@
 //                                __/ |
 //                               |___/
 
+/////////////
+// Z-INDEX //
+/////////////
+
+$z-indexes: (
+  over: 30,
+  page: 20,
+  under: 10,
+  body: 0
+);
+
+@function z($name) { @return map-get($z-indexes, $name); }
+
+/////////////////
+// POSITIONING //
+/////////////////
+
 @mixin position($pos, $args...) {
   position: $pos;
   @each $arg in $args { #{nth($arg, 1)}: nth($arg, 2); }

@@ -28,6 +28,10 @@ $media-orig: ();
 
 @mixin parse-media($output: true) {
 
+  //////////
+  // BASE //
+  //////////
+
   // backup and merge against defaults
   $base-orig: $base;
 
@@ -43,6 +47,8 @@ $media-orig: ();
       page-right: 1rem,
       page-bottom: 1rem,
       page-left: 1rem,
+      typo-measure: 30,
+      typo-col-ratio: 1
     ), $base);
 
   // correct for font-size and line-height units/non-units
@@ -63,10 +69,6 @@ $media-orig: ();
   $base: map-merge($base, $corrected-values);
 
   @if $output {
-
-    /////////////////////
-    // default-medium //
-    /////////////////////
 
     // JSON format string output for pickup in JS
 
@@ -97,14 +99,15 @@ $media-orig: ();
     }
   }
 
-  //////////////
-  // media //
-  //////////////
+  ///////////
+  // MEDIA //
+  ///////////
 
   // backup data first
   $media-orig: $media;
 
   // TODO: add a conditional re-assignment here, rather than the default thing above
+  // (I already don't understand what I was talking about on the above line)
 
   @if $media != () {
 
@@ -135,10 +138,25 @@ $media-orig: ();
       // merge corrections back to reference
       $reference-medium: map-merge($reference-medium, $corrected-values);
 
+      // breakpoint vs typo-col-ratio
+      $page-x: map-get($reference-medium, 'page-right') + map-get($reference-medium, 'page-left');
+      $typo-measure: map-get($reference-medium, 'typo-measure');
+      $typo-col-ratio: map-get($medium, 'typo-col-ratio'); // spec medium only
+      @if $typo-col-ratio and $typo-col-ratio < 1 {
+        $margin-x: map-get($reference-medium, 'margin-x');
+        $breakpoint: assert((($typo-measure) / $typo-col-ratio  - $margin-x + $page-x) * $html-scale, em); // alt3
+        $reference-medium: map-merge($reference-medium, ('breakpoint': $breakpoint))
+      } @else {
+        $breakpoint: map-get($reference-medium, 'breakpoint');
+      }
+
       // merge some additions to reference
-      $body-width: assert(map-get($reference-medium, 'breakpoint') / $html-scale, rem);
-      $content-width: $body-width - (map-get($reference-medium, 'page-left') + map-get($reference-medium, 'page-right'));
-      $reference-medium: map-merge($reference-medium, ('body-width': $body-width, 'content-width': $content-width));
+      $body-width: assert($breakpoint / $html-scale, rem);
+      $content-width: $body-width - $page-x;
+      $reference-medium: map-merge($reference-medium, (
+        'body-width': $body-width,
+        'content-width': $content-width
+      ));
 
       // merge reference back to master
       $media: map-merge($media, ($medium-alias: $reference-medium));
@@ -156,8 +174,9 @@ $media-orig: ();
 
           .util--medium { width: index(map-keys($media), $medium-alias) * 1px; }
 
-          // output CSS if spec'd by user
 
+          // output CSS if spec'd by user
+          @if $typo-col-ratio { .l--col_typo { width: percentage($typo-col-ratio) !important; } }
           @if $font-size { html { font-size: assert(map-get($reference-medium, 'html-scale'), em); } }
           @if $line-height { body { line-height: map-get($reference-medium, 'line-height'); } }
           // @if $page-top { body { margin-top: map-get($reference-medium, 'page-top'); } }

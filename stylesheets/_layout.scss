@@ -11,7 +11,7 @@
 // GLOBALS //
 /////////////
 
-$l_pre: 'l_' !default;
+$l_pre: 'l--' !default;
 $l_page-class: 'page' !default;
 $l_wrap-class: 'wrap' !default;
 $l_sect-class: 'sect' !default;
@@ -44,6 +44,8 @@ $l_page-left: 1rem !default;
 @mixin grid-size($cols) {
   &::before { content: '#{$cols} .col'; }
 }
+// alias
+@mixin grid-width($args...) { @include grid-size($args...); }
 
 @mixin grid-set($args...) {
   @extend %#{$l_grid-class};
@@ -63,6 +65,9 @@ $l_page-left: 1rem !default;
 
   }
 }
+// alias
+@mixin col-width($args...) { @include col-size($args...); }
+
 
 @mixin col-set($args...) {
   @extend %#{$l_col-class};
@@ -211,8 +216,8 @@ $l_page-left: 1rem !default;
           // WRAP
           $media-keys: map-keys($media); $wrap_to: (); $wrap_fr: ();
           @each $alias in slice($media-keys, 1, index($media-keys, $alias)) {
-            $wrap_fr: append($wrap_fr, unquote('.#{$l_pre}#{$l_wrap-class}_fr--#{$alias}'), 'comma');
-            $wrap_fr: append($wrap_fr, unquote('[layout~="#{$l_wrap-class}_fr--#{$alias}"]'), 'comma');
+            $wrap_fr: append($wrap_fr, unquote('.#{$l_pre}#{$l_wrap-class}_from--#{$alias}'), 'comma');
+            $wrap_fr: append($wrap_fr, unquote('[layout~="#{$l_wrap-class}_from--#{$alias}"]'), 'comma');
           }
           @each $alias in slice($media-keys, index($media-keys, $alias), length($media-keys)) {
             $wrap_to: append($wrap_to, unquote('.#{$l_pre}#{$l_wrap-class}_to--#{$alias}'), 'comma');

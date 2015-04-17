@@ -910,315 +910,208 @@ $list-map-sort-dir: 'asc';
 @function list-merge($args...) { @return list-map-merge-nested($args...); }
 @function list-set($args...) { @return list-map-merge-nested($args...); }
 
-@mixin parse-resets() {
-  @include reset-n3();
-  @include reset-ln();
-}
-@mixin reset-n3(){
-  html{font-family:sans-serif;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%}
-  body{margin:0}
-  article,aside,details,figcaption,figure,footer,header,hgroup,main,menu,nav,section,summary{display:block}
-  audio,canvas,progress,video{display:inline-block;vertical-align:baseline}
-  audio:not([controls]){display:none;height:0}
-  [hidden],template{display:none}
-  a{background-color:transparent}
-  a:active,a:hover{outline:0}
-  abbr[title]{border-bottom:1px dotted}
-  b,strong{font-weight:bold}
-  dfn{font-style:italic}
-  h1{font-size:2em;margin:.67em 0}
-  mark{background:#ff0;color:#000}
-  small{font-size:80%}
-  sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}
-  sup{top:-0.5em}
-  sub{bottom:-0.25em}
-  img{border:0}
-  svg:not(:root){overflow:hidden}
-  figure{margin:1em 40px}
-  hr{-moz-box-sizing:content-box;box-sizing:content-box;height:0}
-  pre{overflow:auto}
-  code,kbd,pre,samp{font-family:monospace,monospace;font-size:1em}
-  button,input,optgroup,select,textarea{color:inherit;font:inherit;margin:0}
-  button{overflow:visible}
-  button,select{text-transform:none}
-  button,html input[type="button"],input[type="reset"],input[type="submit"]{-webkit-appearance:button;cursor:pointer}
-  button[disabled],html input[disabled]{cursor:default}
-  button::-moz-focus-inner,input::-moz-focus-inner{border:0;padding:0}
-  input{line-height:normal}
-  input[type="checkbox"],input[type="radio"]{box-sizing:border-box;padding:0}
-  input[type="number"]::-webkit-inner-spin-button,input[type="number"]::-webkit-outer-spin-button{height:auto}
-  input[type="search"]{-webkit-appearance:textfield;-moz-box-sizing:content-box;-webkit-box-sizing:content-box;box-sizing:content-box}
-  input[type="search"]::-webkit-search-cancel-button,input[type="search"]::-webkit-search-decoration{-webkit-appearance:none}
-  fieldset{border:1px solid silver;margin:0 2px;padding:.35em .625em .75em}
-  legend{border:0;padding:0}
-  textarea{overflow:auto}
-  optgroup{font-weight:bold}
-  table{border-collapse:collapse;border-spacing:0}
-  td,th{padding:0}
-}
-@mixin reset-ln(){
-  *, *:before, *:after { box-sizing: inherit; } 
-  html, body { height: 100%; } 
-  html {
-    box-sizing: border-box; 
-    -webkit-font-smoothing: antialiased; 
-    -moz-osx-font-smoothing: grayscale; 
-    -webkit-tap-highlight-color: rgba(0, 0, 0, 0); 
-    text-rendering: optimizespeed; 
-  }
-  img, video {
-    display: block;
-    max-width: 100%;
-    height: auto;
-  }
-  a {
-    &:link,
-    &:visited,
-    &:hover,
-    &:focus,
-    &:active { text-decoration: none !important; }
-    &.block { display: block !important; }
-    &.inline-block { display: inline-block !important; }
-    span.target { text-decoration: underline !important; }
-  }
-}
-
-$base: () !default;
-$media: (
-  alpha: (breakpoint: 20em),
-  beta: (breakpoint: 30em),
-  gamma: (breakpoint: 48em),
-  delta: (breakpoint: 64em),
-  epsilon: (breakpoint: 80em)
+$colors: (
+  body: black,
+  body_bg: white,
+  link: blue,
+  link--active: red,
+  link_bg: null,
+  link_bg--active: null,
 ) !default;
-$base-orig: ();
-$media-orig: ();
-@mixin parse-media($output: true) {
-  $base-orig: $base;
-  $base: map-merge((
-      font-size: 16px,
-      line-height: 1.5,
-      font-size-mod: 1.5,
-      margin-x: 1rem,
-      margin-x-mod: 2,
-      margin-y: 1rem,
-      margin-y-mod: 2,
-      page-top: 1rem,
-      page-right: 1rem,
-      page-bottom: 1rem,
-      page-left: 1rem,
-    ), $base);
-  $font-size: map-get($base, 'font-size');
-  $line-height: map-get($base, 'line-height');
-  @if unit($font-size) != 'px' { $font-size: strip($font-size) * 16px; }
-  @if unit($line-height) == 'px' { $line-height: $line-height / $font-size; }
-  $html-scale: strip($font-size / 16px);
-  $corrected-values: ('html-scale': $html-scale, 'font-size': $font-size, 'line-height': $line-height);
-  @each $key, $value in map-remove($base, 'font-size', 'line-height') {
-    @if unit($value) == 'px' { $corrected-values: map-merge($corrected-values, ($key: $value / $font-size * 1rem)); }
+@function get-color($key) {
+  $keys: map-keys($colors);
+  $value: map-get($colors, $key);
+  @return if(index($keys, $value), get-color($value), $value);
+}
+@function set-hue($c, $h) {
+  $s: saturation($c);
+  $l: lightness($c);
+  $a: alpha($c);
+  @return hsla($h, $s, $l, $a);
+}
+@function set-saturation($c, $s) {
+  $h: hue($c);
+  $l: lightness($c);
+  $a: alpha($c);
+  @return hsla($h, $s, $l, $a);
+}
+@function set-lightness($c, $l) {
+  $h: hue($c);
+  $s: saturation($c);
+  $a: alpha($c);
+  @return hsla($h, $s, $l, $a);
+}
+@function set-alpha($c, $a) {
+  $h: hue($c);
+  $s: saturation($c);
+  $l: lightness($c);
+  @return hsla($h, $s, $l, $a);
+}
+@function set-brightness($c, $y) {
+  $h: hue($c);
+  $s: saturation($c);
+  $a: alpha($c);
+  @return set-alpha(hsy($h, $s, $y), $a);
+}
+@function shade($color, $percent){ @return mix($color, black, $percent); }
+@function blacken($args...) { @return shade($args...); }
+@function tint($color, $percent){ @return mix($color, white, $percent); }
+@function whiten($args...) { @return tint($args...); }
+@function gray($n) { $c: $n/100*255; @return rgb($c, $c, $c); }
+@function grey($args...) { @return gray($args...); }
+@function re-gamma($n) { @if $n <= 0.0031308 { @return $n * 12.92; } @else { @return 1.055 * pow($n, 1/2.4) - 0.055; } }
+@function de-gamma($n) { @if $n <= 0.04045 { @return $n / 12.92; } @else { @return pow((($n + 0.055)/1.055), 2.4); } }
+@function brightness($c) {
+  $rlin: de-gamma(red($c)/255);
+  $glin: de-gamma(green($c)/255);
+  $blin: de-gamma(blue($c)/255);
+  @return re-gamma(0.2126 * $rlin + 0.7152 * $glin + 0.0722 * $blin) * 100;
+}
+@function contrast-color($color, $dark: black, $light: white) {
+  @if $color == null { @return null; }
+  @else {
+    $color-bright: brightness($color);
+    $light-bright: brightness($light);
+    $dark-bright: brightness($dark);
+    @return if($color-bright > ($light-bright + $dark-bright)/2, $light, $dark);
   }
-  $base: map-merge($base, $corrected-values);
-  @if $output {
-    $medium-key-list: ();
-    @each $key in map-keys($media) {
-      $medium-key-list: append($medium-key-list, quote($key), 'comma');
+}
+@function hsy($h, $s, $y) {
+  @if $s == 0 { @return gray($y); }
+  @if $y == 0 { @return rgb(0, 0,0); }
+  @else if $y == 100 { @return rgb(255, 255, 255); }
+  @else { $min-l: 0; $max-l: 100; $mid-l: 50;
+    @while ($max-l - $min-l) > 0.01 {
+      $mid-y: brightness(hsl($h, $s, $mid-l));
+      @if $mid-y > $y { $max-l: $mid-l; } @else { $min-l: $mid-l; }
+      $mid-l: ($min-l + $max-l) / 2;
+    } @return hsl($h, $s, $mid-l);
+  }
+}
+@function hsya($h, $s, $y, $a: 1) {
+  @return set-alpha(hsy($h, $s, $y), $a);
+}
+@function weight($n1, $n2, $w) {
+  @return ($n2 - $n1) * $w + $n1;
+}
+@function hsy-mix($c1, $c2, $w) {
+  $h1: hue($c1); $h2: hue($c2);
+  @if $h1 - $h2 > 180deg { $h2: $h2 + 360; }
+  @if $h2 - $h1 > 180deg { $h1: $h1 + 360; }
+  $s1: saturation($c1); $s2: saturation($c2);
+  @if $s1 == 0 { $h1: $h2; }
+  @if $s2 == 0 { $h2: $h1; }
+  $h: weight($h1, $h2, $w);
+  $s: weight($s1, $s2, $w);
+  $y: re-gamma(weight(de-gamma(brightness($c1)/100), de-gamma(brightness($c2)/100), $w)) * 100;
+  $a: weight(alpha($c1), alpha($c2), $w);
+  @return hsya($h, $s, $y, $a);
+}
+@function hsya-mix($args...) { @return hsy-mix($args...); }
+
+$z-indexes: (
+  over: 30,
+  page: 20,
+  under: 10,
+  body: 0
+);
+@function z($name) { @return map-get($z-indexes, $name); }
+@mixin position($pos, $args...) {
+  position: $pos;
+  @each $arg in $args { #{nth($arg, 1)}: nth($arg, 2); }
+}
+@mixin absolute($args...) { @include position(absolute, $args...); }
+@mixin fixed($args...) { @include position(fixed, $args...); }
+@mixin relative($args...) { @include position(relative, $args...); }
+@mixin clearfix() {
+  &:after { content:""; display: table; clear: both; }
+}
+@mixin cf() { @include clearfix(); }
+@mixin clearfix-old(){
+  & { *zoom: 1; }
+  &:before, &:after { content: ""; display: table; }
+  &:after { clear: both; }
+}
+@function child-selector($selector) {
+  @if $selector {
+    @if str-index($selector, '&'){
+      @return '#{$selector}';
+    } @else {
+      @return '& > #{$selector}';
     }
-    body::before {
-      width: 0;
-      height: 0;
-      display: block;
+  } @else {
+    @return '& > *';
+  }
+}
+@mixin child-layout($selector, $type, $options...) {
+  @if index(table-cell table-row cell row, $type) {
+    width: 100%; 
+    display: table;
+    table-layout: fixed;
+    border-collapse: collapse;
+    #{child-selector($selector)} {
+      @if index(table-row row, $type) {
+        display: table-row;
+        height: auto; 
+        @if index($options, center) or index($options, centre) { text-align: center; }
+        @else if index($options, right) { text-align: right;}
+        @else { text-align: left; }
+      }
+      @else {
+        display: table-cell;
+        width: auto; 
+        @if index($options, bottom) { vertical-align: bottom; }
+        @else if index($options, middle) { vertical-align: middle;}
+        @else { vertical-align: top; }
+      }
       overflow: hidden;
-      content: '{ "current" : "default", "all": ["#{$medium-key-list}"] }';
-    }
-    head { font-family: '{ "current" : "default", "all": ["#{$medium-key-list}"] }'; }
-    .util--medium { width: 0; transition: width 1ms; }
-    html { font-size: assert(map-get($base, 'html-scale'), em); }
-    body { line-height: map-get($base, 'line-height');
+      @content;
     }
   }
-  $media-orig: $media;
-  @if $media != () {
-    $reference-medium: $base;
-    $sorted-media: maps-sort(maps-collect($media, 'breakpoint'), 'breakpoint');
-    @each $medium-alias, $medium in $sorted-media {
-      $reference-medium: map-merge($reference-medium, $medium);
-      $font-size: map-get($reference-medium, 'font-size');
-      $line-height: map-get($reference-medium, 'line-height');
-      @if unit($font-size) != 'px' { $font-size: strip($font-size) * 16px; }
-      @if unit($line-height) == 'px' { $line-height: $line-height / $font-size; }
-      $html-scale: strip($font-size / 16px);
-      $corrected-values: ('html-scale': $html-scale, 'font-size': $font-size, 'line-height': $line-height);
-      @each $key, $value in map-remove($reference-medium, 'font-size', 'breakpoint', 'line-height') {
-        @if unit($value) == 'px' { $corrected-values: map-merge($corrected-values, ($key: $value / $font-size * 1rem)); }
+  @else if index(inline-block iblock ib, $type) {
+    font-size: 0px;
+    @if index($options, justify) {
+      text-align: justify;
+      &:after, #{child-selector($selector)} {
+        display: inline-block;
+        max-width: 100%; 
+        @if index($options, bottom) { vertical-align: bottom; }
+        @else if index($options, middle) { vertical-align: middle;}
+        @else { vertical-align: top; }
       }
-      $reference-medium: map-merge($reference-medium, $corrected-values);
-      $body-width: assert(map-get($reference-medium, 'breakpoint') / $html-scale, rem);
-      $content-width: $body-width - (map-get($reference-medium, 'page-left') + map-get($reference-medium, 'page-right'));
-      $reference-medium: map-merge($reference-medium, ('body-width': $body-width, 'content-width': $content-width));
-      $media: map-merge($media, ($medium-alias: $reference-medium));
-      @if $output {
-        $font-size: map-get($medium, 'font-size');
-        $line-height: map-get($medium, 'line-height');
-        @include medium($medium-alias) {
-          body::before { content: '{ "current" : "#{$medium-alias}", "all": ["#{$medium-key-list}"] }'; }
-          head { font-family: '{ "current" : "#{$medium-alias}", "all": ["#{$medium-key-list}"] }'; }
-          .util--medium { width: index(map-keys($media), $medium-alias) * 1px; }
-          @if $font-size { html { font-size: assert(map-get($reference-medium, 'html-scale'), em); } }
-          @if $line-height { body { line-height: map-get($reference-medium, 'line-height'); } }
-        }
+      &:after {
+        content: '';
+        width: 100%;
+      }
+      #{child-selector($selector)} {
+        font-size: 1rem;
+        @content;
       }
     }
-  }
-}
-
-
-$current-medium-alias: null;
-@function medium-value($key, $alias: $current-medium-alias) { @return map-get(medium($alias), $key); }
-@function media-value($args...) { @return medium-value($args...); } 
-@function m-value($args...) { @return medium-value($args...); } 
-@function margin-x($index: 0, $unit: true, $basis: 10) {
-  @if type-of($index) == 'string' { @return medium-value('margin-x', $index); }
-  @if not unitless($index) { @return $index; }
-  $mod: medium-value('margin-x-mod'); $spread: ceil($basis/6);
-  @return pow($mod, $index/$spread) * if($unit, medium-value('margin-x'), strip(medium-value('margin-x')));
-}
-@function margin-y($index: 0, $unit: true, $basis: 10) {
-  @if type-of($index) == 'string' { @return medium-value('margin-y', $index); }
-  @if not unitless($index) { @return $index; }
-  $mod: medium-value('margin-y-mod'); $spread: ceil($basis/6);
-  @return pow($mod, $index/$spread) * if($unit, medium-value('margin-y'), strip(medium-value('margin-y')));
-}
-@function font-size($index: 0, $unit: true, $basis: 10) {
-  @if type-of($index) == 'string' { @return medium-value('font-size', $index); }
-  @if not unitless($index) { @return $index; }
-  $mod: medium-value('font-size-mod'); $spread: ceil($basis/6);
-  @return pow($mod, $index/$spread) * if($unit, 1rem, strip(1rem));
-}
-@function size($args...) { @return font-size($args...); }
-@function medium-string($alias1: null, $alias2: null) {
-  @return 'screen'
-    + if($alias1, ' and (min-width: #{get($media, $alias1, breakpoint)})', '')
-    + if($alias2, ' and (max-width: #{get($media, $alias2, breakpoint) - 0.001})', '');
-}
-@function m-string($args...) { @return medium-string($args...); }
-@function medium($alias: $current-medium-alias) {
-  @if $alias { @return map-get($media, $alias); }
-  @return $base;
-}
-@function m($args...) { @return medium($args...); }
-@function medium-orig($alias: $current-medium-alias) {
-  @if $alias { @return map-get($media-orig, $alias); }
-  @return $base-orig;
-}
-@function m-orig($args...) { @return medium-orig($args...); }
-@mixin medium($aliases...) {
-  $prev-medium-alias: $current-medium-alias;
-  @if length($aliases) > 0 {
-    $current-medium-alias: nth($aliases, 1) or map-prev-key($media, nth($aliases, 2));
-  }
-  @media #{medium-string($aliases...)} { @content }
-  $current-medium-alias: $prev-medium-alias;
-}
-@mixin media($args...) { @include medium($args...) { @content; } }
-@mixin m($args...) { @include medium($args...) { @content; } }
-$medium-hd-ratio: (3,2);
-@mixin hidpi($aliases...) {
-  $n: nth($medium-hd-ratio, 1);
-  $d: nth($medium-hd-ratio, 2);
-  $ratio: $n/$d;
-  $prev-medium-alias: $current-medium-alias;
-  @if length($aliases) > 0 {
-    $current-medium-alias: nth($aliases, 1) or map-prev-key($media, nth($aliases, 2));
-  }
-  @media screen and
-    (-webkit-min-device-pixel-ratio: $ratio),
-    (min--moz-device-pixel-ratio: $ratio),
-    (-o-min-device-pixel-ratio: #{$n}/#{$d}),
-    (min-device-pixel-ratio: $ratio),
-    (min-resolution: $ratio * 96dpi),
-    (min-resolution: $ratio * 1dppx) {
-    @content;
-  }
-  $current-medium-alias: $prev-medium-alias;
-}
-@mixin hd($args...) { @include hidpi($args...) { @content; } }
-@mixin each-medium($options:()) {
-  $from: get($options, 'from');
-  $to: get($options, 'to');
-  $for: get($options, 'for');
-  @if $for {
-    @if contains($for, typo) { $for: join($for, margin-y line-height font-size-mod); }
-    @if contains($for, margin-y) { $for: join($for, margin-y-mod); }
-    @if contains($for, margin-x) { $for: join($for, margin-x-mod); }
-  }
-  @if $from == null { @content; }
-  $medium-aliases: map-keys($media);
-  $sliced-aliases: slice($medium-aliases,
-      if($from, index($medium-aliases, $from), 1),
-      if($to, index($medium-aliases, $to) - 1, length($medium-aliases)));
-  @each $medium-alias in $sliced-aliases {
-    $orig-keys: map-keys(medium-orig($medium-alias));
-    @if not $for { @include medium($medium-alias) { @content; } }
-    @else if contains-any($orig-keys, $for) {
-      @include medium($medium-alias) { @content; }
+    @else {
+      &:before, #{child-selector($selector)} {
+        display: inline-block;
+        max-width: 100%; 
+        @if index($options, bottom) { vertical-align: bottom; }
+        @else if index($options, middle) { vertical-align: middle;}
+        @else { vertical-align: top; }
+      }
+      &:before {
+        content: '';
+        height: 100%;
+      }
+      #{child-selector($selector)} {
+        font-size: 1rem;
+        @content;
+      }
+      @if index($options, center) or index($options, centre) { text-align: center; }
+      @else if index($options, right) { text-align: right;}
+      @else { text-align: left; }
     }
   }
 }
-@mixin all-media($args...) { @include each-medium($args...) { @content; } }
 
-@function rem($values...) {
-  @if $values == null { @return null; }
-  @if type-of(nth($values, 1)) == 'list' { $values: nth($values, 1); }
-  $size: strip(medium-value('font-size')); $result: ();
-  @each $value in $values {
-    @if index('rem' 'em', unit($value)) { $result: append($result, assert($value, rem), 'space'); }
-    @else { $result: append($result, assert($value / $size, rem), 'space'); }
-  }
-  @return if(length($result) > 1, $result, nth($result, 1));
-}
-@function px($values...) {
-  @if $values == null { @return null; }
-  @if type-of(nth($values, 1)) == 'list' { $values: nth($values, 1); }
-  $size: strip(medium-value('font-size')); $result: ();
-  @each $value in $values {
-    @if unit($value) == 'px' { $result: append($result, $value, 'space'); }
-    @else { $result: append($result, assert($value * $size, 'px'), 'space'); }
-  }
-  @return if(length($result) > 1, $result, nth($result, 1));
-}
-@function strip-lite($value){ @return if(unitless($value), $value, $value / (0 * $value + 1)); }
-@function relativize($val, $ref: 1) {
-  $val-unit: unit($val); $ref-unit: unit($ref);
-  $scale: medium-value('html-scale') or 1;
-  @if $ref-unit == '%' { @warn 'cannot relativize value to a relative reference; exiting'; @return $val; }
-  @if index($ref-unit $val-unit, 'em') { @warn 'cannot reliably relativize to em reference; plz use rem'; }
-  @if $val-unit == '%' { $ref: 100; }
-  @else if $val-unit == 'px' and index('em' 'rem', $ref-unit) { $ref: strip-lite($ref) * 16 * $scale; }
-  @else if $ref-unit == 'px' and index('em' 'rem', $val-unit) { $ref: strip-lite($ref) / 16 / $scale; }
-  @else if not unitless($ref) { $ref: strip-lite($ref); }
-  @return strip-lite($val) / $ref;
-}
-@function vx($base, $rate, $unit: 'vw') {
-  $rel1: null;
-  $brk1: null;
-  $rel2: null;
-  $brk2: null;
-  @if type-of($base) == 'list' and length($base) > 1 {
-    $brk1: nth($base, 2);
-    $rel1: relativize(nth($base, 1), $brk1);
-    @if type-of($rate) == 'list' {
-      $brk2: relativize(nth($rate, 2), $brk1) * $brk1;
-      $rel2: relativize(nth($rate, 1), $brk1);
-      $rate: ($rel2 - $rel1) * $brk1 / ($brk2 - $brk1) * 100;
-    }
-    $rate: strip-lite($rate);
-    $base: ($rel1 - $rate/100) * $brk1;
-  }
-  $op: if($base < 0, '-', '+');
-  @return calc(#{$rate * 1vw} #{$op} #{abs($base)});
-}
-
-$l_pre: 'l_' !default;
+$l_pre: 'l--' !default;
 $l_page-class: 'page' !default;
 $l_wrap-class: 'wrap' !default;
 $l_sect-class: 'sect' !default;
@@ -1236,6 +1129,7 @@ $l_page-left: 1rem !default;
 @mixin grid-size($cols) {
   &::before { content: '#{$cols} .col'; }
 }
+@mixin grid-width($args...) { @include grid-size($args...); }
 @mixin grid-set($args...) {
   @extend %#{$l_grid-class};
   @if length($args) > 0 { @include grid-size($args...); }
@@ -1250,6 +1144,7 @@ $l_page-left: 1rem !default;
   @else if $out { position: absolute; #{opposite($out)}: 100%; }
   }
 }
+@mixin col-width($args...) { @include col-size($args...); }
 @mixin col-set($args...) {
   @extend %#{$l_col-class};
   @if length($args) > 0 { @include col-size($args...); }
@@ -1407,91 +1302,562 @@ $l_page-left: 1rem !default;
   }
 }
 
-@mixin clearfix() {
-  & { *zoom: 1; }
-  &:before, &:after { content: ""; display: table; }
-  &:after { clear: both; }
+@function rem($values...) {
+  @if $values == null { @return null; }
+  @if type-of(nth($values, 1)) == 'list' { $values: nth($values, 1); }
+  $size: strip(medium-value('font-size')); $result: ();
+  @each $value in $values {
+    @if index('rem' 'em', unit($value)) { $result: append($result, assert($value, rem), 'space'); }
+    @else { $result: append($result, assert($value / $size, rem), 'space'); }
+  }
+  @return if(length($result) > 1, $result, nth($result, 1));
 }
-@mixin cf() { @include clearfix(); }
-@function child-selector($selector) {
-  @if $selector {
-    @if str-index($selector, '&'){
-      @return '#{$selector}';
-    } @else {
-      @return '& > #{$selector}';
+@function px($values...) {
+  @if $values == null { @return null; }
+  @if type-of(nth($values, 1)) == 'list' { $values: nth($values, 1); }
+  $size: strip(medium-value('font-size')); $result: ();
+  @each $value in $values {
+    @if unit($value) == 'px' { $result: append($result, $value, 'space'); }
+    @else { $result: append($result, assert($value * $size, 'px'), 'space'); }
+  }
+  @return if(length($result) > 1, $result, nth($result, 1));
+}
+@function strip-lite($value){ @return if(unitless($value), $value, $value / (0 * $value + 1)); }
+@function relativize($val, $ref: 1) {
+  $val-unit: unit($val); $ref-unit: unit($ref);
+  $scale: medium-value('html-scale') or 1;
+  @if $ref-unit == '%' { @warn 'cannot relativize value to a relative reference; exiting'; @return $val; }
+  @if index($ref-unit $val-unit, 'em') { @warn 'cannot reliably relativize to em reference; plz use rem'; }
+  @if $val-unit == '%' { $ref: 100; }
+  @else if $val-unit == 'px' and index('em' 'rem', $ref-unit) { $ref: strip-lite($ref) * 16 * $scale; }
+  @else if $ref-unit == 'px' and index('em' 'rem', $val-unit) { $ref: strip-lite($ref) / 16 / $scale; }
+  @else if not unitless($ref) { $ref: strip-lite($ref); }
+  @return strip-lite($val) / $ref;
+}
+@function vx($base, $rate, $unit: 'vw') {
+  $rel1: null;
+  $brk1: null;
+  $rel2: null;
+  $brk2: null;
+  @if type-of($base) == 'list' and length($base) > 1 {
+    $brk1: nth($base, 2);
+    $rel1: relativize(nth($base, 1), $brk1);
+    @if type-of($rate) == 'list' {
+      $brk2: relativize(nth($rate, 2), $brk1) * $brk1;
+      $rel2: relativize(nth($rate, 1), $brk1);
+      $rate: ($rel2 - $rel1) * $brk1 / ($brk2 - $brk1) * 100;
     }
-  } @else {
-    @return '& > *';
+    $rate: strip-lite($rate);
+    $base: ($rel1 - $rate/100) * $brk1;
+  }
+  $op: if($base < 0, '-', '+');
+  @return calc(#{$rate * 1vw} #{$op} #{abs($base)});
+}
+
+$base: () !default;
+$media: (
+  alpha: (breakpoint: 20em),
+  beta: (breakpoint: 30em),
+  gamma: (breakpoint: 48em),
+  delta: (breakpoint: 64em),
+  epsilon: (breakpoint: 80em)
+) !default;
+$base-orig: ();
+$media-orig: ();
+@mixin parse-media($output: true) {
+  $base-orig: $base;
+  $base: map-merge((
+      font-size: 16px,
+      line-height: 1.5,
+      font-size-mod: 1.5,
+      margin-x: 1rem,
+      margin-x-mod: 2,
+      margin-y: 1rem,
+      margin-y-mod: 2,
+      page-top: 1rem,
+      page-right: 1rem,
+      page-bottom: 1rem,
+      page-left: 1rem,
+      typo-measure: 30,
+      typo-col-ratio: 1
+    ), $base);
+  $font-size: map-get($base, 'font-size');
+  $line-height: map-get($base, 'line-height');
+  @if unit($font-size) != 'px' { $font-size: strip($font-size) * 16px; }
+  @if unit($line-height) == 'px' { $line-height: $line-height / $font-size; }
+  $html-scale: strip($font-size / 16px);
+  $corrected-values: ('html-scale': $html-scale, 'font-size': $font-size, 'line-height': $line-height);
+  @each $key, $value in map-remove($base, 'font-size', 'line-height') {
+    @if unit($value) == 'px' { $corrected-values: map-merge($corrected-values, ($key: $value / $font-size * 1rem)); }
+  }
+  $base: map-merge($base, $corrected-values);
+  @if $output {
+    $medium-key-list: ();
+    @each $key in map-keys($media) {
+      $medium-key-list: append($medium-key-list, quote($key), 'comma');
+    }
+    body::before {
+      width: 0;
+      height: 0;
+      display: block;
+      overflow: hidden;
+      content: '{ "current" : "default", "all": ["#{$medium-key-list}"] }';
+    }
+    head { font-family: '{ "current" : "default", "all": ["#{$medium-key-list}"] }'; }
+    .util--medium { width: 0; transition: width 1ms; }
+    html { font-size: assert(map-get($base, 'html-scale'), em); }
+    body { line-height: map-get($base, 'line-height');
+    }
+  }
+  $media-orig: $media;
+  @if $media != () {
+    $reference-medium: $base;
+    $sorted-media: maps-sort(maps-collect($media, 'breakpoint'), 'breakpoint');
+    @each $medium-alias, $medium in $sorted-media {
+      $reference-medium: map-merge($reference-medium, $medium);
+      $font-size: map-get($reference-medium, 'font-size');
+      $line-height: map-get($reference-medium, 'line-height');
+      @if unit($font-size) != 'px' { $font-size: strip($font-size) * 16px; }
+      @if unit($line-height) == 'px' { $line-height: $line-height / $font-size; }
+      $html-scale: strip($font-size / 16px);
+      $corrected-values: ('html-scale': $html-scale, 'font-size': $font-size, 'line-height': $line-height);
+      @each $key, $value in map-remove($reference-medium, 'font-size', 'breakpoint', 'line-height') {
+        @if unit($value) == 'px' { $corrected-values: map-merge($corrected-values, ($key: $value / $font-size * 1rem)); }
+      }
+      $reference-medium: map-merge($reference-medium, $corrected-values);
+      $breakpoint: map-get($reference-medium, 'breakpoint');
+      $margin-x: map-get($reference-medium, 'margin-x');
+      $page-right: map-get($reference-medium, 'page-right');
+      $page-left: map-get($reference-medium, 'page-left');
+      $typo-measure: map-get($reference-medium, 'typo-measure');
+      $typo-col-ratio: map-get($medium, 'typo-col-ratio'); 
+      @if $typo-col-ratio and $typo-col-ratio < 1 {
+        $breakpoint: assert((($typo-measure + $margin-x) / $typo-col-ratio) * $html-scale, em); 
+      }
+      $body-width: assert($breakpoint / $html-scale, rem);
+      $content-width: $body-width - ($page-left + $page-right);
+      $reference-medium: map-merge($reference-medium, (
+        'body-width': $body-width,
+        'content-width': $content-width,
+        'breakpoint': $breakpoint
+      ));
+      $media: map-merge($media, ($medium-alias: $reference-medium));
+      @if $output {
+        $font-size: map-get($medium, 'font-size');
+        $line-height: map-get($medium, 'line-height');
+        @include medium($medium-alias) {
+          body::before { content: '{ "current" : "#{$medium-alias}", "all": ["#{$medium-key-list}"] }'; }
+          head { font-family: '{ "current" : "#{$medium-alias}", "all": ["#{$medium-key-list}"] }'; }
+          .util--medium { width: index(map-keys($media), $medium-alias) * 1px; }
+          @if $typo-col-ratio { .l--col_typo { width: percentage($typo-col-ratio) !important; } }
+          @if $font-size { html { font-size: assert(map-get($reference-medium, 'html-scale'), em); } }
+          @if $line-height { body { line-height: map-get($reference-medium, 'line-height'); } }
+        }
+      }
+    }
   }
 }
-@mixin child-layout($selector, $type, $options...) {
-  @if index(table-cell table-row cell row, $type) {
-    width: 100%; 
-    display: table;
-    table-layout: fixed;
-    border-collapse: collapse;
-    #{child-selector($selector)} {
-      @if index(table-row row, $type) {
-        display: table-row;
-        height: auto; 
-        @if index($options, center) or index($options, centre) { text-align: center; }
-        @else if index($options, right) { text-align: right;}
-        @else { text-align: left; }
-      }
-      @else {
-        display: table-cell;
-        width: auto; 
-        @if index($options, bottom) { vertical-align: bottom; }
-        @else if index($options, middle) { vertical-align: middle;}
-        @else { vertical-align: top; }
-      }
-      overflow: hidden;
+$current-medium-alias: null;
+@function medium-value($key, $alias: $current-medium-alias) { @return map-get(medium($alias), $key); }
+@function media-value($args...) { @return medium-value($args...); } 
+@function m-value($args...) { @return medium-value($args...); } 
+@function margin-x($index: 0, $unit: true, $basis: 10) {
+  @if type-of($index) == 'string' { @return medium-value('margin-x', $index); }
+  @if not unitless($index) { @return $index; }
+  $mod: medium-value('margin-x-mod'); $spread: ceil($basis/6);
+  @return pow($mod, $index/$spread) * if($unit, medium-value('margin-x'), strip(medium-value('margin-x')));
+}
+@function margin-y($index: 0, $unit: true, $basis: 10) {
+  @if type-of($index) == 'string' { @return medium-value('margin-y', $index); }
+  @if not unitless($index) { @return $index; }
+  $mod: medium-value('margin-y-mod'); $spread: ceil($basis/6);
+  @return pow($mod, $index/$spread) * if($unit, medium-value('margin-y'), strip(medium-value('margin-y')));
+}
+@function font-size($index: 0, $unit: true, $basis: 10) {
+  @if type-of($index) == 'string' { @return medium-value('font-size', $index); }
+  @if not unitless($index) { @return $index; }
+  $mod: medium-value('font-size-mod'); $spread: ceil($basis/6);
+  @return pow($mod, $index/$spread) * if($unit, 1rem, strip(1rem));
+}
+@function size($args...) { @return font-size($args...); }
+@function medium-string($alias1: null, $alias2: null) {
+  @return 'screen'
+    + if($alias1, ' and (min-width: #{get($media, $alias1, breakpoint)})', '')
+    + if($alias2, ' and (max-width: #{get($media, $alias2, breakpoint) - 0.001})', '');
+}
+@function m-string($args...) { @return medium-string($args...); }
+@function medium($alias: $current-medium-alias) {
+  @if $alias { @return map-get($media, $alias); }
+  @return $base;
+}
+@function m($args...) { @return medium($args...); }
+@function medium-orig($alias: $current-medium-alias) {
+  @if $alias { @return map-get($media-orig, $alias); }
+  @return $base-orig;
+}
+@function m-orig($args...) { @return medium-orig($args...); }
+@mixin medium($aliases...) {
+  $prev-medium-alias: $current-medium-alias;
+  @if length($aliases) > 0 {
+    $current-medium-alias: nth($aliases, 1) or map-prev-key($media, nth($aliases, 2));
+  }
+  @media #{medium-string($aliases...)} { @content }
+  $current-medium-alias: $prev-medium-alias;
+}
+@mixin media($args...) { @include medium($args...) { @content; } }
+@mixin m($args...) { @include medium($args...) { @content; } }
+$medium-hd-ratio: (3,2);
+@mixin hidpi($aliases...) {
+  $n: nth($medium-hd-ratio, 1);
+  $d: nth($medium-hd-ratio, 2);
+  $ratio: $n/$d;
+  $prev-medium-alias: $current-medium-alias;
+  @if length($aliases) > 0 {
+    $current-medium-alias: nth($aliases, 1) or map-prev-key($media, nth($aliases, 2));
+  }
+  @media screen and
+    (-webkit-min-device-pixel-ratio: $ratio),
+    (min--moz-device-pixel-ratio: $ratio),
+    (-o-min-device-pixel-ratio: #{$n}/#{$d}),
+    (min-device-pixel-ratio: $ratio),
+    (min-resolution: $ratio * 96dpi),
+    (min-resolution: $ratio * 1dppx) {
+    @content;
+  }
+  $current-medium-alias: $prev-medium-alias;
+}
+@mixin hd($args...) { @include hidpi($args...) { @content; } }
+@mixin each-medium($options:()) {
+  $from: get($options, 'from');
+  $to: get($options, 'to');
+  $for: get($options, 'for');
+  @if $for {
+    @if contains($for, typo) { $for: join($for, margin-y line-height font-size-mod); }
+    @if contains($for, margin-y) { $for: join($for, margin-y-mod); }
+    @if contains($for, margin-x) { $for: join($for, margin-x-mod); }
+  }
+  @if $from == null { @content; }
+  $medium-aliases: map-keys($media);
+  $sliced-aliases: slice($medium-aliases,
+      if($from, index($medium-aliases, $from), 1),
+      if($to, index($medium-aliases, $to) - 1, length($medium-aliases)));
+  @each $medium-alias in $sliced-aliases {
+    $orig-keys: map-keys(medium-orig($medium-alias));
+    @if not $for { @include medium($medium-alias) { @content; } }
+    @else if contains-any($orig-keys, $for) {
+      @include medium($medium-alias) { @content; }
+    }
+  }
+}
+@mixin all-media($args...) { @include each-medium($args...) { @content; } }
+
+@function opposite($dirs...) {
+  @if length($dirs) == 1 and type-of(nth($dirs, 1)) == 'list' { @return opposite(nth($dirs, 1)...); }
+  $out: (); $sep: list-separator($dirs);
+  $opposites: ('top': bottom, 'right': left, 'bottom': top, 'left': right, 'ltr': rtl, 'rtl': ltr);
+  @each $dir in $dirs {
+    $opposite: if(type-of($dir) != 'list', map-get($opposites, $dir), opposite($dir...));
+    @if $opposite {$out: append($out, $opposite, $sep); } }
+  @return $out;
+}
+@mixin adjacent-to($args...) {
+  @if length($args) == 0 {
+    & + & { @content; }
+  } @else {
+    @if type-of(nth($args, 1)) == list { $args: join((), $args...); }
+    $arr: '';
+    @for $n from 1 through length($args) {
+      $arr: if($n == 1, unquote('#{nth($args, 1)} + &'), append($arr, unquote(', #{nth($args,$n)} + &')));
+    }
+    #{$arr} { @content; }
+  }
+}
+@mixin child-counter($child-selector: '> li', $content-before:'', $content-after:''){
+  $counter: unique-id();
+  list-style-type: none;
+  counter-reset: $counter;
+  & #{$child-selector} {
+    counter-increment: $counter;
+    &:before {
+      content: '#{$content-before}' counter($counter) '#{$content-after}';
       @content;
     }
   }
-  @else if index(inline-block iblock ib, $type) {
-    font-size: 0px;
-    @if index($options, justify) {
-      text-align: justify;
-      &:after, #{child-selector($selector)} {
-        display: inline-block;
-        max-width: 100%; 
-        @if index($options, bottom) { vertical-align: bottom; }
-        @else if index($options, middle) { vertical-align: middle;}
-        @else { vertical-align: top; }
-      }
-      &:after {
-        content: '';
-        width: 100%;
-      }
-      #{child-selector($selector)} {
-        font-size: 1rem;
-        @content;
-      }
-    }
-    @else {
-      &:before, #{child-selector($selector)} {
-        display: inline-block;
-        max-width: 100%; 
-        @if index($options, bottom) { vertical-align: bottom; }
-        @else if index($options, middle) { vertical-align: middle;}
-        @else { vertical-align: top; }
-      }
-      &:before {
-        content: '';
-        height: 100%;
-      }
-      #{child-selector($selector)} {
-        font-size: 1rem;
-        @content;
-      }
-      @if index($options, center) or index($options, centre) { text-align: center; }
-      @else if index($options, right) { text-align: right;}
-      @else { text-align: left; }
-    }
+}
+@mixin parse-resets() {
+  @include reset-n3();
+  @include reset-ln();
+}
+@mixin reset-n3(){
+  html{font-family:sans-serif;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%}
+  body{margin:0}
+  article,aside,details,figcaption,figure,footer,header,hgroup,main,menu,nav,section,summary{display:block}
+  audio,canvas,progress,video{display:inline-block;vertical-align:baseline}
+  audio:not([controls]){display:none;height:0}
+  [hidden],template{display:none}
+  a{background-color:transparent}
+  a:active,a:hover{outline:0}
+  abbr[title]{border-bottom:1px dotted}
+  b,strong{font-weight:bold}
+  dfn{font-style:italic}
+  h1{font-size:2em;margin:.67em 0}
+  mark{background:#ff0;color:#000}
+  small{font-size:80%}
+  sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}
+  sup{top:-0.5em}
+  sub{bottom:-0.25em}
+  img{border:0}
+  svg:not(:root){overflow:hidden}
+  figure{margin:1em 40px}
+  hr{-moz-box-sizing:content-box;box-sizing:content-box;height:0}
+  pre{overflow:auto}
+  code,kbd,pre,samp{font-family:monospace,monospace;font-size:1em}
+  button,input,optgroup,select,textarea{color:inherit;font:inherit;margin:0}
+  button{overflow:visible}
+  button,select{text-transform:none}
+  button,html input[type="button"],input[type="reset"],input[type="submit"]{-webkit-appearance:button;cursor:pointer}
+  button[disabled],html input[disabled]{cursor:default}
+  button::-moz-focus-inner,input::-moz-focus-inner{border:0;padding:0}
+  input{line-height:normal}
+  input[type="checkbox"],input[type="radio"]{box-sizing:border-box;padding:0}
+  input[type="number"]::-webkit-inner-spin-button,input[type="number"]::-webkit-outer-spin-button{height:auto}
+  input[type="search"]{-webkit-appearance:textfield;-moz-box-sizing:content-box;-webkit-box-sizing:content-box;box-sizing:content-box}
+  input[type="search"]::-webkit-search-cancel-button,input[type="search"]::-webkit-search-decoration{-webkit-appearance:none}
+  fieldset{border:1px solid silver;margin:0 2px;padding:.35em .625em .75em}
+  legend{border:0;padding:0}
+  textarea{overflow:auto}
+  optgroup{font-weight:bold}
+  table{border-collapse:collapse;border-spacing:0}
+  td,th{padding:0}
+}
+@mixin reset-ln(){
+  *, *:before, *:after { box-sizing: inherit; } 
+  html, body { height: 100%; } 
+  html {
+    box-sizing: border-box; 
+    -webkit-font-smoothing: antialiased; 
+    -moz-osx-font-smoothing: grayscale; 
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0); 
+    text-rendering: optimizespeed; 
+  }
+  img, video {
+    display: block;
+    max-width: 100%;
+    height: auto;
+  }
+  a {
+    &:link,
+    &:visited,
+    &:hover,
+    &:focus,
+    &:active { text-decoration: none !important; }
+    &.block { display: block !important; }
+    &.inline-block { display: inline-block !important; }
+    span.target { text-decoration: underline !important; }
   }
 }
 
+@function list-max($list) { @return max($list...); }
+@function list-min($list) { @return min($list...); }
+@function csv($list) {
+  $output: ();
+  @each $item in $list {
+    $output: append($output, $item, 'comma');
+  }
+  @return $output;
+}
+@function csv($list) {
+  @return zip($list);
+}
+@function ssv($list) {
+  $output: ();
+  @each $item in $list {
+    $output: append($output, $item, 'space');
+  }
+  @return $output;
+}
+@function remove($list, $tests...) {
+  $out:(); $sep: list-separator($list);
+  @if length($list) == 1 { $list: nth($list, 1); }
+  @each $item in $list {
+    @if not index($tests, $item) { $out: append($out, $item, $sep); } }
+  @return $out;
+}
+@function reduce($list) { @return remove($list, null, false, ''); }
+@function compact($list) { @return remove($list, null, false, ''); }
+@function reject($list, $item) { 
+  $out:();
+  @each $arg in $list { @if $arg != $item { $out: append($out, $arg); } }
+  @return if($out == (), empty, $out); }
+  @function except($args...) { @return reject($args...); }
+@function collect-types($list, $type) {
+  $out: ();
+  @if length($list) == 1 { $list: nth($list, 1); }
+  @each $item in $list {
+      @if type_of($item) == $type {
+          $out: append($out, $item);
+      }
+  }
+  @return if(length($out) == 1, nth($out, 1), $out);
+}
+@function reject-types($list, $type) {
+  @if length($list) == 1 { $list: nth($list, 1); }
+  @each $item in $list {
+      @if type_of($item) == $type {
+          $list: reject($list, $item);
+      }
+  }
+  @return if(length($list) == 1, nth($list, 1), $list);
+}
+@function collect-strings($list) { @return collect-types($list, 'string'); }
+@function reject-strings($list) { @return reject-types($list, 'string'); }
+@function collect-numbers($list) { @return collect-types($list, 'number'); }
+@function reject-numbers($list) { @return reject-types($list, 'number'); }
+@function collect-bools($list) { @return collect-types($list, 'bool'); }
+@function reject-bools($list) { @return reject-types($list, 'bool'); }
+@function contains($list, $item) {
+  @if index($list, $item) { @return true; }
+  @return false;
+}
+@function contains-any($list, $items) {
+  @each $item in $items { @if index($list, $item) { @return true; } }
+  @return false;
+}
+@function slice($list, $start: 1, $end: length($list), $sep: 'comma') {
+  $output: ();
+  @if $start >= 1 and $end >= $start {
+    @for $i from $start through $end {
+      $output: append($output, nth($list, $i), $sep);
+    }
+  }
+  @return $output;
+}
+@function get-nth($list, $n) {
+  @return if(length($list)>=$n, nth($list, $n), null);
+}
+
+@function one($unit:'') {
+  $one: ('em': 1em, 'ex': 1ex, 'ch': 1ch, 'rem': 1rem, '%': 1%, 'vw': 1vw, 'vh': 1vh, 'vmin': 1vmin, 'vmax': 1vmax, 'cm': 1cm, 'mm': 1mm, 'in': 1in, 'px': 1px, 'pt': 1pt, 'pc': 1pc, 'deg': 1deg, 'grad': 1grad, 'rad': 1rad, 'turn': 1turn, 's': 1s, 'ms': 1ms, 'dpi': 1dpi, 'dpcm': 1dpcm, 'dppx': 1dppx);
+  @return map-get($one, $unit) or 1;
+}
+@function strip($value) { @return if(unitless($value), $value, $value / one(unit($value))); }
+@function assert($value, $unit: '') { @return strip($value) * one($unit); }
+@function strip-alt($value){ @return if(unitless($value), $value, $value / (0 * $value + 1)); }
+@function has-unit($number, $unit: null) {
+  @if $unit { @return unit($number) == $unit; }
+  @return not unitless($number);
+}
+@function unit-relative($number){
+  @return index('%' 'ex' 'rem' 'em' 'vh' 'vw' 'vmin' 'vmax', unit($number));
+}
+@function unit-absolute($number){
+  @return not index('%' 'ex' 'rem' 'em' 'vh' 'vw' 'vmin' 'vmax', unit($number)) and not unitless($number);
+}
+@function unit-type($number) {
+  @if index('%' 'ex' 'rem' 'em' 'vh' 'vw' 'vmin' 'vmax', unit($number)) {
+    @return "relative";
+  } @else if not unitless($number) {
+    @return "absolute";
+  } @else {
+    @return "unitless";
+  }
+}
+@function modular-scale($base, $power, $spread) { @return pow($base, $power / $spread); }
+@function trend($value, $c1: 0 0, $c2: 1 1) {
+  $x1: nth($c1, 1); $y1: nth($c1, 2);
+  $x2: nth($c2, 1); $y2: nth($c2, 2);
+  $m: ($y2 - $y1) / ($x2 - $x1);
+  @return $y1 + $m * ($value - $x1);
+}
+@function sum(){}
+@function average(){}
+@function weighted-average(){}
+@function gcd($a, $b) {
+  @if $b == 0 { @return abs($a); }
+  @return gcd($b, $a % $b);
+}
+@function reduce($n, $d) {
+  $g: gcd($n, $d);
+  @return ($n/$g, $d/$g)
+}
+@function limit($number, $limit1, $limit2) {
+  $max: max($limit1, $limit2);
+  $min: min($limit1, $limit2);
+  @if comparable($number, $min) and comparable($number, $max) {
+    $number: min(max($number, $min), $max);
+  }
+  @return $number;
+}
+@function E() {
+  @return 2.71828182845;
+}
+@function PI() {
+  @return 3.14159265359;
+}
+@function TAU() {
+  @return 2 * PI();
+}
+@function PHI() {
+  @return 1.61803398874;
+}
+@function int-exp($base, $exponent) {
+  $result: $base;
+  @if $exponent > 1 {
+    @for $i from 2 through $exponent {
+      $result: $result * $base;
+    }
+  }
+  @if $exponent < 1 {
+    @for $i from 0 through abs($exponent) {
+      $result: $result / $base;
+    }
+  }
+  @return $result;
+}
+@function ceil-to($number, $precision) {
+  $precision: int-exp(10, $precision);
+  @return ceil($number * $precision) / $precision;
+}
+@function floor-to($number, $precision) {
+  $precision: int-exp(10, $precision);
+  @return floor($number * $precision) / $precision;
+}
+@function round-to($number, $precision) {
+  $precision: int-exp(10, $precision);
+  @return round($number * $precision) / $precision;
+}
+
+@function str-remove($str, $sub) {
+  $i: str-index($str, $sub);
+  @if $i == 0 { @return $str; }
+  @else { @return str-remove(str-slice($str, 1, $i - 1) + str-slice($str, $i + 1, str-length($str)), $sub); }
+}
+
+$fonts: (
+  default (
+    definition (
+      font-family ('Helvetica Neue' Helvetica sans-serif),
+      letter-spacing 0.0125em
+    ),
+    metrics (
+      size-modifier 1,
+      capline (50 0.125, 200 0.2),
+      baseline (50 0.175, 200 0.25)
+    )
+  )
+) !default;
+@mixin font-face($family, $file, $style: normal, $weight: normal, $path: $typo-font-path) {
+  @font-face {
+    font-family: $family;
+    font-style: $style;
+    font-weight: $weight; 
+    src: url('#{$path}#{$file}.eot'); 
+    src: url('#{$path}#{$file}.eot?#iefix') format('embedded-opentype'),
+       url('#{$path}#{$file}.woff') format('woff'),
+       url('#{$path}#{$file}.svg##{$file}') format('svg'),
+       url('#{$path}#{$file}.ttf') format('truetype');
+  }
+}
 $t_current-size: null !default;
 $t_current-height: null !default;
 $t_min-height: 1.125 !default;
