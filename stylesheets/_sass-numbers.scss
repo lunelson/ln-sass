@@ -124,18 +124,3 @@
   $precision: int-exp(10, $precision);
   @return round($number * $precision) / $precision;
 }
-
-.test {
-  out: opposite(right top);
-  out: opposite(right, top bottom);
-  out: has-unit(4rem, px);
-  out: has-unit(4rem, rem);
-  out: has-unit(4rem);
-  out: max(1rem, 5rem);
-  out: min(1rem, 5rem);
-  out: limit(8rem, 1rem, 5rem);
-  out: limit(-3rem, 1rem, 5rem);
-  out: floor-to(5.226, 1);
-  out: ceil-to(5.226, 1);
-  out: round-to(5.226, 1);
-}

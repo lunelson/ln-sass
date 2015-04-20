@@ -7,6 +7,23 @@
 //                                __/ |
 //                               |___/
 
+/////////////
+// Z-INDEX //
+/////////////
+
+$z-indexes: (
+  over: 30,
+  page: 20,
+  under: 10,
+  body: 0
+);
+
+@function z($name) { @return map-get($z-indexes, $name); }
+
+/////////////////
+// POSITIONING //
+/////////////////
+
 @mixin position($pos, $args...) {
   position: $pos;
   @each $arg in $args { #{nth($arg, 1)}: nth($arg, 2); }
@@ -121,5 +138,56 @@
       @else { text-align: left; }
     }
   }
+}
+
+////////////////////////////////////
+// CSS PARALLAX  / Z DISPLACEMENT //
+////////////////////////////////////
+
+// basic param and function for displacement
+$parallax-perspective: 10px; // nb this defines max positive displacement
+@function offsetZ($z, $p: $parallax-perspective) {
+  @if unitless($z) { @return translateZ($z); }
+  @return translateZ($z) scale(1 - $z/$p);
+}
+
+// perspective rendered at container level; will be inherited
+// height is full viewport, overflow-y allows scroll
+// may need to be placed on the body element, for some browsers
+@mixin parallax-base($height: 100vh) {
+  perspective: $parallax-perspective;
+  height: $height;
+  overflow-x: hidden;
+  overflow-y: auto;
+  perspective-origin: 100%; // fix webkit overflow bug
+}
+
+// preserve-3d prevents child layers of a group from being collapsed
+// must not have overflow hidden or effect will break
+@mixin parallax-group($height: 100vh) {
+  position: relative;
+  height: $height;
+  transform-style: preserve-3d;
+  // debug option reveals all the overlapping
+  .debug & {
+    transform: translate3d(700px, 0, -800px) rotateY(30deg);
+  }
+}
+
+// layer is pulled out of flow and forced to fill its parent
+@mixin parallax-item {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  perspective-origin: 100%; // fix webkit overflow bug
+
+  // variants are given different z positions
+  // &--fg2 { transform: offsetZ(20px); }
+  // &--fg1 { transform: offsetZ(10px); }
+  // &--base { transform: offsetZ(0); }
+  // &--bg1 { transform: offsetZ(-10px); }
+  // &--bg2 { transform: offsetZ(-20px); }
 }
 
