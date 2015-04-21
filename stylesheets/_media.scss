@@ -214,6 +214,8 @@ $current-medium-alias: null;
   $mod: medium-value('margin-y-mod'); $spread: ceil($basis/6);
   @return pow($mod, $index/$spread) * if($unit, medium-value('margin-y'), strip(medium-value('margin-y')));
 }
+// alias; default 'margin' is vertical
+@function margin($args...){ @return margin-y($args...); }
 
 @function font-size($index: 0, $unit: true, $basis: 10) {
   @if type-of($index) == 'string' { @return medium-value('font-size', $index); }

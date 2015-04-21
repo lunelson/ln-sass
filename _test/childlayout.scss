@@ -1,8 +1,8 @@
 // @import "../_pkg/sass-master";
-@import "../_sass-ln";
+@import "../_sass-master";
 
-.test {
-  @include child-layout(null, iblock, center, middle);
+nav {
+  @include child-layout('a', iblock);
 }
 
 @mixin vx($base, $rate, $unit: 'vw') {
@@ -43,26 +43,5 @@
   base: $base;
   $op: if($base < 0, '-', '+');
   return: 'calc(#{$rate * 1vw} #{$op} #{abs($base)})'
-}
-
-
-
-//  _            _
-// | |          | |
-// | |_ ___  ___| |_
-// | __/ _ \/ __| __|
-// | ||  __/\__ \ |_
-//  \__\___||___/\__|
-
-.test1 {
-  out: relativize(2rem, 20rem);
-  out: relativize(1rem, 40rem);
-
-  @include vx(10px, 20);
-
-  @include vx(1rem 40rem, 2rem 70rem);
-  // out: vx(1rem 40rem, 2rem 70rem);
-  // out: vx(1rem 640px, 2rem 70rem);
-  // out: vx(0.5rem 30rem, 2.5);
 }
 

@@ -1,0 +1,70 @@
+// @import "../_pkg/sass-master";
+@import "../_sass-master";
+
+@include parse-media(false);
+
+$nitti-height: 0.8;
+$headings: 'h1' '.h1' 'h2' '.h2' 'h3' '.h3' 'h4' '.h4' 'h5' '.h5' 'h6' '.h6';
+$blocks: 'p' 'ul' 'ol' 'dl' 'table' 'blockquote' 'pre';
+
+@mixin adjacent($siblings, $items) {
+  $out: '';
+  @for $k from 1 through length($items) {
+    @for $n from 1 through length($siblings) {
+      $out: if(
+        $n == 1 and $k == 1,
+        unquote('#{nth($siblings, $n)} + #{nth($items, $k)}'),
+        append($out, unquote(', #{nth($siblings,$n)} + #{nth($items, $k)}'))
+      );
+    }
+  }
+  #{$out} { @content; }
+}
+
+
+.t-contain {
+  @include adjacent($headings, $blocks) {
+    margin-top: 1rem;
+  }
+}
+@mixin heading-margins($selectors) {
+  margin-top: 2rem;
+}
+
+@mixin block-margins($selectors) {
+  margin-top: 2rem;
+  @include adjacent($blocks, $selectors) {
+    margin-top: 1rem;
+  }
+}
+
+h1, .h1 {
+  @include typo(3, auto, $nitti-height){
+    @include heading-margins('h1' '.h1');
+  }
+}
+
+h2, .h2 {
+  @include typo(2, auto, $nitti-height){
+    @include heading-margins('h2' '.h2');
+  }
+}
+
+h3, .h3 {
+  @include typo(1, auto, $nitti-height){
+    @include heading-margins('h3' '.h3');
+  }
+}
+
+h4, .h4 {
+  @include typo(0, auto, $nitti-height){
+    @include heading-margins('h4' '.h4');
+  }
+}
+
+
+.test {
+  trim: t-trim(1.5);
+  trim: t-trim(1.5, 0.7);
+  margin-top: t-margin(2);
+}
