@@ -22,6 +22,8 @@ $media: (
 $base-orig: ();
 $media-orig: ();
 
+$bp-trans-element: '.u--media_trans';
+
 /////////////////
 // SETUP MIXIN //
 /////////////////
@@ -34,7 +36,6 @@ $media-orig: ();
 
   // backup and merge against defaults
   $base-orig: $base;
-
   $base: map-merge((
       font-size: 16px,
       line-height: 1.5,
@@ -56,46 +57,40 @@ $media-orig: ();
   $line-height: map-get($base, 'line-height');
   @if unit($font-size) != 'px' { $font-size: strip($font-size) * 16px; }
   @if unit($line-height) == 'px' { $line-height: $line-height / $font-size; }
-  // $font-size: assert($font-size, rem);
+
+  // derive html-scale
   $html-scale: strip($font-size / 16px);
 
-  // .. and for pixel-united other values
+  // correct for other pixel-united values; merge back in
   $corrected-values: ('html-scale': $html-scale, 'font-size': $font-size, 'line-height': $line-height);
   @each $key, $value in map-remove($base, 'font-size', 'line-height') {
-    @if unit($value) == 'px' { $corrected-values: map-merge($corrected-values, ($key: $value / $font-size * 1rem)); }
-  }
-
-  // merge it all back to default
+    @if unit($value) == 'px' { $corrected-values: map-merge($corrected-values, ($key: $value / $font-size * 1rem)); } }
   $base: map-merge($base, $corrected-values);
 
+  // do output, if true
   @if $output {
 
-    // JSON format string output for pickup in JS
-
-    $medium-key-list: ();
-    @each $key in map-keys($media) {
-      $medium-key-list: append($medium-key-list, quote($key), 'comma');
+    // simplistic JSON $media information
+    @if $media != () {
+      $medium-key-list: ();
+      @each $key in map-keys($media) {
+        $medium-key-list: append($medium-key-list, quote($key), 'comma'); }
+      body::before {
+        width: 0;
+        height: 0;
+        display: block;
+        overflow: hidden;
+        content: '{ "current" : "default", "all": ["#{$medium-key-list}"] }';
+      }
+      // this is still best recommendation but there are other approaches
+      head { font-family: '{ "current" : "default", "all": ["#{$medium-key-list}"] }'; }
+      // dummy element to catch breakpoint transitions
+      #{$bp-trans-element} { width: 0; transition: width 1ms; }
     }
-
-    body::before {
-      width: 0;
-      height: 0;
-      display: block;
-      overflow: hidden;
-      content: '{ "current" : "default", "all": ["#{$medium-key-list}"] }';
-    }
-
-    // nb: some approaches recommend using html instead of head here, and then resetting real font-family on body
-    head { font-family: '{ "current" : "default", "all": ["#{$medium-key-list}"] }'; }
-
-    .util--medium { width: 0; transition: width 1ms; }
 
     // styles
-
     html { font-size: assert(map-get($base, 'html-scale'), em); }
     body { line-height: map-get($base, 'line-height');
-      // padding-top: map-get($base, 'page-top');
-      // padding-bottom: map-get($base, 'page-bottom');
     }
   }
 
@@ -106,18 +101,16 @@ $media-orig: ();
   // backup data first
   $media-orig: $media;
 
-  // TODO: add a conditional re-assignment here, rather than the default thing above
-  // (I already don't understand what I was talking about on the above line)
-
   @if $media != () {
 
-    // maintain a reference-medium upon which to merge each medium in media
+    // temp variable for recursive merging
     $reference-medium: $base;
 
     // collect and sort the breakpoint media
-    $sorted-media: maps-sort(maps-collect($media, 'breakpoint'), 'breakpoint');
+    // $sorted-media: maps-sort(maps-collect($media, 'breakpoint'), 'breakpoint');
+    // !!! above is obsolete, if we are now allowing typo-columns to retro-determine breakpoint
 
-    @each $medium-alias, $medium in $sorted-media {
+    @each $medium-alias, $medium in $media {
 
       // merge medium to reference
       $reference-medium: map-merge($reference-medium, $medium);
@@ -127,30 +120,29 @@ $media-orig: ();
       $line-height: map-get($reference-medium, 'line-height');
       @if unit($font-size) != 'px' { $font-size: strip($font-size) * 16px; }
       @if unit($line-height) == 'px' { $line-height: $line-height / $font-size; }
-      // $font-size: assert($font-size, rem);
+
+      // get html-scale
       $html-scale: strip($font-size / 16px);
 
-      // ..and for pixel-united other values
+      // correct for other pixel-united values, merge back to reference
       $corrected-values: ('html-scale': $html-scale, 'font-size': $font-size, 'line-height': $line-height);
       @each $key, $value in map-remove($reference-medium, 'font-size', 'breakpoint', 'line-height') {
-        @if unit($value) == 'px' { $corrected-values: map-merge($corrected-values, ($key: $value / $font-size * 1rem)); }
-      }
-      // merge corrections back to reference
+        @if unit($value) == 'px' { $corrected-values: map-merge($corrected-values, ($key: $value / $font-size * 1rem)); } }
       $reference-medium: map-merge($reference-medium, $corrected-values);
 
-      // breakpoint vs typo-col-ratio
+      // solve breakpoint vs typo-col-ratio
       $page-x: map-get($reference-medium, 'page-right') + map-get($reference-medium, 'page-left');
       $typo-measure: map-get($reference-medium, 'typo-measure');
       $typo-col-ratio: map-get($medium, 'typo-col-ratio'); // spec medium only
       @if $typo-col-ratio and $typo-col-ratio < 1 {
         $margin-x: map-get($reference-medium, 'margin-x');
-        $breakpoint: assert((($typo-measure) / $typo-col-ratio  - $margin-x + $page-x) * $html-scale, em); // alt3
+        $breakpoint: assert((($typo-measure) / $typo-col-ratio  - $margin-x + $page-x) * $html-scale, em); // correct ?
         $reference-medium: map-merge($reference-medium, ('breakpoint': $breakpoint))
       } @else {
         $breakpoint: map-get($reference-medium, 'breakpoint');
       }
 
-      // merge some additions to reference
+      // merge some additional props
       $body-width: assert($breakpoint / $html-scale, rem);
       $content-width: $body-width - $page-x;
       $reference-medium: map-merge($reference-medium, (
@@ -164,28 +156,28 @@ $media-orig: ();
       @if $output {
         $font-size: map-get($medium, 'font-size');
         $line-height: map-get($medium, 'line-height');
-        // $page-top: map-get($medium, 'page-top');
-        // $page-bottom: map-get($medium, 'page-bottom');
 
         @include medium($medium-alias) {
 
+          // simplistic JSON info
           body::before { content: '{ "current" : "#{$medium-alias}", "all": ["#{$medium-key-list}"] }'; }
           head { font-family: '{ "current" : "#{$medium-alias}", "all": ["#{$medium-key-list}"] }'; }
+          // dummy element to track breakpoint transition
+          #{$bp-trans-element} { width: index(map-keys($media), $medium-alias) * 1px; }
 
-          .util--medium { width: index(map-keys($media), $medium-alias) * 1px; }
-
-
-          // output CSS if spec'd by user
+          // styles, if spec'd
           @if $typo-col-ratio { .l--col_typo { width: percentage($typo-col-ratio) !important; } }
           @if $font-size { html { font-size: assert(map-get($reference-medium, 'html-scale'), em); } }
           @if $line-height { body { line-height: map-get($reference-medium, 'line-height'); } }
-          // @if $page-top { body { margin-top: map-get($reference-medium, 'page-top'); } }
-          // @if $page-bottom { body { margin-bottom: map-get($reference-medium, 'page-bottom'); } }
-
         }
       }
     }
   }
+
+  // check if breakpoint order is okay; warn if not
+  $keys-sorted: map-keys(maps-sort($media, 'breakpoint'));
+  $keys-orig: map-keys($media-orig);
+  @if $keys-sorted != $keys-orig { @warn 'breakpoints out of order; should be #{$keys-sorted}.'; }
 }
 
 //                     _ _                    _   _ _

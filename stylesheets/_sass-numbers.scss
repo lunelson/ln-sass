@@ -5,13 +5,13 @@
 // | |_| | | | | | |_\__ \
 //  \__,_|_| |_|_|\__|___/
 
+// my unit strip / assert functions
 @function one($unit:'') {
   $one: ('em': 1em, 'ex': 1ex, 'ch': 1ch, 'rem': 1rem, '%': 1%, 'vw': 1vw, 'vh': 1vh, 'vmin': 1vmin, 'vmax': 1vmax, 'cm': 1cm, 'mm': 1mm, 'in': 1in, 'px': 1px, 'pt': 1pt, 'pc': 1pc, 'deg': 1deg, 'grad': 1grad, 'rad': 1rad, 'turn': 1turn, 's': 1s, 'ms': 1ms, 'dpi': 1dpi, 'dpcm': 1dpcm, 'dppx': 1dppx);
   @return map-get($one, $unit) or 1;
 }
 @function strip($value) { @return if(unitless($value), $value, $value / one(unit($value))); }
 @function assert($value, $unit: '') { @return strip($value) * one($unit); }
-// @function convert($value, $unit: '') { @return one($unit) + $value; }
 
 // the classic unit stripping hack
 @function strip-alt($value){ @return if(unitless($value), $value, $value / (0 * $value + 1)); }
