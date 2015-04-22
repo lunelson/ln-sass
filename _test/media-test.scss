@@ -14,4 +14,7 @@
   @include media((to: delta)) {
     color: green;
   }
+  @include hidpi() {
+    color: red;
+  }
 }
