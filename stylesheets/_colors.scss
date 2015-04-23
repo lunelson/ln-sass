@@ -26,10 +26,10 @@ $colors: (
 // GET FUNCTION //
 //////////////////
 
-@function get-color($key) {
+@function color($key) {
   $keys: map-keys($colors);
   $value: map-get($colors, $key);
-  @return if(index($keys, $value), get-color($value), $value);
+  @return if(index($keys, $value), color($value), $value);
 }
 
 //            _                    _   _ _
