@@ -7,40 +7,6 @@
 //       __/ | |           __/ |         | |           __/ |
 //      |___/|_|          |___/          |_|          |___/
 
-///////////
-// FONTS //
-///////////
-
-$fonts: (
-  default (
-    definition (
-      font-family ('Helvetica Neue' Helvetica sans-serif),
-      letter-spacing 0.0125em
-    ),
-    metrics (
-      size-modifier 1,
-      capline (50 0.125, 200 0.2),
-      baseline (50 0.175, 200 0.25)
-    )
-  )
-) !default;
-
-// font-face declarations
-// TODO: get the newer IE9+ version of this
-@mixin font-face($family, $file, $style: normal, $weight: normal, $path: $typo-font-path) {
-  @font-face {
-    font-family: $family;
-    font-style: $style;
-    font-weight: $weight; // this should be both word and number values
-    src: url('#{$path}#{$file}.eot'); // IE9 Compat Modes
-    src: url('#{$path}#{$file}.eot?#iefix') format('embedded-opentype'),
-       url('#{$path}#{$file}.woff') format('woff'),
-       url('#{$path}#{$file}.svg##{$file}') format('svg'),
-       url('#{$path}#{$file}.ttf') format('truetype');
-  }
-}
-
-
 /////////////
 // GLOBALS //
 /////////////

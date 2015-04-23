@@ -1,0 +1,58 @@
+//  _                           _
+// | |                         | |
+// | |_ _   _ _ __   ___ ______| |__
+// | __| | | | '_ \ / _ \______| '_ \
+// | |_| |_| | |_) | (_) |     | |_) |
+//  \__|\__, | .__/ \___/      |_.__/
+//       __/ | |
+//      |___/|_|
+
+////////////
+// GLOBAL //
+////////////
+
+$fonts: (
+  heading: (
+    family: '',
+    spacing: 0,
+    size-mod: 1,
+    cap-height: 1
+  ),
+  default: (
+    family: '',
+    spacing: 0,
+    size-mod: 1,
+    cap-height: 1
+  ),
+  mono: (
+    family: '',
+    spacing: 0,
+    size-mod: 1,
+    cap-height: 1
+  )
+) !default;
+
+//////////////
+// FUNCTION //
+//////////////
+
+@function font($keys...) { @return get($fonts, $keys...); }
+
+///////////
+// MIXIN //
+///////////
+
+// font-face declarations
+// TODO: get the newer IE9+ version of this
+@mixin font-face($family, $file, $style: normal, $weight: normal, $path: $typo-font-path) {
+  @font-face {
+    font-family: $family;
+    font-style: $style;
+    font-weight: $weight; // this should be both word and number values
+    src: url('#{$path}#{$file}.eot'); // IE9 Compat Modes
+    src: url('#{$path}#{$file}.eot?#iefix') format('embedded-opentype'),
+       url('#{$path}#{$file}.woff') format('woff'),
+       url('#{$path}#{$file}.svg##{$file}') format('svg'),
+       url('#{$path}#{$file}.ttf') format('truetype');
+  }
+}
