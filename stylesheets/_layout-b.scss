@@ -122,8 +122,8 @@ $z-indexes: (
         display: inline-block;
         max-width: 100%; // ff bug
         @if index($options, bottom) { vertical-align: bottom; }
-        @else if index($options, middle) { vertical-align: middle;}
-        @else { vertical-align: top; }
+        @else if index($options, top) { vertical-align: top;}
+        @else { vertical-align: middle; }
       }
       &:before {
         content: '';
@@ -133,9 +133,9 @@ $z-indexes: (
         font-size: 1rem;
         @content;
       }
-      @if index($options, center) or index($options, centre) { text-align: center; }
+      @if index($options, left) { text-align: left; }
       @else if index($options, right) { text-align: right;}
-      @else { text-align: left; }
+      @else { text-align: center; }
     }
   }
 }

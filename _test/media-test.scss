@@ -1,0 +1,20 @@
+@import '../sass-master';
+
+
+@include parse-media(false);
+
+.test {
+  out: 'hello world';
+  @include media(alpha) {
+    color: blue;
+  }
+}
+
+.test2 {
+  @include media((to: delta)) {
+    color: green;
+  }
+  @include hidpi() {
+    color: red;
+  }
+}

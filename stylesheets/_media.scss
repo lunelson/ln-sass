@@ -22,6 +22,8 @@ $media: (
 $base-orig: ();
 $media-orig: ();
 
+$bp-trans-element: '.u--media_trans';
+
 /////////////////
 // SETUP MIXIN //
 /////////////////
@@ -34,7 +36,6 @@ $media-orig: ();
 
   // backup and merge against defaults
   $base-orig: $base;
-
   $base: map-merge((
       font-size: 16px,
       line-height: 1.5,
@@ -56,46 +57,40 @@ $media-orig: ();
   $line-height: map-get($base, 'line-height');
   @if unit($font-size) != 'px' { $font-size: strip($font-size) * 16px; }
   @if unit($line-height) == 'px' { $line-height: $line-height / $font-size; }
-  // $font-size: assert($font-size, rem);
+
+  // derive html-scale
   $html-scale: strip($font-size / 16px);
 
-  // .. and for pixel-united other values
+  // correct for other pixel-united values; merge back in
   $corrected-values: ('html-scale': $html-scale, 'font-size': $font-size, 'line-height': $line-height);
   @each $key, $value in map-remove($base, 'font-size', 'line-height') {
-    @if unit($value) == 'px' { $corrected-values: map-merge($corrected-values, ($key: $value / $font-size * 1rem)); }
-  }
-
-  // merge it all back to default
+    @if unit($value) == 'px' { $corrected-values: map-merge($corrected-values, ($key: $value / $font-size * 1rem)); } }
   $base: map-merge($base, $corrected-values);
 
+  // do output, if true
   @if $output {
 
-    // JSON format string output for pickup in JS
-
-    $medium-key-list: ();
-    @each $key in map-keys($media) {
-      $medium-key-list: append($medium-key-list, quote($key), 'comma');
+    // simplistic JSON $media information
+    @if $media != () {
+      $medium-key-list: ();
+      @each $key in map-keys($media) {
+        $medium-key-list: append($medium-key-list, quote($key), 'comma'); }
+      body::before {
+        width: 0;
+        height: 0;
+        display: block;
+        overflow: hidden;
+        content: '{ "current" : "default", "all": ["#{$medium-key-list}"] }';
+      }
+      // this is still best recommendation but there are other approaches
+      head { font-family: '{ "current" : "default", "all": ["#{$medium-key-list}"] }'; }
+      // dummy element to catch breakpoint transitions
+      #{$bp-trans-element} { width: 0; transition: width 1ms; }
     }
-
-    body::before {
-      width: 0;
-      height: 0;
-      display: block;
-      overflow: hidden;
-      content: '{ "current" : "default", "all": ["#{$medium-key-list}"] }';
-    }
-
-    // nb: some approaches recommend using html instead of head here, and then resetting real font-family on body
-    head { font-family: '{ "current" : "default", "all": ["#{$medium-key-list}"] }'; }
-
-    .util--medium { width: 0; transition: width 1ms; }
 
     // styles
-
     html { font-size: assert(map-get($base, 'html-scale'), em); }
     body { line-height: map-get($base, 'line-height');
-      // padding-top: map-get($base, 'page-top');
-      // padding-bottom: map-get($base, 'page-bottom');
     }
   }
 
@@ -106,18 +101,16 @@ $media-orig: ();
   // backup data first
   $media-orig: $media;
 
-  // TODO: add a conditional re-assignment here, rather than the default thing above
-  // (I already don't understand what I was talking about on the above line)
-
   @if $media != () {
 
-    // maintain a reference-medium upon which to merge each medium in media
+    // temp variable for recursive merging
     $reference-medium: $base;
 
     // collect and sort the breakpoint media
-    $sorted-media: maps-sort(maps-collect($media, 'breakpoint'), 'breakpoint');
+    // $sorted-media: maps-sort(maps-collect($media, 'breakpoint'), 'breakpoint');
+    // !!! above is obsolete, if we are now allowing typo-columns to retro-determine breakpoint
 
-    @each $medium-alias, $medium in $sorted-media {
+    @each $medium-alias, $medium in $media {
 
       // merge medium to reference
       $reference-medium: map-merge($reference-medium, $medium);
@@ -127,30 +120,28 @@ $media-orig: ();
       $line-height: map-get($reference-medium, 'line-height');
       @if unit($font-size) != 'px' { $font-size: strip($font-size) * 16px; }
       @if unit($line-height) == 'px' { $line-height: $line-height / $font-size; }
-      // $font-size: assert($font-size, rem);
+
+      // get html-scale
       $html-scale: strip($font-size / 16px);
 
-      // ..and for pixel-united other values
+      // correct for other pixel-united values, merge back to reference
       $corrected-values: ('html-scale': $html-scale, 'font-size': $font-size, 'line-height': $line-height);
       @each $key, $value in map-remove($reference-medium, 'font-size', 'breakpoint', 'line-height') {
-        @if unit($value) == 'px' { $corrected-values: map-merge($corrected-values, ($key: $value / $font-size * 1rem)); }
-      }
-      // merge corrections back to reference
+        @if unit($value) == 'px' { $corrected-values: map-merge($corrected-values, ($key: $value / $font-size * 1rem)); } }
       $reference-medium: map-merge($reference-medium, $corrected-values);
 
-      // breakpoint vs typo-col-ratio
+      // solve breakpoint vs typo-col-ratio
       $page-x: map-get($reference-medium, 'page-right') + map-get($reference-medium, 'page-left');
       $typo-measure: map-get($reference-medium, 'typo-measure');
       $typo-col-ratio: map-get($medium, 'typo-col-ratio'); // spec medium only
+      $breakpoint: map-get($reference-medium, 'breakpoint');
       @if $typo-col-ratio and $typo-col-ratio < 1 {
         $margin-x: map-get($reference-medium, 'margin-x');
-        $breakpoint: assert((($typo-measure) / $typo-col-ratio  - $margin-x + $page-x) * $html-scale, em); // alt3
+        $breakpoint: assert((($typo-measure) / $typo-col-ratio  - $margin-x + $page-x) * $html-scale, em); // correct ?
         $reference-medium: map-merge($reference-medium, ('breakpoint': $breakpoint))
-      } @else {
-        $breakpoint: map-get($reference-medium, 'breakpoint');
       }
 
-      // merge some additions to reference
+      // merge some additional props
       $body-width: assert($breakpoint / $html-scale, rem);
       $content-width: $body-width - $page-x;
       $reference-medium: map-merge($reference-medium, (
@@ -164,28 +155,28 @@ $media-orig: ();
       @if $output {
         $font-size: map-get($medium, 'font-size');
         $line-height: map-get($medium, 'line-height');
-        // $page-top: map-get($medium, 'page-top');
-        // $page-bottom: map-get($medium, 'page-bottom');
 
         @include medium($medium-alias) {
 
+          // simplistic JSON info
           body::before { content: '{ "current" : "#{$medium-alias}", "all": ["#{$medium-key-list}"] }'; }
           head { font-family: '{ "current" : "#{$medium-alias}", "all": ["#{$medium-key-list}"] }'; }
+          // dummy element to track breakpoint transition
+          #{$bp-trans-element} { width: index(map-keys($media), $medium-alias) * 1px; }
 
-          .util--medium { width: index(map-keys($media), $medium-alias) * 1px; }
-
-
-          // output CSS if spec'd by user
+          // styles, if spec'd
           @if $typo-col-ratio { .l--col_typo { width: percentage($typo-col-ratio) !important; } }
           @if $font-size { html { font-size: assert(map-get($reference-medium, 'html-scale'), em); } }
           @if $line-height { body { line-height: map-get($reference-medium, 'line-height'); } }
-          // @if $page-top { body { margin-top: map-get($reference-medium, 'page-top'); } }
-          // @if $page-bottom { body { margin-bottom: map-get($reference-medium, 'page-bottom'); } }
-
         }
       }
     }
   }
+
+  // check if breakpoint order is okay; warn if not
+  $keys-sorted: map-keys(maps-sort($media, 'breakpoint'));
+  $keys-orig: map-keys($media-orig);
+  @if $keys-sorted != $keys-orig { @warn 'breakpoints out of order; should be #{$keys-sorted}.'; }
 }
 
 //                     _ _                    _   _ _
@@ -222,6 +213,8 @@ $current-medium-alias: null;
   $mod: medium-value('margin-y-mod'); $spread: ceil($basis/6);
   @return pow($mod, $index/$spread) * if($unit, medium-value('margin-y'), strip(medium-value('margin-y')));
 }
+// alias; default 'margin' is vertical
+@function margin($args...){ @return margin-y($args...); }
 
 @function font-size($index: 0, $unit: true, $basis: 10) {
   @if type-of($index) == 'string' { @return medium-value('font-size', $index); }
@@ -265,88 +258,37 @@ $current-medium-alias: null;
 // MIXINS //
 ////////////
 
-// mixin to output width media medium
-@mixin medium($aliases...) {
+// SINGLE
 
-  // save the medium
+@mixin media-single($args...) {
+  // save alias reference; assign current
   $prev-medium-alias: $current-medium-alias;
-
-  // get the current alias or at least the previous one if in max-width medium
-  @if length($aliases) > 0 {
-    $current-medium-alias: nth($aliases, 1) or map-prev-key($media, nth($aliases, 2));
-  }
-
+  $current-medium-alias: nth($args, 1) or map-prev-key($media, nth($args, 2));
   // run the content in medium
-  @media #{medium-string($aliases...)} { @content }
-
+  @media #{medium-string($args...)} { @content }
   // reset the medium (no nesting; could just reset to null)
   $current-medium-alias: $prev-medium-alias;
 }
-// alias
-@mixin media($args...) { @include medium($args...) { @content; } }
-@mixin m($args...) { @include medium($args...) { @content; } }
 
-// default hd ratio
-$medium-hd-ratio: (3,2);
+// MULTIPLE
 
-// hd media query
-@mixin hidpi($aliases...) {
-
-  $n: nth($medium-hd-ratio, 1);
-  $d: nth($medium-hd-ratio, 2);
-  $ratio: $n/$d;
-
-  // save the medium
-  $prev-medium-alias: $current-medium-alias;
-
-  // get the current alias or at least the previous one if in max-width medium
-  @if length($aliases) > 0 {
-    $current-medium-alias: nth($aliases, 1) or map-prev-key($media, nth($aliases, 2));
-  }
-
-  // run the content in medium
-  @media screen and
-    (-webkit-min-device-pixel-ratio: $ratio),
-    (min--moz-device-pixel-ratio: $ratio),
-    (-o-min-device-pixel-ratio: #{$n}/#{$d}),
-    (min-device-pixel-ratio: $ratio),
-    (min-resolution: $ratio * 96dpi),
-    (min-resolution: $ratio * 1dppx) {
-    @content;
-  }
-
-  // reset the medium (no nesting; could just reset to null)
-  $current-medium-alias: $prev-medium-alias;
-}
-// alias
-@mixin hd($args...) { @include hidpi($args...) { @content; } }
-
-// multi width medium -- combines both medium-each() and medium-for()
-@mixin each-medium($options:()) {
-
-  // get 'from', 'to' and 'for'
-  $from: get($options, 'from');
-  $to: get($options, 'to');
-  $for: get($options, 'for');
-
+@mixin media-multiple($from: null, $to: null, $for: null) {
   // correct 'for' options
   @if $for {
     @if contains($for, typo) { $for: join($for, margin-y line-height font-size-mod); }
     @if contains($for, margin-y) { $for: join($for, margin-y-mod); }
-    // @if contains($for, font-size) { $for: join($for, font-size-mod); }
+    @if contains($for, font-size) { $for: join($for, font-size-mod); }
     @if contains($for, margin-x) { $for: join($for, margin-x-mod); }
   }
-
-  // output the @content raw, if $from is null
+  // output the @content for $base medium if $from is null
   @if $from == null { @content; }
-
   // determine other referenced media
   $medium-aliases: map-keys($media);
   $sliced-aliases: slice($medium-aliases,
       if($from, index($medium-aliases, $from), 1),
       if($to, index($medium-aliases, $to) - 1, length($medium-aliases)));
-
   // conditional per-medium actions
+
   @each $medium-alias in $sliced-aliases {
     $orig-keys: map-keys(medium-orig($medium-alias));
     @if not $for { @include medium($medium-alias) { @content; } }
@@ -355,5 +297,34 @@ $medium-hd-ratio: (3,2);
     }
   }
 }
+
+// MASTER
+
+@mixin media($args...) {
+  $arg1: nth($args, 1);
+  @if type-of($arg1) == 'map' { @include media-multiple($arg1...) { @content; } }
+  @else { @include media-single($args...) { @content; } }
+}
+
 // alias
-@mixin all-media($args...) { @include each-medium($args...) { @content; } }
+@mixin medium($args...){ @include media($args...) { @content; } }
+
+// HIDPI
+
+$media-hd-ratio: 3 2;
+@mixin hidpi($ratio: $media-hd-ratio) {
+  $n: nth($ratio, 1); $d: nth($ratio, 2);
+  $ratio: ($n / $d);
+  @media screen and
+  (-webkit-min-device-pixel-ratio: $ratio),
+  (min--moz-device-pixel-ratio: $ratio),
+  (-o-min-device-pixel-ratio: #{$n}/#{$d}),
+  (min-device-pixel-ratio: $ratio),
+  (min-resolution: $ratio * 96dpi),
+  (min-resolution: $ratio * 1dppx) {
+    @content;
+  }
+}
+
+// alias
+@mixin hd($args...) { @include hidpi($args...) { @content; } }
