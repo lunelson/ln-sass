@@ -67,6 +67,7 @@ $l_page-left: 1rem !default;
 }
 // alias
 @mixin col-width($args...) { @include col-size($args...); }
+@mixin width($args...) { @include col-size($args...); }
 
 
 @mixin col-set($args...) {
