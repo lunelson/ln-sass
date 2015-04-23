@@ -12,11 +12,12 @@
 /////////////
 
 $z-indexes: (
-  over: 30,
-  page: 20,
-  under: 10,
-  body: 0
-);
+  baked: 30,
+  stoned: 20,
+  buzzed: 10,
+  sober: 0,
+  asleep: -10
+) !default;
 
 @function z-index($name) { @return map-get($z-indexes, $name); }
 @function z($name) { @return z-index($name); }
