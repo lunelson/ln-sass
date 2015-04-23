@@ -12,13 +12,15 @@
 /////////////
 
 $z-indexes: (
-  over: 30,
-  page: 20,
-  under: 10,
-  body: 0
-);
+  baked: 30,
+  stoned: 20,
+  buzzed: 10,
+  sober: 0,
+  asleep: -10
+) !default;
 
-@function z($name) { @return map-get($z-indexes, $name); }
+@function z-index($name) { @return map-get($z-indexes, $name); }
+@function z($name) { @return z-index($name); }
 
 /////////////////
 // POSITIONING //
@@ -44,17 +46,9 @@ $z-indexes: (
   &:after { clear: both; }
 }
 
-//////////////////
-// CHILD LAYOUT //
-//////////////////
-
-// http://nicolasgallagher.com/an-introduction-to-css-pseudo-element-hacks/
-// http://css-tricks.com/pseudo-element-roundup/
-
-// table-layout - CSS | MDN | https://developer.mozilla.org/en-US/docs/Web/CSS/table-layout
-// Fixed Table Layouts | CSS-Tricks | http://css-tricks.com/fixing-tables-long-strings/
-// ungrid - the simplest responsive css grid | https://chrisnager.github.io/ungrid/
-// Pure CSS, equal-width navigation tabs | http://jsfiddle.net/csswizardry/zfSt4/
+/////////////////////////
+// CHILD ELEMENT SHITE //
+/////////////////////////
 
 @function child-selector($selector) {
   @if $selector {
@@ -67,6 +61,31 @@ $z-indexes: (
     @return '& > *';
   }
 }
+
+@mixin child-counter($selector: 'li', $content-before:'', $content-after:''){
+  $counter: unique-id();
+  list-style-type: none;
+  counter-reset: $counter;
+  & #{child-selector($selector)} {
+    counter-increment: $counter;
+    &:before {
+      content: '#{$content-before}' counter($counter) '#{$content-after}';
+      @content;
+    }
+  }
+}
+
+//////////////////
+// CHILD LAYOUT //
+//////////////////
+
+// http://nicolasgallagher.com/an-introduction-to-css-pseudo-element-hacks/
+// http://css-tricks.com/pseudo-element-roundup/
+
+// table-layout - CSS | MDN | https://developer.mozilla.org/en-US/docs/Web/CSS/table-layout
+// Fixed Table Layouts | CSS-Tricks | http://css-tricks.com/fixing-tables-long-strings/
+// ungrid - the simplest responsive css grid | https://chrisnager.github.io/ungrid/
+// Pure CSS, equal-width navigation tabs | http://jsfiddle.net/csswizardry/zfSt4/
 
 @mixin child-layout($selector, $type, $options...) {
 

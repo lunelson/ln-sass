@@ -1,0 +1,20 @@
+@mixin col-size($span: 1 1, $right: null, $left: null, $cycle: null, $out: null) {
+  @if type-of($span) == 'map' { @include col-size($span...); } @else {
+
+  $n: nth($span, 1); $d: nth($span, 2);
+  width: $n / $d * 100%;
+
+  @if $right { margin-right: nth($right, 1) / if(length($right) > 1, nth($right, 2), $d) * 100%; }
+  @if $left { margin-left: nth($left, 1) / if(length($left) > 1, nth($left, 2), $d) * 100%; }
+  @if $cycle { &:nth-child(#{$cycle}n+1) { clear: left; } }
+  @else if $out { position: absolute; #{opposite($out)}: 100%; }
+
+  }
+}
+// alias
+@mixin col-width($args...) { @include col-size($args...); }
+@mixin width($args...) { @include col-size($args...); }
+
+.test {
+  @include width(3 2, $out: left);
+}

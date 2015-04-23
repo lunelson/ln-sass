@@ -84,6 +84,7 @@ gulp.task('sass-ln',[], function() {
         'stylesheets/_sass-lists.scss',
         'stylesheets/_sass-numbers.scss',
         'stylesheets/_sass-strings.scss',
+        'stylesheets/_typo-b.scss',
         'stylesheets/_typo.scss'
         ])
     .pipe(stripComments())
