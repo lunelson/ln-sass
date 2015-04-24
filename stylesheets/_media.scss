@@ -71,11 +71,11 @@ $media-hd-ratio: 3 2 !default;
   $base: map-merge($base, $corrected-values);
 
   // do output, if true
+  $medium-key-list: ();
   @if $output {
 
     // simplistic JSON $media information
     @if $media != () {
-      $medium-key-list: ();
       @each $key in map-keys($media) {
         $medium-key-list: append($medium-key-list, quote($key), 'comma'); }
       body::before {
