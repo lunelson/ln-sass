@@ -109,13 +109,15 @@ $l_page-left: 1rem !default;
     }
 
     // WRAP
-    .#{$l_pre}#{$l_wrap-class} {
+    .#{$l_pre}#{$l_wrap-class},
+    [class*="#{$l_pre}#{$l_wrap-class}_"],
+    [class*="#{$l_pre}#{$l_wrap-class}--"] {
       @if $g_use-float { @include clearfix(); }
       @if $l_wrap-align != left { margin-left: auto; }
       @if $l_wrap-align != right { margin-right: auto; }
-      &--left { @extend .#{$l_pre}#{$l_wrap-class}; margin-left: 0; }
-      &--right { @extend .#{$l_pre}#{$l_wrap-class}; margin-right: 0; }
     }
+    .#{$l_pre}#{$l_wrap-class}--left { @extend .#{$l_pre}#{$l_wrap-class}; margin-left: 0; }
+    .#{$l_pre}#{$l_wrap-class}--right { @extend .#{$l_pre}#{$l_wrap-class}; margin-right: 0; }
 
     // SECT
     .#{$l_pre}#{$l_sect-class} {

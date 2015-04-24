@@ -37,6 +37,9 @@ $media-hd-ratio: 3 2 !default;
   // BASE //
   //////////
 
+  // line-length
+  // column-ratio
+
   // backup and merge against defaults
   $base-orig: $base;
   $base: map-merge((
@@ -51,8 +54,8 @@ $media-hd-ratio: 3 2 !default;
       page-right: 1rem,
       page-bottom: 1rem,
       page-left: 1rem,
-      typo-measure: 30,
-      typo-col-ratio: 1
+      line-length: 30,
+      column-ratio: 1 // n.b. wherever this is less than one, will override breakpoint
     ), $base);
 
   // correct for font-size and line-height units/non-units
@@ -133,14 +136,14 @@ $media-hd-ratio: 3 2 !default;
         @if unit($value) == 'px' { $corrected-values: map-merge($corrected-values, ($key: $value / $font-size * 1rem)); } }
       $reference-medium: map-merge($reference-medium, $corrected-values);
 
-      // solve breakpoint vs typo-col-ratio
+      // solve breakpoint vs column-ratio
       $page-x: map-get($reference-medium, 'page-right') + map-get($reference-medium, 'page-left');
-      $typo-measure: map-get($reference-medium, 'typo-measure');
-      $typo-col-ratio: map-get($medium, 'typo-col-ratio'); // spec medium only
+      $line-length: map-get($reference-medium, 'line-length');
+      $column-ratio: map-get($medium, 'column-ratio'); // spec medium only
       $breakpoint: map-get($reference-medium, 'breakpoint');
-      @if $typo-col-ratio and $typo-col-ratio < 1 {
+      @if $column-ratio and $column-ratio < 1 {
         $margin-x: map-get($reference-medium, 'margin-x');
-        $breakpoint: assert((($typo-measure) / $typo-col-ratio  - $margin-x + $page-x) * $html-scale, em); // correct ?
+        $breakpoint: assert((($line-length) / $column-ratio  - $margin-x + $page-x) * $html-scale, em); // correct ?
         $reference-medium: map-merge($reference-medium, ('breakpoint': $breakpoint))
       }
 
@@ -168,7 +171,7 @@ $media-hd-ratio: 3 2 !default;
           #{$media-transition-utility-class} { width: index(map-keys($media), $medium-alias) * 1px; }
 
           // styles, if spec'd
-          @if $typo-col-ratio { .l--col_typo { width: percentage($typo-col-ratio) !important; } }
+          @if $column-ratio { .l--col_typo { width: percentage($column-ratio) !important; } }
           @if $font-size { html { font-size: assert(map-get($reference-medium, 'html-scale'), em); } }
           @if $line-height { body { line-height: map-get($reference-medium, 'line-height'); } }
         }

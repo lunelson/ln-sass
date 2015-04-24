@@ -99,16 +99,16 @@ $z-indexes: (
       @if index(table-row row, $type) {
         display: table-row;
         height: auto; // base setting
-        @if index($options, center) or index($options, centre) { text-align: center; }
+        @if index($options, left) { text-align: left; }
         @else if index($options, right) { text-align: right;}
-        @else { text-align: left; }
+        @else { text-align: center; }
       }
       @else {
         display: table-cell;
         width: auto; // base setting
         @if index($options, bottom) { vertical-align: bottom; }
-        @else if index($options, middle) { vertical-align: middle;}
-        @else { vertical-align: top; }
+        @else if index($options, top) { vertical-align: top;}
+        @else { vertical-align: middle; }
       }
       overflow: hidden;
       @content;
@@ -217,7 +217,7 @@ $parallax-perspective: 100px; // nb this defines max positive displacement
       right: 0;
       bottom: 0;
       left: 0;
-      transform-origin: 100%; // fix webkit overflow bug
+      perspective-origin: 100%; // fix webkit overflow bug
     }
   }
 }
