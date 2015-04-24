@@ -75,14 +75,14 @@ $l_page-left: 1rem !default;
 
 @mixin parse-layouts($output: true){
 
-  @if $output {
+  $margin-x: $l_margin-x;
+  $margin-y: $l_margin-y;
+  $page-top: $l_page-top;
+  $page-right: $l_page-right;
+  $page-bottom: $l_page-bottom;
+  $page-left: $l_page-left;
 
-    $margin-x: $l_margin-x;
-    $margin-y: $l_margin-y;
-    $page-top: $l_page-top;
-    $page-right: $l_page-right;
-    $page-bottom: $l_page-bottom;
-    $page-left: $l_page-left;
+  @if $output {
 
     // get dimensions from '$base' if it exists
     @if variable-exists('base') {
