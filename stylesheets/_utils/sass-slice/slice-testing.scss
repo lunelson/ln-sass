@@ -1,0 +1,55 @@
+// new "slice" function, supporting negative indexes
+
+// ZERO-INDEX-NTH
+@function zero-nth($list, $n) { @return if($n < 0, nth($list, $n), nth($list, $n + 1)); }
+
+// SLICE
+@function slice($list, $n1: 1, $n2: length($list), $sep: list-separator($list)) {
+  $output: (); $len: length($list);
+  $n1: if($n1 < 0, $n1 + $len + 1, if($n1 > $len, $len, $n1));
+  $n2: if($n2 < 0, $n2 + $len + 1, if($n2 > $len, $len, $n2));
+  @for $n from $n1 through $n2 {
+    $output: append($output, nth($list, $n), $sep);
+  }
+  @return $output;
+}
+
+// SLICE-TO
+@function slice-thru($list, $n: length($list), $sep: list-separator($list)) {
+  @return slice($list, 1, $n, $sep);
+}
+
+// SLICE-FROM
+@function slice-from($list, $n: 1, $sep: list-separator($list)) {
+  @return slice($list, $n, length($list), $sep);
+}
+
+$test: a b c d e f g h i j k l m;
+
+.test {
+  /* zero-nth */
+  out: zero-nth($test, 2);
+  out: zero-nth($test, -1);
+  out: zero-nth($test, 0);
+  /* slice */
+  out: slice($test, 1, -1); // whole list
+  out: slice($test, -1, 1); // whole list, reversed
+  out: slice($test, 3, 1); // whole list
+  out: slice($test, length($test), 1); // whole list, reversed
+  out: slice($test, 1, length($test)); // whole list
+  out: slice($test, 1, length($test) + 1); // whole list
+  /* slice-thru */
+  out: slice-thru($test, -6);
+  out: slice-thru($test, -4);
+  out: slice-thru($test, -2);
+  out: slice-thru($test, 2);
+  out: slice-thru($test, 4);
+  out: slice-thru($test, 6);
+  /* slice-from */
+  out: slice-from($test, -6);
+  out: slice-from($test, -4);
+  out: slice-from($test, -2);
+  out: slice-from($test, 2);
+  out: slice-from($test, 4);
+  out: slice-from($test, 6);
+}
