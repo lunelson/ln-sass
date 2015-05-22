@@ -22,7 +22,7 @@ $media: (
 $base-orig: ();
 $media-orig: ();
 
-$media-transition-utility-class: '.u--media_trans' !default;
+$media-transition-utility-class: '.u-media_tracker' !default;
 $media-current-alias: null;
 $media-hd-ratio: 3 2 !default;
 
@@ -41,7 +41,7 @@ $media-hd-ratio: 3 2 !default;
   // column-ratio
 
   // backup and merge against defaults
-  $base-orig: $base;
+  $base-orig: $base !global;
   $base: map-merge((
       font-size: 16px,
       line-height: 1.5,
@@ -56,7 +56,7 @@ $media-hd-ratio: 3 2 !default;
       page-left: 1rem,
       line-length: 30,
       column-ratio: 1 // n.b. wherever this is less than one, will override breakpoint
-    ), $base);
+    ), $base) !global;
 
   // correct for font-size and line-height units/non-units
   $font-size: map-get($base, 'font-size');
@@ -71,7 +71,7 @@ $media-hd-ratio: 3 2 !default;
   $corrected-values: ('html-scale': $html-scale, 'font-size': $font-size, 'line-height': $line-height);
   @each $key, $value in map-remove($base, 'font-size', 'line-height') {
     @if unit($value) == 'px' { $corrected-values: map-merge($corrected-values, ($key: $value / $font-size * 1rem)); } }
-  $base: map-merge($base, $corrected-values);
+  $base: map-merge($base, $corrected-values) !global;
 
   // do output, if true
   $medium-key-list: ();
@@ -105,7 +105,7 @@ $media-hd-ratio: 3 2 !default;
   ///////////
 
   // backup data first
-  $media-orig: $media;
+  $media-orig: $media !global;
 
   @if $media != () {
 
@@ -156,7 +156,7 @@ $media-hd-ratio: 3 2 !default;
       ));
 
       // merge reference back to master
-      $media: map-merge($media, ($medium-alias: $reference-medium));
+      $media: map-merge($media, ($medium-alias: $reference-medium)) !global;
 
       @if $output {
         $font-size: map-get($medium, 'font-size');
@@ -189,7 +189,7 @@ $media-hd-ratio: 3 2 !default;
 // FUNCTIONS //
 ///////////////
 
-@function medium-value($key, $alias: $media-current-alias) { @return map-get(medium($alias), $key); }
+@function medium-value($key, $alias: $media-current-alias) { @return if($alias, map-get(medium($alias), $key), map-get($base, $key)); }
 @function media-value($args...) { @return medium-value($args...); } // alias
 @function m-value($args...) { @return medium-value($args...); } // alias
 
@@ -254,12 +254,12 @@ $media-hd-ratio: 3 2 !default;
 
 @mixin media-single($args...) {
   // save alias reference; assign current
-  $media-prev-alias: $media-current-alias;
-  $media-current-alias: nth($args, 1) or map-prev-key($media, nth($args, 2));
+  $media-prev-alias: $media-current-alias !global;
+  $media-current-alias: nth($args, 1) or map-prev-key($media, nth($args, 2)) !global;
   // run the content in medium
   @media #{medium-string($args...)} { @content }
   // reset the medium (no nesting; could just reset to null)
-  $media-current-alias: $media-prev-alias;
+  $media-current-alias: $media-prev-alias !global;
 }
 
 // MULTIPLE
@@ -285,7 +285,7 @@ $media-hd-ratio: 3 2 !default;
     $orig-keys: map-keys(medium-orig($medium-alias));
     @if not $for { @include medium($medium-alias) { @content; } }
     @else if contains-any($orig-keys, $for) {
-      @include medium($medium-alias) { @content; }
+      @include media-single($medium-alias) { @content; }
     }
   }
 }

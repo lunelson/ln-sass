@@ -8,7 +8,7 @@
 @mixin parse-resets() {
   @include reset-n3();
   @include reset-ln();
-  @include reset-ot();
+  // @include reset-ot();
 }
 
 @mixin reset-n3 {
@@ -80,7 +80,7 @@
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0); // remove webkit tap highlight color
     text-rendering: optimizespeed; // fixes a webkit bug re: optimizelegibility?
   }
-  img, video {
+  img, video, svg {
     display: block;
     max-width: 100%;
     height: auto;
@@ -92,6 +92,7 @@
     &:focus,
     &:active { text-decoration: none !important; }
     &.block { display: block !important; }
+    &.clean { border: none !important;}
     &.inline-block { display: inline-block !important; }
     span.target { text-decoration: underline !important; }
   }
