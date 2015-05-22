@@ -11,27 +11,23 @@
 // GLOBALS //
 /////////////
 
-$l_pre: 'l_' !default;
+// layout classes
+$l_pre: 'l-' !default;
 $l_page-class: 'page' !default;
 $l_wrap-class: 'wrap' !default;
 $l_sect-class: 'sect' !default;
-$l_grid-class: 'grid' !default;
-$l_col-class: 'col' !default;
-
-$l-use-float: false !default; // true | false
-$l_grid-align: left !default; // right | left
 $l_wrap-align: false !default; // right | left | false
 
+// grid classes
+$g_pre: 'g-' !default;
+$g_grid-class: 'row' !default;
+$g_cell-class: 'col' !default;
+$g_row-align: left !default; // right | left
+$g_use-float: false !default; // true | false
+
+// default values, if $media not present
 $l_margin-x: 1rem !default;
-// $l_margin-x_sm: -1 !default;
-// $l_margin-x_lg: 1 !default;
-
 $l_margin-y: 1rem !default;
-// $l_margin-y_sm: -1 !default;
-// $l_margin-y_lg: 1 !default;
-
-// $l_margin-stepvalue: 1 !default;
-
 $l_page-top: 1rem !default;
 $l_page-right: 1rem !default;
 $l_page-bottom: 1rem !default;
@@ -41,13 +37,13 @@ $l_page-left: 1rem !default;
 // GRID MIXINS //
 /////////////////
 
-@mixin grid-size($cols) {
-  &::before { content: '#{$cols} .col'; }
-}
+@mixin row-size($cols) { &::before { content: '#{$cols} .#{$g_pre}#{$g_cell-class}'; } }
+// alias
+@mixin row-width($args...) { @include row-size($args...); }
 
-@mixin grid-set($args...) {
-  @extend %#{$l_grid-class};
-  @if length($args) > 0 { @include grid-size($args...); }
+@mixin row-set($args...) {
+  @extend %#{$g_grid-class};
+  @if length($args) > 0 { @include row-size($args...); }
 }
 
 @mixin col-size($span: 1 1, $right: null, $left: null, $cycle: null, $out: null) {
@@ -63,9 +59,13 @@ $l_page-left: 1rem !default;
 
   }
 }
+// alias
+@mixin col-width($args...) { @include col-size($args...); }
+@mixin width($args...) { @include col-size($args...); }
+
 
 @mixin col-set($args...) {
-  @extend %#{$l_col-class};
+  @extend %#{$g_cell-class};
   @if length($args) > 0 { @include col-size($args...); }
 }
 
@@ -73,16 +73,16 @@ $l_page-left: 1rem !default;
 // SETUP MIXIN //
 /////////////////
 
-@mixin parse-layout($output: true){
+@mixin parse-layouts($output: true){
+
+  $margin-x: $l_margin-x;
+  $margin-y: $l_margin-y;
+  $page-top: $l_page-top;
+  $page-right: $l_page-right;
+  $page-bottom: $l_page-bottom;
+  $page-left: $l_page-left;
 
   @if $output {
-
-    $margin-x: $l_margin-x;
-    $margin-y: $l_margin-y;
-    $page-top: $l_page-top;
-    $page-right: $l_page-right;
-    $page-bottom: $l_page-bottom;
-    $page-left: $l_page-left;
 
     // get dimensions from '$base' if it exists
     @if variable-exists('base') {
@@ -95,55 +95,44 @@ $l_page-left: 1rem !default;
     }
 
     // PAGE
-    .#{$l_pre}#{$l_page-class}_top, [layout~='#{$l_page-class}_top'] {
-      padding-top: $page-top;
-    }
-    .#{$l_pre}#{$l_page-class}_right, [layout~='#{$l_page-class}_right'] {
-      padding-right: $page-right;
-    }
-    .#{$l_pre}#{$l_page-class}_bottom, [layout~='#{$l_page-class}_bottom'] {
-      padding-bottom: $page-bottom;
-    }
-    .#{$l_pre}#{$l_page-class}_left, [layout~='#{$l_page-class}_left'] {
-      padding-left: $page-left;
-    }
-    .#{$l_pre}#{$l_page-class}_x, [layout~='#{$l_page-class}_x'] {
+    .#{$l_pre}#{$l_page-class}_top { padding-top: $page-top; }
+    .#{$l_pre}#{$l_page-class}_right { padding-right: $page-right; }
+    .#{$l_pre}#{$l_page-class}_bottom { padding-bottom: $page-bottom; }
+    .#{$l_pre}#{$l_page-class}_left { padding-left: $page-left; }
+    .#{$l_pre}#{$l_page-class}_x {
       padding-left: $page-left;
       padding-right: $page-right;
     }
-    .#{$l_pre}#{$l_page-class}_y, [layout~='#{$l_page-class}_y'] {
+    .#{$l_pre}#{$l_page-class}_y {
       padding-top: $page-top;
       padding-bottom: $page-bottom;
     }
 
     // WRAP
-    %#{$l_pre}#{$l_wrap-class}, [class*='#{$l_pre}#{$l_wrap-class}'], [layout*='#{$l_wrap-class}'] {
-      @include clearfix();
+    .#{$l_pre}#{$l_wrap-class},
+    [class*="#{$l_pre}#{$l_wrap-class}_"],
+    [class*="#{$l_pre}#{$l_wrap-class}--"] {
+      @if $g_use-float { @include clearfix(); }
       @if $l_wrap-align != left { margin-left: auto; }
       @if $l_wrap-align != right { margin-right: auto; }
     }
-    .#{$l_pre}#{$l_wrap-class}--left, [layout~='#{$l_wrap-class}--left'] { margin-left: 0; }
-    .#{$l_pre}#{$l_wrap-class}--right, [layout~='#{$l_wrap-class}--right'] { margin-right: 0; }
+    .#{$l_pre}#{$l_wrap-class}--left { @extend .#{$l_pre}#{$l_wrap-class}; margin-left: 0; }
+    .#{$l_pre}#{$l_wrap-class}--right { @extend .#{$l_pre}#{$l_wrap-class}; margin-right: 0; }
 
     // SECT
-    .#{$l_pre}#{$l_sect-class},
-    [layout*='#{$l_sect-class}_'],
-    [class*='#{$l_pre}#{$l_sect-class}_'] {
+    .#{$l_pre}#{$l_sect-class} {
       padding-top: $margin-y / 2;
       padding-bottom: $margin-y / 2;
     }
 
     // GRID
-    %#{$l_pre}#{$l_grid-class},
-    .#{$l_pre}#{$l_grid-class},
-    [layout*='#{$l_grid-class}_'],
-    [class*='#{$l_pre}#{$l_grid-class}_'] {
+    .#{$g_pre}#{$g_grid-class} {
       &:before { display: none; }
       width: calc(100% + #{$margin-x}); // necessary?
       position: relative; // avoidable?
       margin-left: $margin-x / -2;
       margin-right: $margin-x / -2;
-      @if $l-use-float {
+      @if $g_use-float {
         @include clearfix();
       } @else {
         font-size: 0rem;
@@ -152,20 +141,17 @@ $l_page-left: 1rem !default;
     }
 
     // COL
-    %#{$l_pre}#{$l_col-class},
-    .#{$l_pre}#{$l_col-class},
-    [layout*='#{$l_col-class}_'],
-    [class*='#{$l_pre}#{$l_col-class}_'] {
+    .#{$g_pre}#{$g_cell-class} {
       width: 100%;
       min-height: 1px; // http://css-tricks.com/make-sure-columns-dont-collapse-horizontally/
       padding-left: $margin-x / 2;
       padding-right: $margin-x / 2;
-      @if $l-use-float {
+      @if $g_use-float {
         display: block;
-        float: $l_grid-align;
+        float: $g_row-align;
       } @else {
         display: inline-block;
-        text-align: $l_grid-align;
+        text-align: $g_row-align;
         vertical-align: top;
       }
     }
@@ -200,48 +186,34 @@ $l_page-left: 1rem !default;
 
           // SECT
           @if map-has-key($orig, 'margin-y') {
-            .#{$l_pre}#{$l_sect-class},
-            [layout*='#{$l_sect-class}_'],
-            [class*='#{$l_pre}#{$l_sect-class}_'] {
+            .#{$l_pre}#{$l_sect-class} {
               padding-top: $margin-y / 2;
               padding-bottom: $margin-y / 2;
             }
           }
 
           // WRAP
-          $media-keys: map-keys($media); $wrap_to: (); $wrap_fr: ();
+          $media-keys: map-keys($media);
+          $wrap_to: (); $wrap_to_string: '_until--';
+          $wrap_fr: (); $wrap_fr_string: '_from--';
           @each $alias in slice($media-keys, 1, index($media-keys, $alias)) {
-            $wrap_fr: append($wrap_fr, unquote('.#{$l_pre}#{$l_wrap-class}_fr--#{$alias}'), 'comma');
-            $wrap_fr: append($wrap_fr, unquote('[layout~="#{$l_wrap-class}_fr--#{$alias}"]'), 'comma');
-          }
+            $wrap_fr: append($wrap_fr, unquote('.#{$l_pre}#{$l_wrap-class}#{$wrap_fr_string}#{$alias}'), 'comma'); }
           @each $alias in slice($media-keys, index($media-keys, $alias), length($media-keys)) {
-            $wrap_to: append($wrap_to, unquote('.#{$l_pre}#{$l_wrap-class}_to--#{$alias}'), 'comma');
-            $wrap_to: append($wrap_to, unquote('[layout~="#{$l_wrap-class}_to--#{$alias}"]'), 'comma');
-          }
-          .#{$l_pre}#{$l_wrap-class}_all,
-          [layout~='#{$l_wrap-class}_all'],
+            $wrap_to: append($wrap_to, unquote('.#{$l_pre}#{$l_wrap-class}#{$wrap_to_string}#{$alias}'), 'comma'); }
           .#{$l_pre}#{$l_wrap-class}_each,
-          [layout~='#{$l_wrap-class}_each'],
-          .#{$l_pre}#{$l_wrap-class}_at--#{$alias},
-          [layout~='#{$l_wrap-class}_at--#{$alias}'],
+          .#{$l_pre}#{$l_wrap-class}--#{$alias},
           #{$wrap_fr}, #{$wrap_to} {
             max-width: medium-value('content-width');
           }
 
           // GRID, CELL
           @if map-has-key($orig, 'margin-x') {
-            %#{$l_pre}#{$l_grid-class},
-            .#{$l_pre}#{$l_grid-class},
-            [layout*='#{$l_grid-class}_'],
-            [class*='#{$l_pre}#{$l_grid-class}_'] {
+            .#{$g_pre}#{$g_grid-class} {
               width: calc(100% + #{$margin-x}); // necessary?
               margin-left: $margin-x / -2;
               margin-right: $margin-x / -2;
             }
-            %#{$l_pre}#{$l_col-class},
-            .#{$l_pre}#{$l_col-class},
-            [layout*='#{$l_col-class}_'],
-            [class*='#{$l_pre}#{$l_col-class}_'] {
+            .#{$g_pre}#{$g_cell-class} {
               padding-left: $margin-x / 2;
               padding-right: $margin-x / 2;
             }

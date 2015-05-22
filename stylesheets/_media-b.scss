@@ -75,3 +75,35 @@
   @return calc(#{$rate * 1vw} #{$op} #{abs($base)});
 }
 
+// BETA
+// @function vx($rate, $base: 0, $vunit: 1vw) {
+//   $relbase1: null;
+//   $break1: null;
+//   $relbase2: null;
+//   $break2: null;
+//   @if type-of($base) == 'list' {
+//     $break1: nth($base, 2);
+//     // relativize base relative to break1
+//     $relbase1: relativize(nth($base, 1), $break1);
+//     @if type-of($rate) == 'list' {
+//       // resolve break2 in units of break1
+//       $break2: relativize(nth($rate, 2), $break1) * $break1;
+//       // resolve base2 in units of break1
+//       $relbase2: relativize(nth($rate, 1), $break1);
+//       // resolve rate in units of break2-break1
+//       $rate: ($relbase2 - $relbase1) * $break1 / ($break2 - $break1) * 100;
+//     }
+//     $rate: strip-alt($rate);
+//     $base: ($relbase1 - $rate/100) * $break1;
+//   }
+//   @return calc(#{$rate * $vunit} + #{$base})
+//   // @return '
+//   //   base: #{$base},
+//   //   rate: #{$rate},
+//   //   break-1 #{$break1},
+//   //   break-2: #{$break2}
+//   // ';
+// }
+
+// @function vwx($rate, $base:0) { @return vx($rate, $base, 1vw); }
+// @function vhx($rate, $base:0) { @return vx($rate, $base, 1vh); }

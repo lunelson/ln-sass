@@ -16,43 +16,47 @@ $t_current-height: null !default;
 $t_min-height: 1.125 !default;
 $t_line-div: 2 !default;
 
-$t_pre: 't_' !default;
+$t_pre: 't-' !default;
 $t_single-class: 'single' !default;
 $t_block-class: 'block' !default;
 $t_container-class: 'contain' !default;
+
+// required for trimming
+.#{$t_pre}#{$t_container-class} { overflow: hidden; }
 
 
 ///////////
 // MIXIN //
 ///////////
 
-@mixin typo($size: 0, $height: auto){
+@mixin typo($size: 0, $line-height: auto, $margin: 0, $char-height: 1){
   $size: if(unitless($size), size($size), if(unit($size) == 'px', rem($size), $size));
-  @if $height == 'auto' {
+  @if $line-height == 'auto' {
     $line-div: $t_line-div or ceil($size);
     $rel-height: medium-value('line-height') / strip($size);
-    $height: $rel-height * ceil($t_min-height / $rel-height * $t_line-div) / $t_line-div;
-    $trim: (1 - $height) / 2;
+    $line-height: $rel-height * ceil($t_min-height / $rel-height * $t_line-div) / $t_line-div;
   }
 
   font-size: $size;
-  line-height: $height;
+  line-height: $line-height;
   margin-top: 0;
   margin-bottom: 0;
 
   $t_current-size: $size !global;
-  $t_current-height: $height !global;
+  $t_current-height: $line-height !global;
 
-  &.#{$t_pre}#{$t_single-class}, [typo~='#{$t_single-class}'] {
-    line-height: 1;
+  &.#{$t_pre}#{$t_single-class} { line-height: 1; }
+  &.#{$t_pre}#{$t_block-class} {
+    margin-top: t-margin(0rem, $line-height, $char-height);
+    margin-bottom: t-margin(0rem, $line-height, $char-height);
   }
-  &.#{$t_pre}#{$t_block-class}, &[typo~='#{$t_block-class}'] {
-    margin-top: margin-t(0rem);
-    margin-bottom: margin-t(0rem);
-  }
-  .#{$t_pre}#{$t_container-class} &, [typo~='#{$t_container-class}'] & {
+  .#{$t_pre}#{$t_container-class} & {
     @content;
-    &:first-child { margin-top: margin-t(0rem); }
+    margin-top: margin($margin);
+    margin-bottom: t-margin(0rem, $line-height, $char-height);
+    &:first-child, &.first {
+      margin-top: t-margin(0rem, $line-height, $char-height);
+    }
   }
 
   $t_current-size: null !global;
@@ -66,17 +70,19 @@ $t_container-class: 'contain' !default;
 // FUNCTIONS //
 ///////////////
 
-@function line-trim($line-height: null){
+@function typo-trim($line-height: null, $char-height: 1){
   $line-height: $line-height or $t_current-height or medium-value('line-height');
-  @return ($line-height - 1em) / 2;
+  @return assert($line-height - $char-height, em) / 2;
 }
+// alias
+@function t-trim($args...) { @return typo-trim($args...); }
 
-@function typo-margin($margin, $line-height: null){
+@function typo-margin($margin, $line-height: null, $char-height: 1){
   $margin: if(unitless($margin), margin-y($margin), $margin);
-  @if strip($margin) == 0 { @return - line-trim($line-height); }
-  @return calc(#{$margin} - #{line-trim($line-height)});
+  @if strip($margin) == 0 { @return - typo-trim($line-height, $char-height); }
+  @return calc(#{$margin} - #{typo-trim($line-height, $char-height)});
 }
 
 // aliases
 @function t-margin($args...) { @return typo-margin($args...); }
-@function margin-t($args...) { @return typo-margin($args...); }
+@function t-margin($args...) { @return typo-margin($args...); }

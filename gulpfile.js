@@ -35,13 +35,13 @@ gulp.task('mathsass',[], function() {
     .pipe(gulp.dest('stylesheets/mathsass/_pkg/'));
 });
 
-gulp.task('sass-util',[], function() {
-    gulp.src(['stylesheets/sass-util/stylesheets/*.scss'])
-    .pipe(stripComments())
-    .pipe(removeEmptyLines())
-    .pipe(concat('_sass-util-pkgd.scss'))
-    .pipe(gulp.dest('stylesheets/sass-util/_pkg/'));
-});
+// gulp.task('sass-util',[], function() {
+//     gulp.src(['stylesheets/sass-util/stylesheets/*.scss'])
+//     .pipe(stripComments())
+//     .pipe(removeEmptyLines())
+//     .pipe(concat('_sass-util-pkgd.scss'))
+//     .pipe(gulp.dest('stylesheets/sass-util/_pkg/'));
+// });
 
 gulp.task('sass-maps-plus',[], function() {
     gulp.src([
@@ -58,15 +58,33 @@ gulp.task('sass-maps-plus',[], function() {
     .pipe(gulp.dest('stylesheets/sass-maps-plus/_pkg/'));
 });
 
+'stylesheets/_colors.scss',
+'stylesheets/_debug.scss',
+'stylesheets/_layout-b.scss',
+'stylesheets/_layout.scss',
+'stylesheets/_media-b.scss',
+'stylesheets/_media.scss',
+'stylesheets/_misc.scss',
+'stylesheets/_reset.scss',
+'stylesheets/_sass-lists.scss',
+'stylesheets/_sass-numbers.scss',
+'stylesheets/_sass-strings.scss',
+'stylesheets/_typo.scss'
+
 gulp.task('sass-ln',[], function() {
     gulp.src([
-        'stylesheets/_reset.scss',
-        'stylesheets/_media.scss',
-        'stylesheets/_media-debug.scss',
-        'stylesheets/_media-utils.scss',
-        'stylesheets/_media-units.scss',
+        'stylesheets/_colors.scss',
+        'stylesheets/_debug.scss',
+        'stylesheets/_layout-b.scss',
         'stylesheets/_layout.scss',
-        'stylesheets/_layout-util.scss',
+        'stylesheets/_media-b.scss',
+        'stylesheets/_media.scss',
+        'stylesheets/_misc.scss',
+        'stylesheets/_reset.scss',
+        'stylesheets/_sass-lists.scss',
+        'stylesheets/_sass-numbers.scss',
+        'stylesheets/_sass-strings.scss',
+        'stylesheets/_typo-b.scss',
         'stylesheets/_typo.scss'
         ])
     .pipe(stripComments())
@@ -104,7 +122,7 @@ gulp.task('sass-master-compass',[], function() {
 gulp.task('watch', function () {
   gulp.watch(['**/*.scss', '!**/_pkg/**/*'], [
     'mathsass',
-    'sass-util',
+    // 'sass-util',
     'sass-maps-plus',
     'sass-ln',
     'sass-master',
@@ -115,7 +133,7 @@ gulp.task('watch', function () {
 
 gulp.task('default', [
     'mathsass',
-    'sass-util',
+    // 'sass-util',
     'sass-maps-plus',
     'sass-ln',
     'sass-master',

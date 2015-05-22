@@ -1,0 +1,83 @@
+// @import '../_pkg/sass-master';
+@import '../sass-master';
+
+.test { out: 'hello world'; }
+
+
+
+$base: map-merge($base, ('body-scale': 1));
+
+// $font-size: 20px;
+// $html-scale: $font-size / 16px;
+// $body-scale: 0.9;
+// $page-right: 1rem;
+// $page-left: 1rem;
+// $typo-measure: 50;
+// $typo-col-ratio: 5/8;
+
+// .debug {
+//   font-size: $font-size;
+//   typo-measure: $typo-measure;
+//   typo-col-ratio: $typo-col-ratio;
+//   breakpoint: assert(($typo-measure / $typo-col-ratio + $page-right + $page-left) * $html-scale, em);
+// }
+
+$media: (
+  alpha: (
+    breakpoint: 20em,
+    font-size: 16px,
+    typo-measure: 50,
+    typo-col-ratio: (1/1)
+  ),
+  beta: (
+    breakpoint: 30em,
+    font-size: 18px,
+    typo-measure: 50,
+    typo-col-ratio: (1/1)
+  ),
+  gamma: (
+    breakpoint: 48em,
+    font-size: 20px,
+    typo-measure: 50,
+    typo-col-ratio: (3/4)
+  ),
+  delta: (
+    breakpoint: 64em,
+    font-size: 20px,
+    typo-measure: 50,
+    typo-col-ratio: (1/2)
+  ),
+  epsilon: (
+    breakpoint: 80em,
+    font-size: 24px,
+    typo-measure: 50,
+    typo-col-ratio: (1/3)
+  )
+);
+
+// @each $alias, $medium in $media {
+
+//   $breakpoint: get($medium, 'breakpoint');
+//   $font-size: get($medium, 'font-size');
+
+//   // this has to be part of $base default
+//   $typo-measure: get($medium, 'typo-measure');
+
+//   // this is per-query; if present and if < 1, overwrite breakpoint
+//   $typo-col-ratio: get($medium, 'typo-col-ratio');
+
+//   // ...then do content-width etc.
+
+//   $html-scale: $font-size / 16px;
+//   $page-right: 1rem;
+//   $page-left: 1rem;
+//   $breakpoint: if($typo-col-ratio >=1, $breakpoint, assert(($typo-measure / $typo-col-ratio + $page-right + $page-left) * $html-scale, em));
+//   $media: merge($media, $alias, (
+//     'breakpoint': $breakpoint
+//   ));
+// }
+
+@include parse-media(false);
+
+/* $base: #{map-inspect($base)} */
+/* $media: #{map-inspect($media)} */

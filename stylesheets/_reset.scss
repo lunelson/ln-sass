@@ -8,9 +8,10 @@
 @mixin parse-resets() {
   @include reset-n3();
   @include reset-ln();
+  @include reset-ot();
 }
 
-@mixin reset-n3(){
+@mixin reset-n3 {
   // normalize.css v3.0.2 | MIT License | git.io/normalize
   html{font-family:sans-serif;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%}
   body{margin:0}
@@ -54,7 +55,22 @@
   td,th{padding:0}
 }
 
-@mixin reset-ln(){
+@mixin reset-ot {
+  // normalize-opentype.css v0.2.4 | MIT License | kennethormandy.com/journal/normalize-opentype-css
+  ::-moz-selection{color:inherit;text-shadow:inherit;background-color:#accef7}
+  ::selection{color:inherit;text-shadow:inherit;background-color:#accef7}
+  html,body,table{-webkit-font-feature-settings:"kern" 1,"liga" 1,"calt" 1,"pnum" 1,"tnum" 0,"onum" 1,"lnum" 0,"dlig" 0;-moz-font-feature-settings:"kern" 1,"liga" 1,"calt" 1,"pnum" 1,"tnum" 0,"onum" 1,"lnum" 0,"dlig" 0;font-feature-settings:"kern" 1,"liga" 1,"calt" 1,"pnum" 1,"tnum" 0,"onum" 1,"lnum" 0,"dlig" 0}
+  h1,h2,h3{-webkit-font-feature-settings:"kern" 1,"liga" 1,"calt" 1,"pnum" 1,"tnum" 0,"onum" 1,"lnum" 0,"dlig" 1;-moz-font-feature-settings:"kern" 1,"liga" 1,"calt" 1,"pnum" 1,"tnum" 0,"onum" 1,"lnum" 0,"dlig" 1;font-feature-settings:"kern" 1,"liga" 1,"calt" 1,"pnum" 1,"tnum" 0,"onum" 1,"lnum" 0,"dlig" 1}
+  abbr{text-transform:uppercase;-webkit-font-feature-settings:"kern" 1,"liga" 1,"calt" 1,"pnum" 1,"tnum" 0,"onum" 1,"lnum" 0,"smcp" 1,"c2sc" 1;-moz-font-feature-settings:"kern" 1,"liga" 1,"calt" 1,"pnum" 1,"tnum" 0,"onum" 1,"lnum" 0,"smcp" 1,"c2sc" 1;font-feature-settings:"kern" 1,"liga" 1,"calt" 1,"pnum" 1,"tnum" 0,"onum" 1,"lnum" 0,"smcp" 1,"c2sc" 1}
+  time{-webkit-font-feature-settings:"kern" 1,"liga" 1,"calt" 1,"pnum" 1,"tnum" 0,"onum" 1,"lnum" 0;-moz-font-feature-settings:"kern" 1,"liga" 1,"calt" 1,"pnum" 1,"tnum" 0,"onum" 1,"lnum" 0;font-feature-settings:"kern" 1,"liga" 1,"calt" 1,"pnum" 1,"tnum" 0,"onum" 1,"lnum" 0}
+  pre,kbd,samp,code{-webkit-font-feature-settings:"kern" 0,"liga" 0,"calt" 1,"dlig" 0,"pnum" 0,"tnum" 1,"onum" 0,"lnum" 1,"zero" 1;-moz-font-feature-settings:"kern" 0,"liga" 0,"calt" 1,"dlig" 0,"pnum" 0,"tnum" 1,"onum" 0,"lnum" 1,"zero" 1;font-feature-settings:"kern" 0,"liga" 0,"calt" 1,"dlig" 0,"pnum" 0,"tnum" 1,"onum" 0,"lnum" 1,"zero" 1}
+  sup{-webkit-font-feature-settings:"kern" 1,"liga" 1,"calt" 1,"pnum" 1,"tnum" 0,"onum" 1,"lnum" 0,"dlig" 0,"sups" 1;-moz-font-feature-settings:"kern" 1,"liga" 1,"calt" 1,"pnum" 1,"tnum" 0,"onum" 1,"lnum" 0,"dlig" 0,"sups" 1;font-feature-settings:"kern" 1,"liga" 1,"calt" 1,"pnum" 1,"tnum" 0,"onum" 1,"lnum" 0,"dlig" 0,"sups" 1}
+  sub{-webkit-font-feature-settings:"kern" 1,"liga" 1,"calt" 1,"pnum" 1,"tnum" 0,"onum" 1,"lnum" 0,"dlig" 0,"subs" 1;-moz-font-feature-settings:"kern" 1,"liga" 1,"calt" 1,"pnum" 1,"tnum" 0,"onum" 1,"lnum" 0,"dlig" 0,"subs" 1;font-feature-settings:"kern" 1,"liga" 1,"calt" 1,"pnum" 1,"tnum" 0,"onum" 1,"lnum" 0,"dlig" 0,"subs" 1}
+  input[type="color"],input[type="date"],input[type="datetime"],input[type="datetime-local"],input[type="number"],input[type="range"],input[type="tel"],input[type="week"]{-webkit-font-feature-settings:"kern" 0,"liga" 1,"calt" 1,"pnum" 1,"tnum" 0,"onum" 0,"lnum" 1,"zero" 0;-moz-font-feature-settings:"kern" 0,"liga" 1,"calt" 1,"pnum" 1,"tnum" 0,"onum" 0,"lnum" 1,"zero" 0;font-feature-settings:"kern" 0,"liga" 1,"calt" 1,"pnum" 1,"tnum" 0,"onum" 0,"lnum" 1,"zero" 0}
+  tbody,caption{-webkit-font-feature-settings:"kern" 1,"liga" 1,"calt" 1,"pnum" 0,"tnum" 1,"onum" 0,"lnum" 1,"zero" 1;-moz-font-feature-settings:"kern" 1,"liga" 1,"calt" 1,"pnum" 0,"tnum" 1,"onum" 0,"lnum" 1,"zero" 1;font-feature-settings:"kern" 1,"liga" 1,"calt" 1,"pnum" 0,"tnum" 1,"onum" 0,"lnum" 1,"zero" 1}
+}
+
+@mixin reset-ln {
   *, *:before, *:after { box-sizing: inherit; } // inherit box sizing (from html)
   html, body { height: 100%; } // set height to 100%; needed for various shit
   html {
@@ -80,3 +96,4 @@
     span.target { text-decoration: underline !important; }
   }
 }
+
