@@ -76,10 +76,11 @@
   html {
     box-sizing: border-box; // will be inherited by all elements
     -webkit-font-smoothing: antialiased; // unify font rendering
-    -moz-osx-font-smoothing: grayscale; // ''
+    -moz-osx-font-smoothing: grayscale; //
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0); // remove webkit tap highlight color
     text-rendering: optimizespeed; // fixes a webkit bug re: optimizelegibility?
   }
+  body { overflow-x: hidden; }
   img, video, svg {
     display: block;
     max-width: 100%;

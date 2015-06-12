@@ -21,6 +21,7 @@ $l_wrap-align: false !default; // right | left | false
 // grid classes
 $g_pre: 'g-' !default;
 $g_grid-class: 'row' !default;
+$g_pad-class: 'pad' !default;
 $g_cell-class: 'col' !default;
 $g_row-align: left !default; // right | left
 $g_use-float: false !default; // true | false
@@ -42,7 +43,7 @@ $l_page-left: 1rem !default;
 @mixin row-width($args...) { @include row-size($args...); }
 
 @mixin row-set($args...) {
-  @extend %#{$g_grid-class};
+  @extend .#{$g_pre}#{$g_grid-class};
   @if length($args) > 0 { @include row-size($args...); }
 }
 
@@ -65,7 +66,7 @@ $l_page-left: 1rem !default;
 
 
 @mixin col-set($args...) {
-  @extend %#{$g_cell-class};
+  @extend .#{$g_pre}#{$g_cell-class};
   @if length($args) > 0 { @include col-size($args...); }
 }
 
@@ -125,7 +126,7 @@ $l_page-left: 1rem !default;
       padding-bottom: $margin-y / 2;
     }
 
-    // GRID
+    // G-ROW
     .#{$g_pre}#{$g_grid-class} {
       &:before { display: none; }
       width: calc(100% + #{$margin-x}); // necessary?
@@ -139,13 +140,17 @@ $l_page-left: 1rem !default;
         & > * { font-size: 1rem; }
       }
     }
+    // G-PAD / COL
+    .#{$g_pre}#{$g_pad-class},
+    .#{$g_pre}#{$g_cell-class} {
+      padding-left: $margin-x / 2;
+      padding-right: $margin-x / 2;
+    }
 
-    // COL
+    // G-COL
     .#{$g_pre}#{$g_cell-class} {
       width: 100%;
       min-height: 1px; // http://css-tricks.com/make-sure-columns-dont-collapse-horizontally/
-      padding-left: $margin-x / 2;
-      padding-right: $margin-x / 2;
       @if $g_use-float {
         display: block;
         float: $g_row-align;
@@ -213,6 +218,8 @@ $l_page-left: 1rem !default;
               margin-left: $margin-x / -2;
               margin-right: $margin-x / -2;
             }
+            // G-PAD
+            .#{$g_pre}#{$g_pad-class},
             .#{$g_pre}#{$g_cell-class} {
               padding-left: $margin-x / 2;
               padding-right: $margin-x / 2;
