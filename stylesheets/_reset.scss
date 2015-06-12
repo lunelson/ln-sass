@@ -72,20 +72,28 @@
 
 @mixin reset-ln {
   *, *:before, *:after { box-sizing: inherit; } // inherit box sizing (from html)
-  html, body { height: 100%; } // set height to 100%; needed for various shit
   html {
     box-sizing: border-box; // will be inherited by all elements
+    width: 100vw; // avoid scrollbar width fx
+    height: 100%; // for iOS < 7
+    height: 100vh; // for everyone else
+    overflow-y: scroll; // does this make scrollbars visible in all cases?
+    overflow-x: hidden; // avoid horiz. clipping
     -webkit-font-smoothing: antialiased; // unify font rendering
     -moz-osx-font-smoothing: grayscale; //
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0); // remove webkit tap highlight color
     text-rendering: optimizespeed; // fixes a webkit bug re: optimizelegibility?
   }
-  body { overflow-x: hidden; }
-  img, video, svg {
+
+  body { overflow-x: hidden; height: 100%; }
+
+  img, video, svg, iframe {
     display: block;
     max-width: 100%;
     height: auto;
+    &.inline { display: inline-block; }
   }
+
   a {
     &:link,
     &:visited,
