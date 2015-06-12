@@ -85,7 +85,9 @@
     text-rendering: optimizespeed; // fixes a webkit bug re: optimizelegibility?
   }
 
-  body { overflow-x: hidden; height: 100%; }
+  body {
+    height: 100%; // pick up height from html
+  }
 
   img, video, svg, iframe {
     display: block;
