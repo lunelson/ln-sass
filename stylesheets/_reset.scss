@@ -84,7 +84,7 @@
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0); // remove webkit tap highlight color
     text-rendering: optimizespeed; // fixes a webkit bug re: optimizelegibility?
   }
-  body { height: 100%; }
+  // body { height: 100%; overflow-x: hidden; }
   img, video, svg, iframe {
     display: block;
     max-width: 100%;
