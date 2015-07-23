@@ -22,11 +22,7 @@ $t_block-class: 'block' !default;
 $t_container-class: 'contain' !default;
 
 // required for trimming
-.#{$t_pre}#{$t_container-class} {
-  // overflow: hidden;
-  min-height: 1px;
-}
-
+.#{$t_pre}#{$t_container-class} { min-height: 1px; }
 
 ///////////
 // MIXIN //
