@@ -22,8 +22,7 @@ $t_block-class: 'block' !default;
 $t_container-class: 'contain' !default;
 
 // required for trimming
-.#{$t_pre}#{$t_container-class} { overflow: hidden; }
-
+.#{$t_pre}#{$t_container-class} { min-height: 1px; }
 
 ///////////
 // MIXIN //
@@ -45,7 +44,11 @@ $t_container-class: 'contain' !default;
   $t_current-size: $size !global;
   $t_current-height: $line-height !global;
 
-  &.#{$t_pre}#{$t_single-class} { line-height: 1; }
+  &.#{$t_pre}#{$t_single-class} {
+    line-height: 1;
+    margin-top: 0;
+    margin-bottom: 0;
+  }
   &.#{$t_pre}#{$t_block-class} {
     margin-top: t-margin(0rem, $line-height, $char-height);
     margin-bottom: t-margin(0rem, $line-height, $char-height);
