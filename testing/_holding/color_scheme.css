@@ -1,0 +1,16 @@
+.t-contain {
+  min-height: 1px; }
+
+.tn_ln {
+  background: black;
+  current_line: black;
+  selection: black;
+  foreground: black;
+  comment: black;
+  red: black;
+  orange: black;
+  yellow: black;
+  green: black;
+  aqua: black;
+  blue: black;
+  purple: black; }
