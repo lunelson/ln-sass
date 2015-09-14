@@ -1,4 +1,9 @@
-/* test: scss-media-init */
+/* test: sass-layout */
+.cf:after, .page:after, .wrap:after, .wrap--left:after, .wrap--right:after, .sect:after {
+  content: "";
+  display: table;
+  clear: both; }
+
 .page-top {
   padding-top: 1.5rem; }
 
@@ -31,3 +36,22 @@
 
 .sect {
   padding-top: 1.5rem; }
+
+.row {
+  width: calc(100% + 1rem);
+  position: relative;
+  margin-left: -0.5rem;
+  margin-right: -0.5rem;
+  font-size: 0rem; }
+  .row:before {
+    display: none; }
+  .row > * {
+    font-size: 1rem; }
+
+.col {
+  width: 100%;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  display: inline-block;
+  text-align: left;
+  vertical-align: top; }

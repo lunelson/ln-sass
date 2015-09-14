@@ -1,4 +1,5 @@
-// globals
+// LAYOUT GLOBALS
+
 $layout-alignment: null !default;
 
 $layout-classes: (
@@ -7,8 +8,23 @@ $layout-classes: (
   sect: 'sect',
 ) !default;
 
+$grid-alignment: left;
+
+$grid-is-float: false;
+
+$grid-classes: (
+  row: 'row',
+  pad: 'pad',
+  col: 'col'
+);
+
+// LAYOUT INITS
+
 @mixin layout-init() {
+
   @include page-init();
-  // @include grid-init();
+
+  @include grid-init();
+
 }
 

@@ -1,3 +1,4 @@
+// PAGE LAYOUT INIT
 
 @mixin page-init() {
 
@@ -19,10 +20,15 @@
   $page-bottom: map-get($base, 'page-bottom');
   $page-left: map-get($base, 'page-left');
 
-  // TODO: apply clearfix to all of these layout classes ?
+  // retrieve classes
+  $page: map-get($layout-classes, 'page');
+  $wrap: map-get($layout-classes, 'wrap');
+  $sect: map-get($layout-classes, 'sect');
+
+  // do clearfix on all
+  .cf, .#{$page}, .#{$wrap}, .#{$sect} { @include clearfix(); }
 
   // base page
-  $page: map-get($layout-classes, 'page');
   .#{$page}-top { padding-top: $page-top; }
   .#{$page}-right { padding-right: $page-right; }
   .#{$page}-bottom { padding-bottom: $page-bottom; }
@@ -31,18 +37,14 @@
   .#{$page}-y { padding-top: $page-top; padding-bottom: $page-bottom; }
 
   // base wrap
-  $wrap: map-get($layout-classes, 'wrap');
-  $align: $layout-alignment;
   .#{$wrap} {
-    // @if $grid-is-float { @include clearfix(); }
-    @if $align != left { margin-left: auto; }
-    @if $align != right { margin-right: auto; }
+    @if $layout-alignment != left { margin-left: auto; }
+    @if $layout-alignment != right { margin-right: auto; }
   }
   .#{$wrap}--left { @extend .#{$wrap}; margin-left: 0; }
   .#{$wrap}--right { @extend .#{$wrap}; margin-right: 0; }
 
   // base sect
-  $sect: map-get($layout-classes, 'sect');
   .#{$sect} { padding-top: $margin-y; }
 
   @if variable-exists('media') {

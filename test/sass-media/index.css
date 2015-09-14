@@ -3,7 +3,7 @@ html {
   font-size: 1em; }
 
 body {
-  line-height: 1.5; }
+  line-height: 1; }
 
 body::before {
   width: 0;
@@ -43,13 +43,15 @@ head {
   .u-media-transition {
     width: 1px; } }
 
-@media (min-width: 64em) {
+@media (min-width: 30em) {
   body::before {
     content: "delta"; }
   head {
     font-family: "delta"; }
   .u-media-transition {
-    width: 0px; } }
+    width: 0px; }
+  html {
+    font-size: 2.5em; } }
 
 @media (min-width: 80em) {
   body::before {
@@ -60,10 +62,24 @@ head {
     width: 1px; } }
 
 /* $keys: alpha, beta, gamma, delta, epsilon; */
+/* $base: (
+    font-size: 16px,
+    line-height: 1,
+    font-size-mod: 1.5,
+    margin-x: 1rem,
+    margin-x-mod: 2,
+    margin-y: 1rem,
+    margin-y-mod: 2,
+    page-top: 1rem,
+    page-right: 1rem,
+    page-bottom: 1rem,
+    page-left: 2.5rem,
+    html-scale: 1
+  ); */
 /* $media: (
     alpha: (
       font-size: 16px,
-      line-height: 1.5,
+      line-height: 1,
       font-size-mod: 1.5,
       margin-x: 1rem,
       margin-x-mod: 2,
@@ -72,15 +88,15 @@ head {
       page-top: 1rem,
       page-right: 1rem,
       page-bottom: 1rem,
-      page-left: 1rem,
+      page-left: 2.5rem,
       html-scale: 1,
       breakpoint: 20em,
       body-width: 20rem,
-      content-width: 18rem
+      content-width: 16.5rem
     ),
     beta: (
       font-size: 16px,
-      line-height: 1.5,
+      line-height: 1,
       font-size-mod: 1.5,
       margin-x: 1rem,
       margin-x-mod: 2,
@@ -89,15 +105,15 @@ head {
       page-top: 1rem,
       page-right: 1rem,
       page-bottom: 1rem,
-      page-left: 1rem,
+      page-left: 2.5rem,
       html-scale: 1,
       breakpoint: 30em,
       body-width: 30rem,
-      content-width: 28rem
+      content-width: 26.5rem
     ),
     gamma: (
       font-size: 16px,
-      line-height: 1.5,
+      line-height: 1,
       font-size-mod: 1.5,
       margin-x: 1rem,
       margin-x-mod: 2,
@@ -106,15 +122,15 @@ head {
       page-top: 1rem,
       page-right: 1rem,
       page-bottom: 1rem,
-      page-left: 1rem,
+      page-left: 2.5rem,
       html-scale: 1,
       breakpoint: 48em,
       body-width: 48rem,
-      content-width: 46rem
+      content-width: 44.5rem
     ),
     delta: (
-      font-size: 16px,
-      line-height: 1.5,
+      font-size: 40px,
+      line-height: 1,
       font-size-mod: 1.5,
       margin-x: 1rem,
       margin-x-mod: 2,
@@ -123,15 +139,15 @@ head {
       page-top: 1rem,
       page-right: 1rem,
       page-bottom: 1rem,
-      page-left: 1rem,
-      html-scale: 1,
-      breakpoint: 64em,
-      body-width: 64rem,
-      content-width: 62rem
+      page-left: 2.5rem,
+      html-scale: 2.5,
+      breakpoint: 30em,
+      body-width: 12rem,
+      content-width: 8.5rem
     ),
     epsilon: (
-      font-size: 16px,
-      line-height: 1.5,
+      font-size: 40px,
+      line-height: 1,
       font-size-mod: 1.5,
       margin-x: 1rem,
       margin-x-mod: 2,
@@ -140,10 +156,10 @@ head {
       page-top: 1rem,
       page-right: 1rem,
       page-bottom: 1rem,
-      page-left: 1rem,
-      html-scale: 1,
+      page-left: 2.5rem,
+      html-scale: 2.5,
       breakpoint: 80em,
-      body-width: 80rem,
-      content-width: 78rem
+      body-width: 32rem,
+      content-width: 28.5rem
     )
   ); */

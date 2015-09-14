@@ -1,3 +1,40 @@
+/////////////////
+// GRID MIXINS //
+/////////////////
+
+@mixin row-size($cols) { &::before { content: '#{$cols} .#{$col}'; } }
+// alias
+@mixin row-width($args...) { @include row-size($args...); }
+
+@mixin row-set($args...) {
+  @extend .#{$row};
+  @if length($args) > 0 { @include row-size($args...); }
+}
+
+@mixin col-size($span: 1 1, $right: null, $left: null, $cycle: null, $out: null) {
+  @if type-of($span) == 'map' { @include col-size($span...); } @else {
+
+  $n: nth($span, 1); $d: nth($span, 2);
+  width: $n / $d * 100%;
+
+  @if $right { margin-right: nth($right, 1) / if(length($right) > 1, nth($right, 2), $d) * 100%; }
+  @if $left { margin-left: nth($left, 1) / if(length($left) > 1, nth($left, 2), $d) * 100%; }
+  @if $cycle { &:nth-child(#{$cycle}n+1) { clear: left; } }
+  @else if $out { position: absolute; #{opposite($out)}: 100%; }
+
+  }
+}
+// alias
+@mixin col-width($args...) { @include col-size($args...); }
+@mixin width($args...) { @include col-size($args...); }
+
+
+@mixin col-set($args...) {
+  @extend .#{$col};
+  @if length($args) > 0 { @include col-size($args...); }
+}
+
+
 //        _   _ _        _                         _
 //       | | (_) |      | |                       | |
 //  _   _| |_ _| |______| | __ _ _   _  ___  _   _| |_
@@ -26,21 +63,32 @@ $z-indexes: (
 // POSITIONING //
 /////////////////
 
+//  _                         _
+// | |                       | |
+// | | __ _ _   _  ___  _   _| |_
+// | |/ _` | | | |/ _ \| | | | __|
+// | | (_| | |_| | (_) | |_| | |_
+// |_|\__,_|\__, |\___/ \__,_|\__|
+//           __/ |
+//          |___/
+
 @mixin position($pos, $args...) {
   position: $pos;
   @each $arg in $args { #{nth($arg, 1)}: nth($arg, 2); }
 }
+
 @mixin absolute($args...) { @include position(absolute, $args...); }
 @mixin fixed($args...) { @include position(fixed, $args...); }
 @mixin relative($args...) { @include position(relative, $args...); }
 
-@mixin clearfix() {
-  &:after { content:""; display: table; clear: both; }
+@mixin clearfix {
+  &:after {
+    content:"";
+    display:table;
+    clear:both;
+  }
 }
-// alias
-@mixin cf() { @include clearfix(); }
-
-@mixin clearfix-old(){
+@mixin clearfix-legacy(){
   & { *zoom: 1; }
   &:before, &:after { content: ""; display: table; }
   &:after { clear: both; }
@@ -74,6 +122,20 @@ $z-indexes: (
     }
   }
 }
+
+// OLDER VERSION
+// @mixin child-counter($child-selector: '> li', $content-before:'', $content-after:''){
+//   $counter: unique-id();
+//   list-style-type: none;
+//   counter-reset: $counter;
+//   & #{$child-selector} {
+//     counter-increment: $counter;
+//     &:before {
+//       content: '#{$content-before}' counter($counter) '#{$content-after}';
+//       @content;
+//     }
+//   }
+// }
 
 //////////////////
 // CHILD LAYOUT //

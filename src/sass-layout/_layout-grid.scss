@@ -1,37 +1,18 @@
-// grid classes
-$grid-alignment: left,
-
-$grid-is-float: false,
-
-$grid-classes: (
-  row: 'row' ,
-  pad: 'pad',
-  col: 'col'
-);
-
-
-
-// if using float, add the clear fixing to the .wrap class
+// GRID LAYOUT INIT
 
 @mixin grid-init() {
 
   // merge defaults
   $base: map-merge((
     margin-x: 1rem,
-    margin-y: 1.5rem,
-    page-top: 1.5rem,
-    page-right: 1rem,
-    page-bottom: 1.5rem,
-    page-left: 1rem
   ), if(variable-exists('base'), $base, ()));
 
   // retrieve values
   $margin-x: map-get($base, 'margin-x');
-  $margin-y: map-get($base, 'margin-y');
-  $page-top: map-get($base, 'page-top');
-  $page-right: map-get($base, 'page-right');
-  $page-bottom: map-get($base, 'page-bottom');
-  $page-left: map-get($base, 'page-left');
+
+  // retrieve classes
+  $row: map-get($grid-classes, 'row');
+  $col: map-get($grid-classes, 'col');
 
   // row
   .#{$row} {
@@ -40,24 +21,20 @@ $grid-classes: (
     position: relative; // avoidable?
     margin-left: $margin-x / -2;
     margin-right: $margin-x / -2;
-    @if $grid-float {
+    @if $grid-is-float {
       @include clearfix();
     } @else {
       font-size: 0rem;
       & > * { font-size: 1rem; }
     }
   }
-  // G-PAD / COL
-  .#{$pad},
-  .#{$col} {
-    padding-left: $margin-x / 2;
-    padding-right: $margin-x / 2;
-  }
 
-  // G-COL
+  // col
   .#{$col} {
     width: 100%;
-    @if $grid-float {
+    padding-left: $margin-x / 2;
+    padding-right: $margin-x / 2;
+    @if $grid-is-float {
       min-height: 1px; // http://css-tricks.com/make-sure-columns-dont-collapse-horizontally/
       display: block;
       float: $grid-alignment;
@@ -72,23 +49,18 @@ $grid-classes: (
 
     @each $alias, $medium in $media {
       $margin-x: get($medium, 'margin-x');
-      $margin-y: get($medium, 'margin-y');
-      $page-top: get($medium, 'page-top');
-      $page-right: get($medium, 'page-right');
-      $page-bottom: get($medium, 'page-bottom');
-      $page-left: get($medium, 'page-left');
 
       @include medium($alias) {
 
-        // GRID, CELL
+        // row
         @if map-has-key($orig, 'margin-x') {
           .#{$g-pre}#{$g-grid-class} {
             width: calc(100% + #{$margin-x}); // necessary?
             margin-left: $margin-x / -2;
             margin-right: $margin-x / -2;
           }
-          // G-PAD
-          .#{$pad},
+
+          // col
           .#{$col} {
             padding-left: $margin-x / 2;
             padding-right: $margin-x / 2;
@@ -99,42 +71,3 @@ $grid-classes: (
   }
 
 }
-
-
-
-/////////////////
-// GRID MIXINS //
-/////////////////
-
-@mixin row-size($cols) { &::before { content: '#{$cols} .#{$col}'; } }
-// alias
-@mixin row-width($args...) { @include row-size($args...); }
-
-@mixin row-set($args...) {
-  @extend .#{$row};
-  @if length($args) > 0 { @include row-size($args...); }
-}
-
-@mixin col-size($span: 1 1, $right: null, $left: null, $cycle: null, $out: null) {
-  @if type-of($span) == 'map' { @include col-size($span...); } @else {
-
-  $n: nth($span, 1); $d: nth($span, 2);
-  width: $n / $d * 100%;
-
-  @if $right { margin-right: nth($right, 1) / if(length($right) > 1, nth($right, 2), $d) * 100%; }
-  @if $left { margin-left: nth($left, 1) / if(length($left) > 1, nth($left, 2), $d) * 100%; }
-  @if $cycle { &:nth-child(#{$cycle}n+1) { clear: left; } }
-  @else if $out { position: absolute; #{opposite($out)}: 100%; }
-
-  }
-}
-// alias
-@mixin col-width($args...) { @include col-size($args...); }
-@mixin width($args...) { @include col-size($args...); }
-
-
-@mixin col-set($args...) {
-  @extend .#{$col};
-  @if length($args) > 0 { @include col-size($args...); }
-}
-

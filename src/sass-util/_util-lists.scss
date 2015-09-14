@@ -9,6 +9,15 @@
 @function list-max($list) { @return max($list...); }
 @function list-min($list) { @return min($list...); }
 
+// convert a list to space-separated values
+@function ssv($list) {
+  $output: ();
+  @each $item in $list {
+    $output: append($output, $item, 'space');
+  }
+  @return $output;
+}
+
 // convert a list to comma-separated values
 @function csv($list) {
   $output: ();
@@ -19,17 +28,8 @@
 }
 
 // new version uses ZIP
-@function csv($list) {
+@function csv-alt($list) {
   @return zip($list);
-}
-
-// convert a list to space-separated values
-@function ssv($list) {
-  $output: ();
-  @each $item in $list {
-    $output: append($output, $item, 'space');
-  }
-  @return $output;
 }
 
 @function remove($list, $tests...) {
@@ -50,7 +50,7 @@
   @function except($args...) { @return reject($args...); }
 
 // collect and reject by type comparison
-@function collect-types($list, $type) {
+@function collect-by-type($list, $type) {
   $out: ();
   @if length($list) == 1 { $list: nth($list, 1); }
   @each $item in $list {
@@ -61,7 +61,7 @@
   @return if(length($out) == 1, nth($out, 1), $out);
 }
 
-@function reject-types($list, $type) {
+@function reject-by-type($list, $type) {
   @if length($list) == 1 { $list: nth($list, 1); }
   @each $item in $list {
       @if type_of($item) == $type {
@@ -72,12 +72,12 @@
 }
 
 // shortcuts for above
-@function collect-strings($list) { @return collect-types($list, 'string'); }
-@function reject-strings($list) { @return reject-types($list, 'string'); }
-@function collect-numbers($list) { @return collect-types($list, 'number'); }
-@function reject-numbers($list) { @return reject-types($list, 'number'); }
-@function collect-bools($list) { @return collect-types($list, 'bool'); }
-@function reject-bools($list) { @return reject-types($list, 'bool'); }
+@function collect-strings($list) { @return collect-by-type($list, 'string'); }
+@function reject-strings($list) { @return reject-by-type($list, 'string'); }
+@function collect-numbers($list) { @return collect-by-type($list, 'number'); }
+@function reject-numbers($list) { @return reject-by-type($list, 'number'); }
+@function collect-bools($list) { @return collect-by-type($list, 'bool'); }
+@function reject-bools($list) { @return reject-by-type($list, 'bool'); }
 
 @function contains($list, $item) {
   @if index($list, $item) { @return true; }

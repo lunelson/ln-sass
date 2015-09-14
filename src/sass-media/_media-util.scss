@@ -1,10 +1,8 @@
-///////////////
-// FUNCTIONS //
-///////////////
+//////////////////////
+// GETTER FUNCTIONS //
+//////////////////////
 
 @function medium-value($key, $alias: $media-current-alias) { @return if($alias, map-get(medium($alias), $key), map-get($base, $key)); }
-@function media-value($args...) { @return medium-value($args...); } // alias
-@function m-value($args...) { @return medium-value($args...); } // alias
 
 @function margin-x($index: 0, $unit: true, $basis: 10) {
   @if type-of($index) == 'string' { @return medium-value('margin-x', $index); }
@@ -27,56 +25,46 @@
   $mod: medium-value('font-size-mod'); $spread: ceil($basis/6);
   @return pow($mod, $index/$spread) * if($unit, 1rem, strip(1rem));
 }
-// alias of above
-@function size($args...) { @return font-size($args...); }
 
-///////////////
-// FUNCTIONS //
-///////////////
+//////////////////////
+// HELPER FUNCTIONS //
+//////////////////////
 
-// [width] medium string function
-@function medium-string($alias1: null, $alias2: null) {
+// make mq string
+@function media-query-string($alias1: null, $alias2: null) {
   @return 'screen'
     + if($alias1, ' and (min-width: #{get($media, $alias1, breakpoint)})', '')
     + if($alias2, ' and (max-width: #{get($media, $alias2, breakpoint) - 0.001})', '');
 }
-// alias
-@function m-string($args...) { @return medium-string($args...); }
 
-// retrieve current width medium object
+// get current medium object
 @function medium($alias: $media-current-alias) {
   @if $alias { @return map-get($media, $alias); }
   @return $base;
 }
-// alias
-@function m($args...) { @return medium($args...); }
 
-// function to retrieve current medium-data-object based on $media-current-alias
+// get original spec of current medium object
 @function medium-orig($alias: $media-current-alias) {
   @if $alias { @return map-get($media-orig, $alias); }
   @return $base-orig;
 }
-// alias
-@function m-orig($args...) { @return medium-orig($args...); }
 
 ////////////
 // MIXINS //
 ////////////
 
-// SINGLE
-
+// single query
 @mixin media-single($args...) {
   // save alias reference; assign current
   $media-prev-alias: $media-current-alias !global;
   $media-current-alias: nth($args, 1) or map-prev-key($media, nth($args, 2)) !global;
   // run the content in medium
-  @media #{medium-string($args...)} { @content }
+  @media #{media-query-string($args...)} { @content }
   // reset the medium (no nesting; could just reset to null)
   $media-current-alias: $media-prev-alias !global;
 }
 
-// MULTIPLE
-
+// multiple queries
 @mixin media-multiple($from: null, $to: null, $for: null) {
   // correct 'for' options
   @if $for {
@@ -88,34 +76,31 @@
   // output the @content for $base medium if $from is null
   @if $from == null { @content; }
   // determine other referenced media
-  $medium-aliases: map-keys($media);
-  $sliced-aliases: slice($medium-aliases,
-      if($from, index($medium-aliases, $from), 1),
-      if($to, index($medium-aliases, $to) - 1, length($medium-aliases)));
+  $media-keys: map-keys($media);
+  $sliced-keys: slice($media-keys,
+      if($from, index($media-keys, $from), 1),
+      if($to, index($media-keys, $to) - 1, length($media-keys)));
   // conditional per-medium actions
 
-  @each $medium-alias in $sliced-aliases {
-    $orig-keys: map-keys(medium-orig($medium-alias));
-    @if not $for { @include medium($medium-alias) { @content; } }
+  @each $key in $sliced-keys {
+    $orig-keys: map-keys(medium-orig($key));
+    @if not $for { @include media-single($key) { @content; } }
     @else if contains-any($orig-keys, $for) {
-      @include media-single($medium-alias) { @content; }
+      @include media-single($key) { @content; }
     }
   }
 }
 
-// MASTER
-
+// unified media query mixin -- calls mixins above
 @mixin media($args...) {
   $arg1: nth($args, 1);
   @if type-of($arg1) == 'map' { @include media-multiple($arg1...) { @content; } }
   @else { @include media-single($args...) { @content; } }
 }
-
 // alias
 @mixin medium($args...){ @include media($args...) { @content; } }
 
-// HIDPI
-
+// hidpi / retina query; should combine with media() via nesting
 @mixin hidpi($ratio: $media-hd-ratio) {
   $n: nth($ratio, 1); $d: nth($ratio, 2);
   $ratio: ($n / $d);
@@ -129,6 +114,5 @@
     @content;
   }
 }
-
 // alias
 @mixin hd($args...) { @include hidpi($args...) { @content; } }

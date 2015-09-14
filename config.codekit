@@ -2584,15 +2584,6 @@
 		"outputPathIsSetByUser": 0,
 		"processed": 0
 		},
-	"\/PLANNING.html": {
-		"fileType": 8192,
-		"ignore": 1,
-		"ignoreWasSetByUser": 0,
-		"inputAbbreviatedPath": "\/PLANNING.html",
-		"outputAbbreviatedPath": "No Output Path",
-		"outputPathIsOutsideProject": 0,
-		"outputPathIsSetByUser": 0
-		},
 	"\/PLANNING.md": {
 		"criticStyle": 0,
 		"enableFootnotes": 0,
@@ -2644,6 +2635,22 @@
 		"ignoreWasSetByUser": 0,
 		"inputAbbreviatedPath": "\/src\/_sass-layout.scss",
 		"outputAbbreviatedPath": "\/src\/_sass-layout.css",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"outputStyle": 0,
+		"shouldRunAutoprefixer": 0,
+		"shouldRunBless": 0,
+		"useLibsass": 1
+		},
+	"\/src\/_sass-media.scss": {
+		"createSourceMap": 0,
+		"debugStyle": 0,
+		"decimalPrecision": 10,
+		"fileType": 4,
+		"ignore": 1,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/src\/_sass-media.scss",
+		"outputAbbreviatedPath": "\/src\/_sass-media.css",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
 		"outputStyle": 0,
@@ -2763,31 +2770,15 @@
 		"shouldRunBless": 0,
 		"useLibsass": 1
 		},
-	"\/src\/sass-media\/_media-json.scss": {
+	"\/src\/sass-media\/_media-util.scss": {
 		"createSourceMap": 0,
 		"debugStyle": 0,
 		"decimalPrecision": 10,
 		"fileType": 4,
 		"ignore": 1,
 		"ignoreWasSetByUser": 0,
-		"inputAbbreviatedPath": "\/src\/sass-media\/_media-json.scss",
-		"outputAbbreviatedPath": "\/src\/sass-media\/_media-json.css",
-		"outputPathIsOutsideProject": 0,
-		"outputPathIsSetByUser": 0,
-		"outputStyle": 0,
-		"shouldRunAutoprefixer": 0,
-		"shouldRunBless": 0,
-		"useLibsass": 1
-		},
-	"\/src\/sass-media\/_media-utils.scss": {
-		"createSourceMap": 0,
-		"debugStyle": 0,
-		"decimalPrecision": 10,
-		"fileType": 4,
-		"ignore": 1,
-		"ignoreWasSetByUser": 0,
-		"inputAbbreviatedPath": "\/src\/sass-media\/_media-utils.scss",
-		"outputAbbreviatedPath": "\/src\/sass-media\/_media-utils.css",
+		"inputAbbreviatedPath": "\/src\/sass-media\/_media-util.scss",
+		"outputAbbreviatedPath": "\/src\/sass-media\/_media-util.css",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
 		"outputStyle": 0,
@@ -2843,38 +2834,6 @@
 		"shouldRunBless": 0,
 		"useLibsass": 1
 		},
-	"\/src\/sass-util\/_color.scss": {
-		"createSourceMap": 0,
-		"debugStyle": 0,
-		"decimalPrecision": 10,
-		"fileType": 4,
-		"ignore": 1,
-		"ignoreWasSetByUser": 0,
-		"inputAbbreviatedPath": "\/src\/sass-util\/_color.scss",
-		"outputAbbreviatedPath": "\/src\/sass-util\/_color.css",
-		"outputPathIsOutsideProject": 0,
-		"outputPathIsSetByUser": 0,
-		"outputStyle": 0,
-		"shouldRunAutoprefixer": 0,
-		"shouldRunBless": 0,
-		"useLibsass": 1
-		},
-	"\/src\/sass-util\/_colors.scss": {
-		"createSourceMap": 0,
-		"debugStyle": 0,
-		"decimalPrecision": 10,
-		"fileType": 4,
-		"ignore": 1,
-		"ignoreWasSetByUser": 0,
-		"inputAbbreviatedPath": "\/src\/sass-util\/_colors.scss",
-		"outputAbbreviatedPath": "\/src\/sass-util\/_colors.css",
-		"outputPathIsOutsideProject": 0,
-		"outputPathIsSetByUser": 0,
-		"outputStyle": 0,
-		"shouldRunAutoprefixer": 0,
-		"shouldRunBless": 0,
-		"useLibsass": 1
-		},
 	"\/src\/sass-util\/_debug.scss": {
 		"createSourceMap": 0,
 		"debugStyle": 0,
@@ -2884,70 +2843,6 @@
 		"ignoreWasSetByUser": 0,
 		"inputAbbreviatedPath": "\/src\/sass-util\/_debug.scss",
 		"outputAbbreviatedPath": "\/src\/sass-util\/_debug.css",
-		"outputPathIsOutsideProject": 0,
-		"outputPathIsSetByUser": 0,
-		"outputStyle": 0,
-		"shouldRunAutoprefixer": 0,
-		"shouldRunBless": 0,
-		"useLibsass": 1
-		},
-	"\/src\/sass-util\/_elements.scss": {
-		"createSourceMap": 0,
-		"debugStyle": 0,
-		"decimalPrecision": 10,
-		"fileType": 4,
-		"ignore": 1,
-		"ignoreWasSetByUser": 0,
-		"inputAbbreviatedPath": "\/src\/sass-util\/_elements.scss",
-		"outputAbbreviatedPath": "\/src\/sass-util\/_elements.css",
-		"outputPathIsOutsideProject": 0,
-		"outputPathIsSetByUser": 0,
-		"outputStyle": 0,
-		"shouldRunAutoprefixer": 0,
-		"shouldRunBless": 0,
-		"useLibsass": 1
-		},
-	"\/src\/sass-util\/_layout.scss": {
-		"createSourceMap": 0,
-		"debugStyle": 0,
-		"decimalPrecision": 10,
-		"fileType": 4,
-		"ignore": 1,
-		"ignoreWasSetByUser": 0,
-		"inputAbbreviatedPath": "\/src\/sass-util\/_layout.scss",
-		"outputAbbreviatedPath": "\/src\/sass-util\/_layout.css",
-		"outputPathIsOutsideProject": 0,
-		"outputPathIsSetByUser": 0,
-		"outputStyle": 0,
-		"shouldRunAutoprefixer": 0,
-		"shouldRunBless": 0,
-		"useLibsass": 1
-		},
-	"\/src\/sass-util\/_math.scss": {
-		"createSourceMap": 0,
-		"debugStyle": 0,
-		"decimalPrecision": 10,
-		"fileType": 4,
-		"ignore": 1,
-		"ignoreWasSetByUser": 0,
-		"inputAbbreviatedPath": "\/src\/sass-util\/_math.scss",
-		"outputAbbreviatedPath": "\/src\/sass-util\/_math.css",
-		"outputPathIsOutsideProject": 0,
-		"outputPathIsSetByUser": 0,
-		"outputStyle": 0,
-		"shouldRunAutoprefixer": 0,
-		"shouldRunBless": 0,
-		"useLibsass": 1
-		},
-	"\/src\/sass-util\/_misc copy.scss": {
-		"createSourceMap": 0,
-		"debugStyle": 0,
-		"decimalPrecision": 10,
-		"fileType": 4,
-		"ignore": 1,
-		"ignoreWasSetByUser": 0,
-		"inputAbbreviatedPath": "\/src\/sass-util\/_misc copy.scss",
-		"outputAbbreviatedPath": "\/src\/sass-util\/_misc copy.css",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
 		"outputStyle": 0,
@@ -2987,15 +2882,15 @@
 		"shouldRunBless": 0,
 		"useLibsass": 1
 		},
-	"\/src\/sass-util\/_sass-numbers.scss": {
+	"\/src\/sass-util\/_util-color.scss": {
 		"createSourceMap": 0,
 		"debugStyle": 0,
 		"decimalPrecision": 10,
 		"fileType": 4,
 		"ignore": 1,
 		"ignoreWasSetByUser": 0,
-		"inputAbbreviatedPath": "\/src\/sass-util\/_sass-numbers.scss",
-		"outputAbbreviatedPath": "\/src\/sass-util\/_sass-numbers.css",
+		"inputAbbreviatedPath": "\/src\/sass-util\/_util-color.scss",
+		"outputAbbreviatedPath": "\/src\/sass-util\/_util-color.css",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
 		"outputStyle": 0,
@@ -3035,6 +2930,38 @@
 		"shouldRunBless": 0,
 		"useLibsass": 1
 		},
+	"\/src\/sass-util\/_util-math.scss": {
+		"createSourceMap": 0,
+		"debugStyle": 0,
+		"decimalPrecision": 10,
+		"fileType": 4,
+		"ignore": 1,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/src\/sass-util\/_util-math.scss",
+		"outputAbbreviatedPath": "\/src\/sass-util\/_util-math.css",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"outputStyle": 0,
+		"shouldRunAutoprefixer": 0,
+		"shouldRunBless": 0,
+		"useLibsass": 1
+		},
+	"\/src\/sass-util\/_util-selectors.scss": {
+		"createSourceMap": 0,
+		"debugStyle": 0,
+		"decimalPrecision": 10,
+		"fileType": 4,
+		"ignore": 1,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/src\/sass-util\/_util-selectors.scss",
+		"outputAbbreviatedPath": "\/src\/sass-util\/_util-selectors.css",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"outputStyle": 0,
+		"shouldRunAutoprefixer": 0,
+		"shouldRunBless": 0,
+		"useLibsass": 1
+		},
 	"\/src\/sass-util\/_util-strings.scss": {
 		"createSourceMap": 0,
 		"debugStyle": 0,
@@ -3067,15 +2994,15 @@
 		"shouldRunBless": 0,
 		"useLibsass": 1
 		},
-	"\/src\/sass-util\/_viewport copy.scss": {
+	"\/src\/sass-util\/ballistic\/_chunk.scss": {
 		"createSourceMap": 0,
 		"debugStyle": 0,
 		"decimalPrecision": 10,
 		"fileType": 4,
 		"ignore": 1,
 		"ignoreWasSetByUser": 0,
-		"inputAbbreviatedPath": "\/src\/sass-util\/_viewport copy.scss",
-		"outputAbbreviatedPath": "\/src\/sass-util\/_viewport copy.css",
+		"inputAbbreviatedPath": "\/src\/sass-util\/ballistic\/_chunk.scss",
+		"outputAbbreviatedPath": "\/src\/sass-util\/ballistic\/_chunk.css",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
 		"outputStyle": 0,
@@ -3083,15 +3010,15 @@
 		"shouldRunBless": 0,
 		"useLibsass": 1
 		},
-	"\/src\/sass-util\/_viewport.scss": {
+	"\/src\/sass-util\/ballistic\/_first.scss": {
 		"createSourceMap": 0,
 		"debugStyle": 0,
 		"decimalPrecision": 10,
 		"fileType": 4,
 		"ignore": 1,
 		"ignoreWasSetByUser": 0,
-		"inputAbbreviatedPath": "\/src\/sass-util\/_viewport.scss",
-		"outputAbbreviatedPath": "\/src\/sass-util\/_viewport.css",
+		"inputAbbreviatedPath": "\/src\/sass-util\/ballistic\/_first.scss",
+		"outputAbbreviatedPath": "\/src\/sass-util\/ballistic\/_first.css",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
 		"outputStyle": 0,
@@ -3099,15 +3026,15 @@
 		"shouldRunBless": 0,
 		"useLibsass": 1
 		},
-	"\/src\/sass-util\/ballistic-lists\/_chunk.scss": {
+	"\/src\/sass-util\/ballistic\/_flatten.scss": {
 		"createSourceMap": 0,
 		"debugStyle": 0,
 		"decimalPrecision": 10,
 		"fileType": 4,
 		"ignore": 1,
 		"ignoreWasSetByUser": 0,
-		"inputAbbreviatedPath": "\/src\/sass-util\/ballistic-lists\/_chunk.scss",
-		"outputAbbreviatedPath": "\/src\/sass-util\/ballistic-lists\/_chunk.css",
+		"inputAbbreviatedPath": "\/src\/sass-util\/ballistic\/_flatten.scss",
+		"outputAbbreviatedPath": "\/src\/sass-util\/ballistic\/_flatten.css",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
 		"outputStyle": 0,
@@ -3115,15 +3042,15 @@
 		"shouldRunBless": 0,
 		"useLibsass": 1
 		},
-	"\/src\/sass-util\/ballistic-lists\/_first.scss": {
+	"\/src\/sass-util\/ballistic\/_initial.scss": {
 		"createSourceMap": 0,
 		"debugStyle": 0,
 		"decimalPrecision": 10,
 		"fileType": 4,
 		"ignore": 1,
 		"ignoreWasSetByUser": 0,
-		"inputAbbreviatedPath": "\/src\/sass-util\/ballistic-lists\/_first.scss",
-		"outputAbbreviatedPath": "\/src\/sass-util\/ballistic-lists\/_first.css",
+		"inputAbbreviatedPath": "\/src\/sass-util\/ballistic\/_initial.scss",
+		"outputAbbreviatedPath": "\/src\/sass-util\/ballistic\/_initial.css",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
 		"outputStyle": 0,
@@ -3131,15 +3058,15 @@
 		"shouldRunBless": 0,
 		"useLibsass": 1
 		},
-	"\/src\/sass-util\/ballistic-lists\/_flatten.scss": {
+	"\/src\/sass-util\/ballistic\/_intersection.scss": {
 		"createSourceMap": 0,
 		"debugStyle": 0,
 		"decimalPrecision": 10,
 		"fileType": 4,
 		"ignore": 1,
 		"ignoreWasSetByUser": 0,
-		"inputAbbreviatedPath": "\/src\/sass-util\/ballistic-lists\/_flatten.scss",
-		"outputAbbreviatedPath": "\/src\/sass-util\/ballistic-lists\/_flatten.css",
+		"inputAbbreviatedPath": "\/src\/sass-util\/ballistic\/_intersection.scss",
+		"outputAbbreviatedPath": "\/src\/sass-util\/ballistic\/_intersection.css",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
 		"outputStyle": 0,
@@ -3147,15 +3074,15 @@
 		"shouldRunBless": 0,
 		"useLibsass": 1
 		},
-	"\/src\/sass-util\/ballistic-lists\/_initial.scss": {
+	"\/src\/sass-util\/ballistic\/_is-symmetrical.scss": {
 		"createSourceMap": 0,
 		"debugStyle": 0,
 		"decimalPrecision": 10,
 		"fileType": 4,
 		"ignore": 1,
 		"ignoreWasSetByUser": 0,
-		"inputAbbreviatedPath": "\/src\/sass-util\/ballistic-lists\/_initial.scss",
-		"outputAbbreviatedPath": "\/src\/sass-util\/ballistic-lists\/_initial.css",
+		"inputAbbreviatedPath": "\/src\/sass-util\/ballistic\/_is-symmetrical.scss",
+		"outputAbbreviatedPath": "\/src\/sass-util\/ballistic\/_is-symmetrical.css",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
 		"outputStyle": 0,
@@ -3163,15 +3090,15 @@
 		"shouldRunBless": 0,
 		"useLibsass": 1
 		},
-	"\/src\/sass-util\/ballistic-lists\/_intersection.scss": {
+	"\/src\/sass-util\/ballistic\/_last.scss": {
 		"createSourceMap": 0,
 		"debugStyle": 0,
 		"decimalPrecision": 10,
 		"fileType": 4,
 		"ignore": 1,
 		"ignoreWasSetByUser": 0,
-		"inputAbbreviatedPath": "\/src\/sass-util\/ballistic-lists\/_intersection.scss",
-		"outputAbbreviatedPath": "\/src\/sass-util\/ballistic-lists\/_intersection.css",
+		"inputAbbreviatedPath": "\/src\/sass-util\/ballistic\/_last.scss",
+		"outputAbbreviatedPath": "\/src\/sass-util\/ballistic\/_last.css",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
 		"outputStyle": 0,
@@ -3179,15 +3106,15 @@
 		"shouldRunBless": 0,
 		"useLibsass": 1
 		},
-	"\/src\/sass-util\/ballistic-lists\/_is-symmetrical.scss": {
+	"\/src\/sass-util\/ballistic\/_loop.scss": {
 		"createSourceMap": 0,
 		"debugStyle": 0,
 		"decimalPrecision": 10,
 		"fileType": 4,
 		"ignore": 1,
 		"ignoreWasSetByUser": 0,
-		"inputAbbreviatedPath": "\/src\/sass-util\/ballistic-lists\/_is-symmetrical.scss",
-		"outputAbbreviatedPath": "\/src\/sass-util\/ballistic-lists\/_is-symmetrical.css",
+		"inputAbbreviatedPath": "\/src\/sass-util\/ballistic\/_loop.scss",
+		"outputAbbreviatedPath": "\/src\/sass-util\/ballistic\/_loop.css",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
 		"outputStyle": 0,
@@ -3195,15 +3122,15 @@
 		"shouldRunBless": 0,
 		"useLibsass": 1
 		},
-	"\/src\/sass-util\/ballistic-lists\/_last.scss": {
+	"\/src\/sass-util\/ballistic\/_prepend.scss": {
 		"createSourceMap": 0,
 		"debugStyle": 0,
 		"decimalPrecision": 10,
 		"fileType": 4,
 		"ignore": 1,
 		"ignoreWasSetByUser": 0,
-		"inputAbbreviatedPath": "\/src\/sass-util\/ballistic-lists\/_last.scss",
-		"outputAbbreviatedPath": "\/src\/sass-util\/ballistic-lists\/_last.css",
+		"inputAbbreviatedPath": "\/src\/sass-util\/ballistic\/_prepend.scss",
+		"outputAbbreviatedPath": "\/src\/sass-util\/ballistic\/_prepend.css",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
 		"outputStyle": 0,
@@ -3211,15 +3138,15 @@
 		"shouldRunBless": 0,
 		"useLibsass": 1
 		},
-	"\/src\/sass-util\/ballistic-lists\/_loop.scss": {
+	"\/src\/sass-util\/ballistic\/_replace-nth.scss": {
 		"createSourceMap": 0,
 		"debugStyle": 0,
 		"decimalPrecision": 10,
 		"fileType": 4,
 		"ignore": 1,
 		"ignoreWasSetByUser": 0,
-		"inputAbbreviatedPath": "\/src\/sass-util\/ballistic-lists\/_loop.scss",
-		"outputAbbreviatedPath": "\/src\/sass-util\/ballistic-lists\/_loop.css",
+		"inputAbbreviatedPath": "\/src\/sass-util\/ballistic\/_replace-nth.scss",
+		"outputAbbreviatedPath": "\/src\/sass-util\/ballistic\/_replace-nth.css",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
 		"outputStyle": 0,
@@ -3227,15 +3154,15 @@
 		"shouldRunBless": 0,
 		"useLibsass": 1
 		},
-	"\/src\/sass-util\/ballistic-lists\/_prepend.scss": {
+	"\/src\/sass-util\/ballistic\/_replace.scss": {
 		"createSourceMap": 0,
 		"debugStyle": 0,
 		"decimalPrecision": 10,
 		"fileType": 4,
 		"ignore": 1,
 		"ignoreWasSetByUser": 0,
-		"inputAbbreviatedPath": "\/src\/sass-util\/ballistic-lists\/_prepend.scss",
-		"outputAbbreviatedPath": "\/src\/sass-util\/ballistic-lists\/_prepend.css",
+		"inputAbbreviatedPath": "\/src\/sass-util\/ballistic\/_replace.scss",
+		"outputAbbreviatedPath": "\/src\/sass-util\/ballistic\/_replace.css",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
 		"outputStyle": 0,
@@ -3243,15 +3170,15 @@
 		"shouldRunBless": 0,
 		"useLibsass": 1
 		},
-	"\/src\/sass-util\/ballistic-lists\/_replace-nth.scss": {
+	"\/src\/sass-util\/ballistic\/_rest.scss": {
 		"createSourceMap": 0,
 		"debugStyle": 0,
 		"decimalPrecision": 10,
 		"fileType": 4,
 		"ignore": 1,
 		"ignoreWasSetByUser": 0,
-		"inputAbbreviatedPath": "\/src\/sass-util\/ballistic-lists\/_replace-nth.scss",
-		"outputAbbreviatedPath": "\/src\/sass-util\/ballistic-lists\/_replace-nth.css",
+		"inputAbbreviatedPath": "\/src\/sass-util\/ballistic\/_rest.scss",
+		"outputAbbreviatedPath": "\/src\/sass-util\/ballistic\/_rest.css",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
 		"outputStyle": 0,
@@ -3259,15 +3186,15 @@
 		"shouldRunBless": 0,
 		"useLibsass": 1
 		},
-	"\/src\/sass-util\/ballistic-lists\/_replace.scss": {
+	"\/src\/sass-util\/ballistic\/_reverse.scss": {
 		"createSourceMap": 0,
 		"debugStyle": 0,
 		"decimalPrecision": 10,
 		"fileType": 4,
 		"ignore": 1,
 		"ignoreWasSetByUser": 0,
-		"inputAbbreviatedPath": "\/src\/sass-util\/ballistic-lists\/_replace.scss",
-		"outputAbbreviatedPath": "\/src\/sass-util\/ballistic-lists\/_replace.css",
+		"inputAbbreviatedPath": "\/src\/sass-util\/ballistic\/_reverse.scss",
+		"outputAbbreviatedPath": "\/src\/sass-util\/ballistic\/_reverse.css",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
 		"outputStyle": 0,
@@ -3275,15 +3202,15 @@
 		"shouldRunBless": 0,
 		"useLibsass": 1
 		},
-	"\/src\/sass-util\/ballistic-lists\/_rest.scss": {
+	"\/src\/sass-util\/ballistic\/_slice.scss": {
 		"createSourceMap": 0,
 		"debugStyle": 0,
 		"decimalPrecision": 10,
 		"fileType": 4,
 		"ignore": 1,
 		"ignoreWasSetByUser": 0,
-		"inputAbbreviatedPath": "\/src\/sass-util\/ballistic-lists\/_rest.scss",
-		"outputAbbreviatedPath": "\/src\/sass-util\/ballistic-lists\/_rest.css",
+		"inputAbbreviatedPath": "\/src\/sass-util\/ballistic\/_slice.scss",
+		"outputAbbreviatedPath": "\/src\/sass-util\/ballistic\/_slice.css",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
 		"outputStyle": 0,
@@ -3291,15 +3218,15 @@
 		"shouldRunBless": 0,
 		"useLibsass": 1
 		},
-	"\/src\/sass-util\/ballistic-lists\/_reverse.scss": {
+	"\/src\/sass-util\/ballistic\/_sum.scss": {
 		"createSourceMap": 0,
 		"debugStyle": 0,
 		"decimalPrecision": 10,
 		"fileType": 4,
 		"ignore": 1,
 		"ignoreWasSetByUser": 0,
-		"inputAbbreviatedPath": "\/src\/sass-util\/ballistic-lists\/_reverse.scss",
-		"outputAbbreviatedPath": "\/src\/sass-util\/ballistic-lists\/_reverse.css",
+		"inputAbbreviatedPath": "\/src\/sass-util\/ballistic\/_sum.scss",
+		"outputAbbreviatedPath": "\/src\/sass-util\/ballistic\/_sum.css",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
 		"outputStyle": 0,
@@ -3307,15 +3234,15 @@
 		"shouldRunBless": 0,
 		"useLibsass": 1
 		},
-	"\/src\/sass-util\/ballistic-lists\/_slice.scss": {
+	"\/src\/sass-util\/ballistic\/_union.scss": {
 		"createSourceMap": 0,
 		"debugStyle": 0,
 		"decimalPrecision": 10,
 		"fileType": 4,
 		"ignore": 1,
 		"ignoreWasSetByUser": 0,
-		"inputAbbreviatedPath": "\/src\/sass-util\/ballistic-lists\/_slice.scss",
-		"outputAbbreviatedPath": "\/src\/sass-util\/ballistic-lists\/_slice.css",
+		"inputAbbreviatedPath": "\/src\/sass-util\/ballistic\/_union.scss",
+		"outputAbbreviatedPath": "\/src\/sass-util\/ballistic\/_union.css",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
 		"outputStyle": 0,
@@ -3323,15 +3250,15 @@
 		"shouldRunBless": 0,
 		"useLibsass": 1
 		},
-	"\/src\/sass-util\/ballistic-lists\/_sum.scss": {
+	"\/src\/sass-util\/ballistic\/_unique.scss": {
 		"createSourceMap": 0,
 		"debugStyle": 0,
 		"decimalPrecision": 10,
 		"fileType": 4,
 		"ignore": 1,
 		"ignoreWasSetByUser": 0,
-		"inputAbbreviatedPath": "\/src\/sass-util\/ballistic-lists\/_sum.scss",
-		"outputAbbreviatedPath": "\/src\/sass-util\/ballistic-lists\/_sum.css",
+		"inputAbbreviatedPath": "\/src\/sass-util\/ballistic\/_unique.scss",
+		"outputAbbreviatedPath": "\/src\/sass-util\/ballistic\/_unique.css",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
 		"outputStyle": 0,
@@ -3339,15 +3266,15 @@
 		"shouldRunBless": 0,
 		"useLibsass": 1
 		},
-	"\/src\/sass-util\/ballistic-lists\/_union.scss": {
+	"\/src\/sass-util\/ballistic\/_without-nth.scss": {
 		"createSourceMap": 0,
 		"debugStyle": 0,
 		"decimalPrecision": 10,
 		"fileType": 4,
 		"ignore": 1,
 		"ignoreWasSetByUser": 0,
-		"inputAbbreviatedPath": "\/src\/sass-util\/ballistic-lists\/_union.scss",
-		"outputAbbreviatedPath": "\/src\/sass-util\/ballistic-lists\/_union.css",
+		"inputAbbreviatedPath": "\/src\/sass-util\/ballistic\/_without-nth.scss",
+		"outputAbbreviatedPath": "\/src\/sass-util\/ballistic\/_without-nth.css",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
 		"outputStyle": 0,
@@ -3355,15 +3282,15 @@
 		"shouldRunBless": 0,
 		"useLibsass": 1
 		},
-	"\/src\/sass-util\/ballistic-lists\/_unique.scss": {
+	"\/src\/sass-util\/ballistic\/_without.scss": {
 		"createSourceMap": 0,
 		"debugStyle": 0,
 		"decimalPrecision": 10,
 		"fileType": 4,
 		"ignore": 1,
 		"ignoreWasSetByUser": 0,
-		"inputAbbreviatedPath": "\/src\/sass-util\/ballistic-lists\/_unique.scss",
-		"outputAbbreviatedPath": "\/src\/sass-util\/ballistic-lists\/_unique.css",
+		"inputAbbreviatedPath": "\/src\/sass-util\/ballistic\/_without.scss",
+		"outputAbbreviatedPath": "\/src\/sass-util\/ballistic\/_without.css",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
 		"outputStyle": 0,
@@ -3371,79 +3298,15 @@
 		"shouldRunBless": 0,
 		"useLibsass": 1
 		},
-	"\/src\/sass-util\/ballistic-lists\/_without-nth.scss": {
-		"createSourceMap": 0,
-		"debugStyle": 0,
-		"decimalPrecision": 10,
-		"fileType": 4,
-		"ignore": 1,
-		"ignoreWasSetByUser": 0,
-		"inputAbbreviatedPath": "\/src\/sass-util\/ballistic-lists\/_without-nth.scss",
-		"outputAbbreviatedPath": "\/src\/sass-util\/ballistic-lists\/_without-nth.css",
-		"outputPathIsOutsideProject": 0,
-		"outputPathIsSetByUser": 0,
-		"outputStyle": 0,
-		"shouldRunAutoprefixer": 0,
-		"shouldRunBless": 0,
-		"useLibsass": 1
-		},
-	"\/src\/sass-util\/ballistic-lists\/_without.scss": {
-		"createSourceMap": 0,
-		"debugStyle": 0,
-		"decimalPrecision": 10,
-		"fileType": 4,
-		"ignore": 1,
-		"ignoreWasSetByUser": 0,
-		"inputAbbreviatedPath": "\/src\/sass-util\/ballistic-lists\/_without.scss",
-		"outputAbbreviatedPath": "\/src\/sass-util\/ballistic-lists\/_without.css",
-		"outputPathIsOutsideProject": 0,
-		"outputPathIsSetByUser": 0,
-		"outputStyle": 0,
-		"shouldRunAutoprefixer": 0,
-		"shouldRunBless": 0,
-		"useLibsass": 1
-		},
-	"\/src\/sass-util\/holding\/_sass-lists.scss": {
-		"createSourceMap": 0,
-		"debugStyle": 0,
-		"decimalPrecision": 10,
-		"fileType": 4,
-		"ignore": 1,
-		"ignoreWasSetByUser": 0,
-		"inputAbbreviatedPath": "\/src\/sass-util\/holding\/_sass-lists.scss",
-		"outputAbbreviatedPath": "\/src\/sass-util\/holding\/_sass-lists.css",
-		"outputPathIsOutsideProject": 0,
-		"outputPathIsSetByUser": 0,
-		"outputStyle": 0,
-		"shouldRunAutoprefixer": 0,
-		"shouldRunBless": 0,
-		"useLibsass": 1
-		},
-	"\/src\/sass-util\/holding\/_sass-strings.scss": {
-		"createSourceMap": 0,
-		"debugStyle": 0,
-		"decimalPrecision": 10,
-		"fileType": 4,
-		"ignore": 1,
-		"ignoreWasSetByUser": 0,
-		"inputAbbreviatedPath": "\/src\/sass-util\/holding\/_sass-strings.scss",
-		"outputAbbreviatedPath": "\/src\/sass-util\/holding\/_sass-strings.css",
-		"outputPathIsOutsideProject": 0,
-		"outputPathIsSetByUser": 0,
-		"outputStyle": 0,
-		"shouldRunAutoprefixer": 0,
-		"shouldRunBless": 0,
-		"useLibsass": 1
-		},
-	"\/src\/sass-util\/sass-slice\/new-slice.scss": {
+	"\/src\/sass-util\/ballistic\/sass-slice\/new-slice.scss": {
 		"createSourceMap": 0,
 		"debugStyle": 0,
 		"decimalPrecision": 10,
 		"fileType": 4,
 		"ignore": 0,
 		"ignoreWasSetByUser": 0,
-		"inputAbbreviatedPath": "\/src\/sass-util\/sass-slice\/new-slice.scss",
-		"outputAbbreviatedPath": "\/src\/sass-util\/sass-slice\/new-slice.css",
+		"inputAbbreviatedPath": "\/src\/sass-util\/ballistic\/sass-slice\/new-slice.scss",
+		"outputAbbreviatedPath": "\/src\/sass-util\/ballistic\/sass-slice\/new-slice.css",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
 		"outputStyle": 0,
@@ -3451,15 +3314,15 @@
 		"shouldRunBless": 0,
 		"useLibsass": 1
 		},
-	"\/src\/sass-util\/sass-slice\/slice-testing.scss": {
+	"\/src\/sass-util\/ballistic\/sass-slice\/slice-testing.scss": {
 		"createSourceMap": 0,
 		"debugStyle": 0,
 		"decimalPrecision": 10,
 		"fileType": 4,
 		"ignore": 0,
 		"ignoreWasSetByUser": 0,
-		"inputAbbreviatedPath": "\/src\/sass-util\/sass-slice\/slice-testing.scss",
-		"outputAbbreviatedPath": "\/src\/sass-util\/sass-slice\/slice-testing.css",
+		"inputAbbreviatedPath": "\/src\/sass-util\/ballistic\/sass-slice\/slice-testing.scss",
+		"outputAbbreviatedPath": "\/src\/sass-util\/ballistic\/sass-slice\/slice-testing.css",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
 		"outputStyle": 0,
@@ -3754,15 +3617,6 @@
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0
 		},
-	"\/test\/sass-layout\/index.html": {
-		"fileType": 8192,
-		"ignore": 1,
-		"ignoreWasSetByUser": 0,
-		"inputAbbreviatedPath": "\/test\/sass-layout\/index.html",
-		"outputAbbreviatedPath": "No Output Path",
-		"outputPathIsOutsideProject": 0,
-		"outputPathIsSetByUser": 0
-		},
 	"\/test\/sass-layout\/index.jade": {
 		"compileDebug": 1,
 		"fileType": 512,
@@ -3801,55 +3655,46 @@
 		"shouldRunBless": 0,
 		"useLibsass": 1
 		},
-	"\/test\/sass-media-init\/index.css": {
+	"\/test\/sass-media\/index.css": {
 		"fileType": 16,
 		"ignore": 1,
 		"ignoreWasSetByUser": 0,
-		"inputAbbreviatedPath": "\/test\/sass-media-init\/index.css",
+		"inputAbbreviatedPath": "\/test\/sass-media\/index.css",
 		"outputAbbreviatedPath": "No Output Path",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0
 		},
-	"\/test\/sass-media-init\/index.html": {
-		"fileType": 8192,
-		"ignore": 1,
-		"ignoreWasSetByUser": 0,
-		"inputAbbreviatedPath": "\/test\/sass-media-init\/index.html",
-		"outputAbbreviatedPath": "No Output Path",
-		"outputPathIsOutsideProject": 0,
-		"outputPathIsSetByUser": 0
-		},
-	"\/test\/sass-media-init\/index.jade": {
+	"\/test\/sass-media\/index.jade": {
 		"compileDebug": 1,
 		"fileType": 512,
 		"ignore": 0,
 		"ignoreWasSetByUser": 0,
-		"inputAbbreviatedPath": "\/test\/sass-media-init\/index.jade",
-		"outputAbbreviatedPath": "\/test\/sass-media-init\/index.html",
+		"inputAbbreviatedPath": "\/test\/sass-media\/index.jade",
+		"outputAbbreviatedPath": "\/test\/sass-media\/index.html",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
 		"outputStyle": 0
 		},
-	"\/test\/sass-media-init\/index.js": {
+	"\/test\/sass-media\/index.js": {
 		"fileType": 64,
 		"ignore": 1,
 		"ignoreWasSetByUser": 0,
-		"inputAbbreviatedPath": "\/test\/sass-media-init\/index.js",
-		"outputAbbreviatedPath": "\/test\/sass-media-init\/index-min.js",
+		"inputAbbreviatedPath": "\/test\/sass-media\/index.js",
+		"outputAbbreviatedPath": "\/test\/sass-media\/index-min.js",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
 		"outputStyle": 1,
 		"syntaxCheckerStyle": 1
 		},
-	"\/test\/sass-media-init\/index.scss": {
+	"\/test\/sass-media\/index.scss": {
 		"createSourceMap": 0,
 		"debugStyle": 0,
 		"decimalPrecision": 10,
 		"fileType": 4,
 		"ignore": 0,
 		"ignoreWasSetByUser": 0,
-		"inputAbbreviatedPath": "\/test\/sass-media-init\/index.scss",
-		"outputAbbreviatedPath": "\/test\/sass-media-init\/index.css",
+		"inputAbbreviatedPath": "\/test\/sass-media\/index.scss",
+		"outputAbbreviatedPath": "\/test\/sass-media\/index.css",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
 		"outputStyle": 0,
@@ -4131,6 +3976,10 @@
 			"active": 0,
 			"flagValue": -1
 			},
+		"futurehostile": {
+			"active": 0,
+			"flagValue": -1
+			},
 		"globalstrict": {
 			"active": 0,
 			"flagValue": -1
@@ -4217,6 +4066,10 @@
 			},
 		"noarg": {
 			"active": 1,
+			"flagValue": -1
+			},
+		"nocomma": {
+			"active": 0,
 			"flagValue": -1
 			},
 		"node": {
@@ -4317,6 +4170,10 @@
 			},
 		"unused": {
 			"active": 1,
+			"flagValue": -1
+			},
+		"varstmt": {
+			"active": 0,
 			"flagValue": -1
 			},
 		"withstmt": {
