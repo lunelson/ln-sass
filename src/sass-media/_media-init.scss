@@ -1,0 +1,82 @@
+
+@mixin media-init(){
+
+  // backup $base, merge against defaults
+  $base-orig: $base !global;
+  $base: map-merge($base-defaults, $base) !global;
+
+  // correct for font-size and line-height units/non-units, derive html-scale
+  $font-size: map-get($base, 'font-size');
+  $line-height: map-get($base, 'line-height');
+  @if unit($font-size) != 'px' { $font-size: unit-strip($font-size) * 16px; }
+  @if unit($line-height) == 'px' { $line-height: $line-height / $font-size; }
+  $html-scale: unit-strip($font-size / 16px);
+
+  // correct for other pixel-united values; merge back
+  $corrections: ('html-scale': $html-scale, 'font-size': $font-size, 'line-height': $line-height);
+  @each $key, $value in map-remove($base, 'font-size', 'line-height') {
+    @if unit($value) == 'px' { $corrections: map-merge($corrections, ($key: $value / $font-size * 1rem)); } }
+  $base: map-merge($base, $corrections) !global;
+
+  // backup $media; if media is not empty, proceed
+  $media-orig: $media !global;
+  @if $media != () {
+
+    // temp variable for recursive merging
+    $ref-medium: $base;
+
+    // collect and sort the breakpoint media
+    // $sorted-media: maps-sort(maps-collect($media, 'breakpoint'), 'breakpoint');
+    // !!! above is obsolete, if we are now allowing typo-columns to retro-determine breakpoint
+
+    @each $alias, $medium in $media {
+
+      // merge medium to reference
+      $ref-medium: map-merge($ref-medium, $medium);
+
+      // correct for font-size and line-height units/non-units
+      $font-size: map-get($ref-medium, 'font-size');
+      $line-height: map-get($ref-medium, 'line-height');
+      @if unit($font-size) != 'px' { $font-size: unit-strip($font-size) * 16px; }
+      @if unit($line-height) == 'px' { $line-height: $line-height / $font-size; }
+
+      // get html-scale
+      $html-scale: unit-strip($font-size / 16px);
+
+      // correct for other pixel-united values, merge back to reference
+      $corrections: ('html-scale': $html-scale, 'font-size': $font-size, 'line-height': $line-height);
+      @each $key, $value in map-remove($ref-medium, 'font-size', 'breakpoint', 'line-height') {
+        @if unit($value) == 'px' { $corrections: map-merge($corrections, ($key: $value / $font-size * 1rem)); } }
+      $ref-medium: map-merge($ref-medium, $corrections);
+
+      // // solve breakpoint vs column-ratio
+      $breakpoint: map-get($ref-medium, 'breakpoint');
+      $page-x: map-get($ref-medium, 'page-right') + map-get($ref-medium, 'page-left');
+      // $line-length: map-get($ref-medium, 'line-length');
+      // $column-ratio: map-get($medium, 'column-ratio'); // spec medium only
+      // @if $column-ratio and $column-ratio < 1 {
+      //   $margin-x: map-get($ref-medium, 'margin-x');
+      //   $breakpoint: unit-assert((($line-length) / $column-ratio  - $margin-x + $page-x) * $html-scale, em); // correct ?
+      //   $ref-medium: map-merge($ref-medium, ('breakpoint': $breakpoint))
+      // }
+
+      // merge some additional props
+      $body-width: unit-assert($breakpoint / $html-scale, rem);
+      $content-width: $body-width - $page-x;
+      $ref-medium: map-merge($ref-medium, (
+        'body-width': $body-width,
+        'content-width': $content-width
+      ));
+
+      // merge reference back to master
+      $media: map-merge($media, ($alias: $ref-medium)) !global;
+
+    }
+  }
+
+  // check if breakpoint order is okay; warn if not
+  // $keys-sorted: map-keys(maps-sort($media, 'breakpoint'));
+  // $keys-orig: map-keys($media-orig);
+  // @if $keys-sorted != $keys-orig { @warn 'breakpoints out of order; should be #{$keys-sorted}.'; }
+}
+

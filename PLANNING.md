@@ -1,3 +1,47 @@
+# ln.sass planning
+
+## file structure
+
+ln-sass/
+    sass-media/
+        media-base
+            $base, $media, $current
+        media-init
+            media-normalize
+        media-json
+        media-utils
+            @mixin medium(), media() // if map not supplied, call medium
+            @function medium(), medium-value()
+    sass-layout/
+        layout-base
+        layout-page
+            page
+            sect
+            wrap
+            wrap-break
+        layout-grid
+        layout-utils
+            @function margin-y, margin-x
+    sass-typo/
+        typo-init
+        typo-utils
+        typo-?
+    sass-util/
+        util-resets
+        util-math
+        util-lists
+        util-color
+        util-units
+        sass-maps-plus/
+            @function get / map-get-plus
+            @function merge, set / map-merge-plus
+            @function map-inspect
+            // the rest can be handled with sassdash
+
+
+## variable structure
+
+
 # sass-ln next
 
 ## next

@@ -1,0 +1,35 @@
+/////////////
+// GLOBALS //
+/////////////
+
+$base: () !default;
+$base-defaults: (
+  font-size: 16px,
+  line-height: 1.5,
+  font-size-mod: 1.5,
+  margin-x: 1rem,
+  margin-x-mod: 2,
+  margin-y: 1rem,
+  margin-y-mod: 2,
+  page-top: 1rem,
+  page-right: 1rem,
+  page-bottom: 1rem,
+  page-left: 1rem,
+  // line-length: 30,
+  // column-ratio: 1 // n.b. wherever this is less than one, will override breakpoint
+);
+
+$media: (
+  alpha: (breakpoint: 20em),
+  beta: (breakpoint: 30em),
+  gamma: (breakpoint: 48em),
+  delta: (breakpoint: 64em),
+  epsilon: (breakpoint: 80em)
+) !default;
+
+$base-orig: ();
+$media-orig: ();
+
+$media-transition-utility-class: '.u-media-transition' !default;
+$media-current-alias: null;
+$media-hd-ratio: 3 2 !default;

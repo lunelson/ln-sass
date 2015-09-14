@@ -1,0 +1,12 @@
+/* test: scss-media-init */
+
+@import '../../src/sass-util';
+@import '../../src/sass-media/media-base';
+@import '../../src/sass-media/media-init';
+@import '../../src/sass-media/media-json';
+
+@include media-init();
+@include media-json();
+
+/* $keys: #{map-keys($media)}; */
+/* $media: #{_inspect($media)}; */

@@ -1,6 +1,0 @@
-[submodule "stylesheets/mathsass"]
-	path = stylesheets/mathsass
-	url = git@github.com:lunelson/mathsass.git
-[submodule "stylesheets/sass-maps-plus"]
-	path = stylesheets/sass-maps-plus
-	url = git@github.com:lunelson/sass-maps-plus.git

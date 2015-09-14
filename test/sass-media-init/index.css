@@ -1,0 +1,149 @@
+/* test: scss-media-init */
+html {
+  font-size: 1em; }
+
+body {
+  line-height: 1.5; }
+
+body::before {
+  width: 0;
+  height: 0;
+  display: block;
+  overflow: hidden;
+  content: 'base'; }
+
+head {
+  font-family: 'base'; }
+
+.u-media-transition {
+  width: 0px;
+  transition: width 1ms; }
+
+@media (min-width: 20em) {
+  body::before {
+    content: "alpha"; }
+  head {
+    font-family: "alpha"; }
+  .u-media-transition {
+    width: 1px; } }
+
+@media (min-width: 30em) {
+  body::before {
+    content: "beta"; }
+  head {
+    font-family: "beta"; }
+  .u-media-transition {
+    width: 0px; } }
+
+@media (min-width: 48em) {
+  body::before {
+    content: "gamma"; }
+  head {
+    font-family: "gamma"; }
+  .u-media-transition {
+    width: 1px; } }
+
+@media (min-width: 64em) {
+  body::before {
+    content: "delta"; }
+  head {
+    font-family: "delta"; }
+  .u-media-transition {
+    width: 0px; } }
+
+@media (min-width: 80em) {
+  body::before {
+    content: "epsilon"; }
+  head {
+    font-family: "epsilon"; }
+  .u-media-transition {
+    width: 1px; } }
+
+/* $keys: alpha, beta, gamma, delta, epsilon; */
+/* $media: (
+    alpha: (
+      font-size: 16px,
+      line-height: 1.5,
+      font-size-mod: 1.5,
+      margin-x: 1rem,
+      margin-x-mod: 2,
+      margin-y: 1rem,
+      margin-y-mod: 2,
+      page-top: 1rem,
+      page-right: 1rem,
+      page-bottom: 1rem,
+      page-left: 1rem,
+      html-scale: 1,
+      breakpoint: 20em,
+      body-width: 20rem,
+      content-width: 18rem
+    ),
+    beta: (
+      font-size: 16px,
+      line-height: 1.5,
+      font-size-mod: 1.5,
+      margin-x: 1rem,
+      margin-x-mod: 2,
+      margin-y: 1rem,
+      margin-y-mod: 2,
+      page-top: 1rem,
+      page-right: 1rem,
+      page-bottom: 1rem,
+      page-left: 1rem,
+      html-scale: 1,
+      breakpoint: 30em,
+      body-width: 30rem,
+      content-width: 28rem
+    ),
+    gamma: (
+      font-size: 16px,
+      line-height: 1.5,
+      font-size-mod: 1.5,
+      margin-x: 1rem,
+      margin-x-mod: 2,
+      margin-y: 1rem,
+      margin-y-mod: 2,
+      page-top: 1rem,
+      page-right: 1rem,
+      page-bottom: 1rem,
+      page-left: 1rem,
+      html-scale: 1,
+      breakpoint: 48em,
+      body-width: 48rem,
+      content-width: 46rem
+    ),
+    delta: (
+      font-size: 16px,
+      line-height: 1.5,
+      font-size-mod: 1.5,
+      margin-x: 1rem,
+      margin-x-mod: 2,
+      margin-y: 1rem,
+      margin-y-mod: 2,
+      page-top: 1rem,
+      page-right: 1rem,
+      page-bottom: 1rem,
+      page-left: 1rem,
+      html-scale: 1,
+      breakpoint: 64em,
+      body-width: 64rem,
+      content-width: 62rem
+    ),
+    epsilon: (
+      font-size: 16px,
+      line-height: 1.5,
+      font-size-mod: 1.5,
+      margin-x: 1rem,
+      margin-x-mod: 2,
+      margin-y: 1rem,
+      margin-y-mod: 2,
+      page-top: 1rem,
+      page-right: 1rem,
+      page-bottom: 1rem,
+      page-left: 1rem,
+      html-scale: 1,
+      breakpoint: 80em,
+      body-width: 80rem,
+      content-width: 78rem
+    )
+  ); */

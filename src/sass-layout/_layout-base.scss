@@ -1,0 +1,14 @@
+// globals
+$layout-alignment: null !default;
+
+$layout-classes: (
+  page: 'page',
+  wrap: 'wrap',
+  sect: 'sect',
+) !default;
+
+@mixin layout-init() {
+  @include page-init();
+  // @include grid-init();
+}
+

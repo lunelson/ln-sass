@@ -1,0 +1,102 @@
+
+@mixin page-init() {
+
+  // merge defaults
+  $base: map-merge((
+    margin-x: 1rem,
+    margin-y: 1.5rem,
+    page-top: 1.5rem,
+    page-right: 1rem,
+    page-bottom: 1.5rem,
+    page-left: 1rem
+  ), if(variable-exists('base'), $base, ()));
+
+  // retrieve values
+  $margin-x: map-get($base, 'margin-x');
+  $margin-y: map-get($base, 'margin-y');
+  $page-top: map-get($base, 'page-top');
+  $page-right: map-get($base, 'page-right');
+  $page-bottom: map-get($base, 'page-bottom');
+  $page-left: map-get($base, 'page-left');
+
+  // TODO: apply clearfix to all of these layout classes ?
+
+  // base page
+  $page: map-get($layout-classes, 'page');
+  .#{$page}-top { padding-top: $page-top; }
+  .#{$page}-right { padding-right: $page-right; }
+  .#{$page}-bottom { padding-bottom: $page-bottom; }
+  .#{$page}-left { padding-left: $page-left; }
+  .#{$page}-x { padding-left: $page-left; padding-right: $page-right; }
+  .#{$page}-y { padding-top: $page-top; padding-bottom: $page-bottom; }
+
+  // base wrap
+  $wrap: map-get($layout-classes, 'wrap');
+  $align: $layout-alignment;
+  .#{$wrap} {
+    // @if $grid-is-float { @include clearfix(); }
+    @if $align != left { margin-left: auto; }
+    @if $align != right { margin-right: auto; }
+  }
+  .#{$wrap}--left { @extend .#{$wrap}; margin-left: 0; }
+  .#{$wrap}--right { @extend .#{$wrap}; margin-right: 0; }
+
+  // base sect
+  $sect: map-get($layout-classes, 'sect');
+  .#{$sect} { padding-top: $margin-y; }
+
+  @if variable-exists('media') {
+
+    @each $alias, $medium in $media {
+      $margin-x: map-get($medium, 'margin-x');
+      $margin-y: map-get($medium, 'margin-y');
+      $page-top: map-get($medium, 'page-top');
+      $page-right: map-get($medium, 'page-right');
+      $page-bottom: map-get($medium, 'page-bottom');
+      $page-left: map-get($medium, 'page-left');
+
+      @include medium($alias) {
+
+        $orig: medium-orig();
+
+        // page
+        .#{$page}-top { @if map-has-key($orig, 'page-top') { padding-top: $page-top; } }
+        .#{$page}-right { @if map-has-key($orig, 'page-right') { padding-right: $page-right; } }
+        .#{$page}-bottom { @if map-has-key($orig, 'page-bottom') { padding-bottom: $page-bottom; } }
+        .#{$page}-left { @if map-has-key($orig, 'page-left') { padding-left: $page-left; } }
+        .#{$page}-x {
+          @if map-has-key($orig, 'page-left') { padding-left: $page-left; }
+          @if map-has-key($orig, 'page-right') { padding-right: $page-right; }
+        }
+        .#{$page}-y {
+          @if map-has-key($orig, 'page-top') { padding-top: $page-top; }
+          @if map-has-key($orig, 'page-bottom') { padding-bottom: $page-bottom; }
+        }
+
+        // sect
+        @if map-has-key($orig, 'margin-y') {
+          .#{$sect} {
+            padding-top: $margin-y / 2;
+            padding-bottom: $margin-y / 2;
+          }
+        }
+
+        // wrap
+        $media-keys: map-keys($media);
+        $wrap-to: (); $wrap-to-string: '-until--';
+        $wrap-fr: (); $wrap-fr-string: '-from--';
+        @each $alias in slice($media-keys, 1, index($media-keys, $alias)) {
+          $wrap-fr: append($wrap-fr, unquote('.#{$wrap}#{$wrap-fr-string}#{$alias}'), 'comma'); }
+        @each $alias in slice($media-keys, index($media-keys, $alias), length($media-keys)) {
+          $wrap-to: append($wrap-to, unquote('.#{$wrap}#{$wrap-to-string}#{$alias}'), 'comma'); }
+        .#{$wrap}-each,
+        .#{$wrap}--#{$alias},
+        #{$wrap-fr}, #{$wrap-to} {
+          max-width: medium-value('content-width');
+        }
+
+      }
+    }
+  }
+
+}

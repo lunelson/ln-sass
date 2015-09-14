@@ -1,0 +1,21 @@
+
+@function str-remove($str, $sub) {
+  $i: str-index($str, $sub);
+  @if $i == 0 {
+    @return $str;
+  }
+  @else {
+    @return str-remove(str-slice($str, 1, $i - 1) + str-slice($str, $i + 1, str-length($str)), $sub);
+  }
+}
+
+@function str-multiply($string, $n) {
+  $output: '';
+  @if $n > 0 {
+    @for $i from 1 through $n {
+      $output: $output + $string;
+    }
+  }
+  @return $output;
+}
+

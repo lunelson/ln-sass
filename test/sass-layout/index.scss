@@ -1,0 +1,6 @@
+/* test: scss-media-init */
+
+@import '../../src/sass-util';
+@import '../../src/sass-layout';
+
+@include layout-init();
