@@ -1,0 +1,40 @@
+extends ../_layout.jade
+block body
+
+    .proof
+
+        .wrap(class="pink")
+
+            p full unwraps
+            .unwrap-full(class="shaded"): p This is unwrap-full; goes to viewport
+            .unwrap-full-right(class="shaded"): p This unwraps to the right of viewport
+            .unwrap-full-left(class="shaded"): p This unwraps to the left of the viewport
+
+            p standard unwraps
+            .unwrap(class="shaded"): p This is a standard unwrap; stays in container
+            .unwrap-right(class="shaded"): p This unwraps to the right of container
+            .unwrap-left(class="shaded"): p This unwraps to the left of container
+
+        .wrap.wrap-left(class="pink")
+            p Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium quia asperiores deserunt, at consequuntur
+            .left.unwrap(class="shaded")
+                p Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia maiores excepturi a tempora amet.
+            p Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium quia asperiores deserunt, at consequuntur
+            .left.unwrap-left(class="shaded")
+                p Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia maiores excepturi a tempora amet.
+            p Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium quia asperiores deserunt, at consequuntur
+            .left.unwrap-right(class="shaded")
+                p Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia maiores excepturi a tempora amet.
+            p Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium quia asperiores deserunt, at consequuntur
+
+        .wrap.wrap-right(class="pink")
+            p Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium quia asperiores deserunt, at consequuntur
+            .right.unwrap(class="shaded")
+                p Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia maiores excepturi a tempora amet.
+            p Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium quia asperiores deserunt, at consequuntur
+            .right.unwrap-left(class="shaded")
+                p Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia maiores excepturi a tempora amet.
+            p Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium quia asperiores deserunt, at consequuntur
+            .right.unwrap-right(class="shaded")
+                p Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia maiores excepturi a tempora amet.
+            p Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium quia asperiores deserunt, at consequuntur

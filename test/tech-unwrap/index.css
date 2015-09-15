@@ -1,0 +1,98 @@
+*, *:before, *:after {
+  box-sizing: inherit; }
+
+html {
+  box-sizing: border-box;
+  width: 100vw;
+  height: 100%;
+  height: 100vh;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-tap-highlight-color: transparent;
+  text-rendering: optimizespeed; }
+
+body {
+  height: 100%; }
+
+img, video, svg, iframe {
+  display: block;
+  max-width: 100%;
+  height: auto; }
+  img.inline, video.inline, svg.inline, iframe.inline {
+    display: inline-block; }
+
+a:link,
+a:visited,
+a:hover,
+a:focus,
+a:active {
+  text-decoration: none !important; }
+
+a.block {
+  display: block !important; }
+
+a.clean {
+  border: none !important; }
+
+a.inline-block {
+  display: inline-block !important; }
+
+a span.target {
+  text-decoration: underline !important; }
+
+body {
+  margin: 0;
+  padding: 0;
+  border-right: 20rem solid rgba(173, 216, 230, 0.5);
+  border-left: 4rem solid rgba(173, 216, 230, 0.5); }
+
+.pad {
+  padding: 1px 0; }
+
+.wrap {
+  margin-right: auto;
+  margin-left: auto; }
+  .wrap-right {
+    margin-right: 0; }
+  .wrap-left {
+    margin-left: 0; }
+
+.unwrap {
+  width: calc(100vw - (20rem + 4rem));
+  margin-right: calc((100% - 100vw + (20rem + 4rem))/2);
+  margin-left: calc((100% - 100vw + (20rem + 4rem))/2); }
+
+.unwrap-right {
+  width: calc((100vw + 100% - (20rem + 4rem))/2);
+  margin-right: calc((100% - 100vw + (20rem + 4rem))/2);
+  margin-left: 0; }
+
+.unwrap-left {
+  width: calc((100vw + 100% - (20rem + 4rem))/2);
+  margin-left: calc((100% - 100vw + (20rem + 4rem))/2);
+  margin-right: 0; }
+
+.unwrap-full {
+  width: 100vw;
+  margin-right: calc((100% - 100vw - (20rem - 4rem))/2);
+  margin-left: calc((100% - 100vw + (20rem - 4rem))/2); }
+
+.unwrap-full-right {
+  width: calc((100vw + 100% + (20rem - 4rem))/2);
+  margin-right: calc((100% - 100vw - (20rem - 4rem))/2);
+  margin-left: 0; }
+
+.unwrap-full-left {
+  width: calc((100vw + 100% - (20rem - 4rem))/2);
+  margin-right: 0;
+  margin-left: calc((100% - 100vw + (20rem - 4rem))/2); }
+
+.pink {
+  max-width: 40rem;
+  background-color: pink; }
+
+.shaded {
+  background-color: rgba(50, 50, 50, 0.75);
+  color: whitesmoke; }

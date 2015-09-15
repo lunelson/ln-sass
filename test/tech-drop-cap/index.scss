@@ -1,0 +1,25 @@
+body {
+    line-height: 1.4;
+}
+.wrap {
+    width: 500px;
+    margin: 0 auto;
+}
+
+h2 + p {
+    &:first-letter {
+        float: left;
+        margin: 0;
+        height: 0.75em;
+        line-height: 0.75em;
+        font-size: 4.5em;
+        margin-top: 0.3rem;
+        margin-bottom: 0rem;
+        margin-left: -0.3rem;
+        margin-right: 0.5rem;
+        font-weight: normal;
+    }
+    &:first-line {
+        font-weight: bold;
+    }
+}
