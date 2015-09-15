@@ -25,11 +25,7 @@ head {
   head {
     font-family: "alpha"; }
   .u-media-trans {
-    width: 1px; }
-  html {
-    font-size: 1em; }
-  body {
-    line-height: 1.5; } }
+    width: 1px; } }
 
 @media (min-width: 30em) {
   body::before {
@@ -37,11 +33,7 @@ head {
   head {
     font-family: "beta"; }
   .u-media-trans {
-    width: 0px; }
-  html {
-    font-size: 1em; }
-  body {
-    line-height: 1.5; } }
+    width: 0px; } }
 
 @media (min-width: 48em) {
   body::before {
@@ -49,11 +41,7 @@ head {
   head {
     font-family: "gamma"; }
   .u-media-trans {
-    width: 1px; }
-  html {
-    font-size: 1em; }
-  body {
-    line-height: 1.5; } }
+    width: 1px; } }
 
 @media (min-width: 64em) {
   body::before {
@@ -61,11 +49,7 @@ head {
   head {
     font-family: "delta"; }
   .u-media-trans {
-    width: 0px; }
-  html {
-    font-size: 1em; }
-  body {
-    line-height: 1.5; } }
+    width: 0px; } }
 
 @media (min-width: 80em) {
   body::before {
@@ -73,13 +57,9 @@ head {
   head {
     font-family: "epsilon"; }
   .u-media-trans {
-    width: 1px; }
-  html {
-    font-size: 1em; }
-  body {
-    line-height: 1.5; } }
+    width: 1px; } }
 
-.cf:after, .page:after, .wrap:after, .wrap--left:after, .wrap--right:after, .sect:after {
+.cf:after, .page:after, .wrap:after, .sect:after {
   content: "";
   display: table;
   clear: both; }
@@ -104,7 +84,7 @@ head {
   padding-top: 1rem;
   padding-bottom: 1rem; }
 
-.wrap, .wrap--left, .wrap--right {
+.wrap {
   margin-left: auto;
   margin-right: auto; }
 

@@ -42,8 +42,8 @@
     @if $layout-alignment != left { margin-left: auto; }
     @if $layout-alignment != right { margin-right: auto; }
   }
-  .#{$wrap}--left { @extend .#{$wrap}; margin-left: 0; }
-  .#{$wrap}--right { @extend .#{$wrap}; margin-right: 0; }
+  .#{$wrap}--left { margin-left: 0; }
+  .#{$wrap}--right { margin-right: 0; }
 
   // base sect
   .#{$sect} { padding-top: $margin-y; }

@@ -25,11 +25,7 @@ head {
   head {
     font-family: "alpha"; }
   .u-media-trans {
-    width: 1px; }
-  html {
-    font-size: 1em; }
-  body {
-    line-height: 1; } }
+    width: 1px; } }
 
 @media (min-width: 30em) {
   body::before {
@@ -37,11 +33,7 @@ head {
   head {
     font-family: "beta"; }
   .u-media-trans {
-    width: 0px; }
-  html {
-    font-size: 1em; }
-  body {
-    line-height: 1; } }
+    width: 0px; } }
 
 @media (min-width: 48em) {
   body::before {
@@ -49,11 +41,7 @@ head {
   head {
     font-family: "gamma"; }
   .u-media-trans {
-    width: 1px; }
-  html {
-    font-size: 1em; }
-  body {
-    line-height: 1; } }
+    width: 1px; } }
 
 @media (min-width: 30em) {
   body::before {
@@ -63,9 +51,7 @@ head {
   .u-media-trans {
     width: 0px; }
   html {
-    font-size: 2.5em; }
-  body {
-    line-height: 1; } }
+    font-size: 2.5em; } }
 
 @media (min-width: 80em) {
   body::before {
@@ -73,11 +59,7 @@ head {
   head {
     font-family: "epsilon"; }
   .u-media-trans {
-    width: 1px; }
-  html {
-    font-size: 2.5em; }
-  body {
-    line-height: 1; } }
+    width: 1px; } }
 
 /* $keys: alpha, beta, gamma, delta, epsilon; */
 /* $base: (

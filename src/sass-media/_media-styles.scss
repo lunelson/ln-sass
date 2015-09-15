@@ -41,8 +41,8 @@
 
         // styles, if spec'd
         // @if $column-ratio { .l--col_typo { width: percentage($column-ratio) !important; } }
-        @if _has-keys($media-orig, $alias, 'font-size') { html { font-size: unit-assert(map-get($medium, 'html-scale'), em); } }
-        @if _has-keys($media-orig, $alias, 'line-height') { body { line-height: map-get($medium, 'line-height'); } }
+        @if has-keys($media-orig, $alias, 'font-size') { html { font-size: unit-assert(map-get($medium, 'html-scale'), em); } }
+        @if has-keys($media-orig, $alias, 'line-height') { body { line-height: map-get($medium, 'line-height'); } }
       }
     }
   }
