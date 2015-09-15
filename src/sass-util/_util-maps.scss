@@ -43,15 +43,13 @@
 @function map-get-nested($map, $keys...) {
   @if length($map) == 0 { @return null; }
   @each $key in $keys {
-    @if type-of($map) != 'map' {
-      @return $map;
-    }
+    @if type-of($map) != 'map' { @return $map; }
     $map: map-get($map, $key);
   }
   @return $map;
 }
 
-@function map-get-nested($map, $keys-and-value...) {
+@function map-merge-nested($map, $keys-and-value...) {
   $keys-and-value-length: length($keys-and-value);
   $key-length: $keys-and-value-length - 1;
   $value: nth($keys-and-value, $keys-and-value-length);
@@ -62,7 +60,7 @@
   } @else {
     @for $i from if($value-is-map, 0, 1) through $key-length {
       $new: if($i == 0, $value, (nth($keys-and-value, $keys-and-value-length - $i): $value));
-      $old: if($i == $key-length, $map, map-get-nested($map, slice($keys-and-value, 1, $key-length - $i)...) or ());
+      $old: if($i == $key-length, $map, map-merge-nested($map, slice($keys-and-value, 1, $key-length - $i)...) or ());
       $value: if(type-of($old) == 'map', map-merge($old, $new), $new);
     }
   }
@@ -103,11 +101,11 @@
 
 // aliases
 
-@function _get($args...){ @return map-get-nested($args...); }
-@function _set($args...){ @return map-merge-nested($args...); }
-@function _merge($args...){ @return map-merge-nested($args...); }
-@function _prev-key($args...){ @return map-prev-key($args...); }
-@function _next-key($args...){ @return map-next-key($args...); }
-@function _has-keys($args...){ @return map-has-keys($args...); }
-@function _values($args...){ @return map-values($args...); }
-@function _inspect($args...){ @return map-inspect($args...); }
+@function get($args...){ @return map-get-nested($args...); }
+@function set($args...){ @return map-merge-nested($args...); }
+@function merge($args...){ @return map-merge-nested($args...); }
+@function prev-key($args...){ @return map-prev-key($args...); }
+@function next-key($args...){ @return map-next-key($args...); }
+@function has-keys($args...){ @return map-has-keys($args...); }
+@function values($args...){ @return map-values($args...); }
+@function inspect($args...){ @return map-inspect($args...); }

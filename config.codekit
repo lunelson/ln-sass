@@ -2584,6 +2584,15 @@
 		"outputPathIsSetByUser": 0,
 		"processed": 0
 		},
+	"\/PLANNING.html": {
+		"fileType": 8192,
+		"ignore": 1,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/PLANNING.html",
+		"outputAbbreviatedPath": "No Output Path",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0
+		},
 	"\/PLANNING.md": {
 		"criticStyle": 0,
 		"enableFootnotes": 0,
@@ -2754,15 +2763,31 @@
 		"shouldRunBless": 0,
 		"useLibsass": 1
 		},
-	"\/src\/sass-media\/_media-init.scss": {
+	"\/src\/sass-media\/_media-object.scss": {
 		"createSourceMap": 0,
 		"debugStyle": 0,
 		"decimalPrecision": 10,
 		"fileType": 4,
 		"ignore": 1,
 		"ignoreWasSetByUser": 0,
-		"inputAbbreviatedPath": "\/src\/sass-media\/_media-init.scss",
-		"outputAbbreviatedPath": "\/src\/sass-media\/_media-init.css",
+		"inputAbbreviatedPath": "\/src\/sass-media\/_media-object.scss",
+		"outputAbbreviatedPath": "\/src\/sass-media\/_media-object.css",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"outputStyle": 0,
+		"shouldRunAutoprefixer": 0,
+		"shouldRunBless": 0,
+		"useLibsass": 1
+		},
+	"\/src\/sass-media\/_media-styles.scss": {
+		"createSourceMap": 0,
+		"debugStyle": 0,
+		"decimalPrecision": 10,
+		"fileType": 4,
+		"ignore": 1,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/src\/sass-media\/_media-styles.scss",
+		"outputAbbreviatedPath": "\/src\/sass-media\/_media-styles.css",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
 		"outputStyle": 0,
@@ -3617,6 +3642,15 @@
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0
 		},
+	"\/test\/sass-layout\/index.html": {
+		"fileType": 8192,
+		"ignore": 1,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/test\/sass-layout\/index.html",
+		"outputAbbreviatedPath": "No Output Path",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0
+		},
 	"\/test\/sass-layout\/index.jade": {
 		"compileDebug": 1,
 		"fileType": 512,
@@ -3976,10 +4010,6 @@
 			"active": 0,
 			"flagValue": -1
 			},
-		"futurehostile": {
-			"active": 0,
-			"flagValue": -1
-			},
 		"globalstrict": {
 			"active": 0,
 			"flagValue": -1
@@ -4066,10 +4096,6 @@
 			},
 		"noarg": {
 			"active": 1,
-			"flagValue": -1
-			},
-		"nocomma": {
-			"active": 0,
 			"flagValue": -1
 			},
 		"node": {
@@ -4170,10 +4196,6 @@
 			},
 		"unused": {
 			"active": 1,
-			"flagValue": -1
-			},
-		"varstmt": {
-			"active": 0,
 			"flagValue": -1
 			},
 		"withstmt": {

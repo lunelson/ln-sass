@@ -1,6 +1,7 @@
-// PAGE LAYOUT INIT
 
-@mixin page-init() {
+// LAYOUT PAGE INIT
+
+@mixin layout-page-init() {
 
   // merge defaults
   $base: map-merge((
@@ -12,7 +13,7 @@
     page-left: 1rem
   ), if(variable-exists('base'), $base, ()));
 
-  // retrieve values
+  // get values
   $margin-x: map-get($base, 'margin-x');
   $margin-y: map-get($base, 'margin-y');
   $page-top: map-get($base, 'page-top');
@@ -20,7 +21,7 @@
   $page-bottom: map-get($base, 'page-bottom');
   $page-left: map-get($base, 'page-left');
 
-  // retrieve classes
+  // get classes
   $page: map-get($layout-classes, 'page');
   $wrap: map-get($layout-classes, 'wrap');
   $sect: map-get($layout-classes, 'sect');
@@ -96,9 +97,7 @@
         #{$wrap-fr}, #{$wrap-to} {
           max-width: medium-value('content-width');
         }
-
       }
     }
   }
-
 }

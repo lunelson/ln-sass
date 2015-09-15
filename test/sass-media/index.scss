@@ -20,5 +20,5 @@ $base: (
 @include media-init();
 
 /* $keys: #{map-keys($media)}; */
-/* $base: #{_inspect($base)}; */
-/* $media: #{_inspect($media)}; */
+/* $base: #{inspect($base)}; */
+/* $media: #{inspect($media)}; */

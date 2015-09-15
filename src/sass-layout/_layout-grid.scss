@@ -1,16 +1,16 @@
-// GRID LAYOUT INIT
+// LAYOUT GRID INIT
 
-@mixin grid-init() {
+@mixin layout-grid-init() {
 
   // merge defaults
   $base: map-merge((
     margin-x: 1rem,
   ), if(variable-exists('base'), $base, ()));
 
-  // retrieve values
+  // get values
   $margin-x: map-get($base, 'margin-x');
 
-  // retrieve classes
+  // get classes
   $row: map-get($grid-classes, 'row');
   $col: map-get($grid-classes, 'col');
 
@@ -48,13 +48,15 @@
   @if variable-exists('media') {
 
     @each $alias, $medium in $media {
-      $margin-x: get($medium, 'margin-x');
 
-      @include medium($alias) {
+      @if map-has-key(medium-orig($alias), 'margin-x') {
 
-        // row
-        @if map-has-key($orig, 'margin-x') {
-          .#{$g-pre}#{$g-grid-class} {
+        $margin-x: map-get($medium, 'margin-x');
+
+        @include medium($alias) {
+
+          // row
+          .#{$row} {
             width: calc(100% + #{$margin-x}); // necessary?
             margin-left: $margin-x / -2;
             margin-right: $margin-x / -2;
@@ -69,5 +71,4 @@
       }
     }
   }
-
 }

@@ -1,17 +1,97 @@
 /* test: sass-layout */
+html {
+  font-size: 1em; }
+
+body {
+  line-height: 1.5; }
+
+body::before {
+  width: 0;
+  height: 0;
+  display: block;
+  overflow: hidden;
+  content: 'base'; }
+
+head {
+  font-family: 'base'; }
+
+.u-media-trans {
+  width: 0px;
+  transition: width 1ms; }
+
+@media (min-width: 20em) {
+  body::before {
+    content: "alpha"; }
+  head {
+    font-family: "alpha"; }
+  .u-media-trans {
+    width: 1px; }
+  html {
+    font-size: 1em; }
+  body {
+    line-height: 1.5; } }
+
+@media (min-width: 30em) {
+  body::before {
+    content: "beta"; }
+  head {
+    font-family: "beta"; }
+  .u-media-trans {
+    width: 0px; }
+  html {
+    font-size: 1em; }
+  body {
+    line-height: 1.5; } }
+
+@media (min-width: 48em) {
+  body::before {
+    content: "gamma"; }
+  head {
+    font-family: "gamma"; }
+  .u-media-trans {
+    width: 1px; }
+  html {
+    font-size: 1em; }
+  body {
+    line-height: 1.5; } }
+
+@media (min-width: 64em) {
+  body::before {
+    content: "delta"; }
+  head {
+    font-family: "delta"; }
+  .u-media-trans {
+    width: 0px; }
+  html {
+    font-size: 1em; }
+  body {
+    line-height: 1.5; } }
+
+@media (min-width: 80em) {
+  body::before {
+    content: "epsilon"; }
+  head {
+    font-family: "epsilon"; }
+  .u-media-trans {
+    width: 1px; }
+  html {
+    font-size: 1em; }
+  body {
+    line-height: 1.5; } }
+
 .cf:after, .page:after, .wrap:after, .wrap--left:after, .wrap--right:after, .sect:after {
   content: "";
   display: table;
   clear: both; }
 
 .page-top {
-  padding-top: 1.5rem; }
+  padding-top: 1rem; }
 
 .page-right {
   padding-right: 1rem; }
 
 .page-bottom {
-  padding-bottom: 1.5rem; }
+  padding-bottom: 1rem; }
 
 .page-left {
   padding-left: 1rem; }
@@ -21,8 +101,8 @@
   padding-right: 1rem; }
 
 .page-y {
-  padding-top: 1.5rem;
-  padding-bottom: 1.5rem; }
+  padding-top: 1rem;
+  padding-bottom: 1rem; }
 
 .wrap, .wrap--left, .wrap--right {
   margin-left: auto;
@@ -35,7 +115,37 @@
   margin-right: 0; }
 
 .sect {
-  padding-top: 1.5rem; }
+  padding-top: 1rem; }
+
+@media screen and (min-width: 20em) {
+  .wrap-each,
+  .wrap--alpha,
+  .wrap-from--alpha, .wrap-until--alpha, .wrap-until--beta, .wrap-until--gamma, .wrap-until--delta, .wrap-until--epsilon {
+    max-width: 18rem; } }
+
+@media screen and (min-width: 30em) {
+  .wrap-each,
+  .wrap--beta,
+  .wrap-from--alpha, .wrap-from--beta, .wrap-until--beta, .wrap-until--gamma, .wrap-until--delta, .wrap-until--epsilon {
+    max-width: 28rem; } }
+
+@media screen and (min-width: 48em) {
+  .wrap-each,
+  .wrap--gamma,
+  .wrap-from--alpha, .wrap-from--beta, .wrap-from--gamma, .wrap-until--gamma, .wrap-until--delta, .wrap-until--epsilon {
+    max-width: 46rem; } }
+
+@media screen and (min-width: 64em) {
+  .wrap-each,
+  .wrap--delta,
+  .wrap-from--alpha, .wrap-from--beta, .wrap-from--gamma, .wrap-from--delta, .wrap-until--delta, .wrap-until--epsilon {
+    max-width: 62rem; } }
+
+@media screen and (min-width: 80em) {
+  .wrap-each,
+  .wrap--epsilon,
+  .wrap-from--alpha, .wrap-from--beta, .wrap-from--gamma, .wrap-from--delta, .wrap-from--epsilon, .wrap-until--epsilon {
+    max-width: 78rem; } }
 
 .row {
   width: calc(100% + 1rem);

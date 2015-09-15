@@ -22,9 +22,7 @@ $grid-classes: (
 
 @mixin layout-init() {
 
-  @include page-init();
-
-  @include grid-init();
+  @include layout-page-init();
+  @include layout-grid-init();
 
 }
-

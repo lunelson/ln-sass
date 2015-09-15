@@ -1,6 +1,4 @@
-/////////////
-// GLOBALS //
-/////////////
+// MEDIA GLOBALS
 
 $base: () !default;
 $media: (
@@ -16,4 +14,13 @@ $media-orig: ();
 
 $media-current-alias: null;
 $media-hd-ratio: 3 2 !default;
-$media-transition-class: '.u-media-transition' !default;
+$media-transition-class: '.u-media-trans' !default;
+
+// MEDIA INITS
+
+@mixin media-init() {
+
+  @include media-object-init();
+  @include media-styles-init();
+
+}

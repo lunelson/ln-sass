@@ -1,7 +1,46 @@
-//////////////////////
-// GETTER FUNCTIONS //
-//////////////////////
+// MEDIA INIT HELPER
 
+// normalize medium units
+@function normalize-medium($medium) {
+
+  // correct for font-size and line-height units/non-units
+  $font-size: map-get($medium, 'font-size');
+  $line-height: map-get($medium, 'line-height');
+  @if unit($font-size) != 'px' { $font-size: unit-strip($font-size) * 16px; }
+  @if unit($line-height) == 'px' { $line-height: $line-height / $font-size; }
+  $corrections: (
+    'font-size': $font-size,
+    'line-height': $line-height,
+    'html-scale': unit-strip($font-size / 16px)
+  );
+  // TODO: additional function to resolve breakpoint units and/or versus column-count
+  // $breakpoint: map-get($medium, 'breakpoint');
+  // @if $breakpoint and unit($breakpoint) != 'em' {
+  //   $corrections: map-merge($corrections, ('breakpoint': $breakpoint));
+  // }
+  // merge additional corrections if necessary
+  @each $key, $value in map-remove($medium, 'font-size', 'line-height', 'breakpoint') {
+    @if unit($value) == 'px' { $corrections: map-merge($corrections, ($key: $value / $font-size * 1rem)); }
+  }
+  // return merged corrections
+  @return map-merge($medium, $corrections);
+}
+
+// MEDIA OBJECT GET / MODULATE
+
+// get current medium object
+@function medium($alias: $media-current-alias) {
+  @if $alias { @return map-get($media, $alias); }
+  @return $base;
+}
+
+// get original spec of current medium object
+@function medium-orig($alias: $media-current-alias) {
+  @if $alias { @return map-get($media-orig, $alias); }
+  @return $base-orig;
+}
+
+// get a value from current medium
 @function medium-value($key, $alias: $media-current-alias) { @return if($alias, map-get(medium($alias), $key), map-get($base, $key)); }
 
 @function margin-x($index: 0, $unit: true, $basis: 10) {
@@ -26,9 +65,7 @@
   @return pow($mod, $index/$spread) * if($unit, 1rem, strip(1rem));
 }
 
-//////////////////////
-// HELPER FUNCTIONS //
-//////////////////////
+// MEDIA MIXIN HELPER
 
 // make mq string
 @function media-query-string($alias1: null, $alias2: null) {
@@ -37,21 +74,7 @@
     + if($alias2, ' and (max-width: #{get($media, $alias2, breakpoint) - 0.001})', '');
 }
 
-// get current medium object
-@function medium($alias: $media-current-alias) {
-  @if $alias { @return map-get($media, $alias); }
-  @return $base;
-}
-
-// get original spec of current medium object
-@function medium-orig($alias: $media-current-alias) {
-  @if $alias { @return map-get($media-orig, $alias); }
-  @return $base-orig;
-}
-
-////////////
-// MIXINS //
-////////////
+// MEDIA MIXIN
 
 // single query
 @mixin media-single($args...) {
@@ -99,6 +122,8 @@
 }
 // alias
 @mixin medium($args...){ @include media($args...) { @content; } }
+
+// HIDPI COMBINATOR MIXIN
 
 // hidpi / retina query; should combine with media() via nesting
 @mixin hidpi($ratio: $media-hd-ratio) {

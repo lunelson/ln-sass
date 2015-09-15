@@ -2,5 +2,9 @@
 
 @import '../../src/sass-util';
 @import '../../src/sass-layout';
+@import '../../src/sass-media';
+
+@include media-init();
 
 @include layout-init();
+
