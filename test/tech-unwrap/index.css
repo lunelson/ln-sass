@@ -45,11 +45,8 @@ a span.target {
 body {
   margin: 0;
   padding: 0;
-  border-right: 20rem solid rgba(173, 216, 230, 0.5);
+  border-right: 10rem solid rgba(173, 216, 230, 0.5);
   border-left: 4rem solid rgba(173, 216, 230, 0.5); }
-
-.pad {
-  padding: 1px 0; }
 
 .wrap {
   margin-right: auto;
@@ -59,38 +56,87 @@ body {
   .wrap-left {
     margin-left: 0; }
 
+div {
+  padding: 1px 0;
+  margin-top: 0.25em;
+  margin-bottom: 0.25em; }
+
+p {
+  margin-top: 0.25em;
+  margin-bottom: 0.25em; }
+
 .unwrap {
-  width: calc(100vw - (20rem + 4rem));
-  margin-right: calc((100% - 100vw + (20rem + 4rem))/2);
-  margin-left: calc((100% - 100vw + (20rem + 4rem))/2); }
+  width: calc(100vw - (10rem + 4rem));
+  margin-right: calc((100% - 100vw + (10rem + 4rem))/2);
+  margin-left: calc((100% - 100vw + (10rem + 4rem))/2); }
+  .wrap-right > .unwrap {
+    margin-right: 0;
+    margin-left: calc(100% - (100vw - (10rem + 4rem))); }
+  .wrap-left > .unwrap {
+    margin-right: calc(100% - (100vw - (10rem + 4rem)));
+    margin-left: 0; }
 
 .unwrap-right {
-  width: calc((100vw + 100% - (20rem + 4rem))/2);
-  margin-right: calc((100% - 100vw + (20rem + 4rem))/2);
+  width: calc((100vw + 100% - (10rem + 4rem))/2);
+  margin-right: calc((100% - 100vw + (10rem + 4rem))/2);
   margin-left: 0; }
+  .wrap-left > .unwrap-right {
+    width: calc(100vw - (10rem + 4rem));
+    margin-left: 0;
+    margin-right: calc(100% - (100vw - (10rem + 4rem))); }
+  .wrap-right > .unwrap-right {
+    width: 100%;
+    margin-right: 0;
+    margin-left: 0; }
 
 .unwrap-left {
-  width: calc((100vw + 100% - (20rem + 4rem))/2);
-  margin-left: calc((100% - 100vw + (20rem + 4rem))/2);
+  width: calc((100vw + 100% - (10rem + 4rem))/2);
+  margin-left: calc((100% - 100vw + (10rem + 4rem))/2);
   margin-right: 0; }
+  .wrap-right > .unwrap-left {
+    width: calc(100vw - (10rem + 4rem));
+    margin-right: 0;
+    margin-left: calc(100% - (100vw - (10rem + 4rem))); }
+  .wrap-left > .unwrap-left {
+    width: 100%;
+    margin-right: 0;
+    margin-left: 0; }
 
 .unwrap-full {
   width: 100vw;
-  margin-right: calc((100% - 100vw - (20rem - 4rem))/2);
-  margin-left: calc((100% - 100vw + (20rem - 4rem))/2); }
+  margin-left: calc((100% - 100vw + (10rem - 4rem))/2);
+  margin-right: calc((100% - 100vw - (10rem - 4rem))/2); }
+  .wrap-left > .unwrap-full {
+    margin-left: -4rem;
+    margin-right: calc(100% - (100vw - 4rem)); }
+  .wrap-right > .unwrap-full {
+    margin-right: -10rem;
+    margin-left: calc(100% - (100vw - 10rem)); }
 
 .unwrap-full-right {
-  width: calc((100vw + 100% + (20rem - 4rem))/2);
-  margin-right: calc((100% - 100vw - (20rem - 4rem))/2);
+  width: calc((100vw + 100% + (10rem - 4rem))/2);
+  margin-right: calc((100% - 100vw - (10rem - 4rem))/2);
   margin-left: 0; }
+  .wrap-left .unwrap-full-right {
+    width: calc(100vw - 4rem);
+    margin-right: calc((100% - 100vw) + 4rem); }
+  .wrap-right > .unwrap-full-right {
+    width: calc(100% + 10rem);
+    margin-right: -10rem; }
 
 .unwrap-full-left {
-  width: calc((100vw + 100% - (20rem - 4rem))/2);
+  width: calc((100vw + 100% - (10rem - 4rem))/2);
   margin-right: 0;
-  margin-left: calc((100% - 100vw + (20rem - 4rem))/2); }
+  margin-left: calc((100% - 100vw + (10rem - 4rem))/2); }
+  .wrap-right .unwrap-full-left {
+    width: calc(100vw - 10rem);
+    margin-left: calc((100% - 100vw) + 10rem); }
+  .wrap-left > .unwrap-full-left {
+    width: calc(100% + 4rem);
+    margin-left: -4rem; }
 
 .pink {
-  max-width: 40rem;
+  max-width: 30rem;
   background-color: pink; }
 
 .shaded {
