@@ -59,32 +59,35 @@ head {
   .u-media-trans {
     width: 1px; } }
 
-.cf:after, .page:after, .wrap:after, .sect:after {
+.cf:after,
+.wrap:after,
+[class*="wrap--"]:after,
+[class*="page--"]:after {
   content: "";
   display: table;
   clear: both; }
 
-.page-top {
+.page--top {
   padding-top: 1rem; }
 
-.page-right {
+.page--right {
   padding-right: 1rem; }
 
-.page-bottom {
+.page--bottom {
   padding-bottom: 1rem; }
 
-.page-left {
+.page--left {
   padding-left: 1rem; }
 
-.page-x {
+.page--x, .page--h {
   padding-left: 1rem;
   padding-right: 1rem; }
 
-.page-y {
+.page--y, .page--v {
   padding-top: 1rem;
   padding-bottom: 1rem; }
 
-.wrap {
+.wrap, [class*="wrap--"] {
   margin-left: auto;
   margin-right: auto; }
 
@@ -94,54 +97,55 @@ head {
 .wrap--right {
   margin-right: 0; }
 
-.sect {
-  padding-top: 1rem; }
-
 @media screen and (min-width: 20em) {
-  .wrap-each,
+  .wrap--each,
   .wrap--alpha,
-  .wrap-from--alpha, .wrap-until--alpha, .wrap-until--beta, .wrap-until--gamma, .wrap-until--delta, .wrap-until--epsilon {
+  .wrap--from-alpha, .wrap--to-alpha, .wrap--to-beta, .wrap--to-gamma, .wrap--to-delta, .wrap--to-epsilon {
     max-width: 18rem; } }
 
 @media screen and (min-width: 30em) {
-  .wrap-each,
+  .wrap--each,
   .wrap--beta,
-  .wrap-from--alpha, .wrap-from--beta, .wrap-until--beta, .wrap-until--gamma, .wrap-until--delta, .wrap-until--epsilon {
+  .wrap--from-alpha, .wrap--from-beta, .wrap--to-beta, .wrap--to-gamma, .wrap--to-delta, .wrap--to-epsilon {
     max-width: 28rem; } }
 
 @media screen and (min-width: 48em) {
-  .wrap-each,
+  .wrap--each,
   .wrap--gamma,
-  .wrap-from--alpha, .wrap-from--beta, .wrap-from--gamma, .wrap-until--gamma, .wrap-until--delta, .wrap-until--epsilon {
+  .wrap--from-alpha, .wrap--from-beta, .wrap--from-gamma, .wrap--to-gamma, .wrap--to-delta, .wrap--to-epsilon {
     max-width: 46rem; } }
 
 @media screen and (min-width: 64em) {
-  .wrap-each,
+  .wrap--each,
   .wrap--delta,
-  .wrap-from--alpha, .wrap-from--beta, .wrap-from--gamma, .wrap-from--delta, .wrap-until--delta, .wrap-until--epsilon {
+  .wrap--from-alpha, .wrap--from-beta, .wrap--from-gamma, .wrap--from-delta, .wrap--to-delta, .wrap--to-epsilon {
     max-width: 62rem; } }
 
 @media screen and (min-width: 80em) {
-  .wrap-each,
+  .wrap--each,
   .wrap--epsilon,
-  .wrap-from--alpha, .wrap-from--beta, .wrap-from--gamma, .wrap-from--delta, .wrap-from--epsilon, .wrap-until--epsilon {
+  .wrap--from-alpha, .wrap--from-beta, .wrap--from-gamma, .wrap--from-delta, .wrap--from-epsilon, .wrap--to-epsilon {
     max-width: 78rem; } }
 
-.row {
+.grid, [class*="grid--"] {
   width: calc(100% + 1rem);
-  position: relative;
   margin-left: -0.5rem;
   margin-right: -0.5rem;
   font-size: 0rem; }
-  .row:before {
+  .grid:before, [class*="grid--"]:before {
     display: none; }
-  .row > * {
+  .grid > *, [class*="grid--"] > * {
     font-size: 1rem; }
 
-.col {
+.cell, [class*="cell--"] {
   width: 100%;
   padding-left: 0.5rem;
   padding-right: 0.5rem;
   display: inline-block;
   text-align: left;
   vertical-align: top; }
+
+.test {
+  margin: 0.7071067812rem;
+  margin: 1rem;
+  margin: 1.4142135624rem; }

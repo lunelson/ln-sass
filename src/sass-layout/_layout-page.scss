@@ -1,7 +1,7 @@
 
 // LAYOUT PAGE INIT
 
-@mixin layout-page-init() {
+@mixin page-init() {
 
   // merge defaults
   $base: map-merge((
@@ -24,29 +24,32 @@
   // get classes
   $page: map-get($layout-classes, 'page');
   $wrap: map-get($layout-classes, 'wrap');
-  $sect: map-get($layout-classes, 'sect');
 
   // do clearfix on all
-  .cf, .#{$page}, .#{$wrap}, .#{$sect} { @include clearfix(); }
+  .cf,
+  .#{$wrap},
+  [class*="#{$wrap}--"],
+  [class*="#{$page}--"] {
+    @include clearfix();
+  }
 
   // base page
-  .#{$page}-top { padding-top: $page-top; }
-  .#{$page}-right { padding-right: $page-right; }
-  .#{$page}-bottom { padding-bottom: $page-bottom; }
-  .#{$page}-left { padding-left: $page-left; }
-  .#{$page}-x { padding-left: $page-left; padding-right: $page-right; }
-  .#{$page}-y { padding-top: $page-top; padding-bottom: $page-bottom; }
+  .#{$page}--top { padding-top: $page-top; }
+  .#{$page}--right { padding-right: $page-right; }
+  .#{$page}--bottom { padding-bottom: $page-bottom; }
+  .#{$page}--left { padding-left: $page-left; }
+  .#{$page}--x { padding-left: $page-left; padding-right: $page-right; }
+  .#{$page}--y { padding-top: $page-top; padding-bottom: $page-bottom; }
+  .#{$page}--h { @extend .#{$page}--x; }
+  .#{$page}--v { @extend .#{$page}--y; }
 
   // base wrap
-  .#{$wrap} {
+  .#{$wrap}, [class*="#{$wrap}--"] {
     @if $layout-alignment != left { margin-left: auto; }
     @if $layout-alignment != right { margin-right: auto; }
   }
   .#{$wrap}--left { margin-left: 0; }
   .#{$wrap}--right { margin-right: 0; }
-
-  // base sect
-  .#{$sect} { padding-top: $margin-y; }
 
   @if variable-exists('media') {
 
@@ -63,36 +66,28 @@
         $orig: medium-orig();
 
         // page
-        .#{$page}-top { @if map-has-key($orig, 'page-top') { padding-top: $page-top; } }
-        .#{$page}-right { @if map-has-key($orig, 'page-right') { padding-right: $page-right; } }
-        .#{$page}-bottom { @if map-has-key($orig, 'page-bottom') { padding-bottom: $page-bottom; } }
-        .#{$page}-left { @if map-has-key($orig, 'page-left') { padding-left: $page-left; } }
-        .#{$page}-x {
+        .#{$page}--top { @if map-has-key($orig, 'page-top') { padding-top: $page-top; } }
+        .#{$page}--right { @if map-has-key($orig, 'page-right') { padding-right: $page-right; } }
+        .#{$page}--bottom { @if map-has-key($orig, 'page-bottom') { padding-bottom: $page-bottom; } }
+        .#{$page}--left { @if map-has-key($orig, 'page-left') { padding-left: $page-left; } }
+        .#{$page}--x {
           @if map-has-key($orig, 'page-left') { padding-left: $page-left; }
           @if map-has-key($orig, 'page-right') { padding-right: $page-right; }
         }
-        .#{$page}-y {
+        .#{$page}--y {
           @if map-has-key($orig, 'page-top') { padding-top: $page-top; }
           @if map-has-key($orig, 'page-bottom') { padding-bottom: $page-bottom; }
         }
 
-        // sect
-        @if map-has-key($orig, 'margin-y') {
-          .#{$sect} {
-            padding-top: $margin-y / 2;
-            padding-bottom: $margin-y / 2;
-          }
-        }
-
         // wrap
         $media-keys: map-keys($media);
-        $wrap-to: (); $wrap-to-string: '-until--';
-        $wrap-fr: (); $wrap-fr-string: '-from--';
+        $wrap-to: (); $wrap-to-string: '--to-';
+        $wrap-fr: (); $wrap-fr-string: '--from-';
         @each $alias in slice($media-keys, 1, index($media-keys, $alias)) {
           $wrap-fr: append($wrap-fr, unquote('.#{$wrap}#{$wrap-fr-string}#{$alias}'), 'comma'); }
         @each $alias in slice($media-keys, index($media-keys, $alias), length($media-keys)) {
           $wrap-to: append($wrap-to, unquote('.#{$wrap}#{$wrap-to-string}#{$alias}'), 'comma'); }
-        .#{$wrap}-each,
+        .#{$wrap}--each,
         .#{$wrap}--#{$alias},
         #{$wrap-fr}, #{$wrap-to} {
           max-width: medium-value('content-width');

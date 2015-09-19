@@ -1,6 +1,6 @@
 // LAYOUT GRID INIT
 
-@mixin layout-grid-init() {
+@mixin grid-init() {
 
   // merge defaults
   $base: map-merge((
@@ -11,14 +11,14 @@
   $margin-x: map-get($base, 'margin-x');
 
   // get classes
-  $row: map-get($grid-classes, 'row');
-  $col: map-get($grid-classes, 'col');
+  $grid: map-get($layout-classes, 'grid');
+  $cell: map-get($layout-classes, 'cell');
 
-  // row
-  .#{$row} {
+  // grid
+  .#{$grid}, [class*="#{$grid}--"] {
     &:before { display: none; } // in case of salvattore
     width: calc(100% + #{$margin-x}); // necessary?
-    position: relative; // avoidable?
+    // position: relative; // avoidable?
     margin-left: $margin-x / -2;
     margin-right: $margin-x / -2;
     @if $grid-is-float {
@@ -29,15 +29,15 @@
     }
   }
 
-  // col
-  .#{$col} {
+  // cell
+  .#{$cell}, [class*="#{$cell}--"] {
     width: 100%;
     padding-left: $margin-x / 2;
     padding-right: $margin-x / 2;
     @if $grid-is-float {
-      min-height: 1px; // http://css-tricks.com/make-sure-columns-dont-collapse-horizontally/
       display: block;
       float: $grid-alignment;
+      min-height: 1px; // http://css-tricks.com/make-sure-columns-dont-collapse-horizontally/
     } @else {
       display: inline-block;
       text-align: $grid-alignment;
@@ -55,15 +55,15 @@
 
         @include medium($alias) {
 
-          // row
-          .#{$row} {
+          // grid
+          .#{$grid} {
             width: calc(100% + #{$margin-x}); // necessary?
             margin-left: $margin-x / -2;
             margin-right: $margin-x / -2;
           }
 
-          // col
-          .#{$col} {
+          // cell
+          .#{$cell} {
             padding-left: $margin-x / 2;
             padding-right: $margin-x / 2;
           }

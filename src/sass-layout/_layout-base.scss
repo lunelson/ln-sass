@@ -5,24 +5,22 @@ $layout-alignment: null !default;
 $layout-classes: (
   page: 'page',
   wrap: 'wrap',
+  grid: 'grid',
+  cell: 'cell',
   sect: 'sect',
 ) !default;
 
 $grid-alignment: left;
-
 $grid-is-float: false;
 
-$grid-classes: (
-  row: 'row',
-  pad: 'pad',
-  col: 'col'
-);
+$layout-mixins: ();
+
 
 // LAYOUT INITS
 
 @mixin layout-init() {
 
-  @include layout-page-init();
-  @include layout-grid-init();
+  @include page-init();
+  @include grid-init();
 
 }

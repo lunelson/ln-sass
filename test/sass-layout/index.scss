@@ -1,10 +1,83 @@
 /* test: sass-layout */
 
+@import '../../lib/math/math';
 @import '../../src/sass-util';
 @import '../../src/sass-layout';
 @import '../../src/sass-media';
 
 @include media-init();
-
 @include layout-init();
 
+$mixins: ();
+
+@mixin dummy($arg: 0) {
+
+  $id: get($mixins, 'dummy', $arg);
+
+  @if not $id {
+    $id: unique-id();
+    $mixins: merge($mixins, 'dummy', $arg, $id) !global;
+    @at-root %#{$id} {
+      margin: $arg + em;
+    }
+  }
+  @extend %#{$id};
+}
+
+.test {
+  margin: margin(-1);
+  margin: margin();
+  margin: margin(1);
+}
+
+/*
+
+.page
+.page--h, .page--x
+.page--v, .page--y
+.page--left
+
+page:
+h v x y top right bottom left
+
+wrap:
+join(map-keys($media), (each))
+to from
+
+.wrap, [wrap--]
+.wrap--each
+.wrap--alpha
+.wrap--to-alpha
+.wrap--from-beta
+.wrap--from-delta
+
+row, cell:
+sm lg xl
+
+.row--0
+.cell--0
+
+.row--lg
+.cell--lg
+
+.grid--0
+
+.cell--0
+.cell--sm
+.cell--lg
+
+.sect--lg
+.sect--sm
+
+header.site-header(role="banner" class="page")
+
+@include wrap(each)
+
+.test {
+    @include grid(-1) {
+        .sub {
+            @include cell();
+        }
+    }
+}
+ */
