@@ -1,9 +1,21 @@
 /* test: sass-layout */
 
 @import '../../lib/math/math';
-@import '../../src/sass-util';
-@import '../../src/sass-layout';
-@import '../../src/sass-media';
+@import '../../src/ln-util/all';
+@import '../../src/ln-media/all';
+@import '../../src/ln-layout/all';
+
+$media: (
+  alpha: (breakpoint: 20em),
+  beta: (breakpoint: 30em),
+  gamma: (breakpoint: 48em),
+  delta: (
+    breakpoint: 64em,
+    margin-x: 3rem
+  ),
+  epsilon: (breakpoint: 80em)
+);
+
 
 @include media-init();
 @include layout-init();
@@ -30,6 +42,28 @@ $mixins: ();
   margin: margin(1);
 }
 
+@mixin grid($n: 0) {
+  @extend .#{map-get($layout-classes, 'grid')};
+  @include media((for: margin-x)) {
+    margin-left: margin-x($n) / -2;
+    margin-right: margin-x($n) / -2;
+  }
+}
+
+@mixin cell($n: 0) {
+  @extend .#{map-get($layout-classes, 'cell')};
+  @include media((for: margin-x)) {
+    padding-left: margin-x($n) / 2;
+    padding-right: margin-x($n) / 2;
+  }
+}
+
+.grid--lg {
+  @include grid(-2);
+}
+.cell--lg {
+  @include cell(-2);
+}
 /*
 
 .page

@@ -3,22 +3,19 @@
 @mixin grid-init() {
 
   // merge defaults
-  $base: map-merge((
-    margin-x: 1rem,
-  ), if(variable-exists('base'), $base, ()));
+  $base: map-merge(( margin-x: 1rem, ), if(variable-exists('base'), $base, ()));
 
-  // get values
-  $margin-x: map-get($base, 'margin-x');
-
-  // get classes
+  // get values and classes
+  // $margin-x: map-get($base, 'margin-x');
+  $margin-x: margin-x();
   $grid: map-get($layout-classes, 'grid');
   $cell: map-get($layout-classes, 'cell');
 
   // grid
-  .#{$grid}, [class*="#{$grid}--"] {
+  // [class*="#{$grid}--"] { @extend .#{$grid}; }
+  .#{$grid} {
     &:before { display: none; } // in case of salvattore
     width: calc(100% + #{$margin-x}); // necessary?
-    // position: relative; // avoidable?
     margin-left: $margin-x / -2;
     margin-right: $margin-x / -2;
     @if $grid-is-float {
@@ -26,21 +23,22 @@
     } @else {
       font-size: 0rem;
       & > * { font-size: 1rem; }
+      text-align: $grid-alignment;
     }
   }
 
   // cell
-  .#{$cell}, [class*="#{$cell}--"] {
-    width: 100%;
+  // [class*="#{$cell}--"] { @extend .#{$cell}; }
+  .#{$cell} {
+    min-height: 1px; // http://css-tricks.com/make-sure-columns-dont-collapse-horizontally/
     padding-left: $margin-x / 2;
     padding-right: $margin-x / 2;
     @if $grid-is-float {
       display: block;
       float: $grid-alignment;
-      min-height: 1px; // http://css-tricks.com/make-sure-columns-dont-collapse-horizontally/
     } @else {
+      width: 100%;
       display: inline-block;
-      text-align: $grid-alignment;
       vertical-align: top;
     }
   }
@@ -51,9 +49,11 @@
 
       @if map-has-key(medium-orig($alias), 'margin-x') {
 
-        $margin-x: map-get($medium, 'margin-x');
-
         @include medium($alias) {
+
+          // $margin-x: map-get($medium, 'margin-x');
+          // $margin-x: medium-value('margin-x');
+          $margin-x: margin-x();
 
           // grid
           .#{$grid} {
