@@ -1,6 +1,38 @@
-/////////////////
-// GRID MIXINS //
-/////////////////
+// GRID MIXINS
+
+// grid
+@mixin grid($n: 0, $columns: null) {
+  @if $columns { &::before { content: '#{$columns} .#{map-get($layout-classes, 'cell')}'; } }
+  @extend .#{map-get($layout-classes, 'grid')};
+  @include media((for: margin-x)) {
+    margin-left: margin-x($n) / -2;
+    margin-right: margin-x($n) / -2;
+  }
+}
+
+// cell
+@mixin cell($n: 0) {
+  @extend .#{map-get($layout-classes, 'cell')};
+  @include media((for: margin-x)) {
+    padding-left: margin-x($n) / 2;
+    padding-right: margin-x($n) / 2;
+  }
+}
+
+// span; alias: width
+@mixin span($span: 1 1, $options: ()) { @include span-helper(map-merge((span: $span), $options)...); }
+@mixin span-helper($span, $right: null, $left: null, $cycle: null, $out: null) {
+
+  $n: nth($span, 1); $d: nth($span, 2);
+  width: $n / $d * 100%;
+
+  @if $right { margin-right: nth($right, 1) / if(length($right) > 1, nth($right, 2), $d) * 100%; }
+  @if $left { margin-left: nth($left, 1) / if(length($left) > 1, nth($left, 2), $d) * 100%; }
+  @if $cycle { &:nth-child(#{$cycle}n+1) { clear: left; } }
+  @else if $out { position: absolute; #{opposite($out)}: 100%; }
+}
+
+
 
 @mixin row-size($cols) { &::before { content: '#{$cols} .#{$col}'; } }
 // alias

@@ -131,6 +131,7 @@ head {
   width: calc(100% + 1rem);
   margin-left: -0.5rem;
   margin-right: -0.5rem;
+  position: relative;
   font-size: 0rem;
   text-align: left; }
   .grid:before, .grid--lg:before {
@@ -154,11 +155,6 @@ head {
   .cell, .cell--lg {
     padding-left: 1.5rem;
     padding-right: 1.5rem; } }
-
-.test {
-  margin: 0.7071067812rem;
-  margin: 1rem;
-  margin: 1.4142135624rem; }
 
 .grid--lg {
   margin-left: -0.25rem;

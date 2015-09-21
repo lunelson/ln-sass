@@ -36,28 +36,6 @@ $mixins: ();
   @extend %#{$id};
 }
 
-.test {
-  margin: margin(-1);
-  margin: margin();
-  margin: margin(1);
-}
-
-@mixin grid($n: 0) {
-  @extend .#{map-get($layout-classes, 'grid')};
-  @include media((for: margin-x)) {
-    margin-left: margin-x($n) / -2;
-    margin-right: margin-x($n) / -2;
-  }
-}
-
-@mixin cell($n: 0) {
-  @extend .#{map-get($layout-classes, 'cell')};
-  @include media((for: margin-x)) {
-    padding-left: margin-x($n) / 2;
-    padding-right: margin-x($n) / 2;
-  }
-}
-
 .grid--lg {
   @include grid(-2);
 }

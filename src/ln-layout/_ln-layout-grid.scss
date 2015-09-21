@@ -18,6 +18,7 @@
     width: calc(100% + #{$margin-x}); // necessary?
     margin-left: $margin-x / -2;
     margin-right: $margin-x / -2;
+    position: relative; // for 'out' positioned cells which are absolute
     @if $grid-is-float {
       @include clearfix();
     } @else {
