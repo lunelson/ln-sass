@@ -1,4 +1,7 @@
-// MEDIA INIT HELPER
+///////////////////////
+// MEDIA INIT HELPER //
+///////////////////////
+
 
 // normalize medium units
 @function normalize-medium($medium) {
@@ -26,37 +29,57 @@
   @return map-merge($medium, $corrections);
 }
 
-// MEDIA OBJECT GET / MODULATE
 
-// get current medium object
+/////////////////////////////////
+// MEDIA OBJECT GET / MODULATE //
+/////////////////////////////////
+
+
+// medium object
 @function medium($alias: $media-current-alias) {
   @if $alias { @return map-get($media, $alias); }
   @return $base;
 }
 
-// get original spec of current medium object
+// medium original (spec) object
 @function medium-orig($alias: $media-current-alias) {
   @if $alias { @return map-get($media-orig, $alias); }
   @return $base-orig;
 }
 
-// get a value from current medium
-@function medium-value($key, $alias: $media-current-alias) { @return if($alias, map-get(medium($alias), $key), map-get($base, $key)); }
+// medium value
+@function medium-value($key, $alias: $media-current-alias) {
+  @return if($alias, map-get(medium($alias), $key), map-get($base, $key));
+}
 
+// medium original (spec) value
+@function medium-orig-value($key, $alias: $media-current-alias) {
+  @return if($alias, map-get(medium-orig($alias), $key), map-get($base-orig, $key));
+}
+
+// margin-x
 @function margin-x($index: 0, $unit: true, $basis: 10) {
-  @if type-of($index) == 'string' { @return medium-value('margin-x', $index); }
-  @if not unitless($index) { @return $index; }
+  // exceptions
+  @if not $index { @return 0; } // if null
+  @if type-of($index) == 'string' { @return medium-value('margin-x', $index); } // if medium-alias
+  @if not unitless($index) { @return $index; } // if united, return number
+  // modulation
   $mod: medium-value('margin-x-mod'); $spread: ceil($basis/6);
   @return pow($mod, $index/$spread) * if($unit, medium-value('margin-x'), strip(medium-value('margin-x')));
 }
 
+// margin-y
 @function margin-y($index: 0, $unit: true, $basis: 10) {
+  // exceptions
+  @if not $index { @return 0; } // if null
   @if type-of($index) == 'string' { @return medium-value('margin-y', $index); }
   @if not unitless($index) { @return $index; }
+  // modulation
   $mod: medium-value('margin-y-mod'); $spread: ceil($basis/6);
   @return pow($mod, $index/$spread) * if($unit, medium-value('margin-y'), strip(medium-value('margin-y')));
 }
-@function margin($args...){ @return margin-y($args...); } // alias; default 'margin' is vertical
+
+@function margin($args...){ @return margin-x($args...); } // NB default margin is x / horizontal
 
 @function font-size($index: 0, $unit: true, $basis: 10) {
   @if type-of($index) == 'string' { @return medium-value('font-size', $index); }
@@ -65,16 +88,18 @@
   @return pow($mod, $index/$spread) * if($unit, 1rem, strip(1rem));
 }
 
-// MEDIA MIXIN HELPER
 
-// make mq string
+//////////////////
+// MEDIA MIXINS //
+//////////////////
+
+
+// media query string
 @function media-query-string($alias1: null, $alias2: null) {
   @return 'screen'
     + if($alias1, ' and (min-width: #{get($media, $alias1, breakpoint)})', '')
     + if($alias2, ' and (max-width: #{get($media, $alias2, breakpoint) - 0.001})', '');
 }
-
-// MEDIA MIXIN
 
 // single query
 @mixin media-single($args...) {
@@ -120,10 +145,15 @@
   @if type-of($arg1) == 'map' { @include media-multiple($arg1...) { @content; } }
   @else { @include media-single($args...) { @content; } }
 }
+
 // alias
 @mixin medium($args...){ @include media($args...) { @content; } }
 
-// HIDPI COMBINATOR MIXIN
+
+////////////////////////////
+// HIDPI COMBINATOR MIXIN //
+////////////////////////////
+
 
 // hidpi / retina query; should combine with media() via nesting
 @mixin hidpi($ratio: $media-hd-ratio) {

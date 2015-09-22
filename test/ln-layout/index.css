@@ -15,7 +15,7 @@ body::before {
 head {
   font-family: 'base'; }
 
-.u-media-trans {
+.media-trans {
   width: 0px;
   transition: width 1ms; }
 
@@ -24,7 +24,7 @@ head {
     content: "alpha"; }
   head {
     font-family: "alpha"; }
-  .u-media-trans {
+  .media-trans {
     width: 1px; } }
 
 @media (min-width: 30em) {
@@ -32,7 +32,7 @@ head {
     content: "beta"; }
   head {
     font-family: "beta"; }
-  .u-media-trans {
+  .media-trans {
     width: 0px; } }
 
 @media (min-width: 48em) {
@@ -40,7 +40,7 @@ head {
     content: "gamma"; }
   head {
     font-family: "gamma"; }
-  .u-media-trans {
+  .media-trans {
     width: 1px; } }
 
 @media (min-width: 64em) {
@@ -48,7 +48,7 @@ head {
     content: "delta"; }
   head {
     font-family: "delta"; }
-  .u-media-trans {
+  .media-trans {
     width: 0px; } }
 
 @media (min-width: 80em) {
@@ -56,7 +56,7 @@ head {
     content: "epsilon"; }
   head {
     font-family: "epsilon"; }
-  .u-media-trans {
+  .media-trans {
     width: 1px; } }
 
 .cf:after,
@@ -139,7 +139,7 @@ head {
   .grid > *, .grid--lg > * {
     font-size: 1rem; }
 
-.cell, .cell--lg {
+.cell, .cell--lg, .test {
   min-height: 1px;
   padding-left: 0.5rem;
   padding-right: 0.5rem;
@@ -152,7 +152,7 @@ head {
     width: calc(100% + 3rem);
     margin-left: -1.5rem;
     margin-right: -1.5rem; }
-  .cell, .cell--lg {
+  .cell, .cell--lg, .test {
     padding-left: 1.5rem;
     padding-right: 1.5rem; } }
 
@@ -171,6 +171,16 @@ head {
     .cell--lg {
       padding-left: 0.75rem;
       padding-right: 0.75rem; } }
+
+.test {
+  padding-left: 0;
+  padding-right: 0;
+  width: 33.3333333333%;
+  margin-right: 50%; }
+  @media screen and (min-width: 64em) {
+    .test {
+      padding-left: 0;
+      padding-right: 0; } }
 
 /*
 
