@@ -1,4 +1,7 @@
-// GRID MIXINS
+/////////////////
+// GRID MIXINS //
+/////////////////
+
 
 // grid
 @mixin grid($n: 0, $columns: null) {
@@ -11,70 +14,28 @@
 }
 
 // cell
-@mixin cell($n: 0) {
+@mixin cell($n: 0, $width...) {
   @extend .#{map-get($layout-classes, 'cell')};
   @include media((for: margin-x)) {
     padding-left: margin-x($n) / 2;
     padding-right: margin-x($n) / 2;
   }
+  @if length($width) > 0 { @include width($width...); }
 }
 
-// span; alias: width
-@mixin span($span: 1 1, $options: ()) { @include span-helper(map-merge((span: $span), $options)...); }
-@mixin span-helper($span, $right: null, $left: null, $cycle: null, $out: null) {
-
+// width / span
+@mixin width($span: 1 1, $options: ()) { @include width-helper(map-merge((span: $span), $options)...); }
+@mixin width-helper($span, $right: null, $left: null, $out: null, $cycle: null) {
   $n: nth($span, 1); $d: nth($span, 2);
+
   width: $n / $d * 100%;
 
   @if $right { margin-right: nth($right, 1) / if(length($right) > 1, nth($right, 2), $d) * 100%; }
   @if $left { margin-left: nth($left, 1) / if(length($left) > 1, nth($left, 2), $d) * 100%; }
   @if $cycle { &:nth-child(#{$cycle}n+1) { clear: left; } }
-  @else if $out { position: absolute; #{opposite($out)}: 100%; }
+  @else if $out { position: absolute; #{opposite($out)}: 100%; top: auto; }
 }
 
-
-
-@mixin row-size($cols) { &::before { content: '#{$cols} .#{$col}'; } }
-// alias
-@mixin row-width($args...) { @include row-size($args...); }
-
-@mixin row-set($args...) {
-  @extend .#{$row};
-  @if length($args) > 0 { @include row-size($args...); }
-}
-
-@mixin col-size($span: 1 1, $right: null, $left: null, $cycle: null, $out: null) {
-  @if type-of($span) == 'map' { @include col-size($span...); } @else {
-
-  $n: nth($span, 1); $d: nth($span, 2);
-  width: $n / $d * 100%;
-
-  @if $right { margin-right: nth($right, 1) / if(length($right) > 1, nth($right, 2), $d) * 100%; }
-  @if $left { margin-left: nth($left, 1) / if(length($left) > 1, nth($left, 2), $d) * 100%; }
-  @if $cycle { &:nth-child(#{$cycle}n+1) { clear: left; } }
-  @else if $out { position: absolute; #{opposite($out)}: 100%; }
-
-  }
-}
-// alias
-@mixin col-width($args...) { @include col-size($args...); }
-@mixin width($args...) { @include col-size($args...); }
-
-
-@mixin col-set($args...) {
-  @extend .#{$col};
-  @if length($args) > 0 { @include col-size($args...); }
-}
-
-
-//        _   _ _        _                         _
-//       | | (_) |      | |                       | |
-//  _   _| |_ _| |______| | __ _ _   _  ___  _   _| |_
-// | | | | __| | |______| |/ _` | | | |/ _ \| | | | __|
-// | |_| | |_| | |      | | (_| | |_| | (_) | |_| | |_
-//  \__,_|\__|_|_|      |_|\__,_|\__, |\___/ \__,_|\__|
-//                                __/ |
-//                               |___/
 
 /////////////
 // Z-INDEX //
@@ -94,15 +55,6 @@ $z-indexes: (
 /////////////////
 // POSITIONING //
 /////////////////
-
-//  _                         _
-// | |                       | |
-// | | __ _ _   _  ___  _   _| |_
-// | |/ _` | | | |/ _ \| | | | __|
-// | | (_| | |_| | (_) | |_| | |_
-// |_|\__,_|\__, |\___/ \__,_|\__|
-//           __/ |
-//          |___/
 
 @mixin position($pos, $args...) {
   position: $pos;
