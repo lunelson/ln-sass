@@ -4,21 +4,21 @@
 
 
 // grid
-@mixin grid($n: 0, $columns: null) {
+@mixin grid($margin: 0, $columns: null) {
   @if $columns { &::before { content: '#{$columns} .#{map-get($layout-classes, 'cell')}'; } }
   @extend .#{map-get($layout-classes, 'grid')};
   @include media((for: margin-x)) {
-    margin-left: margin-x($n) / -2;
-    margin-right: margin-x($n) / -2;
+    margin-left: margin-x($margin) / -2;
+    margin-right: margin-x($margin) / -2;
   }
 }
 
 // cell
-@mixin cell($n: 0, $width...) {
+@mixin cell($margin: 0, $width...) {
   @extend .#{map-get($layout-classes, 'cell')};
   @include media((for: margin-x)) {
-    padding-left: margin-x($n) / 2;
-    padding-right: margin-x($n) / 2;
+    padding-left: margin-x($margin) / 2;
+    padding-right: margin-x($margin) / 2;
   }
   @if length($width) > 0 { @include width($width...); }
 }
@@ -78,70 +78,21 @@ $z-indexes: (
   &:after { clear: both; }
 }
 
-/////////////////////////
-// CHILD ELEMENT SHITE //
-/////////////////////////
 
-@function child-selector($selector) {
-  @if $selector {
-    @if str-index($selector, '&'){
-      @return '#{$selector}';
-    } @else {
-      @return '& > #{$selector}';
-    }
-  } @else {
-    @return '& > *';
-  }
-}
+////////////////
+// SUB-LAYOUT //
+////////////////
 
-@mixin child-counter($selector: 'li', $content-before:'', $content-after:''){
-  $counter: unique-id();
-  list-style-type: none;
-  counter-reset: $counter;
-  & #{child-selector($selector)} {
-    counter-increment: $counter;
-    &:before {
-      content: '#{$content-before}' counter($counter) '#{$content-after}';
-      @content;
-    }
-  }
-}
 
-// OLDER VERSION
-// @mixin child-counter($child-selector: '> li', $content-before:'', $content-after:''){
-//   $counter: unique-id();
-//   list-style-type: none;
-//   counter-reset: $counter;
-//   & #{$child-selector} {
-//     counter-increment: $counter;
-//     &:before {
-//       content: '#{$content-before}' counter($counter) '#{$content-after}';
-//       @content;
-//     }
-//   }
-// }
+@mixin sub-layout($selectors, $type, $options...) {
 
-//////////////////
-// CHILD LAYOUT //
-//////////////////
-
-// http://nicolasgallagher.com/an-introduction-to-css-pseudo-element-hacks/
-// http://css-tricks.com/pseudo-element-roundup/
-
-// table-layout - CSS | MDN | https://developer.mozilla.org/en-US/docs/Web/CSS/table-layout
-// Fixed Table Layouts | CSS-Tricks | http://css-tricks.com/fixing-tables-long-strings/
-// ungrid - the simplest responsive css grid | https://chrisnager.github.io/ungrid/
-// Pure CSS, equal-width navigation tabs | http://jsfiddle.net/csswizardry/zfSt4/
-
-@mixin child-layout($selector, $type, $options...) {
-
-  // TABLE
-  @if index(table-cell table-row cell row, $type) {
+  // table
+  @if index(table table-cell table-row cell row, $type) {
     width: 100%; // force auto size of children
     display: table;
     table-layout: fixed;
     border-collapse: collapse;
-    #{child-selector($selector)} {
+    #{children($selectors)} {
       @if index(table-row row, $type) {
         display: table-row;
         height: auto; // base setting
@@ -161,112 +112,25 @@ $z-indexes: (
     }
   }
 
-  // INLINE BLOCK
+  // inline-block
   @else if index(inline-block iblock ib, $type) {
-    font-size: 0px;
+    font-size: 0rem;
+    &:before, &:after, #{children($selectors)} {
+      display: inline-block;
+      @if index($options, bottom) { vertical-align: bottom; }
+      @else if index($options, middle) { vertical-align: middle;}
+      @else { vertical-align: top; }
+    }
     @if index($options, justify) {
       text-align: justify;
-      &:after, #{child-selector($selector)} {
-        display: inline-block;
-        max-width: 100%; // ff bug
-        @if index($options, bottom) { vertical-align: bottom; }
-        @else if index($options, middle) { vertical-align: middle;}
-        @else { vertical-align: top; }
-      }
-      &:after {
-        content: '';
-        width: 100%;
-      }
-      #{child-selector($selector)} {
-        font-size: 1rem;
-        @content;
-      }
+      &:after { content: ''; width: 100%; }
     }
     @else {
-      &:before, #{child-selector($selector)} {
-        display: inline-block;
-        max-width: 100%; // ff bug
-        @if index($options, bottom) { vertical-align: bottom; }
-        @else if index($options, top) { vertical-align: top;}
-        @else { vertical-align: middle; }
-      }
-      &:before {
-        content: '';
-        height: 100%;
-      }
-      #{child-selector($selector)} {
-        font-size: 1rem;
-        @content;
-      }
-      @if index($options, left) { text-align: left; }
-      @else if index($options, right) { text-align: right;}
-      @else { text-align: center; }
+      @if index($options, right) { text-align: right;}
+      @else if index($options, center) or index($options, centre) { text-align: center; }
+      @else { text-align: left; }
+      &:before { content: ''; height: 100%; }
     }
+    #{children($selectors)} { font-size: 1rem; max-width: 100%; @content; }
   }
 }
-
-////////////////////////////////////
-// CSS PARALLAX  / Z DISPLACEMENT //
-////////////////////////////////////
-
-///////////////////////
-// Z-OFFSET FUNCTION //
-///////////////////////
-
-@function offsetZ($z, $p: $parallax-perspective) {
-  @if unitless($z) { @return translateZ($z); }
-  @return translateZ($z) scale(1 - $z/$p);
-}
-
-/////////////////
-// SETUP MIXIN //
-/////////////////
-
-$parallax-perspective: 100px; // nb this defines max positive displacement
-
-@mixin parallax-setup {
-  html.no-touch body {
-    perspective: $parallax-perspective;
-  }
-  // perspective rendered at container level; will be inherited
-  // height is full viewport, overflow-y allows scroll
-  // perspective rule may need to be placed on the body element, for some browsers
-  .#{$l_pre}parallax_area {
-    position: relative;
-    height: 100vh;
-    html.no-touch & {
-      // perspective: $parallax-perspective;
-      overflow-x: hidden;
-      overflow-y: scroll;
-      perspective-origin: 100%; // fix webkit overflow bug
-    }
-  }
-  // preserve-3d prevents child layers of a group from being collapsed
-  // must not have overflow hidden or effect will break
-  .#{$l_pre}parallax_group {
-    position: relative;
-    height: 100vh;
-    html.no-touch & {
-      transform-style: preserve-3d;
-      .debug & {
-        transform: translate3d(700px, 0, -800px) rotateY(30deg);
-      }
-    }
-  }
-  // layer is pulled out of flow and forced to fill its parent
-  .#{$l_pre}parallax_layer {
-    position: absolute;
-    width: 100%;
-    height: 100vh;
-    html.no-touch & {
-      top: 0;
-      right: 0;
-      bottom: 0;
-      left: 0;
-      perspective-origin: 100%; // fix webkit overflow bug
-    }
-  }
-}
-
-
-

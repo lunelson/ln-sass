@@ -18,6 +18,15 @@
 		"shouldRunBless": 0,
 		"useLibsass": 1
 		},
+	"\/_planning.html": {
+		"fileType": 8192,
+		"ignore": 1,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/_planning.html",
+		"outputAbbreviatedPath": "No Output Path",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0
+		},
 	"\/_planning.md": {
 		"criticStyle": 0,
 		"enableFootnotes": 0,
@@ -2898,22 +2907,6 @@
 		"shouldRunBless": 0,
 		"useLibsass": 1
 		},
-	"\/src\/ln-util\/_debug.scss": {
-		"createSourceMap": 0,
-		"debugStyle": 0,
-		"decimalPrecision": 10,
-		"fileType": 4,
-		"ignore": 1,
-		"ignoreWasSetByUser": 0,
-		"inputAbbreviatedPath": "\/src\/ln-util\/_debug.scss",
-		"outputAbbreviatedPath": "\/src\/ln-util\/_debug.css",
-		"outputPathIsOutsideProject": 0,
-		"outputPathIsSetByUser": 0,
-		"outputStyle": 0,
-		"shouldRunAutoprefixer": 0,
-		"shouldRunBless": 0,
-		"useLibsass": 1
-		},
 	"\/src\/ln-util\/_ln-util-color.scss": {
 		"createSourceMap": 0,
 		"debugStyle": 0,
@@ -2923,6 +2916,22 @@
 		"ignoreWasSetByUser": 0,
 		"inputAbbreviatedPath": "\/src\/ln-util\/_ln-util-color.scss",
 		"outputAbbreviatedPath": "\/src\/ln-util\/_ln-util-color.css",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"outputStyle": 0,
+		"shouldRunAutoprefixer": 0,
+		"shouldRunBless": 0,
+		"useLibsass": 1
+		},
+	"\/src\/ln-util\/_ln-util-debug.scss": {
+		"createSourceMap": 0,
+		"debugStyle": 0,
+		"decimalPrecision": 10,
+		"fileType": 4,
+		"ignore": 1,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/src\/ln-util\/_ln-util-debug.scss",
+		"outputAbbreviatedPath": "\/src\/ln-util\/_ln-util-debug.css",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
 		"outputStyle": 0,
@@ -2978,6 +2987,22 @@
 		"shouldRunBless": 0,
 		"useLibsass": 1
 		},
+	"\/src\/ln-util\/_ln-util-misc.scss": {
+		"createSourceMap": 0,
+		"debugStyle": 0,
+		"decimalPrecision": 10,
+		"fileType": 4,
+		"ignore": 1,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/src\/ln-util\/_ln-util-misc.scss",
+		"outputAbbreviatedPath": "\/src\/ln-util\/_ln-util-misc.css",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"outputStyle": 0,
+		"shouldRunAutoprefixer": 0,
+		"shouldRunBless": 0,
+		"useLibsass": 1
+		},
 	"\/src\/ln-util\/_ln-util-reset.scss": {
 		"createSourceMap": 0,
 		"debugStyle": 0,
@@ -2987,22 +3012,6 @@
 		"ignoreWasSetByUser": 0,
 		"inputAbbreviatedPath": "\/src\/ln-util\/_ln-util-reset.scss",
 		"outputAbbreviatedPath": "\/src\/ln-util\/_ln-util-reset.css",
-		"outputPathIsOutsideProject": 0,
-		"outputPathIsSetByUser": 0,
-		"outputStyle": 0,
-		"shouldRunAutoprefixer": 0,
-		"shouldRunBless": 0,
-		"useLibsass": 1
-		},
-	"\/src\/ln-util\/_ln-util-selectors.scss": {
-		"createSourceMap": 0,
-		"debugStyle": 0,
-		"decimalPrecision": 10,
-		"fileType": 4,
-		"ignore": 1,
-		"ignoreWasSetByUser": 0,
-		"inputAbbreviatedPath": "\/src\/ln-util\/_ln-util-selectors.scss",
-		"outputAbbreviatedPath": "\/src\/ln-util\/_ln-util-selectors.css",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
 		"outputStyle": 0,
@@ -3042,15 +3051,15 @@
 		"shouldRunBless": 0,
 		"useLibsass": 1
 		},
-	"\/src\/ln-util\/_misc.scss": {
+	"\/src\/ln-util\/beta\/_chunk.scss": {
 		"createSourceMap": 0,
 		"debugStyle": 0,
 		"decimalPrecision": 10,
 		"fileType": 4,
 		"ignore": 1,
 		"ignoreWasSetByUser": 0,
-		"inputAbbreviatedPath": "\/src\/ln-util\/_misc.scss",
-		"outputAbbreviatedPath": "\/src\/ln-util\/_misc.css",
+		"inputAbbreviatedPath": "\/src\/ln-util\/beta\/_chunk.scss",
+		"outputAbbreviatedPath": "\/src\/ln-util\/beta\/_chunk.css",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
 		"outputStyle": 0,
@@ -3058,15 +3067,15 @@
 		"shouldRunBless": 0,
 		"useLibsass": 1
 		},
-	"\/src\/ln-util\/ballistic\/_chunk.scss": {
+	"\/src\/ln-util\/beta\/_first.scss": {
 		"createSourceMap": 0,
 		"debugStyle": 0,
 		"decimalPrecision": 10,
 		"fileType": 4,
 		"ignore": 1,
 		"ignoreWasSetByUser": 0,
-		"inputAbbreviatedPath": "\/src\/ln-util\/ballistic\/_chunk.scss",
-		"outputAbbreviatedPath": "\/src\/ln-util\/ballistic\/_chunk.css",
+		"inputAbbreviatedPath": "\/src\/ln-util\/beta\/_first.scss",
+		"outputAbbreviatedPath": "\/src\/ln-util\/beta\/_first.css",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
 		"outputStyle": 0,
@@ -3074,15 +3083,15 @@
 		"shouldRunBless": 0,
 		"useLibsass": 1
 		},
-	"\/src\/ln-util\/ballistic\/_first.scss": {
+	"\/src\/ln-util\/beta\/_flatten.scss": {
 		"createSourceMap": 0,
 		"debugStyle": 0,
 		"decimalPrecision": 10,
 		"fileType": 4,
 		"ignore": 1,
 		"ignoreWasSetByUser": 0,
-		"inputAbbreviatedPath": "\/src\/ln-util\/ballistic\/_first.scss",
-		"outputAbbreviatedPath": "\/src\/ln-util\/ballistic\/_first.css",
+		"inputAbbreviatedPath": "\/src\/ln-util\/beta\/_flatten.scss",
+		"outputAbbreviatedPath": "\/src\/ln-util\/beta\/_flatten.css",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
 		"outputStyle": 0,
@@ -3090,15 +3099,15 @@
 		"shouldRunBless": 0,
 		"useLibsass": 1
 		},
-	"\/src\/ln-util\/ballistic\/_flatten.scss": {
+	"\/src\/ln-util\/beta\/_initial.scss": {
 		"createSourceMap": 0,
 		"debugStyle": 0,
 		"decimalPrecision": 10,
 		"fileType": 4,
 		"ignore": 1,
 		"ignoreWasSetByUser": 0,
-		"inputAbbreviatedPath": "\/src\/ln-util\/ballistic\/_flatten.scss",
-		"outputAbbreviatedPath": "\/src\/ln-util\/ballistic\/_flatten.css",
+		"inputAbbreviatedPath": "\/src\/ln-util\/beta\/_initial.scss",
+		"outputAbbreviatedPath": "\/src\/ln-util\/beta\/_initial.css",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
 		"outputStyle": 0,
@@ -3106,15 +3115,15 @@
 		"shouldRunBless": 0,
 		"useLibsass": 1
 		},
-	"\/src\/ln-util\/ballistic\/_initial.scss": {
+	"\/src\/ln-util\/beta\/_intersection.scss": {
 		"createSourceMap": 0,
 		"debugStyle": 0,
 		"decimalPrecision": 10,
 		"fileType": 4,
 		"ignore": 1,
 		"ignoreWasSetByUser": 0,
-		"inputAbbreviatedPath": "\/src\/ln-util\/ballistic\/_initial.scss",
-		"outputAbbreviatedPath": "\/src\/ln-util\/ballistic\/_initial.css",
+		"inputAbbreviatedPath": "\/src\/ln-util\/beta\/_intersection.scss",
+		"outputAbbreviatedPath": "\/src\/ln-util\/beta\/_intersection.css",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
 		"outputStyle": 0,
@@ -3122,15 +3131,15 @@
 		"shouldRunBless": 0,
 		"useLibsass": 1
 		},
-	"\/src\/ln-util\/ballistic\/_intersection.scss": {
+	"\/src\/ln-util\/beta\/_is-symmetrical.scss": {
 		"createSourceMap": 0,
 		"debugStyle": 0,
 		"decimalPrecision": 10,
 		"fileType": 4,
 		"ignore": 1,
 		"ignoreWasSetByUser": 0,
-		"inputAbbreviatedPath": "\/src\/ln-util\/ballistic\/_intersection.scss",
-		"outputAbbreviatedPath": "\/src\/ln-util\/ballistic\/_intersection.css",
+		"inputAbbreviatedPath": "\/src\/ln-util\/beta\/_is-symmetrical.scss",
+		"outputAbbreviatedPath": "\/src\/ln-util\/beta\/_is-symmetrical.css",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
 		"outputStyle": 0,
@@ -3138,15 +3147,15 @@
 		"shouldRunBless": 0,
 		"useLibsass": 1
 		},
-	"\/src\/ln-util\/ballistic\/_is-symmetrical.scss": {
+	"\/src\/ln-util\/beta\/_last.scss": {
 		"createSourceMap": 0,
 		"debugStyle": 0,
 		"decimalPrecision": 10,
 		"fileType": 4,
 		"ignore": 1,
 		"ignoreWasSetByUser": 0,
-		"inputAbbreviatedPath": "\/src\/ln-util\/ballistic\/_is-symmetrical.scss",
-		"outputAbbreviatedPath": "\/src\/ln-util\/ballistic\/_is-symmetrical.css",
+		"inputAbbreviatedPath": "\/src\/ln-util\/beta\/_last.scss",
+		"outputAbbreviatedPath": "\/src\/ln-util\/beta\/_last.css",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
 		"outputStyle": 0,
@@ -3154,15 +3163,15 @@
 		"shouldRunBless": 0,
 		"useLibsass": 1
 		},
-	"\/src\/ln-util\/ballistic\/_last.scss": {
+	"\/src\/ln-util\/beta\/_loop.scss": {
 		"createSourceMap": 0,
 		"debugStyle": 0,
 		"decimalPrecision": 10,
 		"fileType": 4,
 		"ignore": 1,
 		"ignoreWasSetByUser": 0,
-		"inputAbbreviatedPath": "\/src\/ln-util\/ballistic\/_last.scss",
-		"outputAbbreviatedPath": "\/src\/ln-util\/ballistic\/_last.css",
+		"inputAbbreviatedPath": "\/src\/ln-util\/beta\/_loop.scss",
+		"outputAbbreviatedPath": "\/src\/ln-util\/beta\/_loop.css",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
 		"outputStyle": 0,
@@ -3170,15 +3179,15 @@
 		"shouldRunBless": 0,
 		"useLibsass": 1
 		},
-	"\/src\/ln-util\/ballistic\/_loop.scss": {
+	"\/src\/ln-util\/beta\/_parallax.scss": {
 		"createSourceMap": 0,
 		"debugStyle": 0,
 		"decimalPrecision": 10,
 		"fileType": 4,
 		"ignore": 1,
 		"ignoreWasSetByUser": 0,
-		"inputAbbreviatedPath": "\/src\/ln-util\/ballistic\/_loop.scss",
-		"outputAbbreviatedPath": "\/src\/ln-util\/ballistic\/_loop.css",
+		"inputAbbreviatedPath": "\/src\/ln-util\/beta\/_parallax.scss",
+		"outputAbbreviatedPath": "\/src\/ln-util\/beta\/_parallax.css",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
 		"outputStyle": 0,
@@ -3186,15 +3195,15 @@
 		"shouldRunBless": 0,
 		"useLibsass": 1
 		},
-	"\/src\/ln-util\/ballistic\/_prepend.scss": {
+	"\/src\/ln-util\/beta\/_prepend.scss": {
 		"createSourceMap": 0,
 		"debugStyle": 0,
 		"decimalPrecision": 10,
 		"fileType": 4,
 		"ignore": 1,
 		"ignoreWasSetByUser": 0,
-		"inputAbbreviatedPath": "\/src\/ln-util\/ballistic\/_prepend.scss",
-		"outputAbbreviatedPath": "\/src\/ln-util\/ballistic\/_prepend.css",
+		"inputAbbreviatedPath": "\/src\/ln-util\/beta\/_prepend.scss",
+		"outputAbbreviatedPath": "\/src\/ln-util\/beta\/_prepend.css",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
 		"outputStyle": 0,
@@ -3202,15 +3211,15 @@
 		"shouldRunBless": 0,
 		"useLibsass": 1
 		},
-	"\/src\/ln-util\/ballistic\/_replace-nth.scss": {
+	"\/src\/ln-util\/beta\/_replace-nth.scss": {
 		"createSourceMap": 0,
 		"debugStyle": 0,
 		"decimalPrecision": 10,
 		"fileType": 4,
 		"ignore": 1,
 		"ignoreWasSetByUser": 0,
-		"inputAbbreviatedPath": "\/src\/ln-util\/ballistic\/_replace-nth.scss",
-		"outputAbbreviatedPath": "\/src\/ln-util\/ballistic\/_replace-nth.css",
+		"inputAbbreviatedPath": "\/src\/ln-util\/beta\/_replace-nth.scss",
+		"outputAbbreviatedPath": "\/src\/ln-util\/beta\/_replace-nth.css",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
 		"outputStyle": 0,
@@ -3218,15 +3227,15 @@
 		"shouldRunBless": 0,
 		"useLibsass": 1
 		},
-	"\/src\/ln-util\/ballistic\/_replace.scss": {
+	"\/src\/ln-util\/beta\/_replace.scss": {
 		"createSourceMap": 0,
 		"debugStyle": 0,
 		"decimalPrecision": 10,
 		"fileType": 4,
 		"ignore": 1,
 		"ignoreWasSetByUser": 0,
-		"inputAbbreviatedPath": "\/src\/ln-util\/ballistic\/_replace.scss",
-		"outputAbbreviatedPath": "\/src\/ln-util\/ballistic\/_replace.css",
+		"inputAbbreviatedPath": "\/src\/ln-util\/beta\/_replace.scss",
+		"outputAbbreviatedPath": "\/src\/ln-util\/beta\/_replace.css",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
 		"outputStyle": 0,
@@ -3234,15 +3243,15 @@
 		"shouldRunBless": 0,
 		"useLibsass": 1
 		},
-	"\/src\/ln-util\/ballistic\/_rest.scss": {
+	"\/src\/ln-util\/beta\/_rest.scss": {
 		"createSourceMap": 0,
 		"debugStyle": 0,
 		"decimalPrecision": 10,
 		"fileType": 4,
 		"ignore": 1,
 		"ignoreWasSetByUser": 0,
-		"inputAbbreviatedPath": "\/src\/ln-util\/ballistic\/_rest.scss",
-		"outputAbbreviatedPath": "\/src\/ln-util\/ballistic\/_rest.css",
+		"inputAbbreviatedPath": "\/src\/ln-util\/beta\/_rest.scss",
+		"outputAbbreviatedPath": "\/src\/ln-util\/beta\/_rest.css",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
 		"outputStyle": 0,
@@ -3250,15 +3259,15 @@
 		"shouldRunBless": 0,
 		"useLibsass": 1
 		},
-	"\/src\/ln-util\/ballistic\/_reverse.scss": {
+	"\/src\/ln-util\/beta\/_reverse.scss": {
 		"createSourceMap": 0,
 		"debugStyle": 0,
 		"decimalPrecision": 10,
 		"fileType": 4,
 		"ignore": 1,
 		"ignoreWasSetByUser": 0,
-		"inputAbbreviatedPath": "\/src\/ln-util\/ballistic\/_reverse.scss",
-		"outputAbbreviatedPath": "\/src\/ln-util\/ballistic\/_reverse.css",
+		"inputAbbreviatedPath": "\/src\/ln-util\/beta\/_reverse.scss",
+		"outputAbbreviatedPath": "\/src\/ln-util\/beta\/_reverse.css",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
 		"outputStyle": 0,
@@ -3266,15 +3275,15 @@
 		"shouldRunBless": 0,
 		"useLibsass": 1
 		},
-	"\/src\/ln-util\/ballistic\/_slice.scss": {
+	"\/src\/ln-util\/beta\/_slice.scss": {
 		"createSourceMap": 0,
 		"debugStyle": 0,
 		"decimalPrecision": 10,
 		"fileType": 4,
 		"ignore": 1,
 		"ignoreWasSetByUser": 0,
-		"inputAbbreviatedPath": "\/src\/ln-util\/ballistic\/_slice.scss",
-		"outputAbbreviatedPath": "\/src\/ln-util\/ballistic\/_slice.css",
+		"inputAbbreviatedPath": "\/src\/ln-util\/beta\/_slice.scss",
+		"outputAbbreviatedPath": "\/src\/ln-util\/beta\/_slice.css",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
 		"outputStyle": 0,
@@ -3282,15 +3291,15 @@
 		"shouldRunBless": 0,
 		"useLibsass": 1
 		},
-	"\/src\/ln-util\/ballistic\/_sum.scss": {
+	"\/src\/ln-util\/beta\/_sum.scss": {
 		"createSourceMap": 0,
 		"debugStyle": 0,
 		"decimalPrecision": 10,
 		"fileType": 4,
 		"ignore": 1,
 		"ignoreWasSetByUser": 0,
-		"inputAbbreviatedPath": "\/src\/ln-util\/ballistic\/_sum.scss",
-		"outputAbbreviatedPath": "\/src\/ln-util\/ballistic\/_sum.css",
+		"inputAbbreviatedPath": "\/src\/ln-util\/beta\/_sum.scss",
+		"outputAbbreviatedPath": "\/src\/ln-util\/beta\/_sum.css",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
 		"outputStyle": 0,
@@ -3298,15 +3307,15 @@
 		"shouldRunBless": 0,
 		"useLibsass": 1
 		},
-	"\/src\/ln-util\/ballistic\/_union.scss": {
+	"\/src\/ln-util\/beta\/_union.scss": {
 		"createSourceMap": 0,
 		"debugStyle": 0,
 		"decimalPrecision": 10,
 		"fileType": 4,
 		"ignore": 1,
 		"ignoreWasSetByUser": 0,
-		"inputAbbreviatedPath": "\/src\/ln-util\/ballistic\/_union.scss",
-		"outputAbbreviatedPath": "\/src\/ln-util\/ballistic\/_union.css",
+		"inputAbbreviatedPath": "\/src\/ln-util\/beta\/_union.scss",
+		"outputAbbreviatedPath": "\/src\/ln-util\/beta\/_union.css",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
 		"outputStyle": 0,
@@ -3314,15 +3323,15 @@
 		"shouldRunBless": 0,
 		"useLibsass": 1
 		},
-	"\/src\/ln-util\/ballistic\/_unique.scss": {
+	"\/src\/ln-util\/beta\/_unique.scss": {
 		"createSourceMap": 0,
 		"debugStyle": 0,
 		"decimalPrecision": 10,
 		"fileType": 4,
 		"ignore": 1,
 		"ignoreWasSetByUser": 0,
-		"inputAbbreviatedPath": "\/src\/ln-util\/ballistic\/_unique.scss",
-		"outputAbbreviatedPath": "\/src\/ln-util\/ballistic\/_unique.css",
+		"inputAbbreviatedPath": "\/src\/ln-util\/beta\/_unique.scss",
+		"outputAbbreviatedPath": "\/src\/ln-util\/beta\/_unique.css",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
 		"outputStyle": 0,
@@ -3330,15 +3339,15 @@
 		"shouldRunBless": 0,
 		"useLibsass": 1
 		},
-	"\/src\/ln-util\/ballistic\/_without-nth.scss": {
+	"\/src\/ln-util\/beta\/_without-nth.scss": {
 		"createSourceMap": 0,
 		"debugStyle": 0,
 		"decimalPrecision": 10,
 		"fileType": 4,
 		"ignore": 1,
 		"ignoreWasSetByUser": 0,
-		"inputAbbreviatedPath": "\/src\/ln-util\/ballistic\/_without-nth.scss",
-		"outputAbbreviatedPath": "\/src\/ln-util\/ballistic\/_without-nth.css",
+		"inputAbbreviatedPath": "\/src\/ln-util\/beta\/_without-nth.scss",
+		"outputAbbreviatedPath": "\/src\/ln-util\/beta\/_without-nth.css",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
 		"outputStyle": 0,
@@ -3346,15 +3355,15 @@
 		"shouldRunBless": 0,
 		"useLibsass": 1
 		},
-	"\/src\/ln-util\/ballistic\/_without.scss": {
+	"\/src\/ln-util\/beta\/_without.scss": {
 		"createSourceMap": 0,
 		"debugStyle": 0,
 		"decimalPrecision": 10,
 		"fileType": 4,
 		"ignore": 1,
 		"ignoreWasSetByUser": 0,
-		"inputAbbreviatedPath": "\/src\/ln-util\/ballistic\/_without.scss",
-		"outputAbbreviatedPath": "\/src\/ln-util\/ballistic\/_without.css",
+		"inputAbbreviatedPath": "\/src\/ln-util\/beta\/_without.scss",
+		"outputAbbreviatedPath": "\/src\/ln-util\/beta\/_without.css",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
 		"outputStyle": 0,
@@ -3362,15 +3371,15 @@
 		"shouldRunBless": 0,
 		"useLibsass": 1
 		},
-	"\/src\/ln-util\/ballistic\/sass-slice\/new-slice.scss": {
+	"\/src\/ln-util\/beta\/sass-slice\/new-slice.scss": {
 		"createSourceMap": 0,
 		"debugStyle": 0,
 		"decimalPrecision": 10,
 		"fileType": 4,
 		"ignore": 0,
 		"ignoreWasSetByUser": 0,
-		"inputAbbreviatedPath": "\/src\/ln-util\/ballistic\/sass-slice\/new-slice.scss",
-		"outputAbbreviatedPath": "\/src\/ln-util\/ballistic\/sass-slice\/new-slice.css",
+		"inputAbbreviatedPath": "\/src\/ln-util\/beta\/sass-slice\/new-slice.scss",
+		"outputAbbreviatedPath": "\/src\/ln-util\/beta\/sass-slice\/new-slice.css",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
 		"outputStyle": 0,
@@ -3378,15 +3387,15 @@
 		"shouldRunBless": 0,
 		"useLibsass": 1
 		},
-	"\/src\/ln-util\/ballistic\/sass-slice\/slice-testing.scss": {
+	"\/src\/ln-util\/beta\/sass-slice\/slice-testing.scss": {
 		"createSourceMap": 0,
 		"debugStyle": 0,
 		"decimalPrecision": 10,
 		"fileType": 4,
 		"ignore": 0,
 		"ignoreWasSetByUser": 0,
-		"inputAbbreviatedPath": "\/src\/ln-util\/ballistic\/sass-slice\/slice-testing.scss",
-		"outputAbbreviatedPath": "\/src\/ln-util\/ballistic\/sass-slice\/slice-testing.css",
+		"inputAbbreviatedPath": "\/src\/ln-util\/beta\/sass-slice\/slice-testing.scss",
+		"outputAbbreviatedPath": "\/src\/ln-util\/beta\/sass-slice\/slice-testing.css",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
 		"outputStyle": 0,
@@ -3542,6 +3551,62 @@
 		"outputPathIsSetByUser": 0,
 		"outputStyle": 0
 		},
+	"\/test\/dev-debug\/index.css": {
+		"fileType": 16,
+		"ignore": 1,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/test\/dev-debug\/index.css",
+		"outputAbbreviatedPath": "No Output Path",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0
+		},
+	"\/test\/dev-debug\/index.html": {
+		"fileType": 8192,
+		"ignore": 1,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/test\/dev-debug\/index.html",
+		"outputAbbreviatedPath": "No Output Path",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0
+		},
+	"\/test\/dev-debug\/index.jade": {
+		"compileDebug": 1,
+		"fileType": 512,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/test\/dev-debug\/index.jade",
+		"outputAbbreviatedPath": "\/test\/dev-debug\/index.html",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"outputStyle": 0
+		},
+	"\/test\/dev-debug\/index.js": {
+		"fileType": 64,
+		"ignore": 1,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/test\/dev-debug\/index.js",
+		"outputAbbreviatedPath": "\/test\/dev-debug\/index-min.js",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"outputStyle": 1,
+		"syntaxCheckerStyle": 1
+		},
+	"\/test\/dev-debug\/index.scss": {
+		"createSourceMap": 0,
+		"debugStyle": 0,
+		"decimalPrecision": 10,
+		"fileType": 4,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/test\/dev-debug\/index.scss",
+		"outputAbbreviatedPath": "\/test\/dev-debug\/index.css",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"outputStyle": 0,
+		"shouldRunAutoprefixer": 0,
+		"shouldRunBless": 0,
+		"useLibsass": 1
+		},
 	"\/test\/dev-drop-cap\/index.css": {
 		"fileType": 16,
 		"ignore": 1,
@@ -3594,6 +3659,15 @@
 		"ignore": 1,
 		"ignoreWasSetByUser": 0,
 		"inputAbbreviatedPath": "\/test\/dev-sublayout\/index.css",
+		"outputAbbreviatedPath": "No Output Path",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0
+		},
+	"\/test\/dev-sublayout\/index.html": {
+		"fileType": 8192,
+		"ignore": 1,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/test\/dev-sublayout\/index.html",
 		"outputAbbreviatedPath": "No Output Path",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0
@@ -4099,10 +4173,6 @@
 			"active": 0,
 			"flagValue": -1
 			},
-		"futurehostile": {
-			"active": 0,
-			"flagValue": -1
-			},
 		"globalstrict": {
 			"active": 0,
 			"flagValue": -1
@@ -4189,10 +4259,6 @@
 			},
 		"noarg": {
 			"active": 1,
-			"flagValue": -1
-			},
-		"nocomma": {
-			"active": 0,
 			"flagValue": -1
 			},
 		"node": {
@@ -4293,10 +4359,6 @@
 			},
 		"unused": {
 			"active": 1,
-			"flagValue": -1
-			},
-		"varstmt": {
-			"active": 0,
 			"flagValue": -1
 			},
 		"withstmt": {

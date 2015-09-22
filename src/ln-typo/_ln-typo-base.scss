@@ -1,15 +1,28 @@
-//  _                           _
-// | |                         | |
-// | |_ _   _ _ __   ___ ______| |__
-// | __| | | | '_ \ / _ \______| '_ \
-// | |_| |_| | |_) | (_) |     | |_) |
-//  \__|\__, | .__/ \___/      |_.__/
-//       __/ | |
-//      |___/|_|
+
+/////////////
+// GLOBALS //
+/////////////
+
+$t_current-size: null !default;
+$t_current-height: null !default;
+$t_min-height: 1.125 !default;
+$t_line-div: 2 !default;
+
+$t_pre: 't-' !default;
+$t_single-class: 'single' !default;
+$t_block-class: 'block' !default;
+$t_container-class: 'contain' !default;
+
+
+
+// required for trimming
+.#{$t_pre}#{$t_container-class} { min-height: 1px; }
+
 
 ////////////
 // GLOBAL //
 ////////////
+
 
 $fonts: (
   heading: (

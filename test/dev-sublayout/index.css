@@ -1,0 +1,38 @@
+dl {
+  list-style-type: none;
+  counter-reset: uc8fcd2ad; }
+  dl > dd {
+    counter-increment: uc8fcd2ad; }
+    dl > dd:before {
+      content: ">> " counter(uc8fcd2ad) ""; }
+
+.list2 li {
+  counter-increment: ud0b3caaf;
+  counter-reset: ud0b3caaf; }
+  .list2 li:before {
+    content: "hello" counter(ud0b3caaf) "world"; }
+
+ol.posts {
+  list-style-type: none;
+  counter-reset: u731f54b9; }
+  ol.posts > .post {
+    counter-increment: u731f54b9; }
+    ol.posts > .post:before {
+      content: "No. " counter(u731f54b9) ""; }
+
+.test {
+  font-size: 0rem;
+  text-align: center; }
+  .test:before, .test:after, .test > * {
+    display: inline-block;
+    vertical-align: middle; }
+  .test:before {
+    content: '';
+    height: 100%; }
+  .test > * {
+    font-size: 1rem;
+    max-width: 100%; }
+  ul + .test, li + .test {
+    color: blue; }
+  .test > ul, .test > li {
+    color: blue; }

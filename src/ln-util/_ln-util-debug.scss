@@ -1,12 +1,19 @@
+// DEBUG
 
-//      _      _
-//     | |    | |
-//   __| | ___| |__  _   _  __ _
-//  / _` |/ _ \ '_ \| | | |/ _` |
-// | (_| |  __/ |_) | |_| | (_| |
-//  \__,_|\___|_.__/ \__,_|\__, |
-//                          __/ |
-//                         |___/
+// heights
+@for $n from 1 to 10 {
+  .d-#{$n * 100} {
+    height: $n * 100px;
+  }
+}
+
+// colors
+.d-red { background-color: #F2CCBB; }
+.d-yellow { background-color: #F2F2B6; }
+.d-green { background-color: #B6F2B6; }
+.d-cyan { background-color: #B6F2F2; }
+.d-blue { background-color: #C2DAF2; }
+.d-magenta { background-color: #F2CEF2; }
 
 // @if $debug-toggle {
 //   $column-count: get($reference-query, column-count);

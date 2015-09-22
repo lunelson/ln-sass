@@ -26,3 +26,25 @@
     #{$arr} { @content; }
   }
 }
+
+@function opposite($dirs) {
+  $out: ();
+  $opposites: ('top': bottom, 'right': left, 'bottom': top, 'left': right, 'ltr': rtl, 'rtl': ltr);
+  @each $dir in $dirs {
+    $opposite: map-get($opposites, $dir);
+    @if $opposite {$out: append($out, $opposite); } }
+  @return $out;
+}
+
+// @mixin adjacent-to($args...) {
+//   @if length($args) == 0 {
+//     & + & { @content; }
+//   } @else {
+//     @if type-of(nth($args, 1)) == list { $args: join((), $args...); }
+//     $arr: '';
+//     @for $n from 1 through length($args) {
+//       $arr: if($n == 1, unquote('#{nth($args, 1)} + &'), append($arr, unquote(', #{nth($args,$n)} + &')));
+//     }
+//     #{$arr} { @content; }
+//   }
+// }

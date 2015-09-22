@@ -1,0 +1,62 @@
+////////////////////////////////////
+// CSS PARALLAX  / Z DISPLACEMENT //
+////////////////////////////////////
+
+///////////////////////
+// Z-OFFSET FUNCTION //
+///////////////////////
+
+@function offsetZ($z, $p: $parallax-perspective) {
+  @if unitless($z) { @return translateZ($z); }
+  @return translateZ($z) scale(1 - $z/$p);
+}
+
+/////////////////
+// SETUP MIXIN //
+/////////////////
+
+$parallax-perspective: 100px; // nb this defines max positive displacement
+
+@mixin parallax-setup {
+  html.no-touch body {
+    perspective: $parallax-perspective;
+  }
+  // perspective rendered at container level; will be inherited
+  // height is full viewport, overflow-y allows scroll
+  // perspective rule may need to be placed on the body element, for some browsers
+  .#{$l_pre}parallax_area {
+    position: relative;
+    height: 100vh;
+    html.no-touch & {
+      // perspective: $parallax-perspective;
+      overflow-x: hidden;
+      overflow-y: scroll;
+      perspective-origin: 100%; // fix webkit overflow bug
+    }
+  }
+  // preserve-3d prevents child layers of a group from being collapsed
+  // must not have overflow hidden or effect will break
+  .#{$l_pre}parallax_group {
+    position: relative;
+    height: 100vh;
+    html.no-touch & {
+      transform-style: preserve-3d;
+      .debug & {
+        transform: translate3d(700px, 0, -800px) rotateY(30deg);
+      }
+    }
+  }
+  // layer is pulled out of flow and forced to fill its parent
+  .#{$l_pre}parallax_layer {
+    position: absolute;
+    width: 100%;
+    height: 100vh;
+    html.no-touch & {
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      perspective-origin: 100%; // fix webkit overflow bug
+    }
+  }
+}

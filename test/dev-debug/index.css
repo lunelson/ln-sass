@@ -1,0 +1,44 @@
+.d-100 {
+  height: 100px; }
+
+.d-200 {
+  height: 200px; }
+
+.d-300 {
+  height: 300px; }
+
+.d-400 {
+  height: 400px; }
+
+.d-500 {
+  height: 500px; }
+
+.d-600 {
+  height: 600px; }
+
+.d-700 {
+  height: 700px; }
+
+.d-800 {
+  height: 800px; }
+
+.d-900 {
+  height: 900px; }
+
+.d-red {
+  background-color: #F2CCBB; }
+
+.d-yellow {
+  background-color: #F2F2B6; }
+
+.d-green {
+  background-color: #B6F2B6; }
+
+.d-cyan {
+  background-color: #B6F2F2; }
+
+.d-blue {
+  background-color: #C2DAF2; }
+
+.d-magenta {
+  background-color: #F2CEF2; }
