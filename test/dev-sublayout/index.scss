@@ -1,0 +1,38 @@
+@import "../../src/ln-util/all";
+@import "../../src/ln-layout/all";
+@import "../../src/ln-typo/ln-typo-util";
+
+
+@mixin pseudo-counter($before:'', $after:'', $parent: null){
+  $counter: unique-id(); counter-increment: $counter;
+  @if $parent { #{$parent} { counter-reset: $counter; } }
+  @else { counter-reset: $counter; }
+  &:before {
+    content: '#{$before}' counter($counter) '#{$after}';
+    @content;
+  }
+}
+
+dl {
+  @include item-counter('dd', '>> ');
+}
+
+.list2 {
+  li {
+    @include pseudo-counter('hello', 'world');
+  }
+}
+
+ol.posts {
+  @include item-counter('.post', 'No. ');
+}
+
+.test {
+  @include sub-layout(null, ib, center, middle);
+  @include adjacent-siblings(ul li) {
+    color: blue
+  }
+  @include general-siblings('input[type="checkbox"]', h3){
+    color: blue;
+  }
+}

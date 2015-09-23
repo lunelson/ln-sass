@@ -1,0 +1,52 @@
+///////////
+// FONTS //
+///////////
+
+
+$fonts: (
+  heading: (
+    family: '',
+    spacing: 0,
+    size-mod: 1,
+    cap-height: 1
+  ),
+  default: (
+    family: '',
+    spacing: 0,
+    size-mod: 1,
+    cap-height: 1
+  ),
+  mono: (
+    family: '',
+    spacing: 0,
+    size-mod: 1,
+    cap-height: 1
+  )
+) !default;
+
+// font value function
+@function font-value($keys...) { @return get($fonts, $keys...); }
+
+// fonts init mixin
+@mixin fonts-init(){
+  @each $alias, $font in $fonts {
+    .font--#{$alias} {
+      font-family: map-get($font, family);
+    }
+  }
+}
+
+// font-face declarations
+// TODO: get the newer IE9+ version of this
+@mixin font-face($family, $file, $style: normal, $weight: normal, $path: $typo-font-path) {
+  @font-face {
+    font-family: $family;
+    font-style: $style;
+    font-weight: $weight; // this should be both word and number values
+    src: url('#{$path}#{$file}.eot'); // IE9 Compat Modes
+    src: url('#{$path}#{$file}.eot?#iefix') format('embedded-opentype'),
+       url('#{$path}#{$file}.woff') format('woff'),
+       url('#{$path}#{$file}.svg##{$file}') format('svg'),
+       url('#{$path}#{$file}.ttf') format('truetype');
+  }
+}

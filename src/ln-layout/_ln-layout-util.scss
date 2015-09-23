@@ -1,0 +1,136 @@
+/////////////////
+// GRID MIXINS //
+/////////////////
+
+
+// grid
+@mixin grid($margin: 0, $columns: null) {
+  @if $columns { &::before { content: '#{$columns} .#{map-get($layout-classes, 'cell')}'; } }
+  @extend .#{map-get($layout-classes, 'grid')};
+  @include media((for: margin-x)) {
+    margin-left: margin-x($margin) / -2;
+    margin-right: margin-x($margin) / -2;
+  }
+}
+
+// cell
+@mixin cell($margin: 0, $width...) {
+  @extend .#{map-get($layout-classes, 'cell')};
+  @include media((for: margin-x)) {
+    padding-left: margin-x($margin) / 2;
+    padding-right: margin-x($margin) / 2;
+  }
+  @if length($width) > 0 { @include width($width...); }
+}
+
+// width / span
+@mixin width($span: 1 1, $options: ()) { @include width-helper(map-merge((span: $span), $options)...); }
+@mixin width-helper($span, $right: null, $left: null, $out: null, $cycle: null) {
+  $n: nth($span, 1); $d: nth($span, 2);
+
+  width: $n / $d * 100%;
+
+  @if $right { margin-right: nth($right, 1) / if(length($right) > 1, nth($right, 2), $d) * 100%; }
+  @if $left { margin-left: nth($left, 1) / if(length($left) > 1, nth($left, 2), $d) * 100%; }
+  @if $cycle { &:nth-child(#{$cycle}n+1) { clear: left; } }
+  @else if $out { position: absolute; #{opposite($out)}: 100%; top: auto; }
+}
+
+
+/////////////
+// Z-INDEX //
+/////////////
+
+$z-indexes: (
+  baked: 30,
+  stoned: 20,
+  buzzed: 10,
+  sober: 0,
+  asleep: -10
+) !default;
+
+@function z-index($name) { @return map-get($z-indexes, $name); }
+@function z($name) { @return z-index($name); }
+
+/////////////////
+// POSITIONING //
+/////////////////
+
+@mixin position($pos, $args...) {
+  position: $pos;
+  @each $arg in $args { #{nth($arg, 1)}: nth($arg, 2); }
+}
+
+@mixin absolute($args...) { @include position(absolute, $args...); }
+@mixin fixed($args...) { @include position(fixed, $args...); }
+@mixin relative($args...) { @include position(relative, $args...); }
+
+@mixin clearfix {
+  &:after {
+    content:"";
+    display:table;
+    clear:both;
+  }
+}
+@mixin clearfix-legacy(){
+  & { *zoom: 1; }
+  &:before, &:after { content: ""; display: table; }
+  &:after { clear: both; }
+}
+
+
+////////////////
+// SUB-LAYOUT //
+////////////////
+
+
+@mixin sub-layout($selectors, $type, $options...) {
+
+  // table
+  @if index(table table-cell table-row cell row, $type) {
+    width: 100%; // force auto size of children
+    display: table;
+    table-layout: fixed;
+    border-collapse: collapse;
+    #{children($selectors)} {
+      @if index(table-row row, $type) {
+        display: table-row;
+        height: auto; // base setting
+        @if index($options, left) { text-align: left; }
+        @else if index($options, right) { text-align: right;}
+        @else { text-align: center; }
+      }
+      @else {
+        display: table-cell;
+        width: auto; // base setting
+        @if index($options, bottom) { vertical-align: bottom; }
+        @else if index($options, top) { vertical-align: top;}
+        @else { vertical-align: middle; }
+      }
+      overflow: hidden;
+      @content;
+    }
+  }
+
+  // inline-block
+  @else if index(inline-block iblock ib, $type) {
+    font-size: 0rem;
+    &:before, &:after, #{children($selectors)} {
+      display: inline-block;
+      @if index($options, bottom) { vertical-align: bottom; }
+      @else if index($options, middle) { vertical-align: middle;}
+      @else { vertical-align: top; }
+    }
+    @if index($options, justify) {
+      text-align: justify;
+      &:after { content: ''; width: 100%; }
+    }
+    @else {
+      @if index($options, right) { text-align: right;}
+      @else if index($options, center) or index($options, centre) { text-align: center; }
+      @else { text-align: left; }
+      &:before { content: ''; height: 100%; }
+    }
+    #{children($selectors)} { font-size: 1rem; max-width: 100%; @content; }
+  }
+}

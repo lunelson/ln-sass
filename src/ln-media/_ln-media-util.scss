@@ -1,0 +1,174 @@
+///////////////////////
+// MEDIA INIT HELPER //
+///////////////////////
+
+
+// normalize medium units
+@function normalize-medium($medium) {
+
+  // correct for font-size and line-height units/non-units
+  $font-size: map-get($medium, 'font-size');
+  $line-height: map-get($medium, 'line-height');
+  @if unit($font-size) != 'px' { $font-size: unit-strip($font-size) * 16px; }
+  @if unit($line-height) == 'px' { $line-height: $line-height / $font-size; }
+  $corrections: (
+    'font-size': $font-size,
+    'line-height': $line-height,
+    'html-scale': unit-strip($font-size / 16px)
+  );
+  // TODO: additional function to resolve breakpoint units and/or versus column-count
+  // $breakpoint: map-get($medium, 'breakpoint');
+  // @if $breakpoint and unit($breakpoint) != 'em' {
+  //   $corrections: map-merge($corrections, ('breakpoint': $breakpoint));
+  // }
+  // merge additional corrections if necessary
+  @each $key, $value in map-remove($medium, 'font-size', 'line-height', 'breakpoint') {
+    @if unit($value) == 'px' { $corrections: map-merge($corrections, ($key: $value / $font-size * 1rem)); }
+  }
+  // return merged corrections
+  @return map-merge($medium, $corrections);
+}
+
+
+/////////////////////////////////
+// MEDIA OBJECT GET / MODULATE //
+/////////////////////////////////
+
+
+// medium object
+@function medium($alias: $media-current-alias) {
+  @if $alias { @return map-get($media, $alias); }
+  @return $base;
+}
+
+// medium original (spec) object
+@function medium-orig($alias: $media-current-alias) {
+  @if $alias { @return map-get($media-orig, $alias); }
+  @return $base-orig;
+}
+
+// medium value
+@function medium-value($key, $alias: $media-current-alias) {
+  @return if($alias, map-get(medium($alias), $key), map-get($base, $key));
+}
+
+// medium original (spec) value
+@function medium-orig-value($key, $alias: $media-current-alias) {
+  @return if($alias, map-get(medium-orig($alias), $key), map-get($base-orig, $key));
+}
+
+// margin-x
+@function margin-x($index: 0, $unit: true, $basis: 10) {
+  // exceptions
+  @if not $index { @return 0; } // if null
+  @if type-of($index) == 'string' { @return medium-value('margin-x', $index); } // if medium-alias
+  @if not unitless($index) { @return $index; } // if united, return number
+  // modulation
+  $mod: medium-value('margin-x-mod'); $spread: ceil($basis/6);
+  @return pow($mod, $index/$spread) * if($unit, medium-value('margin-x'), unit-strip(medium-value('margin-x')));
+}
+
+// margin-y
+@function margin-y($index: 0, $unit: true, $basis: 10) {
+  // exceptions
+  @if not $index { @return 0; } // if null
+  @if type-of($index) == 'string' { @return medium-value('margin-y', $index); }
+  @if not unitless($index) { @return $index; }
+  // modulation
+  $mod: medium-value('margin-y-mod'); $spread: ceil($basis/6);
+  @return pow($mod, $index/$spread) * if($unit, medium-value('margin-y'), unit-strip(medium-value('margin-y')));
+}
+
+@function margin($args...){ @return margin-x($args...); } // NB default margin is x / horizontal
+
+@function font-size($index: 0, $unit: true, $basis: 10) {
+  @if type-of($index) == 'string' { @return medium-value('font-size', $index); }
+  @if not unitless($index) { @return $index; }
+  $mod: medium-value('font-size-mod'); $spread: ceil($basis/6);
+  @return pow($mod, $index/$spread) * if($unit, 1rem, unit-strip(1rem));
+}
+@function size($args...) { @return font-size($args...); }
+
+
+//////////////////
+// MEDIA MIXINS //
+//////////////////
+
+
+// media query string
+@function media-query-string($alias1: null, $alias2: null) {
+  @return 'screen'
+    + if($alias1, ' and (min-width: #{get($media, $alias1, breakpoint)})', '')
+    + if($alias2, ' and (max-width: #{get($media, $alias2, breakpoint) - 0.001})', '');
+}
+
+// single query
+@mixin media-single($args...) {
+  // save alias reference; assign current
+  $media-prev-alias: $media-current-alias !global;
+  $media-current-alias: nth($args, 1) or map-prev-key($media, nth($args, 2)) !global;
+  // run the content in medium
+  @media #{media-query-string($args...)} { @content }
+  // reset the medium (no nesting; could just reset to null)
+  $media-current-alias: $media-prev-alias !global;
+}
+
+// multiple queries
+@mixin media-multiple($from: null, $to: null, $for: null) {
+  // correct 'for' options
+  @if $for {
+    @if contains($for, typo) { $for: join($for, margin-y line-height font-size-mod); }
+    @if contains($for, margin-y) { $for: join($for, margin-y-mod); }
+    @if contains($for, font-size) { $for: join($for, font-size-mod); }
+    @if contains($for, margin-x) { $for: join($for, margin-x-mod); }
+  }
+  // output the @content for $base medium if $from is null
+  @if $from == null { @content; }
+  // determine other referenced media
+  $media-keys: map-keys($media);
+  $sliced-keys: slice($media-keys,
+      if($from, index($media-keys, $from), 1),
+      if($to, index($media-keys, $to) - 1, length($media-keys)));
+  // conditional per-medium actions
+
+  @each $key in $sliced-keys {
+    $orig-keys: map-keys(medium-orig($key));
+    @if not $for { @include media-single($key) { @content; } }
+    @else if contains-any($orig-keys, $for) {
+      @include media-single($key) { @content; }
+    }
+  }
+}
+
+// unified media query mixin -- calls mixins above
+@mixin media($args...) {
+  $arg1: nth($args, 1);
+  @if type-of($arg1) == 'map' { @include media-multiple($arg1...) { @content; } }
+  @else { @include media-single($args...) { @content; } }
+}
+
+// alias
+@mixin medium($args...){ @include media($args...) { @content; } }
+
+
+////////////////////////////
+// HIDPI COMBINATOR MIXIN //
+////////////////////////////
+
+
+// hidpi / retina query; should combine with media() via nesting
+@mixin hidpi($ratio: $media-hd-ratio) {
+  $n: nth($ratio, 1); $d: nth($ratio, 2);
+  $ratio: ($n / $d);
+  @media screen and
+  (-webkit-min-device-pixel-ratio: $ratio),
+  (min--moz-device-pixel-ratio: $ratio),
+  (-o-min-device-pixel-ratio: #{$n}/#{$d}),
+  (min-device-pixel-ratio: $ratio),
+  (min-resolution: $ratio * 96dpi),
+  (min-resolution: $ratio * 1dppx) {
+    @content;
+  }
+}
+// alias
+@mixin hd($args...) { @include hidpi($args...) { @content; } }
