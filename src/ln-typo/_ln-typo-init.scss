@@ -70,11 +70,13 @@ $typo-init-run: false !default;
 @function trim($line-height: null, $char-height: null){
   $line-height: $line-height or $typo-curr-line-height or medium-value('line-height');
   $char-height: $char-height or $typo-curr-char-height or 1;
-  @return unit-assert($line-height - $char-height, em) / 2;
+  @return unit-assert($char-height - $line-height, em) / 2;
 }
+
+@function untrim($args...) { @return 0 - trim($args...); }
 
 @function trim-margin($margin, $line-height: null, $char-height: null){
   $margin: if(unitless($margin), margin-y($margin), $margin);
-  @if unit-strip($margin) == 0 { @return - trim($line-height, $char-height); }
-  @return calc(#{$margin} - #{trim($line-height, $char-height)});
+  @if unit-strip($margin) == 0 { @return trim($line-height, $char-height); }
+  @return calc(#{$margin} + #{trim($line-height, $char-height)});
 }

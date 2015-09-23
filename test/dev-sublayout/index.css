@@ -1,24 +1,24 @@
 dl {
   list-style-type: none;
-  counter-reset: ub68dalro; }
+  counter-reset: ufzn2vnxw; }
   dl > dd {
-    counter-increment: ub68dalro; }
+    counter-increment: ufzn2vnxw; }
     dl > dd:before {
-      content: ">> " counter(ub68dalro) ""; }
+      content: ">> " counter(ufzn2vnxw) ""; }
 
 .list2 li {
-  counter-increment: ub68dalrv;
-  counter-reset: ub68dalrv; }
+  counter-increment: ufzn2vny5;
+  counter-reset: ufzn2vny5; }
   .list2 li:before {
-    content: "hello" counter(ub68dalrv) "world"; }
+    content: "hello" counter(ufzn2vny5) "world"; }
 
 ol.posts {
   list-style-type: none;
-  counter-reset: ub68dalrw; }
+  counter-reset: ufzn2vnya; }
   ol.posts > .post {
-    counter-increment: ub68dalrw; }
+    counter-increment: ufzn2vnya; }
     ol.posts > .post:before {
-      content: "No. " counter(ub68dalrw) ""; }
+      content: "No. " counter(ufzn2vnya) ""; }
 
 .test {
   font-size: 0rem;
@@ -34,5 +34,5 @@ ol.posts {
     max-width: 100%; }
   ul + .test, li + .test {
     color: blue; }
-  .test > ul, .test > li {
+  .test input[type="checkbox"] ~ h3 {
     color: blue; }

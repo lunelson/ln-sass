@@ -1,10 +1,10 @@
-/* test: ln-typo */
 
 @import '../../src/ln-util/all';
 @import '../../src/ln-media/all';
-// @import '../../src/ln-typo/all';
+
 @import "../../src/ln-typo/ln-typo-base";
 @import "../../src/ln-typo/ln-typo-util";
+@import "../../src/ln-typo/ln-typo-init";
 @import "../../src/ln-typo/ln-typo-init-beta";
 @import "../../src/ln-typo/ln-typo-fonts";
 
@@ -29,6 +29,28 @@ p { @include typo-init(); }
 h1 { @include typo-init(5); }
 h2 { @include typo-init(4); }
 h3 { @include typo-init(3); }
-ul { @include typo-init() {
-  background-color: blue;
-  } }
+ul {
+  @include typo-init() {
+    @include adjacent-to(h1 h2 h3 h4 h5) {
+      // margin-top: trim-margin(0rem);
+      margin-top: untrim();
+    }
+  }
+}
+
+/*
+
+p { @include init-typo(); }
+h1 { @include init-typo(5); }
+h2 { @include init-typo(4); }
+h3 { @include init-typo(3); }
+ul {
+  @include init-typo() {
+    @include adjacent-to(h1 h2 h3 h4 h5) {
+      background-color: blue;
+    }
+  }
+}
+
+
+*/

@@ -29,14 +29,10 @@ ol.posts {
 
 .test {
   @include sub-layout(null, ib, center, middle);
-  // out: child('.sub');
-  // out: children('.cell' '.test');
-  // out: adjacent-siblings(ul li, h1 h2 h3);
-  // out: adjacent-to('ul', 'li');
-  #{adjacent-to(ul li)} {
-    color: blue;
+  @include adjacent-siblings(ul li) {
+    color: blue
   }
-  #{children(ul li)} {
+  @include general-siblings('input[type="checkbox"]', h3){
     color: blue;
   }
 }

@@ -1,4 +1,3 @@
-/* test: ln-typo */
 .trim-content {
   padding-top: 1px;
   padding-bottom: 1px; }
@@ -82,5 +81,22 @@ h3 {
     .trim-content h3:first-child {
       margin-top: -0.1804138174em; }
 
+h1 + ul, h2 + ul, h3 + ul, h4 + ul, h5 + ul {
+  margin-top: 0.25em; }
+
+/*
+
+p { @include init-typo(); }
+h1 { @include init-typo(5); }
+h2 { @include init-typo(4); }
+h3 { @include init-typo(3); }
 ul {
-  background-color: blue; }
+  @include init-typo() {
+    @include adjacent-to(h1 h2 h3 h4 h5) {
+      background-color: blue;
+    }
+  }
+}
+
+
+*/
