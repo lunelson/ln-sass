@@ -1,59 +1,68 @@
-// DEBUG
+///////////
+// DEBUG //
+///////////
 
-// heights
-@for $n from 1 to 10 {
-  .d-#{$n * 100} {
-    height: $n * 100px;
+
+@if variable-exists('ln-debug') {
+    @if $ln-debug {
+
+    // heights
+    @for $n from 1 to 10 {
+      .d-#{$n * 100} {
+        height: $n * 100px;
+      }
+    }
+
+    // colors
+    .d-red { background-color: #F2CCBB; }
+    .d-yellow { background-color: #F2F2B6; }
+    .d-green { background-color: #B6F2B6; }
+    .d-cyan { background-color: #B6F2F2; }
+    .d-blue { background-color: #C2DAF2; }
+    .d-magenta { background-color: #F2CEF2; }
+
+    // @if $debug-toggle {
+    //   $column-count: get($reference-query, column-count);
+    //   $margin-x: get($reference-query, margin-x);
+    //   body::before { content: '#{$alias}'; }
+    //   body::after {
+    //     $row-width: $content-width + $margin-x;
+    //     width: $row-width; margin-left: ($row-width + $margin-x)/-2;
+    //     background: linear-gradient(to right,
+    //       rgba(0, 0, 0, 0) $margin-x,
+    //       $debug-color $margin-x,
+    //       $debug-color $row-width / $column-count - $margin-x
+    //     );
+    //     background-size: $row-width / $column-count;
+    //   }
+    // }
+
+    // // output stuff for the debug
+    // @if $debug-toggle {
+    //   body {
+    //     &:before, &:after {
+    //       position: fixed;
+    //       pointer-events: none;
+    //       user-select: none;
+    //       z-index: 999;
+    //     }
+    //     &:before {
+    //       text-align: right;
+    //       padding: 0.25rem;
+    //       width: 100%;
+    //       display: block;
+    //       color: black;
+    //       bottom: 0;
+    //       background-color: $debug-color;
+    //     }
+    //     &:after {
+    //       content: '';
+    //       top: 0;
+    //       bottom: 0;
+    //       left: 50%;
+    //     }
+    //   }
+    // }
   }
 }
 
-// colors
-.d-red { background-color: #F2CCBB; }
-.d-yellow { background-color: #F2F2B6; }
-.d-green { background-color: #B6F2B6; }
-.d-cyan { background-color: #B6F2F2; }
-.d-blue { background-color: #C2DAF2; }
-.d-magenta { background-color: #F2CEF2; }
-
-// @if $debug-toggle {
-//   $column-count: get($reference-query, column-count);
-//   $margin-x: get($reference-query, margin-x);
-//   body::before { content: '#{$alias}'; }
-//   body::after {
-//     $row-width: $content-width + $margin-x;
-//     width: $row-width; margin-left: ($row-width + $margin-x)/-2;
-//     background: linear-gradient(to right,
-//       rgba(0, 0, 0, 0) $margin-x,
-//       $debug-color $margin-x,
-//       $debug-color $row-width / $column-count - $margin-x
-//     );
-//     background-size: $row-width / $column-count;
-//   }
-// }
-
-// // output stuff for the debug
-// @if $debug-toggle {
-//   body {
-//     &:before, &:after {
-//       position: fixed;
-//       pointer-events: none;
-//       user-select: none;
-//       z-index: 999;
-//     }
-//     &:before {
-//       text-align: right;
-//       padding: 0.25rem;
-//       width: 100%;
-//       display: block;
-//       color: black;
-//       bottom: 0;
-//       background-color: $debug-color;
-//     }
-//     &:after {
-//       content: '';
-//       top: 0;
-//       bottom: 0;
-//       left: 50%;
-//     }
-//   }
-// }

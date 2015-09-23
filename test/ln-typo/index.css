@@ -1,0 +1,86 @@
+/* test: ln-typo */
+.trim-content {
+  padding-top: 1px;
+  padding-bottom: 1px; }
+p, ul {
+  font-size: 1rem;
+  line-height: 1.5;
+  margin-top: 0;
+  margin-bottom: 0; }
+  p.line, ul.line {
+    line-height: 1; }
+  p.trim--top, ul.trim--top {
+    margin-top: -0.25em; }
+  p.trim--bottom, ul.trim--bottom {
+    margin-bottom: -0.25em; }
+  p.trim, ul.trim {
+    margin-top: -0.25em;
+    margin-bottom: -0.25em; }
+  .trim-content p, .trim-content ul {
+    margin-bottom: -0.25em;
+    margin-top: 1rem; }
+    .trim-content p:first-child, .trim-content ul:first-child {
+      margin-top: -0.25em; }
+
+h1 {
+  font-size: 2.7556759606rem;
+  line-height: 1.2701057926;
+  margin-top: 0;
+  margin-bottom: 0; }
+  h1.line {
+    line-height: 1; }
+  h1.trim--top {
+    margin-top: -0.1350528963em; }
+  h1.trim--bottom {
+    margin-bottom: -0.1350528963em; }
+  h1.trim {
+    margin-top: -0.1350528963em;
+    margin-bottom: -0.1350528963em; }
+  .trim-content h1 {
+    margin-bottom: -0.1350528963em;
+    margin-top: 1rem; }
+    .trim-content h1:first-child {
+      margin-top: -0.1350528963em; }
+
+h2 {
+  font-size: 2.25rem;
+  line-height: 1.3333333333;
+  margin-top: 0;
+  margin-bottom: 0; }
+  h2.line {
+    line-height: 1; }
+  h2.trim--top {
+    margin-top: -0.1666666667em; }
+  h2.trim--bottom {
+    margin-bottom: -0.1666666667em; }
+  h2.trim {
+    margin-top: -0.1666666667em;
+    margin-bottom: -0.1666666667em; }
+  .trim-content h2 {
+    margin-bottom: -0.1666666667em;
+    margin-top: 1rem; }
+    .trim-content h2:first-child {
+      margin-top: -0.1666666667em; }
+
+h3 {
+  font-size: 1.8371173071rem;
+  line-height: 1.3608276349;
+  margin-top: 0;
+  margin-bottom: 0; }
+  h3.line {
+    line-height: 1; }
+  h3.trim--top {
+    margin-top: -0.1804138174em; }
+  h3.trim--bottom {
+    margin-bottom: -0.1804138174em; }
+  h3.trim {
+    margin-top: -0.1804138174em;
+    margin-bottom: -0.1804138174em; }
+  .trim-content h3 {
+    margin-bottom: -0.1804138174em;
+    margin-top: 1rem; }
+    .trim-content h3:first-child {
+      margin-top: -0.1804138174em; }
+
+ul {
+  background-color: blue; }

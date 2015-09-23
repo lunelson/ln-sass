@@ -1,0 +1,80 @@
+// TYPO INIT
+
+// variable to track first include of init
+$typo-init-run: false !default;
+
+// typo init mixin
+@mixin typo-init($size: 0, $height: auto, $alias: null){
+
+  // NB: when libsass 3.3.x is out, use dynamic placeholders
+
+
+  // get classes and values
+  $line: map-get($typo-classes, 'line');
+  $trim: map-get($typo-classes, 'trim');
+  $trim-content: map-get($typo-classes, 'trim-content');
+  $char-height: get($fonts, $alias, 'char-height') or 1;
+
+  // do first run styles if necessary
+  @if not $typo-init-run {
+    @at-root .#{$trim-content} { padding-top: 1px; padding-bottom: 1px; }
+    $typo-init-run: true !global;
+  }
+
+  // normalize font-size; NB change the size() function
+  $size: if(unitless($size), size($size), if(unit($size) == 'px', rem($size), $size));
+
+  // normalize line-height
+  @if $height == 'auto' {
+    $sub-lines: $typo-sub-lines or ceil($size);
+    $rel-height: medium-value('line-height') / unit-strip($size);
+    $height: $rel-height * ceil($typo-min-height / $rel-height * $sub-lines) / $sub-lines;
+  }
+
+  font-size: $size;
+  line-height: $height;
+  margin-top: 0;
+  margin-bottom: 0;
+
+  // get trim value for effectively 0 margin
+  $trim-margin: trim-margin(0rem, $height, $char-height);
+
+  &.#{$line} { line-height: 1; }
+  &.#{$trim}--top { margin-top: $trim-margin; }
+  &.#{$trim}--bottom { margin-bottom: $trim-margin; }
+  &.#{$trim} { margin-top: $trim-margin; margin-bottom: $trim-margin; }
+
+  .#{$trim-content} & {
+    margin-bottom: $trim-margin;
+    margin-top: margin();
+    // QUESTION: does it make more sense to include this whole mixin
+    // inside media((for: margin-y, font-size, line-height)) ?
+    // @include media((for: 'margin-y')) { margin-top: margin(); }
+    &:first-child { margin-top: $trim-margin; }
+  }
+
+  // allow content to be added and refer to current size and height
+  $typo-curr-font-size: $size !global;
+  $typo-curr-line-height: $height !global;
+  $typo-curr-char-height: $char-height !global;
+  @content;
+  $typo-curr-font-size: null !global;
+  $typo-curr-line-height: null !global;
+  $typo-curr-char-height: null !global;
+}
+
+///////////////
+// FUNCTIONS //
+///////////////
+
+@function trim($line-height: null, $char-height: null){
+  $line-height: $line-height or $typo-curr-line-height or medium-value('line-height');
+  $char-height: $char-height or $typo-curr-char-height or 1;
+  @return unit-assert($line-height - $char-height, em) / 2;
+}
+
+@function trim-margin($margin, $line-height: null, $char-height: null){
+  $margin: if(unitless($margin), margin-y($margin), $margin);
+  @if unit-strip($margin) == 0 { @return - trim($line-height, $char-height); }
+  @return calc(#{$margin} - #{trim($line-height, $char-height)});
+}

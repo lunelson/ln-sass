@@ -1,0 +1,34 @@
+/* test: ln-typo */
+
+@import '../../src/ln-util/all';
+@import '../../src/ln-media/all';
+// @import '../../src/ln-typo/all';
+@import "../../src/ln-typo/ln-typo-base";
+@import "../../src/ln-typo/ln-typo-util";
+@import "../../src/ln-typo/ln-typo-init-beta";
+@import "../../src/ln-typo/ln-typo-fonts";
+
+$media: map-merge($media, (
+  delta: (
+    breakpoint: 30em,
+    margin-y: 2.5rem,
+    font-size: 40px
+  )
+));
+
+$base: (
+  font-size: 1,
+  line-height: 1,
+  page-left: 40px,
+
+);
+
+@include media-object-init();
+
+p { @include typo-init(); }
+h1 { @include typo-init(5); }
+h2 { @include typo-init(4); }
+h3 { @include typo-init(3); }
+ul { @include typo-init() {
+  background-color: blue;
+  } }

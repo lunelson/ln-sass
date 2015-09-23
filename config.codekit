@@ -16,16 +16,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
-		},
-	"\/_planning.html": {
-		"fileType": 8192,
-		"ignore": 1,
-		"ignoreWasSetByUser": 0,
-		"inputAbbreviatedPath": "\/_planning.html",
-		"outputAbbreviatedPath": "No Output Path",
-		"outputPathIsOutsideProject": 0,
-		"outputPathIsSetByUser": 0
+		"useLibsass": 0
 		},
 	"\/_planning.md": {
 		"criticStyle": 0,
@@ -62,7 +53,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/dist\/_sass-master-compass.scss": {
 		"createSourceMap": 0,
@@ -78,7 +69,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/dist\/_sass-master.scss": {
 		"createSourceMap": 0,
@@ -94,7 +85,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/gulpfile.js": {
 		"fileType": 64,
@@ -121,7 +112,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/lib\/math\/_math.scss": {
 		"createSourceMap": 0,
@@ -137,7 +128,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/lib\/math\/functions\/_acos.scss": {
 		"createSourceMap": 0,
@@ -153,7 +144,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/lib\/math\/functions\/_asin.scss": {
 		"createSourceMap": 0,
@@ -169,7 +160,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/lib\/math\/functions\/_atan.scss": {
 		"createSourceMap": 0,
@@ -185,7 +176,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/lib\/math\/functions\/_atan2.scss": {
 		"createSourceMap": 0,
@@ -201,7 +192,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/lib\/math\/functions\/_cos.scss": {
 		"createSourceMap": 0,
@@ -217,7 +208,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/lib\/math\/functions\/_cot.scss": {
 		"createSourceMap": 0,
@@ -233,7 +224,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/lib\/math\/functions\/_csc.scss": {
 		"createSourceMap": 0,
@@ -249,7 +240,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/lib\/math\/functions\/_exp.scss": {
 		"createSourceMap": 0,
@@ -265,7 +256,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/lib\/math\/functions\/_fact.scss": {
 		"createSourceMap": 0,
@@ -281,7 +272,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/lib\/math\/functions\/_frexp.scss": {
 		"createSourceMap": 0,
@@ -297,7 +288,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/lib\/math\/functions\/_ldexp.scss": {
 		"createSourceMap": 0,
@@ -313,7 +304,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/lib\/math\/functions\/_log.scss": {
 		"createSourceMap": 0,
@@ -329,7 +320,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/lib\/math\/functions\/_pow.scss": {
 		"createSourceMap": 0,
@@ -345,7 +336,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/lib\/math\/functions\/_sec.scss": {
 		"createSourceMap": 0,
@@ -361,7 +352,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/lib\/math\/functions\/_sin.scss": {
 		"createSourceMap": 0,
@@ -377,7 +368,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/lib\/math\/functions\/_sqrt.scss": {
 		"createSourceMap": 0,
@@ -393,7 +384,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/lib\/math\/functions\/_tan.scss": {
 		"createSourceMap": 0,
@@ -409,7 +400,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/lib\/math\/helpers\/_deg-to-rad.scss": {
 		"createSourceMap": 0,
@@ -425,7 +416,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/lib\/math\/helpers\/_rad-to-deg.scss": {
 		"createSourceMap": 0,
@@ -441,7 +432,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/lib\/math\/helpers\/_strip-unit.scss": {
 		"createSourceMap": 0,
@@ -457,7 +448,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/lib\/math\/helpers\/_unitless-rad.scss": {
 		"createSourceMap": 0,
@@ -473,7 +464,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/lib\/sassdash\/_sassdash.scss": {
 		"createSourceMap": 0,
@@ -489,7 +480,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/lib\/sassdash\/api\/_add.scss": {
 		"createSourceMap": 0,
@@ -505,7 +496,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/lib\/sassdash\/api\/_after.scss": {
 		"createSourceMap": 0,
@@ -521,7 +512,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/lib\/sassdash\/api\/_ary.scss": {
 		"createSourceMap": 0,
@@ -537,7 +528,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/lib\/sassdash\/api\/_assign.scss": {
 		"createSourceMap": 0,
@@ -553,7 +544,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/lib\/sassdash\/api\/_at.scss": {
 		"createSourceMap": 0,
@@ -569,7 +560,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/lib\/sassdash\/api\/_before.scss": {
 		"createSourceMap": 0,
@@ -585,7 +576,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/lib\/sassdash\/api\/_bind.scss": {
 		"createSourceMap": 0,
@@ -601,7 +592,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/lib\/sassdash\/api\/_call.scss": {
 		"createSourceMap": 0,
@@ -617,7 +608,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/lib\/sassdash\/api\/_callback.scss": {
 		"createSourceMap": 0,
@@ -633,7 +624,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/lib\/sassdash\/api\/_case.scss": {
 		"createSourceMap": 0,
@@ -649,7 +640,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/lib\/sassdash\/api\/_chunk.scss": {
 		"createSourceMap": 0,
@@ -665,7 +656,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/lib\/sassdash\/api\/_compact.scss": {
 		"createSourceMap": 0,
@@ -681,7 +672,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/lib\/sassdash\/api\/_concat.scss": {
 		"createSourceMap": 0,
@@ -697,7 +688,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/lib\/sassdash\/api\/_constant.scss": {
 		"createSourceMap": 0,
@@ -713,7 +704,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/lib\/sassdash\/api\/_context.scss": {
 		"createSourceMap": 0,
@@ -729,7 +720,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/lib\/sassdash\/api\/_count-by.scss": {
 		"createSourceMap": 0,
@@ -745,7 +736,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/lib\/sassdash\/api\/_create.scss": {
 		"createSourceMap": 0,
@@ -761,7 +752,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/lib\/sassdash\/api\/_debug.scss": {
 		"createSourceMap": 0,
@@ -777,7 +768,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/lib\/sassdash\/api\/_declare.scss": {
 		"createSourceMap": 0,
@@ -793,7 +784,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/lib\/sassdash\/api\/_defaults.scss": {
 		"createSourceMap": 0,
@@ -809,7 +800,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/lib\/sassdash\/api\/_difference.scss": {
 		"createSourceMap": 0,
@@ -825,7 +816,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/lib\/sassdash\/api\/_drop.scss": {
 		"createSourceMap": 0,
@@ -841,7 +832,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/lib\/sassdash\/api\/_either.scss": {
 		"createSourceMap": 0,
@@ -857,7 +848,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/lib\/sassdash\/api\/_ends-with.scss": {
 		"createSourceMap": 0,
@@ -873,7 +864,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/lib\/sassdash\/api\/_escape.scss": {
 		"createSourceMap": 0,
@@ -889,7 +880,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/lib\/sassdash\/api\/_every.scss": {
 		"createSourceMap": 0,
@@ -905,7 +896,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/lib\/sassdash\/api\/_exec.scss": {
 		"createSourceMap": 0,
@@ -921,7 +912,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/lib\/sassdash\/api\/_extrema.scss": {
 		"createSourceMap": 0,
@@ -937,7 +928,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/lib\/sassdash\/api\/_fill.scss": {
 		"createSourceMap": 0,
@@ -953,7 +944,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/lib\/sassdash\/api\/_filter.scss": {
 		"createSourceMap": 0,
@@ -969,7 +960,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/lib\/sassdash\/api\/_find.scss": {
 		"createSourceMap": 0,
@@ -985,7 +976,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/lib\/sassdash\/api\/_first.scss": {
 		"createSourceMap": 0,
@@ -1001,7 +992,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/lib\/sassdash\/api\/_flatten.scss": {
 		"createSourceMap": 0,
@@ -1017,7 +1008,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/lib\/sassdash\/api\/_flow.scss": {
 		"createSourceMap": 0,
@@ -1033,7 +1024,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/lib\/sassdash\/api\/_for.scss": {
 		"createSourceMap": 0,
@@ -1049,7 +1040,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/lib\/sassdash\/api\/_functions.scss": {
 		"createSourceMap": 0,
@@ -1065,7 +1056,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/lib\/sassdash\/api\/_group-by.scss": {
 		"createSourceMap": 0,
@@ -1081,7 +1072,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/lib\/sassdash\/api\/_has.scss": {
 		"createSourceMap": 0,
@@ -1097,7 +1088,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/lib\/sassdash\/api\/_identity.scss": {
 		"createSourceMap": 0,
@@ -1113,7 +1104,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/lib\/sassdash\/api\/_includes.scss": {
 		"createSourceMap": 0,
@@ -1129,7 +1120,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/lib\/sassdash\/api\/_index-by.scss": {
 		"createSourceMap": 0,
@@ -1145,7 +1136,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/lib\/sassdash\/api\/_index-of.scss": {
 		"createSourceMap": 0,
@@ -1161,7 +1152,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/lib\/sassdash\/api\/_initial.scss": {
 		"createSourceMap": 0,
@@ -1177,7 +1168,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/lib\/sassdash\/api\/_intersection.scss": {
 		"createSourceMap": 0,
@@ -1193,7 +1184,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/lib\/sassdash\/api\/_invert.scss": {
 		"createSourceMap": 0,
@@ -1209,7 +1200,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/lib\/sassdash\/api\/_invoke.scss": {
 		"createSourceMap": 0,
@@ -1225,7 +1216,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/lib\/sassdash\/api\/_is-empty.scss": {
 		"createSourceMap": 0,
@@ -1241,7 +1232,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/lib\/sassdash\/api\/_is-equal.scss": {
 		"createSourceMap": 0,
@@ -1257,7 +1248,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/lib\/sassdash\/api\/_is-match.scss": {
 		"createSourceMap": 0,
@@ -1273,7 +1264,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/lib\/sassdash\/api\/_is-type.scss": {
 		"createSourceMap": 0,
@@ -1289,7 +1280,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/lib\/sassdash\/api\/_join.scss": {
 		"createSourceMap": 0,
@@ -1305,7 +1296,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/lib\/sassdash\/api\/_keys.scss": {
 		"createSourceMap": 0,
@@ -1321,7 +1312,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/lib\/sassdash\/api\/_last.scss": {
 		"createSourceMap": 0,
@@ -1337,7 +1328,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/lib\/sassdash\/api\/_map.scss": {
 		"createSourceMap": 0,
@@ -1353,7 +1344,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/lib\/sassdash\/api\/_matches.scss": {
 		"createSourceMap": 0,
@@ -1369,7 +1360,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/lib\/sassdash\/api\/_memoize.scss": {
 		"createSourceMap": 0,
@@ -1385,7 +1376,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/lib\/sassdash\/api\/_merge.scss": {
 		"createSourceMap": 0,
@@ -1401,7 +1392,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/lib\/sassdash\/api\/_modify.scss": {
 		"createSourceMap": 0,
@@ -1417,7 +1408,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/lib\/sassdash\/api\/_module.scss": {
 		"createSourceMap": 0,
@@ -1433,7 +1424,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/lib\/sassdash\/api\/_negate.scss": {
 		"createSourceMap": 0,
@@ -1449,7 +1440,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/lib\/sassdash\/api\/_noop.scss": {
 		"createSourceMap": 0,
@@ -1465,7 +1456,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/lib\/sassdash\/api\/_omit.scss": {
 		"createSourceMap": 0,
@@ -1481,7 +1472,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/lib\/sassdash\/api\/_once.scss": {
 		"createSourceMap": 0,
@@ -1497,7 +1488,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/lib\/sassdash\/api\/_pad.scss": {
 		"createSourceMap": 0,
@@ -1513,7 +1504,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/lib\/sassdash\/api\/_pairs.scss": {
 		"createSourceMap": 0,
@@ -1529,7 +1520,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/lib\/sassdash\/api\/_parse-int.scss": {
 		"createSourceMap": 0,
@@ -1545,7 +1536,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/lib\/sassdash\/api\/_partial.scss": {
 		"createSourceMap": 0,
@@ -1561,7 +1552,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/lib\/sassdash\/api\/_partition.scss": {
 		"createSourceMap": 0,
@@ -1577,7 +1568,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/lib\/sassdash\/api\/_pick.scss": {
 		"createSourceMap": 0,
@@ -1593,7 +1584,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/lib\/sassdash\/api\/_pluck.scss": {
 		"createSourceMap": 0,
@@ -1609,7 +1600,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/lib\/sassdash\/api\/_property.scss": {
 		"createSourceMap": 0,
@@ -1625,7 +1616,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/lib\/sassdash\/api\/_pull.scss": {
 		"createSourceMap": 0,
@@ -1641,7 +1632,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/lib\/sassdash\/api\/_push.scss": {
 		"createSourceMap": 0,
@@ -1657,7 +1648,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/lib\/sassdash\/api\/_rand.scss": {
 		"createSourceMap": 0,
@@ -1673,7 +1664,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/lib\/sassdash\/api\/_range.scss": {
 		"createSourceMap": 0,
@@ -1689,7 +1680,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/lib\/sassdash\/api\/_reduce.scss": {
 		"createSourceMap": 0,
@@ -1705,7 +1696,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/lib\/sassdash\/api\/_reject.scss": {
 		"createSourceMap": 0,
@@ -1721,7 +1712,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/lib\/sassdash\/api\/_repeat.scss": {
 		"createSourceMap": 0,
@@ -1737,7 +1728,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/lib\/sassdash\/api\/_replace.scss": {
 		"createSourceMap": 0,
@@ -1753,7 +1744,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/lib\/sassdash\/api\/_rest.scss": {
 		"createSourceMap": 0,
@@ -1769,7 +1760,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/lib\/sassdash\/api\/_result.scss": {
 		"createSourceMap": 0,
@@ -1785,7 +1776,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/lib\/sassdash\/api\/_reverse.scss": {
 		"createSourceMap": 0,
@@ -1801,7 +1792,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/lib\/sassdash\/api\/_rules.scss": {
 		"createSourceMap": 0,
@@ -1817,7 +1808,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/lib\/sassdash\/api\/_sample.scss": {
 		"createSourceMap": 0,
@@ -1833,7 +1824,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/lib\/sassdash\/api\/_shuffle.scss": {
 		"createSourceMap": 0,
@@ -1849,7 +1840,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/lib\/sassdash\/api\/_size.scss": {
 		"createSourceMap": 0,
@@ -1865,7 +1856,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/lib\/sassdash\/api\/_slice.scss": {
 		"createSourceMap": 0,
@@ -1881,7 +1872,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/lib\/sassdash\/api\/_some.scss": {
 		"createSourceMap": 0,
@@ -1897,7 +1888,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/lib\/sassdash\/api\/_sort.scss": {
 		"createSourceMap": 0,
@@ -1913,7 +1904,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/lib\/sassdash\/api\/_sorted-index.scss": {
 		"createSourceMap": 0,
@@ -1929,7 +1920,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/lib\/sassdash\/api\/_splice.scss": {
 		"createSourceMap": 0,
@@ -1945,7 +1936,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/lib\/sassdash\/api\/_split.scss": {
 		"createSourceMap": 0,
@@ -1961,7 +1952,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/lib\/sassdash\/api\/_starts-with.scss": {
 		"createSourceMap": 0,
@@ -1977,7 +1968,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/lib\/sassdash\/api\/_sum.scss": {
 		"createSourceMap": 0,
@@ -1993,7 +1984,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/lib\/sassdash\/api\/_take.scss": {
 		"createSourceMap": 0,
@@ -2009,7 +2000,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/lib\/sassdash\/api\/_times.scss": {
 		"createSourceMap": 0,
@@ -2025,7 +2016,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/lib\/sassdash\/api\/_to-list.scss": {
 		"createSourceMap": 0,
@@ -2041,7 +2032,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/lib\/sassdash\/api\/_to-string.scss": {
 		"createSourceMap": 0,
@@ -2057,7 +2048,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/lib\/sassdash\/api\/_trim.scss": {
 		"createSourceMap": 0,
@@ -2073,7 +2064,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/lib\/sassdash\/api\/_trunc.scss": {
 		"createSourceMap": 0,
@@ -2089,7 +2080,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/lib\/sassdash\/api\/_unescape.scss": {
 		"createSourceMap": 0,
@@ -2105,7 +2096,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/lib\/sassdash\/api\/_union.scss": {
 		"createSourceMap": 0,
@@ -2121,7 +2112,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/lib\/sassdash\/api\/_uniq.scss": {
 		"createSourceMap": 0,
@@ -2137,7 +2128,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/lib\/sassdash\/api\/_unique-id.scss": {
 		"createSourceMap": 0,
@@ -2153,7 +2144,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/lib\/sassdash\/api\/_unzip.scss": {
 		"createSourceMap": 0,
@@ -2169,7 +2160,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/lib\/sassdash\/api\/_values.scss": {
 		"createSourceMap": 0,
@@ -2185,7 +2176,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/lib\/sassdash\/api\/_where.scss": {
 		"createSourceMap": 0,
@@ -2201,7 +2192,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/lib\/sassdash\/api\/_without.scss": {
 		"createSourceMap": 0,
@@ -2217,7 +2208,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/lib\/sassdash\/api\/_words.scss": {
 		"createSourceMap": 0,
@@ -2233,7 +2224,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/lib\/sassdash\/api\/_xor.scss": {
 		"createSourceMap": 0,
@@ -2249,7 +2240,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/lib\/sassdash\/api\/_zip.scss": {
 		"createSourceMap": 0,
@@ -2265,7 +2256,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/lib\/sassdash\/constants\/_char.scss": {
 		"createSourceMap": 0,
@@ -2281,7 +2272,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/lib\/sassdash\/constants\/_constructor.scss": {
 		"createSourceMap": 0,
@@ -2297,7 +2288,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/lib\/sassdash\/constants\/_escapes.scss": {
 		"createSourceMap": 0,
@@ -2313,7 +2304,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/lib\/sassdash\/constants\/_flags.scss": {
 		"createSourceMap": 0,
@@ -2329,7 +2320,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/lib\/sassdash\/constants\/_global.scss": {
 		"createSourceMap": 0,
@@ -2345,7 +2336,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/lib\/sassdash\/constants\/_module.scss": {
 		"createSourceMap": 0,
@@ -2361,7 +2352,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/lib\/sassdash\/constants\/_native.scss": {
 		"createSourceMap": 0,
@@ -2377,7 +2368,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/lib\/sassdash\/constants\/_number.scss": {
 		"createSourceMap": 0,
@@ -2393,7 +2384,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/lib\/sassdash\/constants\/_trunc.scss": {
 		"createSourceMap": 0,
@@ -2409,7 +2400,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/lib\/sassdash\/constants\/_units.scss": {
 		"createSourceMap": 0,
@@ -2425,7 +2416,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/lib\/sassdash\/helpers\/_aggregator.scss": {
 		"createSourceMap": 0,
@@ -2441,7 +2432,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/lib\/sassdash\/helpers\/_call.scss": {
 		"createSourceMap": 0,
@@ -2457,7 +2448,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/lib\/sassdash\/helpers\/_chain.scss": {
 		"createSourceMap": 0,
@@ -2473,7 +2464,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/lib\/sassdash\/helpers\/_char.scss": {
 		"createSourceMap": 0,
@@ -2489,7 +2480,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/lib\/sassdash\/helpers\/_coercion.scss": {
 		"createSourceMap": 0,
@@ -2505,7 +2496,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/lib\/sassdash\/helpers\/_compounder.scss": {
 		"createSourceMap": 0,
@@ -2521,7 +2512,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/lib\/sassdash\/helpers\/_module.scss": {
 		"createSourceMap": 0,
@@ -2537,7 +2528,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/lib\/sassdash\/helpers\/_number.scss": {
 		"createSourceMap": 0,
@@ -2553,7 +2544,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/lib\/sassdash\/helpers\/_scope.scss": {
 		"createSourceMap": 0,
@@ -2569,7 +2560,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/lib\/sassdash\/static\/_local.scss": {
 		"createSourceMap": 0,
@@ -2585,7 +2576,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/lib\/sassdash\/static\/_module.scss": {
 		"createSourceMap": 0,
@@ -2601,7 +2592,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/lib\/sassdash\/static\/_static.scss": {
 		"createSourceMap": 0,
@@ -2617,7 +2608,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/ln.jpg": {
 		"fileType": 16384,
@@ -2665,7 +2656,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/src\/ln-layout\/_all.scss": {
 		"createSourceMap": 0,
@@ -2681,7 +2672,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/src\/ln-layout\/_ln-layout-base.scss": {
 		"createSourceMap": 0,
@@ -2697,7 +2688,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/src\/ln-layout\/_ln-layout-grid.scss": {
 		"createSourceMap": 0,
@@ -2713,7 +2704,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/src\/ln-layout\/_ln-layout-page.scss": {
 		"createSourceMap": 0,
@@ -2729,7 +2720,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/src\/ln-layout\/_ln-layout-util.scss": {
 		"createSourceMap": 0,
@@ -2745,7 +2736,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/src\/ln-media\/_all.scss": {
 		"createSourceMap": 0,
@@ -2761,7 +2752,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/src\/ln-media\/_ln-media-base.scss": {
 		"createSourceMap": 0,
@@ -2777,7 +2768,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/src\/ln-media\/_ln-media-object.scss": {
 		"createSourceMap": 0,
@@ -2793,7 +2784,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/src\/ln-media\/_ln-media-styles.scss": {
 		"createSourceMap": 0,
@@ -2809,7 +2800,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/src\/ln-media\/_ln-media-util.scss": {
 		"createSourceMap": 0,
@@ -2825,7 +2816,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/src\/ln-typo\/_all.scss": {
 		"createSourceMap": 0,
@@ -2841,7 +2832,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/src\/ln-typo\/_ln-typo-base.scss": {
 		"createSourceMap": 0,
@@ -2857,7 +2848,55 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
+		},
+	"\/src\/ln-typo\/_ln-typo-fonts.scss": {
+		"createSourceMap": 0,
+		"debugStyle": 0,
+		"decimalPrecision": 10,
+		"fileType": 4,
+		"ignore": 1,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/src\/ln-typo\/_ln-typo-fonts.scss",
+		"outputAbbreviatedPath": "\/src\/ln-typo\/_ln-typo-fonts.css",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"outputStyle": 0,
+		"shouldRunAutoprefixer": 0,
+		"shouldRunBless": 0,
+		"useLibsass": 0
+		},
+	"\/src\/ln-typo\/_ln-typo-init-beta.scss": {
+		"createSourceMap": 0,
+		"debugStyle": 0,
+		"decimalPrecision": 10,
+		"fileType": 4,
+		"ignore": 1,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/src\/ln-typo\/_ln-typo-init-beta.scss",
+		"outputAbbreviatedPath": "\/src\/ln-typo\/_ln-typo-init-beta.css",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"outputStyle": 0,
+		"shouldRunAutoprefixer": 0,
+		"shouldRunBless": 0,
+		"useLibsass": 0
+		},
+	"\/src\/ln-typo\/_ln-typo-init.scss": {
+		"createSourceMap": 0,
+		"debugStyle": 0,
+		"decimalPrecision": 10,
+		"fileType": 4,
+		"ignore": 1,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/src\/ln-typo\/_ln-typo-init.scss",
+		"outputAbbreviatedPath": "\/src\/ln-typo\/_ln-typo-init.css",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"outputStyle": 0,
+		"shouldRunAutoprefixer": 0,
+		"shouldRunBless": 0,
+		"useLibsass": 0
 		},
 	"\/src\/ln-typo\/_ln-typo-util.scss": {
 		"createSourceMap": 0,
@@ -2873,23 +2912,39 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
-	"\/src\/ln-typo\/_old\/_typo-old.scss": {
+	"\/src\/ln-typo\/old\/_typo-not-so-old.scss": {
 		"createSourceMap": 0,
 		"debugStyle": 0,
 		"decimalPrecision": 10,
 		"fileType": 4,
 		"ignore": 1,
 		"ignoreWasSetByUser": 0,
-		"inputAbbreviatedPath": "\/src\/ln-typo\/_old\/_typo-old.scss",
-		"outputAbbreviatedPath": "\/src\/ln-typo\/_old\/_typo-old.css",
+		"inputAbbreviatedPath": "\/src\/ln-typo\/old\/_typo-not-so-old.scss",
+		"outputAbbreviatedPath": "\/src\/ln-typo\/old\/_typo-not-so-old.css",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
+		},
+	"\/src\/ln-typo\/old\/_typo-old.scss": {
+		"createSourceMap": 0,
+		"debugStyle": 0,
+		"decimalPrecision": 10,
+		"fileType": 4,
+		"ignore": 1,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/src\/ln-typo\/old\/_typo-old.scss",
+		"outputAbbreviatedPath": "\/src\/ln-typo\/old\/_typo-old.css",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"outputStyle": 0,
+		"shouldRunAutoprefixer": 0,
+		"shouldRunBless": 0,
+		"useLibsass": 0
 		},
 	"\/src\/ln-util\/_all.scss": {
 		"createSourceMap": 0,
@@ -2905,7 +2960,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/src\/ln-util\/_ln-util-color.scss": {
 		"createSourceMap": 0,
@@ -2921,7 +2976,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/src\/ln-util\/_ln-util-debug.scss": {
 		"createSourceMap": 0,
@@ -2937,7 +2992,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/src\/ln-util\/_ln-util-lists.scss": {
 		"createSourceMap": 0,
@@ -2953,7 +3008,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/src\/ln-util\/_ln-util-maps.scss": {
 		"createSourceMap": 0,
@@ -2969,7 +3024,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/src\/ln-util\/_ln-util-math.scss": {
 		"createSourceMap": 0,
@@ -2985,7 +3040,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/src\/ln-util\/_ln-util-misc.scss": {
 		"createSourceMap": 0,
@@ -3001,7 +3056,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/src\/ln-util\/_ln-util-reset.scss": {
 		"createSourceMap": 0,
@@ -3017,7 +3072,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/src\/ln-util\/_ln-util-strings.scss": {
 		"createSourceMap": 0,
@@ -3033,7 +3088,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/src\/ln-util\/_ln-util-units.scss": {
 		"createSourceMap": 0,
@@ -3049,7 +3104,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/src\/ln-util\/beta\/_chunk.scss": {
 		"createSourceMap": 0,
@@ -3065,7 +3120,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/src\/ln-util\/beta\/_first.scss": {
 		"createSourceMap": 0,
@@ -3081,7 +3136,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/src\/ln-util\/beta\/_flatten.scss": {
 		"createSourceMap": 0,
@@ -3097,7 +3152,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/src\/ln-util\/beta\/_initial.scss": {
 		"createSourceMap": 0,
@@ -3113,7 +3168,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/src\/ln-util\/beta\/_intersection.scss": {
 		"createSourceMap": 0,
@@ -3129,7 +3184,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/src\/ln-util\/beta\/_is-symmetrical.scss": {
 		"createSourceMap": 0,
@@ -3145,7 +3200,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/src\/ln-util\/beta\/_last.scss": {
 		"createSourceMap": 0,
@@ -3161,7 +3216,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/src\/ln-util\/beta\/_loop.scss": {
 		"createSourceMap": 0,
@@ -3177,7 +3232,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/src\/ln-util\/beta\/_parallax.scss": {
 		"createSourceMap": 0,
@@ -3193,7 +3248,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/src\/ln-util\/beta\/_prepend.scss": {
 		"createSourceMap": 0,
@@ -3209,7 +3264,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/src\/ln-util\/beta\/_replace-nth.scss": {
 		"createSourceMap": 0,
@@ -3225,7 +3280,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/src\/ln-util\/beta\/_replace.scss": {
 		"createSourceMap": 0,
@@ -3241,7 +3296,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/src\/ln-util\/beta\/_rest.scss": {
 		"createSourceMap": 0,
@@ -3257,7 +3312,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/src\/ln-util\/beta\/_reverse.scss": {
 		"createSourceMap": 0,
@@ -3273,7 +3328,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/src\/ln-util\/beta\/_slice.scss": {
 		"createSourceMap": 0,
@@ -3289,7 +3344,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/src\/ln-util\/beta\/_sum.scss": {
 		"createSourceMap": 0,
@@ -3305,7 +3360,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/src\/ln-util\/beta\/_union.scss": {
 		"createSourceMap": 0,
@@ -3321,7 +3376,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/src\/ln-util\/beta\/_unique.scss": {
 		"createSourceMap": 0,
@@ -3337,7 +3392,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/src\/ln-util\/beta\/_without-nth.scss": {
 		"createSourceMap": 0,
@@ -3353,7 +3408,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/src\/ln-util\/beta\/_without.scss": {
 		"createSourceMap": 0,
@@ -3369,7 +3424,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/src\/ln-util\/beta\/sass-slice\/new-slice.scss": {
 		"createSourceMap": 0,
@@ -3385,7 +3440,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/src\/ln-util\/beta\/sass-slice\/slice-testing.scss": {
 		"createSourceMap": 0,
@@ -3401,7 +3456,375 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
+		},
+	"\/src\/ln-util\/math\/_constants.scss": {
+		"createSourceMap": 0,
+		"debugStyle": 0,
+		"decimalPrecision": 10,
+		"fileType": 4,
+		"ignore": 1,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/src\/ln-util\/math\/_constants.scss",
+		"outputAbbreviatedPath": "\/src\/ln-util\/math\/_constants.css",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"outputStyle": 0,
+		"shouldRunAutoprefixer": 0,
+		"shouldRunBless": 0,
+		"useLibsass": 0
+		},
+	"\/src\/ln-util\/math\/_math.scss": {
+		"createSourceMap": 0,
+		"debugStyle": 0,
+		"decimalPrecision": 10,
+		"fileType": 4,
+		"ignore": 1,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/src\/ln-util\/math\/_math.scss",
+		"outputAbbreviatedPath": "\/src\/ln-util\/math\/_math.css",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"outputStyle": 0,
+		"shouldRunAutoprefixer": 0,
+		"shouldRunBless": 0,
+		"useLibsass": 0
+		},
+	"\/src\/ln-util\/math\/functions\/_acos.scss": {
+		"createSourceMap": 0,
+		"debugStyle": 0,
+		"decimalPrecision": 10,
+		"fileType": 4,
+		"ignore": 1,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/src\/ln-util\/math\/functions\/_acos.scss",
+		"outputAbbreviatedPath": "\/src\/ln-util\/math\/functions\/_acos.css",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"outputStyle": 0,
+		"shouldRunAutoprefixer": 0,
+		"shouldRunBless": 0,
+		"useLibsass": 0
+		},
+	"\/src\/ln-util\/math\/functions\/_asin.scss": {
+		"createSourceMap": 0,
+		"debugStyle": 0,
+		"decimalPrecision": 10,
+		"fileType": 4,
+		"ignore": 1,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/src\/ln-util\/math\/functions\/_asin.scss",
+		"outputAbbreviatedPath": "\/src\/ln-util\/math\/functions\/_asin.css",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"outputStyle": 0,
+		"shouldRunAutoprefixer": 0,
+		"shouldRunBless": 0,
+		"useLibsass": 0
+		},
+	"\/src\/ln-util\/math\/functions\/_atan.scss": {
+		"createSourceMap": 0,
+		"debugStyle": 0,
+		"decimalPrecision": 10,
+		"fileType": 4,
+		"ignore": 1,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/src\/ln-util\/math\/functions\/_atan.scss",
+		"outputAbbreviatedPath": "\/src\/ln-util\/math\/functions\/_atan.css",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"outputStyle": 0,
+		"shouldRunAutoprefixer": 0,
+		"shouldRunBless": 0,
+		"useLibsass": 0
+		},
+	"\/src\/ln-util\/math\/functions\/_atan2.scss": {
+		"createSourceMap": 0,
+		"debugStyle": 0,
+		"decimalPrecision": 10,
+		"fileType": 4,
+		"ignore": 1,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/src\/ln-util\/math\/functions\/_atan2.scss",
+		"outputAbbreviatedPath": "\/src\/ln-util\/math\/functions\/_atan2.css",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"outputStyle": 0,
+		"shouldRunAutoprefixer": 0,
+		"shouldRunBless": 0,
+		"useLibsass": 0
+		},
+	"\/src\/ln-util\/math\/functions\/_cos.scss": {
+		"createSourceMap": 0,
+		"debugStyle": 0,
+		"decimalPrecision": 10,
+		"fileType": 4,
+		"ignore": 1,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/src\/ln-util\/math\/functions\/_cos.scss",
+		"outputAbbreviatedPath": "\/src\/ln-util\/math\/functions\/_cos.css",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"outputStyle": 0,
+		"shouldRunAutoprefixer": 0,
+		"shouldRunBless": 0,
+		"useLibsass": 0
+		},
+	"\/src\/ln-util\/math\/functions\/_cot.scss": {
+		"createSourceMap": 0,
+		"debugStyle": 0,
+		"decimalPrecision": 10,
+		"fileType": 4,
+		"ignore": 1,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/src\/ln-util\/math\/functions\/_cot.scss",
+		"outputAbbreviatedPath": "\/src\/ln-util\/math\/functions\/_cot.css",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"outputStyle": 0,
+		"shouldRunAutoprefixer": 0,
+		"shouldRunBless": 0,
+		"useLibsass": 0
+		},
+	"\/src\/ln-util\/math\/functions\/_csc.scss": {
+		"createSourceMap": 0,
+		"debugStyle": 0,
+		"decimalPrecision": 10,
+		"fileType": 4,
+		"ignore": 1,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/src\/ln-util\/math\/functions\/_csc.scss",
+		"outputAbbreviatedPath": "\/src\/ln-util\/math\/functions\/_csc.css",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"outputStyle": 0,
+		"shouldRunAutoprefixer": 0,
+		"shouldRunBless": 0,
+		"useLibsass": 0
+		},
+	"\/src\/ln-util\/math\/functions\/_exp.scss": {
+		"createSourceMap": 0,
+		"debugStyle": 0,
+		"decimalPrecision": 10,
+		"fileType": 4,
+		"ignore": 1,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/src\/ln-util\/math\/functions\/_exp.scss",
+		"outputAbbreviatedPath": "\/src\/ln-util\/math\/functions\/_exp.css",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"outputStyle": 0,
+		"shouldRunAutoprefixer": 0,
+		"shouldRunBless": 0,
+		"useLibsass": 0
+		},
+	"\/src\/ln-util\/math\/functions\/_fact.scss": {
+		"createSourceMap": 0,
+		"debugStyle": 0,
+		"decimalPrecision": 10,
+		"fileType": 4,
+		"ignore": 1,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/src\/ln-util\/math\/functions\/_fact.scss",
+		"outputAbbreviatedPath": "\/src\/ln-util\/math\/functions\/_fact.css",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"outputStyle": 0,
+		"shouldRunAutoprefixer": 0,
+		"shouldRunBless": 0,
+		"useLibsass": 0
+		},
+	"\/src\/ln-util\/math\/functions\/_frexp.scss": {
+		"createSourceMap": 0,
+		"debugStyle": 0,
+		"decimalPrecision": 10,
+		"fileType": 4,
+		"ignore": 1,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/src\/ln-util\/math\/functions\/_frexp.scss",
+		"outputAbbreviatedPath": "\/src\/ln-util\/math\/functions\/_frexp.css",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"outputStyle": 0,
+		"shouldRunAutoprefixer": 0,
+		"shouldRunBless": 0,
+		"useLibsass": 0
+		},
+	"\/src\/ln-util\/math\/functions\/_ldexp.scss": {
+		"createSourceMap": 0,
+		"debugStyle": 0,
+		"decimalPrecision": 10,
+		"fileType": 4,
+		"ignore": 1,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/src\/ln-util\/math\/functions\/_ldexp.scss",
+		"outputAbbreviatedPath": "\/src\/ln-util\/math\/functions\/_ldexp.css",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"outputStyle": 0,
+		"shouldRunAutoprefixer": 0,
+		"shouldRunBless": 0,
+		"useLibsass": 0
+		},
+	"\/src\/ln-util\/math\/functions\/_log.scss": {
+		"createSourceMap": 0,
+		"debugStyle": 0,
+		"decimalPrecision": 10,
+		"fileType": 4,
+		"ignore": 1,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/src\/ln-util\/math\/functions\/_log.scss",
+		"outputAbbreviatedPath": "\/src\/ln-util\/math\/functions\/_log.css",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"outputStyle": 0,
+		"shouldRunAutoprefixer": 0,
+		"shouldRunBless": 0,
+		"useLibsass": 0
+		},
+	"\/src\/ln-util\/math\/functions\/_pow.scss": {
+		"createSourceMap": 0,
+		"debugStyle": 0,
+		"decimalPrecision": 10,
+		"fileType": 4,
+		"ignore": 1,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/src\/ln-util\/math\/functions\/_pow.scss",
+		"outputAbbreviatedPath": "\/src\/ln-util\/math\/functions\/_pow.css",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"outputStyle": 0,
+		"shouldRunAutoprefixer": 0,
+		"shouldRunBless": 0,
+		"useLibsass": 0
+		},
+	"\/src\/ln-util\/math\/functions\/_sec.scss": {
+		"createSourceMap": 0,
+		"debugStyle": 0,
+		"decimalPrecision": 10,
+		"fileType": 4,
+		"ignore": 1,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/src\/ln-util\/math\/functions\/_sec.scss",
+		"outputAbbreviatedPath": "\/src\/ln-util\/math\/functions\/_sec.css",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"outputStyle": 0,
+		"shouldRunAutoprefixer": 0,
+		"shouldRunBless": 0,
+		"useLibsass": 0
+		},
+	"\/src\/ln-util\/math\/functions\/_sin.scss": {
+		"createSourceMap": 0,
+		"debugStyle": 0,
+		"decimalPrecision": 10,
+		"fileType": 4,
+		"ignore": 1,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/src\/ln-util\/math\/functions\/_sin.scss",
+		"outputAbbreviatedPath": "\/src\/ln-util\/math\/functions\/_sin.css",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"outputStyle": 0,
+		"shouldRunAutoprefixer": 0,
+		"shouldRunBless": 0,
+		"useLibsass": 0
+		},
+	"\/src\/ln-util\/math\/functions\/_sqrt.scss": {
+		"createSourceMap": 0,
+		"debugStyle": 0,
+		"decimalPrecision": 10,
+		"fileType": 4,
+		"ignore": 1,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/src\/ln-util\/math\/functions\/_sqrt.scss",
+		"outputAbbreviatedPath": "\/src\/ln-util\/math\/functions\/_sqrt.css",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"outputStyle": 0,
+		"shouldRunAutoprefixer": 0,
+		"shouldRunBless": 0,
+		"useLibsass": 0
+		},
+	"\/src\/ln-util\/math\/functions\/_tan.scss": {
+		"createSourceMap": 0,
+		"debugStyle": 0,
+		"decimalPrecision": 10,
+		"fileType": 4,
+		"ignore": 1,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/src\/ln-util\/math\/functions\/_tan.scss",
+		"outputAbbreviatedPath": "\/src\/ln-util\/math\/functions\/_tan.css",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"outputStyle": 0,
+		"shouldRunAutoprefixer": 0,
+		"shouldRunBless": 0,
+		"useLibsass": 0
+		},
+	"\/src\/ln-util\/math\/helpers\/_deg-to-rad.scss": {
+		"createSourceMap": 0,
+		"debugStyle": 0,
+		"decimalPrecision": 10,
+		"fileType": 4,
+		"ignore": 1,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/src\/ln-util\/math\/helpers\/_deg-to-rad.scss",
+		"outputAbbreviatedPath": "\/src\/ln-util\/math\/helpers\/_deg-to-rad.css",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"outputStyle": 0,
+		"shouldRunAutoprefixer": 0,
+		"shouldRunBless": 0,
+		"useLibsass": 0
+		},
+	"\/src\/ln-util\/math\/helpers\/_rad-to-deg.scss": {
+		"createSourceMap": 0,
+		"debugStyle": 0,
+		"decimalPrecision": 10,
+		"fileType": 4,
+		"ignore": 1,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/src\/ln-util\/math\/helpers\/_rad-to-deg.scss",
+		"outputAbbreviatedPath": "\/src\/ln-util\/math\/helpers\/_rad-to-deg.css",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"outputStyle": 0,
+		"shouldRunAutoprefixer": 0,
+		"shouldRunBless": 0,
+		"useLibsass": 0
+		},
+	"\/src\/ln-util\/math\/helpers\/_strip-unit.scss": {
+		"createSourceMap": 0,
+		"debugStyle": 0,
+		"decimalPrecision": 10,
+		"fileType": 4,
+		"ignore": 1,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/src\/ln-util\/math\/helpers\/_strip-unit.scss",
+		"outputAbbreviatedPath": "\/src\/ln-util\/math\/helpers\/_strip-unit.css",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"outputStyle": 0,
+		"shouldRunAutoprefixer": 0,
+		"shouldRunBless": 0,
+		"useLibsass": 0
+		},
+	"\/src\/ln-util\/math\/helpers\/_unitless-rad.scss": {
+		"createSourceMap": 0,
+		"debugStyle": 0,
+		"decimalPrecision": 10,
+		"fileType": 4,
+		"ignore": 1,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/src\/ln-util\/math\/helpers\/_unitless-rad.scss",
+		"outputAbbreviatedPath": "\/src\/ln-util\/math\/helpers\/_unitless-rad.css",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"outputStyle": 0,
+		"shouldRunAutoprefixer": 0,
+		"shouldRunBless": 0,
+		"useLibsass": 0
 		},
 	"\/test\/_holding\/childlayout.scss": {
 		"createSourceMap": 0,
@@ -3417,7 +3840,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/test\/_holding\/color_scheme.css": {
 		"fileType": 16,
@@ -3442,7 +3865,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/test\/_holding\/layout-test.scss": {
 		"createSourceMap": 0,
@@ -3458,7 +3881,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/test\/_holding\/media-test.scss": {
 		"createSourceMap": 0,
@@ -3474,7 +3897,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/test\/_holding\/pre-media.scss": {
 		"createSourceMap": 0,
@@ -3490,7 +3913,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/test\/_holding\/typo-test.scss": {
 		"createSourceMap": 0,
@@ -3506,7 +3929,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/test\/_holding\/viewport.scss": {
 		"createSourceMap": 0,
@@ -3522,7 +3945,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/test\/_holding\/width.scss": {
 		"createSourceMap": 0,
@@ -3538,7 +3961,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/test\/_layout.jade": {
 		"compileDebug": 1,
@@ -3556,15 +3979,6 @@
 		"ignore": 1,
 		"ignoreWasSetByUser": 0,
 		"inputAbbreviatedPath": "\/test\/dev-debug\/index.css",
-		"outputAbbreviatedPath": "No Output Path",
-		"outputPathIsOutsideProject": 0,
-		"outputPathIsSetByUser": 0
-		},
-	"\/test\/dev-debug\/index.html": {
-		"fileType": 8192,
-		"ignore": 1,
-		"ignoreWasSetByUser": 0,
-		"inputAbbreviatedPath": "\/test\/dev-debug\/index.html",
 		"outputAbbreviatedPath": "No Output Path",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0
@@ -3605,7 +4019,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/test\/dev-drop-cap\/index.css": {
 		"fileType": 16,
@@ -3652,22 +4066,38 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
+		},
+	"\/test\/dev-self-extend\/index.css": {
+		"fileType": 16,
+		"ignore": 1,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/test\/dev-self-extend\/index.css",
+		"outputAbbreviatedPath": "No Output Path",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0
+		},
+	"\/test\/dev-self-extend\/index.scss": {
+		"createSourceMap": 0,
+		"debugStyle": 0,
+		"decimalPrecision": 10,
+		"fileType": 4,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/test\/dev-self-extend\/index.scss",
+		"outputAbbreviatedPath": "\/test\/dev-self-extend\/index.css",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"outputStyle": 0,
+		"shouldRunAutoprefixer": 0,
+		"shouldRunBless": 0,
+		"useLibsass": 0
 		},
 	"\/test\/dev-sublayout\/index.css": {
 		"fileType": 16,
 		"ignore": 1,
 		"ignoreWasSetByUser": 0,
 		"inputAbbreviatedPath": "\/test\/dev-sublayout\/index.css",
-		"outputAbbreviatedPath": "No Output Path",
-		"outputPathIsOutsideProject": 0,
-		"outputPathIsSetByUser": 0
-		},
-	"\/test\/dev-sublayout\/index.html": {
-		"fileType": 8192,
-		"ignore": 1,
-		"ignoreWasSetByUser": 0,
-		"inputAbbreviatedPath": "\/test\/dev-sublayout\/index.html",
 		"outputAbbreviatedPath": "No Output Path",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0
@@ -3708,7 +4138,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/test\/dev-unpage\/index.css": {
 		"fileType": 16,
@@ -3755,7 +4185,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/test\/dev-unwrap\/index.css": {
 		"fileType": 16,
@@ -3811,7 +4241,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/test\/global.css": {
 		"fileType": 16,
@@ -3847,7 +4277,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/test\/ln-layout\/index.css": {
 		"fileType": 16,
@@ -3872,7 +4302,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/test\/ln-media\/index.css": {
 		"fileType": 16,
@@ -3897,7 +4327,32 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
+		},
+	"\/test\/ln-typo\/index.css": {
+		"fileType": 16,
+		"ignore": 1,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/test\/ln-typo\/index.css",
+		"outputAbbreviatedPath": "No Output Path",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0
+		},
+	"\/test\/ln-typo\/index.scss": {
+		"createSourceMap": 0,
+		"debugStyle": 0,
+		"decimalPrecision": 10,
+		"fileType": 4,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/test\/ln-typo\/index.scss",
+		"outputAbbreviatedPath": "\/test\/ln-typo\/index.css",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"outputStyle": 0,
+		"shouldRunAutoprefixer": 0,
+		"shouldRunBless": 0,
+		"useLibsass": 0
 		}
 	},
 "hooks": [
@@ -4173,6 +4628,10 @@
 			"active": 0,
 			"flagValue": -1
 			},
+		"futurehostile": {
+			"active": 0,
+			"flagValue": -1
+			},
 		"globalstrict": {
 			"active": 0,
 			"flagValue": -1
@@ -4259,6 +4718,10 @@
 			},
 		"noarg": {
 			"active": 1,
+			"flagValue": -1
+			},
+		"nocomma": {
+			"active": 0,
 			"flagValue": -1
 			},
 		"node": {
@@ -4359,6 +4822,10 @@
 			},
 		"unused": {
 			"active": 1,
+			"flagValue": -1
+			},
+		"varstmt": {
+			"active": 0,
 			"flagValue": -1
 			},
 		"withstmt": {
@@ -4482,7 +4949,7 @@
 	"sassDebugStyle": 0,
 	"sassDecimalPrecision": 10,
 	"sassOutputStyle": 0,
-	"sassUseLibsass": 1,
+	"sassUseLibsass": 0,
 	"shouldRunAutoprefixer": 0,
 	"shouldRunBless": 0,
 	"skippedItemsString": ".svn, .git, .hg, log, _logs, _cache, cache, logs, node_modules",

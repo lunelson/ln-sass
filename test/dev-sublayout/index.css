@@ -1,24 +1,24 @@
 dl {
   list-style-type: none;
-  counter-reset: uc8fcd2ad; }
+  counter-reset: ub68dalro; }
   dl > dd {
-    counter-increment: uc8fcd2ad; }
+    counter-increment: ub68dalro; }
     dl > dd:before {
-      content: ">> " counter(uc8fcd2ad) ""; }
+      content: ">> " counter(ub68dalro) ""; }
 
 .list2 li {
-  counter-increment: ud0b3caaf;
-  counter-reset: ud0b3caaf; }
+  counter-increment: ub68dalrv;
+  counter-reset: ub68dalrv; }
   .list2 li:before {
-    content: "hello" counter(ud0b3caaf) "world"; }
+    content: "hello" counter(ub68dalrv) "world"; }
 
 ol.posts {
   list-style-type: none;
-  counter-reset: u731f54b9; }
+  counter-reset: ub68dalrw; }
   ol.posts > .post {
-    counter-increment: u731f54b9; }
+    counter-increment: ub68dalrw; }
     ol.posts > .post:before {
-      content: "No. " counter(u731f54b9) ""; }
+      content: "No. " counter(ub68dalrw) ""; }
 
 .test {
   font-size: 0rem;

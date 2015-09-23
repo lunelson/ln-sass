@@ -7,6 +7,4 @@
 @import "ln-util-misc";
 @import "ln-util-color";
 @import "ln-util-reset";
-
-// optional
-@if variable-exists('ln-debug') { @if $ln-debug { @import "ln-util-debug"; } }
+@import "ln-util-debug";

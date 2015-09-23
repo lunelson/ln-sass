@@ -65,7 +65,7 @@
   @if not unitless($index) { @return $index; } // if united, return number
   // modulation
   $mod: medium-value('margin-x-mod'); $spread: ceil($basis/6);
-  @return pow($mod, $index/$spread) * if($unit, medium-value('margin-x'), strip(medium-value('margin-x')));
+  @return pow($mod, $index/$spread) * if($unit, medium-value('margin-x'), unit-strip(medium-value('margin-x')));
 }
 
 // margin-y
@@ -76,7 +76,7 @@
   @if not unitless($index) { @return $index; }
   // modulation
   $mod: medium-value('margin-y-mod'); $spread: ceil($basis/6);
-  @return pow($mod, $index/$spread) * if($unit, medium-value('margin-y'), strip(medium-value('margin-y')));
+  @return pow($mod, $index/$spread) * if($unit, medium-value('margin-y'), unit-strip(medium-value('margin-y')));
 }
 
 @function margin($args...){ @return margin-x($args...); } // NB default margin is x / horizontal
@@ -85,8 +85,9 @@
   @if type-of($index) == 'string' { @return medium-value('font-size', $index); }
   @if not unitless($index) { @return $index; }
   $mod: medium-value('font-size-mod'); $spread: ceil($basis/6);
-  @return pow($mod, $index/$spread) * if($unit, 1rem, strip(1rem));
+  @return pow($mod, $index/$spread) * if($unit, 1rem, unit-strip(1rem));
 }
+@function size($args...) { @return font-size($args...); }
 
 
 //////////////////
