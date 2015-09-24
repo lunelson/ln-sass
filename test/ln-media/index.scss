@@ -1,7 +1,7 @@
 /* test: scss-media-init */
 
-@import '../../src/sass-util';
-@import '../../src/sass-media';
+@import '../../dist/sass-util';
+@import '../../dist/sass-media';
 
 $media: map-merge($media, (
   delta: (

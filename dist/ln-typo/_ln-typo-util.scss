@@ -1,0 +1,16 @@
+// TYPO UTIL
+
+// trim-height function
+@function trim-height($line-height: null, $char-height: null){
+  $line-height: $line-height or $typo-curr-line-height or medium-value('line-height');
+  $char-height: $char-height or $typo-curr-char-height or 1;
+  @return unit-assert($line-height - $char-height, em) / 2;
+}
+
+// trim-margin function;
+// combines margin-y() with trim-height()
+@function trim-margin($margin, $line-height: null, $char-height: null){
+  $margin: if(unitless($margin), margin-y($margin), $margin);
+  @if unit-strip($margin) == 0 { @return 0 - trim-height($line-height, $char-height); }
+  @return calc(#{$margin} - #{trim-height($line-height, $char-height)});
+}

@@ -1,6 +1,6 @@
-@import "../../src/ln-util/all";
-@import "../../src/ln-layout/all";
-@import "../../src/ln-typo/ln-typo-util";
+@import "../../dist/ln-util/all";
+@import "../../dist/ln-layout/all";
+@import "../../dist/ln-typo/ln-typo-util";
 
 
 @mixin pseudo-counter($before:'', $after:'', $parent: null){

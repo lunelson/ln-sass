@@ -1,8 +1,8 @@
 
 
-@import '../../src/ln-util/all';
-@import '../../src/ln-media/all';
-@import '../../src/ln-typo/all';
+@import '../../dist/ln-util/all';
+@import '../../dist/ln-media/all';
+@import '../../dist/ln-typo/all';
 
 $media: map-merge($media, (
   delta: (

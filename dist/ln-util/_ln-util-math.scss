@@ -3,9 +3,6 @@
 //////////
 
 
-// sassmath
-@import "math/math";
-
 @function modular-scale($base, $power, $spread) { @return pow($base, $power / $spread); }
 
 @function mscale($index, $factor, $spread) { @return pow($factor, $index/$spread); }

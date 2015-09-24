@@ -1,7 +1,4 @@
-//////////////////
-// STRING UTILS //
-//////////////////
-
+// STRINGS
 
 @function str-remove($str, $sub) {
   $i: str-index($str, $sub);
@@ -24,9 +21,7 @@
 }
 
 
-////////////////////////
-// SELECTOR FUNCTIONS //
-////////////////////////
+// SELECTORS
 
 // child [helper]
 @function child($selector) {
@@ -102,3 +97,31 @@
 }
 // mixin version of above
 @mixin general-siblings($args...) { #{general-siblings($args...)} { @content; } }
+
+// KEYWORDS
+
+@function opposite($dirs) {
+  $out: ();
+  $opposites: ('top': bottom, 'right': left, 'bottom': top, 'left': right, 'ltr': rtl, 'rtl': ltr);
+  @each $dir in $dirs {
+    $opposite: map-get($opposites, $dir);
+    @if $opposite {$out: append($out, $opposite); } }
+  @return $out;
+}
+
+// COUNTER
+
+@mixin list-counter($selector: null, $before:'', $after:''){
+  $counter: unique-id();
+  list-style-type: none;
+  counter-reset: $counter;
+  #{children($selector)} {
+    counter-increment: $counter;
+    &:before {
+      content: '#{$before}' counter($counter) '#{$after}';
+      @content;
+    }
+  }
+}
+
+

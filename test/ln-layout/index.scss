@@ -1,9 +1,9 @@
 /* test: sass-layout */
 
 @import '../../lib/math/math';
-@import '../../src/ln-util/all';
-@import '../../src/ln-media/all';
-@import '../../src/ln-layout/all';
+@import '../../dist/ln-util/all';
+@import '../../dist/ln-media/all';
+@import '../../dist/ln-layout/all';
 
 $media: (
   alpha: (breakpoint: 20em),

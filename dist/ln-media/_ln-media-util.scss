@@ -68,6 +68,9 @@
   @return pow($mod, $index/$spread) * if($unit, medium-value('margin-x'), unit-strip(medium-value('margin-x')));
 }
 
+// alias of above - default margin is x / horizontal
+@function margin($args...){ @return margin-x($args...); }
+
 // margin-y
 @function margin-y($index: 0, $unit: true, $basis: 10) {
   // exceptions
@@ -78,8 +81,6 @@
   $mod: medium-value('margin-y-mod'); $spread: ceil($basis/6);
   @return pow($mod, $index/$spread) * if($unit, medium-value('margin-y'), unit-strip(medium-value('margin-y')));
 }
-
-@function margin($args...){ @return margin-x($args...); } // NB default margin is x / horizontal
 
 @function font-size($index: 0, $unit: true, $basis: 10) {
   @if type-of($index) == 'string' { @return medium-value('font-size', $index); }

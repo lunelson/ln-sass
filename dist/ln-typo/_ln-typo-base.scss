@@ -1,0 +1,18 @@
+// TYPO GLOBALS
+
+$typo-curr-font-size: null !default;
+$typo-curr-line-height: null !default;
+$typo-curr-char-height: null !default;
+
+$typo-min-height: 1.125 !default;
+$typo-sub-lines: 2 !default;
+
+$typo-classes: (
+  line: 'line',
+  trim: 'trim',
+  trim-content: 'trim-content'
+) !default;
+
+@mixin typo-init() {
+  @include fonts-init();
+}
