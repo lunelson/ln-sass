@@ -1,6 +1,6 @@
 // MEDIA OBJECT INIT
 
-@mixin media-object-init(){
+@mixin setup-media-object(){
 
   // backup $base
   $base-orig: $base !global;

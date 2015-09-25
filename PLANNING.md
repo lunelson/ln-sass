@@ -1,42 +1,23 @@
 # ln-sass planning
 
-## naming
-
-- re-do the names of all mixins, like this shit here:
-
-<!--
-
-@include ln-reset()
-    @include ln-reset-hard()
-    @include ln-reset-normalize()
-@include ln-fonts()
-@include ln-media()
-  @include ln-media-object()
-  @include ln-media-styles()
-@include ln-layout()
-  @include ln-layout-page()
-  @include ln-layout-grid()
-
-p { @include ln-typo(); }
-h1 { @include ln-typo(5); }
-h2 { @include ln-typo(4); }
-h3 { @include ln-typo(3); }
-ul {
-  @include ln-typo() {
-    @include adjacent-to(h1 h2 h3 h4 h5) {
-      background-color: blue;
-    }
-  }
-}
-
--->
-
 ## typo
 
-- expand the ln-fonts() mixin to do the font-face mixin for each font type
-- ln-typo-init > ln-typo-main
-- $typo-classes > $trim-classes: ( line, contents )
-- change trim-content thing to 'contents'? e.g. '.trim--contents'
+- $typo-classes > $trim-classes:
+
+h2.line
+h4.trim--both
+
+div.trim--content
+  h2 haha
+  p whatever
+
+
+.trim--bottom
+.trim--both
+.trim--contents
+
+( line, contents )
+- change trim-content thing to 'content'? e.g. '.trim--content'
 
 ## layout
 

@@ -1,7 +1,7 @@
 
 // LAYOUT PAGE INIT
 
-@mixin page-init() {
+@mixin setup-layout-page() {
 
   // merge defaults
   $base: map-merge((

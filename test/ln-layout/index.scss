@@ -1,6 +1,5 @@
 /* test: sass-layout */
 
-@import '../../lib/math/math';
 @import '../../dist/ln-util/all';
 @import '../../dist/ln-media/all';
 @import '../../dist/ln-layout/all';
@@ -17,8 +16,8 @@ $media: (
 );
 
 
-@include media-init();
-@include layout-init();
+@include setup-media();
+@include setup-layout();
 
 $mixins: ();
 

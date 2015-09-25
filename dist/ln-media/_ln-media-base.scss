@@ -18,9 +18,7 @@ $media-transition-class: '.media-trans' !default;
 
 // MEDIA INITS
 
-@mixin media-init() {
-
-  @include media-object-init();
-  @include media-styles-init();
-
+@mixin setup-media() {
+  @include setup-media-object();
+  @include setup-media-styles();
 }

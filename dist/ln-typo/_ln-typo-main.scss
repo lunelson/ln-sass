@@ -1,22 +1,11 @@
-// TYPO INIT stable
+// TYPO main mixin, stable
 
-// variable to track first include of init
-$typo-init-run: false !default;
-
-// typo init mixin
-@mixin typo-init($size: 0, $alias: null, $height: auto){
+@mixin typo($size: 0, $alias: null, $height: auto){
 
   // get classes and values
-  $line: map-get($typo-classes, 'line');
-  $trim: map-get($typo-classes, 'trim');
-  $trim-content: map-get($typo-classes, 'trim-content');
+  $line: map-get($trim-classes, 'line');
+  $content: map-get($trim-classes, 'content');
   $char-height: get($fonts, $alias, 'char-height') or 1;
-
-  // do first run styles if necessary
-  @if not $typo-init-run {
-    @at-root .#{$trim-content} { padding-top: 1px; padding-bottom: 1px; }
-    $typo-init-run: true !global;
-  }
 
   // normalize font-size; NB change the size() function
   $size: if(unitless($size), size($size), if(unit($size) == 'px', rem($size), $size));
@@ -37,11 +26,11 @@ $typo-init-run: false !default;
   $trim-margin: trim-margin(0rem, $height, $char-height);
 
   &.#{$line} { line-height: 1; }
-  &.#{$trim}--top { margin-top: $trim-margin; }
-  &.#{$trim}--bottom { margin-bottom: $trim-margin; }
-  &.#{$trim} { margin-top: $trim-margin; margin-bottom: $trim-margin; }
+  &.trim--top { margin-top: $trim-margin; }
+  &.trim--bottom { margin-bottom: $trim-margin; }
+  &.trim--both { margin-top: $trim-margin; margin-bottom: $trim-margin; }
 
-  .#{$trim-content} & {
+  .trim--#{$content} & {
     margin-bottom: $trim-margin;
     margin-top: margin();
     // QUESTION: does it make more sense to include this whole mixin

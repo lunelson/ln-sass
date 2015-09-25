@@ -1,4 +1,20 @@
+
 @import "ln-util/all";
+@import "ln-resets/all";
+
+@import "ln-typo/all";
 @import "ln-media/all";
 @import "ln-layout/all";
-@import "ln-typo/all";
+
+// MASTER MIXINS
+
+@mixin reset-all() {
+  @include reset-n3();
+  @include reset-ln();
+}
+
+@mixin setup-all() {
+  @include setup-typo();
+  @include setup-media();
+  @include setup-layout();
+}

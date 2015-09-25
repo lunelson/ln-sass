@@ -1,4 +1,4 @@
-// TYPO FONTS
+// TYPO FONT
 
 $fonts: (
   heading: (
@@ -24,17 +24,7 @@ $fonts: (
 // font value function
 @function font-value($keys...) { @return get($fonts, $keys...); }
 
-// fonts init mixin
-@mixin fonts-init(){
-  @each $alias, $font in $fonts {
-    .font--#{$alias} {
-      font-family: map-get($font, family);
-    }
-  }
-}
-
-// font-face declarations
-// TODO: get the newer IE9+ version of this
+// font-face declarations --TODO: get the newer IE9+ version of this
 @mixin font-face($family, $file, $style: normal, $weight: normal, $path: $typo-font-path) {
   @font-face {
     font-family: $family;

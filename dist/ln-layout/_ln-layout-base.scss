@@ -15,11 +15,9 @@ $grid-is-float: false;
 $layout-mixins: ();
 
 
-// LAYOUT INITS
+// LAYOUT SETUP
 
-@mixin layout-init() {
-
-  @include page-init();
-  @include grid-init();
-
+@mixin setup-layout() {
+  @include setup-layout-page();
+  @include setup-layout-grid();
 }

@@ -4,9 +4,9 @@
 
 @import "../../dist/ln-typo/ln-typo-base";
 @import "../../dist/ln-typo/ln-typo-util";
-@import "../../dist/ln-typo/ln-typo-init";
-@import "../../dist/ln-typo/ln-typo-init-beta";
-@import "../../dist/ln-typo/ln-typo-fonts";
+@import "../../dist/ln-typo/ln-typo-main";
+// @import "../../dist/ln-typo/ln-typo-main-beta";
+@import "../../dist/ln-typo/ln-typo-font";
 
 $media: map-merge($media, (
   delta: (
@@ -23,43 +23,18 @@ $base: (
 
 );
 
-@include media-object-init();
+@include setup-media-object();
+@include setup-typo();
 
-p { @include typo-init(); }
-h1 { @include typo-init(5); }
-h2 { @include typo-init(4); }
-h3 { @include typo-init(3); }
+p { @include typo(); }
+h1 { @include typo(5); }
+h2 { @include typo(4); }
+h3 { @include typo(3); }
 ul {
-  @include typo-init() {
+  @include typo() {
     @include adjacent-to(h1 h2 h3 h4 h5) {
       // margin-top: trim-margin(0rem);
-      margin-top: untrim();
+      margin-top: trim-height();
     }
   }
 }
-
-/*
-
-@include ln-reset-hard()
-@include ln-fonts()
-@include ln-media()
-  @include ln-media-object()
-  @include ln-media-styles()
-@include ln-layout()
-  @include ln-layout-page()
-  @include ln-layout-grid()
-
-p { @include ln-typo(); }
-h1 { @include ln-typo(5); }
-h2 { @include ln-typo(4); }
-h3 { @include ln-typo(3); }
-ul {
-  @include ln-typo() {
-    @include adjacent-to(h1 h2 h3 h4 h5) {
-      background-color: blue;
-    }
-  }
-}
-
-
-*/

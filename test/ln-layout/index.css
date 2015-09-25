@@ -22,48 +22,43 @@ head {
 @media (min-width: 20em) {
   body::before {
     content: "alpha"; }
-
   head {
     font-family: "alpha"; }
-
   .media-trans {
     width: 1px; } }
+
 @media (min-width: 30em) {
   body::before {
     content: "beta"; }
-
   head {
     font-family: "beta"; }
-
   .media-trans {
     width: 0px; } }
+
 @media (min-width: 48em) {
   body::before {
     content: "gamma"; }
-
   head {
     font-family: "gamma"; }
-
   .media-trans {
     width: 1px; } }
+
 @media (min-width: 64em) {
   body::before {
     content: "delta"; }
-
   head {
     font-family: "delta"; }
-
   .media-trans {
     width: 0px; } }
+
 @media (min-width: 80em) {
   body::before {
     content: "epsilon"; }
-
   head {
     font-family: "epsilon"; }
-
   .media-trans {
     width: 1px; } }
+
 .cf:after,
 .wrap:after,
 [class*="wrap--"]:after,
@@ -107,26 +102,31 @@ head {
   .wrap--alpha,
   .wrap--from-alpha, .wrap--to-alpha, .wrap--to-beta, .wrap--to-gamma, .wrap--to-delta, .wrap--to-epsilon {
     max-width: 18rem; } }
+
 @media screen and (min-width: 30em) {
   .wrap--each,
   .wrap--beta,
   .wrap--from-alpha, .wrap--from-beta, .wrap--to-beta, .wrap--to-gamma, .wrap--to-delta, .wrap--to-epsilon {
     max-width: 28rem; } }
+
 @media screen and (min-width: 48em) {
   .wrap--each,
   .wrap--gamma,
   .wrap--from-alpha, .wrap--from-beta, .wrap--from-gamma, .wrap--to-gamma, .wrap--to-delta, .wrap--to-epsilon {
     max-width: 46rem; } }
+
 @media screen and (min-width: 64em) {
   .wrap--each,
   .wrap--delta,
   .wrap--from-alpha, .wrap--from-beta, .wrap--from-gamma, .wrap--from-delta, .wrap--to-delta, .wrap--to-epsilon {
     max-width: 62rem; } }
+
 @media screen and (min-width: 80em) {
   .wrap--each,
   .wrap--epsilon,
   .wrap--from-alpha, .wrap--from-beta, .wrap--from-gamma, .wrap--from-delta, .wrap--from-epsilon, .wrap--to-epsilon {
     max-width: 78rem; } }
+
 .grid, .grid--lg {
   width: calc(100% + 1rem);
   margin-left: -0.5rem;
@@ -152,10 +152,10 @@ head {
     width: calc(100% + 3rem);
     margin-left: -1.5rem;
     margin-right: -1.5rem; }
-
   .cell, .cell--lg, .test {
     padding-left: 1.5rem;
     padding-right: 1.5rem; } }
+
 .grid--lg {
   margin-left: -0.25rem;
   margin-right: -0.25rem; }

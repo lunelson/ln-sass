@@ -1,6 +1,6 @@
 // MEDIA STYLES INIT
 
-@mixin media-styles-init(){
+@mixin setup-media-styles(){
 
   // base styles
   html { font-size: unit-assert(map-get($base, 'html-scale'), em); }

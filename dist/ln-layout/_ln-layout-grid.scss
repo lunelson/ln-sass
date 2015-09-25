@@ -1,6 +1,6 @@
 // LAYOUT GRID INIT
 
-@mixin grid-init() {
+@mixin setup-layout-grid() {
 
   // merge defaults
   $base: map-merge(( margin-x: 1rem, ), if(variable-exists('base'), $base, ()));
