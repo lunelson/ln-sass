@@ -1,0 +1,21 @@
+@import '../../dist/ln-sass';
+
+$fonts: (
+  base: (
+    family: 'Circular',
+    path: 'assets/fonts/',
+    files: (
+      (name: 'lineto-circular-book'),
+      (name: 'lineto-circular-bold', weight: bold)
+    ),
+    spacing: 0,
+    size-mod: 1,
+    cap-height: 1
+  )
+);
+
+@include reset-all();
+@include setup-fonts();
+@include setup-media();
+@include setup-layout();
+

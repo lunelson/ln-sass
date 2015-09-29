@@ -12,39 +12,19 @@ $trim-classes: (
   content: 'content'
 ) !default;
 
-$fonts: (
-  heading: (
-    family: '',
-    spacing: 0,
-    size-mod: 1,
-    cap-height: 1
-  ),
-  default: (
-    family: '',
-    spacing: 0,
-    size-mod: 1,
-    cap-height: 1
-  ),
-  mono: (
-    family: '',
-    spacing: 0,
-    size-mod: 1,
-    cap-height: 1
-  )
-) !default;
-
-
 // TYPO SETUP MIXIN
 
 @mixin setup-typo(){
 
+  // setup fonts
+  @include setup-fonts();
+
   // setup typo container class
   .trim--#{map-get($trim-classes, 'content')} { padding-top: 1px; padding-bottom: 1px; }
 
+
+
   // do classes for fonts
   @each $alias, $font in $fonts {
-    .font--#{$alias} {
-      font-family: map-get($font, family);
-    }
   }
 }

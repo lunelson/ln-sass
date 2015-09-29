@@ -1,18 +1,64 @@
-// TYPO FONT
+// TYPO FONT processing
 
-// font value function
-@function font-value($keys...) { @return get($fonts, $keys...); }
+$fonts: (
+  base: (
+    family: 'FamilyName',
+    path: 'path/to/fonts/',
+    files: (
+      (
+        name: 'normal-font-no-extension',
+        style: normal,
+        weight: normal,
+      ),
+      (
+        name: 'bold-font-no-extension',
+        style: normal,
+        weight: bold,
+      ),
+      (
+        name: 'italic-font-no-extension',
+        style: italic,
+        weight: normal,
+      ),
+    ),
+    spacing: 0,
+    size-mod: 1,
+    cap-height: 1
+  )
+) !default;
 
-// font-face declarations --TODO: get the newer IE9+ version of this
-@mixin font-face($family, $file, $style: normal, $weight: normal, $path: $typo-font-path) {
+@mixin font-face($family, $dir, $file, $style, $weight) {
   @font-face {
     font-family: $family;
     font-style: $style;
     font-weight: $weight; // this should be both word and number values
-    src: url('#{$path}#{$file}.eot'); // IE9 Compat Modes
-    src: url('#{$path}#{$file}.eot?#iefix') format('embedded-opentype'),
-       url('#{$path}#{$file}.woff') format('woff'),
-       url('#{$path}#{$file}.svg##{$file}') format('svg'),
-       url('#{$path}#{$file}.ttf') format('truetype');
+    src: url('#{$dir}#{$file}.eot'); // IE9 Compat Modes
+    src: url('#{$dir}#{$file}.eot?#iefix') format('embedded-opentype'),
+       url('#{$dir}#{$file}.woff') format('woff'),
+       url('#{$dir}#{$file}.svg##{$file}') format('svg'),
+       url('#{$dir}#{$file}.ttf') format('truetype');
   }
 }
+
+
+@mixin setup-fonts(){
+  @each $alias, $font in $fonts {
+
+    // setup font-faces
+    @each $file in map-get($font, 'files') {
+      $family: map-get($font, family);
+      $path: map-get($font, path);
+      $name: map-get($file, name);
+      $style: map-get($file, style) or normal;
+      $weight: map-get($file, weight) or normal;
+      @include font-face($family, $path, $name, $style, $weight);
+    }
+
+    // setup classes
+    .font--#{$alias} { font-family: map-get($font, family); }
+
+  }
+}
+
+// font value function
+@function font-value($keys...) { @return get($fonts, $keys...); }
