@@ -12,6 +12,26 @@ $trim-classes: (
   content: 'content'
 ) !default;
 
+$fonts: (
+  heading: (
+    family: '',
+    spacing: 0,
+    size-mod: 1,
+    cap-height: 1
+  ),
+  default: (
+    family: '',
+    spacing: 0,
+    size-mod: 1,
+    cap-height: 1
+  ),
+  mono: (
+    family: '',
+    spacing: 0,
+    size-mod: 1,
+    cap-height: 1
+  )
+) !default;
 
 
 // TYPO SETUP MIXIN

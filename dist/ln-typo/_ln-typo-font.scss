@@ -1,26 +1,5 @@
 // TYPO FONT
 
-$fonts: (
-  heading: (
-    family: '',
-    spacing: 0,
-    size-mod: 1,
-    cap-height: 1
-  ),
-  default: (
-    family: '',
-    spacing: 0,
-    size-mod: 1,
-    cap-height: 1
-  ),
-  mono: (
-    family: '',
-    spacing: 0,
-    size-mod: 1,
-    cap-height: 1
-  )
-) !default;
-
 // font value function
 @function font-value($keys...) { @return get($fonts, $keys...); }
 
