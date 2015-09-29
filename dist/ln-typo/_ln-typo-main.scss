@@ -1,14 +1,24 @@
 // TYPO main mixin, stable
 
-@mixin typo($size: 0, $alias: null, $height: auto){
+/*
 
-  // get classes and values
-  $line: map-get($trim-classes, 'line');
-  $content: map-get($trim-classes, 'content');
-  $char-height: get($fonts, $alias, 'char-height') or 1;
+typo(size, alias, line-height)
+  - set size on item (if other than current root)
+  - create corresponding scope
+  - output @content at root, if you want to style children
 
-  // normalize font-size; NB change the size() function
-  $size: if(unitless($size), size($size), if(unit($size) == 'px', rem($size), $size));
+typo-styles
+
+reset necessary
+  - all typo elements line-height inherit
+  - all typo elements margin top and bottom 0
+
+*/
+
+@mixin typo($size: 1, $alias: null, $height: auto){
+
+  // normalize unit
+  $size: rem($size);
 
   // normalize line-height
   @if $height == 'auto' {
@@ -17,34 +27,44 @@
     $height: $rel-height * ceil($typo-min-height / $rel-height * $sub-lines) / $sub-lines;
   }
 
+  // get char height
+  $char-height: map-get(font($alias), 'char-height') or 1;
+
   font-size: $size;
   line-height: $height;
   margin-top: 0;
   margin-bottom: 0;
 
-  // get trim value for effectively 0 margin
-  $trim-margin: trim-margin(0rem, $height, $char-height);
+  // get classes and values
+  // $line: map-get($trim-classes, 'line');
+  // $content: map-get($trim-classes, 'content');
+  // $t-margin: t-margin(0rem, $height, $char-height);
 
-  &.#{$line} { line-height: 1; }
-  &.trim--top { margin-top: $trim-margin; }
-  &.trim--bottom { margin-bottom: $trim-margin; }
-  &.trim--both { margin-top: $trim-margin; margin-bottom: $trim-margin; }
+  // &.#{$line} { line-height: 1; }
+  // &.trim--top { margin-top: $t-margin; }
+  // &.trim--bottom { margin-bottom: $t-margin; }
+  // &.trim--both { margin-top: $t-margin; margin-bottom: $t-margin; }
 
-  .trim--#{$content} & {
-    margin-bottom: $trim-margin;
-    margin-top: margin();
-    // QUESTION: does it make more sense to include this whole mixin
-    // inside media((for: margin-y, font-size, line-height)) ?
-    // @include media((for: 'margin-y')) { margin-top: margin(); }
-    &:first-child { margin-top: $trim-margin; }
-  }
+  // .trim--#{$content} > & {
+  //   margin-bottom: $t-margin;
+  //   margin-top: margin();
+  //   // QUESTION: does it make more sense to include this whole mixin
+  //   // inside media((for: margin-y, font-size, line-height)) ?
+  //   // @include media((for: 'margin-y')) { margin-top: margin(); }
+  //   &:first-child { margin-top: $t-margin; }
+  // }
 
   // allow content to be added and refer to current size and height
+  $typo-curr-font: $alias !global;
   $typo-curr-font-size: $size !global;
   $typo-curr-line-height: $height !global;
   $typo-curr-char-height: $char-height !global;
-  @content;
+  @at-root { @content; }
+  // @content;
+  $typo-curr-font: null !global;
   $typo-curr-font-size: null !global;
   $typo-curr-line-height: null !global;
   $typo-curr-char-height: null !global;
 }
+
+@mixin mod-typo($mod, $rest...) { @include typo(mod-size($mod), $rest...); }

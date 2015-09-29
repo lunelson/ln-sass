@@ -1,38 +1,66 @@
-dl {
-  list-style-type: none;
-  counter-reset: ufzn2vnxw; }
-  dl > dd {
-    counter-increment: ufzn2vnxw; }
-    dl > dd:before {
-      content: ">> " counter(ufzn2vnxw) ""; }
+/*
+Error: Undefined mixin 'item-counter'.
+        on line 17 of /Users/lunelson/Git/projects/ln-sass/test/dev-sublayout/index.scss, in `item-counter'
+        from line 17 of /Users/lunelson/Git/projects/ln-sass/test/dev-sublayout/index.scss
 
-.list2 li {
-  counter-increment: ufzn2vny5;
-  counter-reset: ufzn2vny5; }
-  .list2 li:before {
-    content: "hello" counter(ufzn2vny5) "world"; }
+12:     @content;
+13:   }
+14: }
+15: 
+16: dl {
+17:   @include item-counter('dd', '>> ');
+18: }
+19: 
+20: .list2 {
+21:   li {
+22:     @include pseudo-counter('hello', 'world');
 
-ol.posts {
-  list-style-type: none;
-  counter-reset: ufzn2vnya; }
-  ol.posts > .post {
-    counter-increment: ufzn2vnya; }
-    ol.posts > .post:before {
-      content: "No. " counter(ufzn2vnya) ""; }
-
-.test {
-  font-size: 0rem;
-  text-align: center; }
-  .test:before, .test:after, .test > * {
-    display: inline-block;
-    vertical-align: middle; }
-  .test:before {
-    content: '';
-    height: 100%; }
-  .test > * {
-    font-size: 1rem;
-    max-width: 100%; }
-  ul + .test, li + .test {
-    color: blue; }
-  .test input[type="checkbox"] ~ h3 {
-    color: blue; }
+Backtrace:
+/Users/lunelson/Git/projects/ln-sass/test/dev-sublayout/index.scss:17:in `item-counter'
+/Users/lunelson/Git/projects/ln-sass/test/dev-sublayout/index.scss:17
+/Applications/CodeKit.app/Contents/Resources/engines/scss/lib/sass/tree/visitors/perform.rb:348:in `block in visit_mixin'
+/Applications/CodeKit.app/Contents/Resources/engines/scss/lib/sass/stack.rb:98:in `block in with_mixin'
+/Applications/CodeKit.app/Contents/Resources/engines/scss/lib/sass/stack.rb:115:in `with_frame'
+/Applications/CodeKit.app/Contents/Resources/engines/scss/lib/sass/stack.rb:98:in `with_mixin'
+/Applications/CodeKit.app/Contents/Resources/engines/scss/lib/sass/tree/visitors/perform.rb:346:in `visit_mixin'
+/Applications/CodeKit.app/Contents/Resources/engines/scss/lib/sass/tree/visitors/base.rb:36:in `visit'
+/Applications/CodeKit.app/Contents/Resources/engines/scss/lib/sass/tree/visitors/perform.rb:158:in `block in visit'
+/Applications/CodeKit.app/Contents/Resources/engines/scss/lib/sass/stack.rb:79:in `block in with_base'
+/Applications/CodeKit.app/Contents/Resources/engines/scss/lib/sass/stack.rb:115:in `with_frame'
+/Applications/CodeKit.app/Contents/Resources/engines/scss/lib/sass/stack.rb:79:in `with_base'
+/Applications/CodeKit.app/Contents/Resources/engines/scss/lib/sass/tree/visitors/perform.rb:158:in `visit'
+/Applications/CodeKit.app/Contents/Resources/engines/scss/lib/sass/tree/visitors/perform.rb:430:in `block (2 levels) in visit_rule'
+/Applications/CodeKit.app/Contents/Resources/engines/scss/lib/sass/tree/visitors/perform.rb:430:in `map'
+/Applications/CodeKit.app/Contents/Resources/engines/scss/lib/sass/tree/visitors/perform.rb:430:in `block in visit_rule'
+/Applications/CodeKit.app/Contents/Resources/engines/scss/lib/sass/tree/visitors/perform.rb:179:in `with_environment'
+/Applications/CodeKit.app/Contents/Resources/engines/scss/lib/sass/tree/visitors/perform.rb:428:in `visit_rule'
+/Applications/CodeKit.app/Contents/Resources/engines/scss/lib/sass/tree/visitors/base.rb:36:in `visit'
+/Applications/CodeKit.app/Contents/Resources/engines/scss/lib/sass/tree/visitors/perform.rb:158:in `block in visit'
+/Applications/CodeKit.app/Contents/Resources/engines/scss/lib/sass/stack.rb:79:in `block in with_base'
+/Applications/CodeKit.app/Contents/Resources/engines/scss/lib/sass/stack.rb:115:in `with_frame'
+/Applications/CodeKit.app/Contents/Resources/engines/scss/lib/sass/stack.rb:79:in `with_base'
+/Applications/CodeKit.app/Contents/Resources/engines/scss/lib/sass/tree/visitors/perform.rb:158:in `visit'
+/Applications/CodeKit.app/Contents/Resources/engines/scss/lib/sass/tree/visitors/base.rb:52:in `block in visit_children'
+/Applications/CodeKit.app/Contents/Resources/engines/scss/lib/sass/tree/visitors/base.rb:52:in `map'
+/Applications/CodeKit.app/Contents/Resources/engines/scss/lib/sass/tree/visitors/base.rb:52:in `visit_children'
+/Applications/CodeKit.app/Contents/Resources/engines/scss/lib/sass/tree/visitors/perform.rb:167:in `block in visit_children'
+/Applications/CodeKit.app/Contents/Resources/engines/scss/lib/sass/tree/visitors/perform.rb:179:in `with_environment'
+/Applications/CodeKit.app/Contents/Resources/engines/scss/lib/sass/tree/visitors/perform.rb:166:in `visit_children'
+/Applications/CodeKit.app/Contents/Resources/engines/scss/lib/sass/tree/visitors/base.rb:36:in `block in visit'
+/Applications/CodeKit.app/Contents/Resources/engines/scss/lib/sass/tree/visitors/perform.rb:186:in `visit_root'
+/Applications/CodeKit.app/Contents/Resources/engines/scss/lib/sass/tree/visitors/base.rb:36:in `visit'
+/Applications/CodeKit.app/Contents/Resources/engines/scss/lib/sass/tree/visitors/perform.rb:157:in `visit'
+/Applications/CodeKit.app/Contents/Resources/engines/scss/lib/sass/tree/visitors/perform.rb:8:in `visit'
+/Applications/CodeKit.app/Contents/Resources/engines/scss/lib/sass/tree/root_node.rb:36:in `css_tree'
+/Applications/CodeKit.app/Contents/Resources/engines/scss/lib/sass/tree/root_node.rb:20:in `render'
+/Applications/CodeKit.app/Contents/Resources/engines/scss/lib/sass/engine.rb:278:in `render'
+/Applications/CodeKit.app/Contents/Resources/engines/scss/lib/sass/exec/sass_scss.rb:418:in `run'
+/Applications/CodeKit.app/Contents/Resources/engines/scss/lib/sass/exec/sass_scss.rb:63:in `process_result'
+/Applications/CodeKit.app/Contents/Resources/engines/scss/lib/sass/exec/base.rb:52:in `parse'
+/Applications/CodeKit.app/Contents/Resources/engines/scss/lib/sass/exec/base.rb:19:in `parse!'
+/Applications/CodeKit.app/Contents/Resources/engines/scss/bin/scss:13:in `<main>'
+*/
+body:before {
+  white-space: pre;
+  font-family: monospace;
+  content: "Error: Undefined mixin 'item-counter'.\A         on line 17 of /Users/lunelson/Git/projects/ln-sass/test/dev-sublayout/index.scss, in `item-counter'\A         from line 17 of /Users/lunelson/Git/projects/ln-sass/test/dev-sublayout/index.scss\A \A 12:     @content;\A 13:   }\A 14: }\A 15: \A 16: dl {\A 17:   @include item-counter('dd', '>> ');\A 18: }\A 19: \A 20: .list2 {\A 21:   li {\A 22:     @include pseudo-counter('hello', 'world');"; }

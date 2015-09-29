@@ -1,16 +1,25 @@
 // TYPO UTIL
 
 // trim-height function
-@function trim-height($line-height: null, $char-height: null){
-  $line-height: $line-height or $typo-curr-line-height or medium-value('line-height');
-  $char-height: $char-height or $typo-curr-char-height or 1;
+@function trim-height($line-height: $typo-curr-line-height, $char-height: $typo-curr-char-height){
+  $line-height: $line-height or medium-value('line-height'); $char-height: $char-height or 1;
   @return unit-assert($line-height - $char-height, em) / 2;
 }
 
-// trim-margin function;
-// combines margin-y() with trim-height()
-@function trim-margin($margin, $line-height: null, $char-height: null){
-  $margin: if(unitless($margin), margin-y($margin), $margin);
-  @if unit-strip($margin) == 0 { @return 0 - trim-height($line-height, $char-height); }
+// typo/trim margin [multiple]
+@function t-margin($mult: 1, $line-height: $typo-curr-line-height, $char-height: $typo-curr-char-height){
+  $margin: if(unitless($mult), margin-y($mult), $mult);
   @return calc(#{$margin} - #{trim-height($line-height, $char-height)});
+}
+
+// modulated typo/trim margin
+@function mod-t-margin($index: 0, $line-height: $typo-curr-line-height, $char-height: $typo-curr-char-height){
+  $margin: if(unitless($index), mod-margin-y($index), $index);
+  @return calc(#{$margin} - #{trim-height($line-height, $char-height)});
+}
+
+// convenience mixin for typical content-area margin, first-child exception
+@mixin t-margin-top($mult) {
+  margin-top: t-margin($mult);
+  &:first-child { margin-top: t-margin(0); }
 }

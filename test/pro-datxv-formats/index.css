@@ -1,3 +1,60 @@
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 1em;
+  font: inherit;
+  vertical-align: baseline; }
+
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section,
+img, video, iframe {
+  display: block; }
+
+body {
+  line-height: 1; }
+
+ol, ul {
+  list-style: none; }
+
+blockquote, q {
+  quotes: none; }
+
+blockquote:before, blockquote:after,
+q:before, q:after {
+  content: '';
+  content: none; }
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0; }
+
+/*
+
+typo(size, alias, line-height)
+  - set size on item (if other than current root)
+  - create corresponding scope
+  - output @content at root, if you want to style children
+
+typo-styles
+
+reset necessary
+  - all typo elements line-height inherit
+  - all typo elements margin top and bottom 0
+
+*/
 html {
   font-family: sans-serif;
   -ms-text-size-adjust: 100%;
@@ -123,7 +180,7 @@ input[type="search"]::-webkit-search-cancel-button, input[type="search"]::-webki
 fieldset {
   border: 1px solid silver;
   margin: 0 2px;
-  padding: 0.35em 0.625em 0.75em; }
+  padding: .35em .625em .75em; }
 
 legend {
   border: 0;
@@ -167,24 +224,20 @@ img, video, svg, iframe {
   img.inline, video.inline, svg.inline, iframe.inline {
     display: inline-block; }
 
-a:link,
-a:visited,
-a:hover,
-a:focus,
-a:active {
+a:link, a:visited, a:hover, a:focus, a:active {
   text-decoration: none !important; }
-
 a.block {
   display: block !important; }
-
 a.clean {
   border: none !important; }
-
 a.inline-block {
   display: inline-block !important; }
-
 a span.target {
   text-decoration: underline !important; }
+
+.trim--content {
+  padding-top: 1px;
+  padding-bottom: 1px; }
 
 @font-face {
   font-family: "Circular";
@@ -192,22 +245,20 @@ a span.target {
   font-weight: normal;
   src: url("assets/fonts/lineto-circular-book.eot");
   src: url("assets/fonts/lineto-circular-book.eot?#iefix") format("embedded-opentype"), url("assets/fonts/lineto-circular-book.woff") format("woff"), url("assets/fonts/lineto-circular-book.svg#lineto-circular-book") format("svg"), url("assets/fonts/lineto-circular-book.ttf") format("truetype"); }
-
 @font-face {
   font-family: "Circular";
   font-style: normal;
   font-weight: bold;
   src: url("assets/fonts/lineto-circular-bold.eot");
   src: url("assets/fonts/lineto-circular-bold.eot?#iefix") format("embedded-opentype"), url("assets/fonts/lineto-circular-bold.woff") format("woff"), url("assets/fonts/lineto-circular-bold.svg#lineto-circular-bold") format("svg"), url("assets/fonts/lineto-circular-bold.ttf") format("truetype"); }
-
 .font--base {
   font-family: "Circular"; }
 
 html {
-  font-size: 1em; }
+  font-size: 1.25em; }
 
 body {
-  line-height: 1.5; }
+  line-height: 1.4; }
 
 body::before {
   width: 0;
@@ -226,43 +277,48 @@ head {
 @media (min-width: 20em) {
   body::before {
     content: "alpha"; }
+
   head {
     font-family: "alpha"; }
+
   .media-trans {
     width: 1px; } }
-
 @media (min-width: 30em) {
   body::before {
     content: "beta"; }
+
   head {
     font-family: "beta"; }
+
   .media-trans {
     width: 0px; } }
-
 @media (min-width: 48em) {
   body::before {
     content: "gamma"; }
+
   head {
     font-family: "gamma"; }
+
   .media-trans {
     width: 1px; } }
-
 @media (min-width: 64em) {
   body::before {
     content: "delta"; }
+
   head {
     font-family: "delta"; }
+
   .media-trans {
     width: 0px; } }
-
 @media (min-width: 80em) {
   body::before {
     content: "epsilon"; }
+
   head {
     font-family: "epsilon"; }
+
   .media-trans {
     width: 1px; } }
-
 .cf:after,
 .wrap:after,
 [class*="wrap--"]:after,
@@ -305,32 +361,27 @@ head {
   .wrap--each,
   .wrap--alpha,
   .wrap--from-alpha, .wrap--to-alpha, .wrap--to-beta, .wrap--to-gamma, .wrap--to-delta, .wrap--to-epsilon {
-    max-width: 18rem; } }
-
+    max-width: 14rem; } }
 @media screen and (min-width: 30em) {
   .wrap--each,
   .wrap--beta,
   .wrap--from-alpha, .wrap--from-beta, .wrap--to-beta, .wrap--to-gamma, .wrap--to-delta, .wrap--to-epsilon {
-    max-width: 28rem; } }
-
+    max-width: 22rem; } }
 @media screen and (min-width: 48em) {
   .wrap--each,
   .wrap--gamma,
   .wrap--from-alpha, .wrap--from-beta, .wrap--from-gamma, .wrap--to-gamma, .wrap--to-delta, .wrap--to-epsilon {
-    max-width: 46rem; } }
-
+    max-width: 36.4rem; } }
 @media screen and (min-width: 64em) {
   .wrap--each,
   .wrap--delta,
   .wrap--from-alpha, .wrap--from-beta, .wrap--from-gamma, .wrap--from-delta, .wrap--to-delta, .wrap--to-epsilon {
-    max-width: 62rem; } }
-
+    max-width: 49.2rem; } }
 @media screen and (min-width: 80em) {
   .wrap--each,
   .wrap--epsilon,
   .wrap--from-alpha, .wrap--from-beta, .wrap--from-gamma, .wrap--from-delta, .wrap--from-epsilon, .wrap--to-epsilon {
-    max-width: 78rem; } }
-
+    max-width: 62rem; } }
 .grid {
   width: calc(100% + 1rem);
   margin-left: -0.5rem;
@@ -350,3 +401,27 @@ head {
   width: 100%;
   display: inline-block;
   vertical-align: top; }
+
+.test-area {
+  font-size: 1rem;
+  line-height: 1.4;
+  margin-top: 0;
+  margin-bottom: 0; }
+  .content-item {
+    margin-top: calc(1.5rem - 0.2em); }
+    .content-item:first-child {
+      margin-top: calc(0rem - 0.2em); }
+    .content-item > .termine-heading, .content-item > .termine-listing {
+      margin-top: calc(1.5rem - 0.2em); }
+      .content-item > .termine-heading:first-child, .content-item > .termine-listing:first-child {
+        margin-top: calc(0rem - 0.2em); }
+
+  .termin {
+    margin-top: calc(0.75rem - 0.2em); }
+    .termin:first-child {
+      margin-top: calc(0rem - 0.2em); }
+    .termin .meta, .termin .main {
+      font-size: 0.8rem;
+      line-height: 1.75;
+      margin-top: 0;
+      margin-bottom: 0; }

@@ -1,32 +1,9 @@
-// TYPO FONT processing
+///////////
+// FONTS //
+///////////
 
-$fonts: (
-  base: (
-    family: 'FamilyName',
-    path: 'path/to/fonts/',
-    files: (
-      (
-        name: 'normal-font-no-extension',
-        style: normal,
-        weight: normal,
-      ),
-      (
-        name: 'bold-font-no-extension',
-        style: normal,
-        weight: bold,
-      ),
-      (
-        name: 'italic-font-no-extension',
-        style: italic,
-        weight: normal,
-      ),
-    ),
-    spacing: 0,
-    size-mod: 1,
-    cap-height: 1
-  )
-) !default;
 
+// font face mixin
 @mixin font-face($family, $dir, $file, $style, $weight) {
   @font-face {
     font-family: $family;
@@ -40,6 +17,7 @@ $fonts: (
   }
 }
 
+// FONT SETUP mixin
 
 @mixin setup-fonts(){
   @each $alias, $font in $fonts {
@@ -59,6 +37,10 @@ $fonts: (
 
   }
 }
+
+// font object function
+@function font($alias: $typo-curr-font) { @return if($alias, map-get($fonts, $alias), map-get($fonts, 'base')); }
+// @function font($alias) { @return map-get($fonts, $alias); }
 
 // font value function
 @function font-value($keys...) { @return get($fonts, $keys...); }

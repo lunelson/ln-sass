@@ -39,20 +39,20 @@ $typo-inits: () !default;
       margin-bottom: 0;
 
       // get trim value for effectively 0 margin
-      $trim-margin: trim-margin(0rem, $height, $char-height);
+      $t-margin: t-margin(0rem, $height, $char-height);
 
       &.#{$line} { line-height: 1; }
-      &.#{$trim}--top { margin-top: $trim-margin; }
-      &.#{$trim}--bottom { margin-bottom: $trim-margin; }
-      &.#{$trim} { margin-top: $trim-margin; margin-bottom: $trim-margin; }
+      &.#{$trim}--top { margin-top: $t-margin; }
+      &.#{$trim}--bottom { margin-bottom: $t-margin; }
+      &.#{$trim} { margin-top: $t-margin; margin-bottom: $t-margin; }
 
       .#{$trim-content} & {
-        margin-bottom: $trim-margin;
+        margin-bottom: $t-margin;
         margin-top: margin();
         // QUESTION: does it make more sense to include this whole mixin
         // inside media((for: margin-y, font-size, line-height)) ?
         // @include media((for: 'margin-y')) { margin-top: margin(); }
-        &:first-child { margin-top: $trim-margin; }
+        &:first-child { margin-top: $t-margin; }
       }
     }
   }
@@ -80,7 +80,7 @@ $typo-inits: () !default;
 
 @function untrim($args...) { @return 0 - trim($args...); }
 
-@function trim-margin($margin, $line-height: null, $char-height: null){
+@function t-margin($margin, $line-height: null, $char-height: null){
   $margin: if(unitless($margin), margin-y($margin), $margin);
   @if unit-strip($margin) == 0 { @return trim($line-height, $char-height); }
   @return calc(#{$margin} + #{trim($line-height, $char-height)});

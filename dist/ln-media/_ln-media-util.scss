@@ -30,65 +30,30 @@
 }
 
 
-/////////////////////////////////
-// MEDIA OBJECT GET / MODULATE //
-/////////////////////////////////
+////////////////////////////
+// MEDIA OBJECT functions //
+////////////////////////////
 
 
-// medium object
-@function medium($alias: $media-current-alias) {
-  @if $alias { @return map-get($media, $alias); }
-  @return $base;
-}
+// medium objects
+@function medium($alias: $media-current-alias) { @return if($alias, map-get($media, $alias), $base); }
+@function medium-orig($alias: $media-current-alias) { @return if($alias, map-get($media-orig, $alias), $base-orig); }
 
-// medium original (spec) object
-@function medium-orig($alias: $media-current-alias) {
-  @if $alias { @return map-get($media-orig, $alias); }
-  @return $base-orig;
-}
+// medium values
+@function medium-value($key, $alias: $media-current-alias) { @return if($alias, map-get(medium($alias), $key), map-get($base, $key)); }
+@function medium-orig-value($key, $alias: $media-current-alias) { @return if($alias, map-get(medium-orig($alias), $key), map-get($base-orig, $key)); }
 
-// medium value
-@function medium-value($key, $alias: $media-current-alias) {
-  @return if($alias, map-get(medium($alias), $key), map-get($base, $key));
-}
+// medium value shortcuts [multiples]
+@function margin-x($mult: 1) { @return if(type-of($mult) == 'string', medium-value('margin-x', $mult), medium-value('margin-x') * $mult); }
+@function margin-y($mult: 1) { @return if(type-of($mult) == 'string', medium-value('margin-y', $mult), medium-value('margin-y') * $mult); }
+@function margin($args...) { @return margin-x($args...); }
 
-// medium original (spec) value
-@function medium-orig-value($key, $alias: $media-current-alias) {
-  @return if($alias, map-get(medium-orig($alias), $key), map-get($base-orig, $key));
-}
-
-// margin-x
-@function margin-x($index: 0, $unit: true, $basis: 10) {
-  // exceptions
-  @if not $index { @return 0; } // if null
-  @if type-of($index) == 'string' { @return medium-value('margin-x', $index); } // if medium-alias
-  @if not unitless($index) { @return $index; } // if united, return number
-  // modulation
-  $mod: medium-value('margin-x-mod'); $spread: ceil($basis/6);
-  @return pow($mod, $index/$spread) * if($unit, medium-value('margin-x'), unit-strip(medium-value('margin-x')));
-}
-
-// alias of above - default margin is x / horizontal
-@function margin($args...){ @return margin-x($args...); }
-
-// margin-y
-@function margin-y($index: 0, $unit: true, $basis: 10) {
-  // exceptions
-  @if not $index { @return 0; } // if null
-  @if type-of($index) == 'string' { @return medium-value('margin-y', $index); }
-  @if not unitless($index) { @return $index; }
-  // modulation
-  $mod: medium-value('margin-y-mod'); $spread: ceil($basis/6);
-  @return pow($mod, $index/$spread) * if($unit, medium-value('margin-y'), unit-strip(medium-value('margin-y')));
-}
-
-@function font-size($index: 0, $unit: true, $basis: 10) {
-  @if type-of($index) == 'string' { @return medium-value('font-size', $index); }
-  @if not unitless($index) { @return $index; }
-  $mod: medium-value('font-size-mod'); $spread: ceil($basis/6);
-  @return pow($mod, $index/$spread) * if($unit, 1rem, unit-strip(1rem));
-}
-@function size($args...) { @return font-size($args...); }
+// modulated medium-value shortcuts
+@function mod-margin-x($index: 0, $spread: 2) { @return pow(medium-value('margin-x-mod'), $index/$spread) * medium-value('margin-x'); }
+@function mod-margin-y($index: 0, $spread: 2) { @return pow(medium-value('margin-y-mod'), $index/$spread) * medium-value('margin-y'); }
+@function mod-font-size($index: 0, $spread: 2) { @return pow(medium-value('font-size-mod'), $index/$spread) * 1rem; }
+@function mod-margin($args...){ @return mod-margin-x($args...); }
+@function mod-size($args...) { @return mod-font-size($args...); }
 
 
 //////////////////

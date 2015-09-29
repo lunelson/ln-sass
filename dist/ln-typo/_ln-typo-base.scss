@@ -1,5 +1,9 @@
-// TYPO GLOBALS
+//////////////////
+// TYPO GLOBALS //
+//////////////////
 
+
+$typo-curr-font: null !default;
 $typo-curr-font-size: null !default;
 $typo-curr-line-height: null !default;
 $typo-curr-char-height: null !default;
@@ -12,19 +16,47 @@ $trim-classes: (
   content: 'content'
 ) !default;
 
-// TYPO SETUP MIXIN
+$fonts: (
+  base: (
+    family: 'FamilyName',
+    path: 'path/to/fonts/',
+    files: (
+      (
+        name: 'normal-font-no-extension',
+        style: normal,
+        weight: normal,
+      ),
+      (
+        name: 'bold-font-no-extension',
+        style: normal,
+        weight: bold,
+      ),
+      (
+        name: 'italic-font-no-extension',
+        style: italic,
+        weight: normal,
+      ),
+    ),
+    spacing: 0,
+    size-mod: 1,
+    cap-height: 1
+  )
+) !default;
+
+
+
+
+////////////////
+// TYPO SETUP //
+////////////////
+
 
 @mixin setup-typo(){
-
-  // setup fonts
-  @include setup-fonts();
 
   // setup typo container class
   .trim--#{map-get($trim-classes, 'content')} { padding-top: 1px; padding-bottom: 1px; }
 
+  // setup fonts
+  @include setup-fonts();
 
-
-  // do classes for fonts
-  @each $alias, $font in $fonts {
-  }
 }
