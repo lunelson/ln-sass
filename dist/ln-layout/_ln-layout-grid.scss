@@ -6,8 +6,8 @@
   $base: map-merge(( margin-x: 1rem, ), if(variable-exists('base'), $base, ()));
 
   // get values and classes
-  // $margin-x: map-get($base, 'margin-x');
-  $margin-x: margin-x();
+  $margin-x: map-get($base, 'margin-x');
+  // $margin-x: margin-x(); // don't assume media is setup
   $grid: map-get($layout-classes, 'grid');
   $cell: map-get($layout-classes, 'cell');
 

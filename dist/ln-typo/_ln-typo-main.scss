@@ -1,11 +1,30 @@
 // TYPO main mixin, stable
 
 /*
+reset-hard()
+  - meyer-style reset of all typographic block elements to size 1em and margins: 0, padding: 0
+
+@mixin setup-typo($sizes)
+  - take a list of six size arguments, for standard heading levels; assume %p is at 1/0
+  - @include typo-item() for standard set of WYSIWYG elements
+  - VARIANT setup-mod-typo() uses mod-typo-item() as described below
+
+@mixin typo-child($size, $suffix)
+  - output styles for '.typo > &' or '.typo--#{$suffix} > &'
+  - also creates a scope: so that within nested elements (ul li, dl dd, etc.) further styling can be done
+  - VARIANT mod-typo-item() outputs typo-item with mod-size arg, under media((for: font-size-mod)) {}
+
+@mixin typo-scope($size, $alias, $height: null, $at-root: true) // NB height should be null for auto
+  - usu. applied to a container
+  - outputs font-size and line-height if other than current default
+  - creates corresponding scope, outputs @content @at-root for child styles
+  - VARIANT: mod-typo-scope() outputs typo-scope with mod-size arg, under media((for: font-size-mod)) {}
+
+grid n cell mixins output if in media query?
+width still needs a better name
+
 
 typo(size, alias, line-height)
-  - set size on item (if other than current root)
-  - create corresponding scope
-  - output @content at root, if you want to style children
 
 typo-styles
 

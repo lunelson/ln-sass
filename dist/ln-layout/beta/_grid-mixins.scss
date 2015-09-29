@@ -1,0 +1,23 @@
+$layout-mixins: ();
+
+@mixin grid($mult: 1){
+  $margin-x: margin-x($mult);
+  &:before { display: none; } // in case of salvattore
+  width: calc(100% + #{$margin-x}); // necessary?
+  margin-left: $margin-x / -2;
+  margin-right: $margin-x / -2;
+  position: relative; // for 'out' positioned cells which are absolute
+  @if $grid-is-float {
+    @include clearfix();
+  } @else {
+    font-size: 0rem;
+    & > * { font-size: 1rem; }
+    text-align: $grid-alignment;
+  }
+}
+@mixin mod-grid($index){ @include grid(mod-margin()); }
+@mixin grid-span($columns){ &::before { content: '#{$columns} .#{map-get($layout-classes, 'cell')}'; } }
+
+@mixin cell($multi){}
+@mixin mod-cell($index){}
+@mixin cell-span($span, $options){}
