@@ -1,0 +1,49 @@
+// MEDIA STYLES INIT
+
+@mixin media-styles-init(){
+
+  // base styles
+  html { font-size: unit-assert(map-get($base, 'html-scale'), em); }
+  body { line-height: map-get($base, 'line-height'); }
+
+  @if $media != () {
+
+    // $media-keys-string: ();
+    // @each $key in map-keys($media) { $media-keys-string: append($media-keys-string, quote($key), 'comma'); }
+
+    body::before {
+      width: 0;
+      height: 0;
+      display: block;
+      overflow: hidden;
+      // content: '{ "current" : "default", "all": ["#{$media-keys-string}"] }';
+      content: 'base';
+    }
+
+    // head { font-family: '{ "current" : "default", "all": ["#{$media-keys-string}"] }'; }
+    head { font-family: 'base'; }
+
+    // dummy element to catch breakpoint transitions
+    #{$media-transition-class} { width: 0px; transition: width 1ms; }
+
+    @each $alias, $medium in $media {
+
+      @media (min-width: #{map-get($medium, 'breakpoint')}) {
+
+        // body::before { content: '{ "current" : "#{$alias}", "all": ["#{$media-keys-string}"] }'; }
+        body::before { content: "#{$alias}";; }
+
+        // head { font-family: '{ "current" : "#{$alias}", "all": ["#{$media-keys-string}"] }'; }
+        head { font-family: "#{$alias}"; }
+
+        // dummy element to track breakpoint transition
+        #{$media-transition-class} { width: index(map-keys($media), $alias) % 2 * 1px; }
+
+        // styles, if spec'd
+        // @if $column-ratio { .l--col_typo { width: percentage($column-ratio) !important; } }
+        @if has-keys($media-orig, $alias, 'font-size') { html { font-size: unit-assert(map-get($medium, 'html-scale'), em); } }
+        @if has-keys($media-orig, $alias, 'line-height') { body { line-height: map-get($medium, 'line-height'); } }
+      }
+    }
+  }
+}

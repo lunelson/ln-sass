@@ -1,0 +1,104 @@
+//////////////////
+// STRING UTILS //
+//////////////////
+
+
+@function str-remove($str, $sub) {
+  $i: str-index($str, $sub);
+  @if $i == 0 {
+    @return $str;
+  }
+  @else {
+    @return str-remove(str-slice($str, 1, $i - 1) + str-slice($str, $i + 1, str-length($str)), $sub);
+  }
+}
+
+@function str-multiply($string, $n) {
+  $output: '';
+  @if $n > 0 {
+    @for $i from 1 through $n {
+      $output: $output + $string;
+    }
+  }
+  @return $output;
+}
+
+
+////////////////////////
+// SELECTOR FUNCTIONS //
+////////////////////////
+
+// child [helper]
+@function child($selector) {
+  @if $selector {
+    @if str-index($selector, '&'){
+      @return '#{$selector}';
+    } @else {
+      @return '& > #{$selector}';
+    }
+  } @else {
+    @return '& > *';
+  }
+}
+
+// children
+@function children($selectors...) {
+  @if length($selectors) == 0 { @return '& > *'; }
+  @else {
+    @if type-of(nth($selectors, 1)) == list { $selectors: join((), $selectors...); }
+    $out: ''; @for $n from 1 through length($selectors) {
+      $out: if($n == 1, unquote('#{child(nth($selectors, 1))}'), append($out, unquote(', #{child(nth($selectors, $n))}')));
+    }
+    @return '#{$out}';
+  }
+}
+// mixin version of above
+@mixin children($args...) { #{children($args...)} { @content; } }
+
+// adjacent-to
+@function adjacent-to($selectors...) {
+  @if length($selectors) == 0 { @return '& + &'; }
+  @else {
+    @if type-of(nth($selectors, 1)) == list { $selectors: join((), $selectors...); }
+    $out: ''; @for $n from 1 through length($selectors) {
+      $out: if($n == 1, unquote('#{nth($selectors, 1)} + &'), append($out, unquote(', #{nth($selectors,$n)} + &')));
+    }
+    @return '#{$out}';
+  }
+}
+// mixin version of above
+@mixin adjacent-to($args...) { #{adjacent-to($args...)} { @content; } }
+
+// adjacent-siblings (all combinations)
+@function adjacent-siblings($pre, $pro: '&') {
+  $out: '';
+  @for $k from 1 through length($pro) {
+    @for $n from 1 through length($pre) {
+      $out: if(
+        $n == 1 and $k == 1,
+        unquote('#{nth($pre, $n)} + #{nth($pro, $k)}'),
+        append($out, unquote(', #{nth($pre,$n)} + #{nth($pro, $k)}'))
+      );
+    }
+  }
+  @return '#{$out}';
+}
+// mixin version of above
+@mixin adjacent-siblings($args...) { #{adjacent-siblings($args...)} { @content; } }
+
+// general-siblings (all combinations)
+@function general-siblings($pre, $pro: '&') {
+  $out: '';
+  @for $k from 1 through length($pro) {
+    @for $n from 1 through length($pre) {
+      $out: if(
+        $n == 1 and $k == 1,
+        unquote('#{nth($pre, $n)} ~ #{nth($pro, $k)}'),
+        append($out, unquote(', #{nth($pre,$n)} ~ #{nth($pro, $k)}'))
+      );
+    }
+  }
+  @return '#{$out}';
+}
+// mixin version of above
+@mixin general-siblings($args...) { #{general-siblings($args...)} { @content; } }

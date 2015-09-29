@@ -1,0 +1,101 @@
+/* test: sass-layout */
+
+@import '../../lib/math/math';
+@import '../../src/ln-util/all';
+@import '../../src/ln-media/all';
+@import '../../src/ln-layout/all';
+
+$media: (
+  alpha: (breakpoint: 20em),
+  beta: (breakpoint: 30em),
+  gamma: (breakpoint: 48em),
+  delta: (
+    breakpoint: 64em,
+    margin-x: 3rem
+  ),
+  epsilon: (breakpoint: 80em)
+);
+
+
+@include media-init();
+@include layout-init();
+
+$mixins: ();
+
+@mixin dummy($arg: 0) {
+
+  $id: get($mixins, 'dummy', $arg);
+
+  @if not $id {
+    $id: unique-id();
+    $mixins: merge($mixins, 'dummy', $arg, $id) !global;
+    @at-root %#{$id} {
+      margin: $arg + em;
+    }
+  }
+  @extend %#{$id};
+}
+
+.grid--lg {
+  @include grid(-2);
+}
+.cell--lg {
+  @include cell(-2);
+}
+
+.test {
+  // @include width(1 3, (right: 1 2));
+  @include cell(null, 1 3, (right: 1 2));
+}
+
+/*
+
+.page
+.page--h, .page--x
+.page--v, .page--y
+.page--left
+
+page:
+h v x y top right bottom left
+
+wrap:
+join(map-keys($media), (each))
+to from
+
+.wrap, [wrap--]
+.wrap--each
+.wrap--alpha
+.wrap--to-alpha
+.wrap--from-beta
+.wrap--from-delta
+
+row, cell:
+sm lg xl
+
+.row--0
+.cell--0
+
+.row--lg
+.cell--lg
+
+.grid--0
+
+.cell--0
+.cell--sm
+.cell--lg
+
+.sect--lg
+.sect--sm
+
+header.site-header(role="banner" class="page")
+
+@include wrap(each)
+
+.test {
+    @include grid(-1) {
+        .sub {
+            @include cell();
+        }
+    }
+}
+ */

@@ -1,0 +1,38 @@
+dl {
+  list-style-type: none;
+  counter-reset: ufzn2vnxw; }
+  dl > dd {
+    counter-increment: ufzn2vnxw; }
+    dl > dd:before {
+      content: ">> " counter(ufzn2vnxw) ""; }
+
+.list2 li {
+  counter-increment: ufzn2vny5;
+  counter-reset: ufzn2vny5; }
+  .list2 li:before {
+    content: "hello" counter(ufzn2vny5) "world"; }
+
+ol.posts {
+  list-style-type: none;
+  counter-reset: ufzn2vnya; }
+  ol.posts > .post {
+    counter-increment: ufzn2vnya; }
+    ol.posts > .post:before {
+      content: "No. " counter(ufzn2vnya) ""; }
+
+.test {
+  font-size: 0rem;
+  text-align: center; }
+  .test:before, .test:after, .test > * {
+    display: inline-block;
+    vertical-align: middle; }
+  .test:before {
+    content: '';
+    height: 100%; }
+  .test > * {
+    font-size: 1rem;
+    max-width: 100%; }
+  ul + .test, li + .test {
+    color: blue; }
+  .test input[type="checkbox"] ~ h3 {
+    color: blue; }
