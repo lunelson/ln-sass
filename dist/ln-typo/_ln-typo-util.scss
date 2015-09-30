@@ -1,20 +1,27 @@
 // TYPO UTIL
 
+// auto-line-height function WRT size
+@function auto-line-height($size) {
+  $sub-lines: $typo-sub-lines or ceil($size);
+  $rel-height: medium-value('line-height') / unit-strip($size);
+  @return $rel-height * ceil($typo-min-height / $rel-height * $sub-lines) / $sub-lines;
+}
+
 // trim-height function
 @function trim-height($line-height: $typo-curr-line-height, $char-height: $typo-curr-char-height){
   $line-height: $line-height or medium-value('line-height'); $char-height: $char-height or 1;
   @return unit-assert($line-height - $char-height, em) / 2;
 }
 
-// typo/trim margin [multiple]
+// typo/trim margin -- mult
 @function t-margin($mult: 1, $line-height: $typo-curr-line-height, $char-height: $typo-curr-char-height){
   $margin: if(unitless($mult), margin-y($mult), $mult);
   @return calc(#{$margin} - #{trim-height($line-height, $char-height)});
 }
 
-// modulated typo/trim margin
-@function mod-t-margin($index: 0, $line-height: $typo-curr-line-height, $char-height: $typo-curr-char-height){
-  $margin: if(unitless($index), mod-margin-y($index), $index);
+// typo/trim margin -- mod
+@function mod-t-margin($mod: 0, $line-height: $typo-curr-line-height, $char-height: $typo-curr-char-height){
+  $margin: if(unitless($mod), mod-margin-y($mod), $mod);
   @return calc(#{$margin} - #{trim-height($line-height, $char-height)});
 }
 

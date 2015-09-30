@@ -1,0 +1,39 @@
+// TYPO SCOPE
+
+@mixin typo-scope($size: 1, $alias: null, $line-height: null, $at-root: true){
+
+  $size: rem($size);
+  $font: font($alias);
+  $char-height: map-get($font, 'char-height') or 1;
+  $auto-height: false;
+  @if not $line-height or $line-height == 'auto' {
+    $auto-height: true; // necessary?
+    $line-height: auto-line-height($size); }
+  $t-margin: t-margin(0, $line-height, $char-height);
+
+  @if medium-orig-value('font-size') { font-size: $size; }
+  @if medium-orig-value('line-height') { line-height: $line-height; }
+
+  $typo-prev-font: $typo-curr-font;
+  $typo-prev-font-size: $typo-curr-font-size;
+  $typo-prev-line-height: $typo-curr-line-height;
+  $typo-prev-char-height: $typo-curr-char-height;
+
+  $typo-curr-font: $font !global;
+  $typo-curr-font-size: $size !global;
+  $typo-curr-line-height: $line-height !global;
+  $typo-curr-char-height: $char-height !global;
+
+  @at-root { @content; }
+
+  $typo-curr-font: $typo-prev-font !global;
+  $typo-curr-font-size: $typo-prev-font-size !global;
+  $typo-curr-line-height: $typo-prev-line-height !global;
+  $typo-curr-char-height: $typo-prev-char-height !global;
+
+}
+
+// modular version
+@mixin mod-typo-scope($mod: 0, $rest...){
+  @include typo-scope(mod-size($mod), $rest...) { @content; }
+}

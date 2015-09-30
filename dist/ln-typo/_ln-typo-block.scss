@@ -1,0 +1,46 @@
+// TYPO BLOCK
+
+@mixin typo-block($size: 1, $alias: null, $height: null, $suffix: null) {
+
+  // stable values
+  $size: rem($size);
+  $font: font($alias);
+  $char-height: map-get($font, 'char-height') or 1;
+
+  // medium values
+  @if not $height or $height == 'auto' { $height: auto-line-height($size); }
+  $t-margin: t-margin(0, $height, $char-height);
+
+  .typo#{if($suffix, '--#{$suffix}', '')} > & {
+
+    @if medium-orig-value('font-size') { font-size: $size; }
+    @if medium-orig-value('margin-y') { margin-top: margin-y(); }
+    @if medium-orig-value('line-height') {
+      line-height: $height;
+      margin-bottom: $t-margin;
+      &:first-child { margin-top: $t-margin; }
+    }
+
+    $typo-prev-font: $typo-curr-font;
+    $typo-prev-font-size: $typo-curr-font-size;
+    $typo-prev-line-height: $typo-curr-line-height;
+    $typo-prev-char-height: $typo-curr-char-height;
+
+    $typo-curr-font: $font !global;
+    $typo-curr-font-size: $size !global;
+    $typo-curr-line-height: $height !global;
+    $typo-curr-char-height: $char-height !global;
+
+    @content;
+
+    $typo-curr-font: $typo-prev-font !global;
+    $typo-curr-font-size: $typo-prev-font-size !global;
+    $typo-curr-line-height: $typo-prev-line-height !global;
+    $typo-curr-char-height: $typo-prev-char-height !global;
+  }
+}
+
+// modular version
+@mixin mod-typo-block($mod: 0, $rest...) {
+  @include typo-block(mod-size($mod), $rest...) { @content; }
+}

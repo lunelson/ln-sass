@@ -17,7 +17,6 @@
   @return $rel-height * ceil($typo-min-height / $rel-height * $sub-lines) / $sub-lines;
 }
 
-// $typo-blocks: ();
 @mixin typo-block($size: 1, $alias: null, $height: null, $suffix: null) {
 
   $size: rem($size);

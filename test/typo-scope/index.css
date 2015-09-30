@@ -228,6 +228,24 @@ a span.target {
   text-decoration: underline !important;
 }
 
+@font-face {
+  font-family: "Circular";
+  font-style: normal;
+  font-weight: normal;
+  src: url("assets/fonts/lineto-circular-book.eot");
+  src: url("assets/fonts/lineto-circular-book.eot?#iefix") format("embedded-opentype"), url("assets/fonts/lineto-circular-book.woff") format("woff"), url("assets/fonts/lineto-circular-book.svg#lineto-circular-book") format("svg"), url("assets/fonts/lineto-circular-book.ttf") format("truetype");
+}
+@font-face {
+  font-family: "Circular";
+  font-style: normal;
+  font-weight: bold;
+  src: url("assets/fonts/lineto-circular-bold.eot");
+  src: url("assets/fonts/lineto-circular-bold.eot?#iefix") format("embedded-opentype"), url("assets/fonts/lineto-circular-bold.woff") format("woff"), url("assets/fonts/lineto-circular-bold.svg#lineto-circular-bold") format("svg"), url("assets/fonts/lineto-circular-bold.ttf") format("truetype");
+}
+.font--base {
+  font-family: "Circular";
+}
+
 html {
   font-size: 1.25em;
 }

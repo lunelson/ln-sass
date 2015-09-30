@@ -326,67 +326,85 @@ h1, h2, h3, h4, h5, h6 {
 
 .typo > h1, .typo > .h1 {
   font-size: 2.25rem;
-  margin-top: 1.5rem;
+  margin-top: 1rem;
   line-height: 1.2444444444;
   margin-bottom: calc(0rem - 0.2222222222em);
 }
 .typo > h1:first-child, .typo > .h1:first-child {
   margin-top: calc(0rem - 0.2222222222em);
 }
+.typo > p + h1, .typo > p + .h1, .typo > ul + h1, .typo > ul + .h1, .typo > ol + h1, .typo > ol + .h1 {
+  margin-top: 2rem;
+}
 
 .typo > h2, .typo > .h2 {
   font-size: 1.5rem;
-  margin-top: 1.5rem;
+  margin-top: 1rem;
   line-height: 1.4;
   margin-bottom: calc(0rem - 0.3em);
 }
 .typo > h2:first-child, .typo > .h2:first-child {
   margin-top: calc(0rem - 0.3em);
 }
+.typo > p + h2, .typo > p + .h2, .typo > ul + h2, .typo > ul + .h2, .typo > ol + h2, .typo > ol + .h2 {
+  margin-top: 2rem;
+}
 
 .typo > h3, .typo > .h3 {
   font-size: 1.2247448729rem;
-  margin-top: 1.5rem;
+  margin-top: 1rem;
   line-height: 1.1430952118;
   margin-bottom: calc(0rem - 0.1715476059em);
 }
 .typo > h3:first-child, .typo > .h3:first-child {
   margin-top: calc(0rem - 0.1715476059em);
 }
+.typo > p + h3, .typo > p + .h3, .typo > ul + h3, .typo > ul + .h3, .typo > ol + h3, .typo > ol + .h3 {
+  margin-top: 2rem;
+}
 
 .typo > h4, .typo > .h4 {
   font-size: 1rem;
-  margin-top: 1.5rem;
+  margin-top: 1rem;
   line-height: 1.4;
   margin-bottom: calc(0rem - 0.3em);
 }
 .typo > h4:first-child, .typo > .h4:first-child {
   margin-top: calc(0rem - 0.3em);
 }
+.typo > p + h4, .typo > p + .h4, .typo > ul + h4, .typo > ul + .h4, .typo > ol + h4, .typo > ol + .h4 {
+  margin-top: 2rem;
+}
 
 .typo > h5, .typo > .h5 {
   font-size: 0.8589458336rem;
-  margin-top: 1.5rem;
+  margin-top: 1rem;
   line-height: 1.6299048732;
   margin-bottom: calc(0rem - 0.4149524366em);
 }
 .typo > h5:first-child, .typo > .h5:first-child {
   margin-top: calc(0rem - 0.4149524366em);
 }
+.typo > p + h5, .typo > p + .h5, .typo > ul + h5, .typo > ul + .h5, .typo > ol + h5, .typo > ol + .h5 {
+  margin-top: 2rem;
+}
 
 .typo > h6, .typo > .h6 {
   font-size: 0.903602003rem;
-  margin-top: 1.5rem;
+  margin-top: 1rem;
   line-height: 1.5493546886;
   margin-bottom: calc(0rem - 0.3746773443em);
 }
 .typo > h6:first-child, .typo > .h6:first-child {
   margin-top: calc(0rem - 0.3746773443em);
 }
+.typo > p + h6, .typo > p + .h6, .typo > ul + h6, .typo > ul + .h6, .typo > ol + h6, .typo > ol + .h6 {
+  margin-top: 2rem;
+}
 
 .typo > p {
   font-size: 1rem;
-  margin-top: 1.5rem;
+  margin-top: 1rem;
   line-height: 1.4;
   margin-bottom: calc(0rem - 0.3em);
 }
@@ -398,36 +416,12 @@ h1, h2, h3, h4, h5, h6 {
   text-indent: 2em;
 }
 
-@media screen and (min-width: 30em) {
-  .typo > h1, .typo > .h1 {
-    margin-top: 3rem;
-  }
-
-  .typo > h2, .typo > .h2 {
-    margin-top: 3rem;
-  }
-
-  .typo > h3, .typo > .h3 {
-    margin-top: 3rem;
-  }
-
-  .typo > h4, .typo > .h4 {
-    margin-top: 3rem;
-  }
-
-  .typo > h5, .typo > .h5 {
-    margin-top: 3rem;
-  }
-
-  .typo > h6, .typo > .h6 {
-    margin-top: 3rem;
-  }
-
-  .typo > p {
-    margin-top: 3rem;
-  }
-  .typo > p + p {
-    margin-top: 0.3em;
-    text-indent: 2em;
-  }
+.typo > ul, .typo > ol, .typo > dl, .typo > table {
+  font-size: 1rem;
+  margin-top: 1rem;
+  line-height: 1.4;
+  margin-bottom: calc(0rem - 0.3em);
+}
+.typo > ul:first-child, .typo > ol:first-child, .typo > dl:first-child, .typo > table:first-child {
+  margin-top: calc(0rem - 0.3em);
 }

@@ -11,31 +11,21 @@ necessary for typo:
 
 ## typo
 
-- question: how to handle media queries if line-height or margin-y changes?
+new plan wrt media queries
+    - don't process media(()) in the mixin, but check against media-orig-value() before outputting styles
+    - add code to auto-extend if pre-included and not currently in media query
 
-typo-scope(rem)
-    get size
-    get char-height
-    properties: append((margin-y) if(not height, line-height, ''))
-    include media((for: properties)) {
-        calc line-height
-        calc t-margin
-        [ do styles ]
-    }
-    calibrate-height()
-    @include media((for: margin-y line-height)) {
-        calibrate-height()
-    }
+remaining proofs
+    - can you still style lists and tables properly
 
 ## layout
 
-- grid and cell classe have few variants so they can be done as placeholders and then extended with functions
-
-ln-layout-grid: placeholders are generated
+ln-layout-grid
+    - generate placeholders on @import
 setup-grid()
-    - extends placeholders
+    - extend placeholders
 setup-page()
-    - remains as before (too many class-variants)
+    - generate placeholders
 
 
 
