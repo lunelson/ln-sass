@@ -1,0 +1,390 @@
+extends ../_layout.jade
+block body
+
+  .u-media-tracker
+  header.site-header.g-row
+    .header-part.header-name.g-col
+      // main logo as link to root
+      a.logo-div.logo-main.block.clean(href="/")
+        svg(xmlns="http://www.w3.org/2000/svg", viewbox="0 0 312.695 67.125")
+          path(fill="#fff000", d="M1.057 66.443V.83h23.115c18.383 0 31.85 12.122 31.85 32.853 0 20.73-13.558 32.76-31.94 32.76H1.057zm22.57-11.845c10.555 0 19.383-6.663 19.383-20.915s-8.736-21.008-19.293-21.008h-10.1v41.923h10.01zM103.342 51.688h-26.21l-5.368 15.308H58.478L83.23 0h14.562l24.57 66.995h-13.65l-5.37-15.307zM81.32 39.78h17.837l-8.92-25.322L81.32 39.78zM152.935 12.604v54.392h-12.65V12.604h-20.384V.276h53.42v12.327h-20.385zM219.73 33.545l21.202 33.45h-15.197l-13.924-23.15-14.014 23.15h-14.742l21.204-33.545L183.145 0h15.106l13.834 23.15L226.19 0h14.65l-21.11 33.545zM296.44 0h13.287l-23.934 66.995H272.87L249.028 0h13.74l16.837 49.798L296.44 0z")
+          path(d="M295.675.046l-16.07 45.84L263.512.046h-2.332l18.426 52.486 18.4-52.486M24.082 66.87H1.057v-2.198H24.08c18.736 0 30.843-12.214 30.843-31.116 0-18.957-12.07-31.205-30.75-31.205H1.056V.15h23.115c19.71 0 32.95 13.425 32.95 33.405 0 19.928-13.278 33.316-33.04 33.316zm-.456-11.647h-11.11V11.798h11.2c12.39 0 20.394 8.54 20.394 21.758 0 13.163-8.04 21.667-20.484 21.667zm-8.91-2.2h8.91c13.48 0 18.284-10.056 18.284-19.468 0-9.454-4.78-19.557-18.193-19.557h-9.002v39.025zM100.73 40.663H79.747l10.49-28.692 10.493 28.693zm-17.837-2.2h14.69l-7.346-20.086-7.344 20.085zM141.363 66.858h-2.2l.022-52.587H119.9v-2.2h21.486l-.023 54.788zm10.504-.046l-.032-54.74h21.485v2.2h-19.284l.03 52.538-2.2.002zm21.453-64.46H119.9V.148h53.42v2.2zM286.616 66.713L311.33.046h-2.347L284.27 66.713M225.688.046l-13.593 21.43L198.803.046h-2.588l15.86 25.57L228.292.046M72.513 66.713L77.9 52.128h24.674l5.337 14.585h2.343L104.11 49.93H76.368l-6.2 16.783M59.295 66.713L84.835.143 84.58.047h-2.067L56.94 66.713M123.898 66.713L98.51.046h-2.354l25.387 66.667M181.087 66.713h2.632l21.854-33.247L183.67.046h-2.404l-.157.103 21.833 33.314M198.45 66.713l13.36-21.176 13.36 21.176h2.6l-15.96-25.3-15.96 25.3M242.986 66.713l-21.94-33.16L242.975.046h-2.627L218.412 33.56l21.935 33.153M274.374 66.713L249.736.046h-2.346l24.638 66.667")
+          path(fill="#fff000", d="M119.867 2.388H173.3v9.73h-53.433z")
+      h1.site-heading.t-block Deutscher Architektentag 2015
+    .header-part.header-byline.g-col
+      // secondary logo part
+      .logo-div.logo-divider
+        svg(xmlns="http://www.w3.org/2000/svg", viewbox="0 6 53.555 15")
+          path(fill="#fff000", d="M0 8.017h53.432v9.73H0z")
+          path(fill="none", stroke="#000", stroke-width="2.2", d="M0 6.913h53.463M0 18.83h53.463")
+      h2.site-heading.t-block
+        | Zukunft planen
+        br
+        | 11. + 12. Oktober
+        br
+        | Hannover
+  main.site-main.g-row.p-programm
+    .main-content.g-col
+      .content-tab
+        input#kongress.tab-input(type="radio", name="tab", checked="")
+        label.tab-label(for="kongress") Kongressprogramm
+        .tab-content.content-kongress
+          ul.no-style
+            // day 1
+            li.content-item.termine.g-row.t-contain
+              p.termine-heading.g-col
+                span Sonntag, 11.10.2015, Sprengel Museum, Hannover
+              ul.termine-listing.g-col
+                li#eroeffnung.termin.g-row
+                  .meta.g-col
+                    p.termin-time 19:00
+                  .main.g-col
+                    h4.termin-title Er&#246;ffnung des Deutschen Architektentags
+                    p.termin-text
+                      | Die Er&#246;ffnung des Deutschen Architektentags findet im Auditorium des Sprengel Museums statt:
+                      | Kurt-Schwitters-Platz, 30169 Hannover
+                    ul.termin-referenten.small
+                      li.referent
+                        a(href="/info-dat/tab:2/#ettinger-brinckman") Barbara Ettinger-Brinckmann
+                      li.referent
+                        a(href="/info-dat/tab:2/#altmeier") Peter Altmaier
+                li#architektenfest.termin.g-row
+                  .meta.g-col
+                    p.termin-time 19:45
+                  .main.g-col
+                    h4.termin-title Architektenfest
+                    p.termin-text
+                      | Das Architektenfest findet in den neuen R&#228;umen des Sprengel Museums:
+                      | Kurt-Schwitters-Platz, 30169 Hannover
+            // day 2
+            li.content-item.termine.g-row.t-contain
+              p.termine-heading.g-col
+                span Montag, 12.10.2015, Schloss Herrenhausen, Hannover
+              ul.termine-listing.g-col
+                li#registrierung-der-teilnehmer.termin.g-row
+                  .meta.g-col
+                    p.termin-time 09:30
+                  .main.g-col
+                    h4.termin-title Registrierung der Teilnehmer
+                li#begruessung.termin.g-row
+                  .meta.g-col
+                    p.termin-time 10:30
+                  .main.g-col
+                    h4.termin-title Begr&#252;&#223;ung
+                    ul.termin-referenten.small
+                      li.referent
+                        a(href="/info-dat/tab:2/#schneider") Wolfgang Schneider
+                      li.referent
+                        a(href="/info-dat/tab:2/#schostok") Stefan Schostok
+                      li.referent
+                        a(href="/info-dat/tab:2/#weil") Stephan Weil
+                li#zukunft-planen-positionsbestimmung-und-berufspolitische-ziele.termin.g-row
+                  .meta.g-col
+                    p.termin-time 11:00
+                  .main.g-col
+                    h4.termin-title Zukunft planen: Positionsbestimmung und berufspolitische Ziele
+                    ul.termin-referenten.small
+                      li.referent
+                        a(href="/info-dat/tab:2/#ettinger-brinckman") Barbara Ettinger-Brinckmann
+                li#vom-wohlleben-zum-wohlergehen.termin.g-row
+                  .meta.g-col
+                    p.termin-time 11:15
+                  .main.g-col
+                    h4.termin-title Vom Wohlleben zum Wohlergehen
+                    p.termin-text Keynote zum Deutschen Architektentag.
+                    ul.termin-referenten.small
+                      li.referent
+                        a(href="/info-dat/tab:2/#opaschowski") Prof. Dr. Horst W. Opaschowski
+                li#weichenstellungen-fuer-gute-architektur.termin.g-row
+                  .meta.g-col
+                    p.termin-time 11:45
+                  .main.g-col
+                    h4.termin-title Weichenstellungen f&#252;r gute Architektur
+                    ul.termin-referenten.small
+                      li.referent
+                        a(href="/info-dat/tab:2/#brenncke") Joachim Brenncke
+                      li.referent
+                        a(href="/info-dat/tab:2/#gebhardt") Evelyne Gebhardt MdEP
+                      li.referent
+                        a(href="/info-dat/tab:2/#adler") Gunther Adler
+                      li.referent
+                        a(href="/info-dat/tab:2/#ulbig") Markus Ulbig
+                      li.referent
+                        a(href="/info-dat/tab:2/#von-lojewski") Hilmar von Lojewski
+                      li.referent
+                        a(href="/info-dat/tab:2/#nagel") Reiner Nagel
+                li#vorstellung-der-foren.termin.g-row
+                  .meta.g-col
+                    p.termin-time 12:45
+                  .main.g-col
+                    h4.termin-title Vorstellung der Foren
+                    ul.termin-referenten.small
+                      li.referent
+                        a(href="/info-dat/tab:2/#rose") Ulrike Rose
+                li#mittagspause.termin.g-row
+                  .meta.g-col
+                    p.termin-time 13:00
+                  .main.g-col
+                    h4.termin-title Mittagspause
+                li#forum-i-generalisten-und-spezialisten.termin.g-row
+                  .meta.g-col
+                    p.termin-time 14:00
+                  .main.g-col
+                    h4.termin-title Forum I: Generalisten und Spezialisten - Das Berufsbild Architekt
+                    p.termin-text
+                      | Moderation: Dr. Matthias Meyer, Hauptgesch&#228;ftsf&#252;hrer der Architektenkammer Niedersachsen
+                    ul.termin-referenten.small
+                      li.referent
+                        a(href="/info-dat/tab:2/#brenncke") Joachim Brenncke
+                      li.referent
+                        a(href="/info-dat/tab:2/#hommerich") Prof. Christoph Hommerich
+                      li.referent
+                        a(href="/info-dat/tab:2/#grzimek") Matthias Grzimek
+                      li.referent
+                        a(href="/info-dat/tab:2/#hoppenstedt") Dr. Hendrik Hoppenstedt MdB
+                li#forum-ii-die-energiewende.termin.g-row
+                  .meta.g-col
+                    p.termin-time 14:00
+                  .main.g-col
+                    h4.termin-title Forum II: Die Energiewende - besser mit Architekten planen
+                    p.termin-text
+                      | Moderation: Dr. Elena Wiezorek, Hauptgesch&#228;ftsf&#252;hrerin der Architektenkammer Rheinland-Pfalz
+                    ul.termin-referenten.small
+                      li.referent
+                        a(href="/info-dat/tab:2/#ettinger-brinckman") Barbara Ettinger-Brinckmann
+                      li.referent
+                        a(href="/info-dat/tab:2/#schuster") Prof. Heide Schuster
+                      li.referent
+                        a(href="/info-dat/tab:2/#herdan") Thorsten Herdan
+                      li.referent
+                        a(href="/info-dat/tab:2/#kuehn") Christian K&#252;hn MdB
+                li#forum-iii-vergabe-von-architektenleistungen-prozessqualitaet-und-bauqualitaet.termin.g-row
+                  .meta.g-col
+                    p.termin-time 14:00
+                  .main.g-col
+                    h4.termin-title Forum III: Vergabe von Architektenleistungen - Prozessqualit&#228;t und Bauqualit&#228;t
+                    p.termin-text
+                      | Moderation: Christof Rose, Pressesprecher der Architektenkammer Nordrhein-Westfalen
+                    ul.termin-referenten.small
+                      li.referent
+                        a(href="/info-dat/tab:2/#schneider") Wolfgang Schneider
+                      li.referent
+                        a(href="/info-dat/tab:2/#bodemann") Uwe Bodemann
+                      li.referent
+                        a(href="/info-dat/tab:2/#wehrmann") Sandra Wehrmann
+                      li.referent
+                        a(href="/info-dat/tab:2/#wappner") Prof. Ludwig Wappner
+                      li.referent
+                        a(href="/info-dat/tab:2/#hoffmann-guenther") G&#252;nther Hoffmann - angefragt
+                li#forum-iv-architektenhaftung-quo-vadis.termin.g-row
+                  .meta.g-col
+                    p.termin-time 14:00
+                  .main.g-col
+                    h4.termin-title Forum IV: Architektenhaftung - quo vadis?
+                    p.termin-text
+                      | Moderation: Rechtsanw&#228;ltin Sabine Fischer, Hauptgesch&#228;ftsf&#252;hrerin der Bayerischen Architektenkammer
+                    ul.termin-referenten.small
+                      li.referent
+                        a(href="/info-dat/tab:2/#schmidt") Dr. Hans-Gerd Schmidt
+                      li.referent
+                        a(href="/info-dat/tab:2/#krause-allenstein") Dr. Florian Krause-Allenstein
+                      li.referent
+                        a(href="/info-dat/tab:2/#leupertz") Prof. Stefan Leupertz
+                      li.referent
+                        a(href="/info-dat/tab:2/#kienemund-beate") Beate Kienemund - angefragt
+                li#forum-v-digitalisierung-im-planungsprozess-chancen-und-risiken.termin.g-row
+                  .meta.g-col
+                    p.termin-time 14:00
+                  .main.g-col
+                    h4.termin-title Forum V: Digitalisierung im Planungsprozess - Chancen und Risiken
+                    p.termin-text Moderation: Dr. Tillman Prinz, Bundesgesch&#228;ftsf&#252;hrer der Bundesarchitektenkammer
+                    ul.termin-referenten.small
+                      li.referent
+                        a(href="/info-dat/tab:2/#mueller") Martin M&#252;ller
+                      li.referent
+                        a(href="/info-dat/tab:2/#may") Dr. Ilka May
+                      li.referent
+                        a(href="/info-dat/tab:2/#beck") Eberhard Beck
+                      li.referent
+                        a(href="/info-dat/tab:2/#gross") Michael Gross MdB
+                li#kaffeepause.termin.g-row
+                  .meta.g-col
+                    p.termin-time 15:00
+                  .main.g-col
+                    h4.termin-title Kaffeepause
+                li#architektur-im-dialog.termin.g-row
+                  .meta.g-col
+                    p.termin-time 15:30
+                  .main.g-col
+                    h4.termin-title Architektur im Dialog
+                    p.termin-text
+                      | Begr&#252;&#223;ung durch Herrn Dr. Krull, Genrealsekret&#228;r der Volkswagenstiftung.
+                      | Zukunft planen - Vortrag von Christoph Ingenhoven.
+                      | Im Anschluss: Ulrike Rose im Gespr&#228;ch mit Christoph Ingenhoven.
+                    ul.termin-referenten.small
+                      li.referent
+                        a(href="/info-dat/tab:2/#krull") Dr. Wilhelm Krull
+                      li.referent
+                        a(href="/info-dat/tab:2/#ingenhoven") Christoph Ingenhoven
+                li#fazit-und-ausblick.termin.g-row
+                  .meta.g-col
+                    p.termin-time 16:15
+                  .main.g-col
+                    h4.termin-title Fazit und Ausblick
+                    ul.termin-referenten.small
+                      li.referent
+                        a(href="/info-dat/tab:2/#ettinger-brinckman") Barbara Ettinger-Brinckmann
+                li#preisverleihung.termin.g-row
+                  .meta.g-col
+                    p.termin-time 18:00
+                  .main.g-col
+                    h4.termin-title Verleihung des Deutschen Architekturpreises 2015
+                    p.termin-text
+                      | Gro&#223;en Festsaal des Schlosses Herrenhausen.
+                      | Moderation: Bundesministerin Dr. Barbara Hendricks
+      .content-tab
+        input#rahmen.tab-input(type="radio", name="tab")
+        label.tab-label(for="rahmen") Rahmenprogramm
+        .tab-content.content-rahmen
+          ul.no-style
+            li.content-item.rahmen-termine.g-row.t-contain
+              p.termine-heading.g-col
+                span Sonntag, 11.10.2015, Hannover
+              ul.termine-listing.g-col
+                li#alpha.termin.g-row
+                  .meta.g-col
+                    p.termin-time Start: 10:00
+                    p.termin-dauer Dauer: 03:00
+                  .main.g-col
+                    h4.termin-title Architekturf&#252;hrung: Moderne weiterbauen
+                    h5.termin-sub-title Fu&#223;gang; Schwerpunkt: St&#228;dtebau und Stadtreparaturen.
+                    p Fu&#223;weg unter Leitung von Architekt Ekkehard Bollmann.
+                    p Treffpunkt vor dem Conti Hochhaus, K&#246;nigsworther Platz 1, 38100 Hannover.
+                    ul
+                      li
+                        p
+                          strong Conti Hochhaus
+                          | 1953
+                          br
+                          | nach Entw&#252;rfen von Ernst Zinsser und Werner Dierschke. Blick &#252;ber die Stadt. Cafeteria 14. OG.
+                      li
+                        p
+                          strong K&#246;rnerstra&#223;e. Spengler Wiescholek Architekten Stadtplaner, Hamburg
+                          br
+                          | 22 Wohnungen, Eigentumswohnungen, insbesondere 2- und 3- Zimmer-Wohnungen sowie einige 4- bis 5- Zimmer-Wohnungen, in den oberen Geschossen Maisonettewohnungen.
+                      li
+                        p
+                          strong Klagesmarkt. Neubau gbh und Wohnungen
+                          br
+                          | Bauherrin Gesellschaft f&#252;r Bauen und Wohnen Hannover (GBH).Planung B&#252;rogeb&#228;ude: Architekten BKSP Grabau Leiber Obermann und Partner, Hannover; Wohngeb&#228;ude 2: Kiefer + Kiefer Architekten BDA, Sarstedt; Wohngeb&#228;ude 3/6: Kellner Schleich Wunderling Architekten + Stadtplaner GmbH, Hannover; Wohngeb&#228;ude 4/8: pfp architekten I prof. friedrich planung, Hamburg; Wohngeb&#228;ude 5/7: Architektur b&#252;ro pk nord, Hannover. 96 Wohnungen.
+                      li
+                        p
+                          strong Marstall
+                          br
+                          | Der Marstall einer der Pl&#228;tze, an dem das neue Innenstadtkonzept in die Realit&#228;t umsetzt werden soll. Statt gro&#223;fl&#228;chiger Parkpl&#228;tze soll dort Wohnraum geschaffen werden. Der lang gestreckte Platz zwischen Altstadt-Leine und Schmiedestra&#223;e soll an beiden Enden je ein gro&#223;es Geb&#228;ude erhalten, zum Fluss hin &#252;berwiegend mit Wohnnutzung, zum Zentrum hin wohl eher als B&#252;ro- und Gesch&#228;ftshaus.)
+                      li
+                        p
+                          strong Am Hohen Ufer. Umbau der VHS
+                          br
+                          | Ahrens Grabenhorst Architekten, Hannover und Heidenreich &#38; Springer Architekten Gesellschaft mbH, Berlin.
+                      li
+                        p
+                          strong Kr&#246;pke und Kr&#246;pke Center
+                          br
+                          | Das ehemalige Kr&#246;pke Center war ein Symbol f&#252;r den St&#228;dtebau der 60er und 70er Jahre. 1972 wurde der Bau, der mehr bauliche Skulptur als einer reiner Gelenkbau durch die Architektengemeinschaft Hiltmann-Piper-Bollmann errichtet, ist heute Ausdruck der Stadtreparatur. Umbau: Kleihues + Kleihues Gesellschaft von Architekten mbH Berlin
+                      li
+                        p
+                          strong Opernplatz-Operndreieck
+                          br
+                          | Zeitgem&#228;&#223;es Platzdesign. Landschaftsarchitekt: Kamel Louafi, Berlin. Opernplatz ist als Schmuckplatz mit klaren Strukturen und gut &#252;berblickbaren Landschaftselementen gestaltet. Mit Bezug auf die klassizistische Architektur des Opernhauses sind die Fl&#228;chen gr&#252;ner und zugleich offener. Modern interpretierte Broderien&#8211;Eibenhecken als nach innen gerichtete, amorphe Formen aneinander gereiht&#8211;pr&#228;gen die neue Anlage.
+                      li
+                        p
+                          strong Von au&#223;en: Aegi mit Umbau Nord LB, Torhaus und Nord/LB Neubau
+                          br
+                          | Nord/LB. Bauherrin: Panima Beteiligungs GmbH &#38; Co. Objekt Hannover KG, Architekten: ASP Schweger Partner, Hannover, Wolfgang Schneider, Bernhard Kohl, Prof. Wilhelm Meyer. Das denkmalgesch&#252;tzte Geb&#228;ude hat seit seiner Errichtung Mitte der 50er Jahre eine stadtbildpr&#228;gende Funktion. Das dominante Geb&#228;udeensemble wurde innen wie au&#223;en komplett saniert. Ein sich nach oben &#246;ffnendes, trichterf&#246;rmiges Glas-Atrium sorgt f&#252;r nat&#252;rliche Belichtung der Halle einschlie&#223;lich der Glasebenen..
+                      li
+                        strong
+                          | Torhaus: NILEG, Norddeutsche Immobilengesellschaft mbH. Architekten (Storch Ehlers Partner Dipl.-Ing. Architekten BDA)
+                        br
+                        | Das neue &#8222;Torhaus am Aegi&#8220;  schlie&#223;t die letzte Baul&#252;cke und komplettiert damit den Platz. Das in den Platzraum hinein geschobene schmale Geb&#228;ude bildet zusammen mit der expressiven Sonderkonstruktion ein Tor, das die Innenstadt mit der S&#252;dstadt verbindet .Vom Kr&#246;pcke, dem Zentrum der Stadt her, ist das Torhaus am Aegi als sein Pendant im Stadtzentrum deutlich erkennbar: es ist ein neuer Blickfang im Bild der Stadt. Nord/LB. Behnisch, Behnisch und Partner 2002.
+                li#beta.termin.g-row
+                  .meta.g-col
+                    p.termin-time Start: 14:00
+                    p.termin-dauer Dauer: 04:00
+                  .main.g-col
+                    h4.termin-title Architekturf&#252;hrung: Moderne weiterbauen
+                    h5.termin-sub-title
+                      | Busrundfahrt; Im Dialog zwischen gestern und morgen: Architektur zum Wohnen, Arbeiten und f&#252;r die Kultur
+                    p Busrunde unter Leitung von Dr. Ute Maasberg
+                    p Treffpunkt am K&#246;belinger Markt, 38100 Hannover
+                    ul
+                      li
+                        p
+                          strong Hanomag-Wohnlofts
+                          br
+                          | Hanomagstra&#223;e 3&#8201;a&#8201;&#8211;&#8201;c, Bauherrin: Baugemeinschaft HanomagLofts, Architekten: Harald Schulte, Heiner R&#252;schenschmidt (agsta Architekten und Ingenieure), Landschaftsarchitekt: Martin Diekmann (lad+ landschaftsarchitektur diekmann)
+                          br
+                          | Im Zuge der Revitalisierung des Hanomagareals entstanden 23 Wohnlofts mit 100&#8201;&#8211;&#8201;220&#8201;m&#178; Wohnfl&#228;che und Raumh&#246;hen von bis zu sechs Meter in einem Abschnitt der Industriehalle 96. Die Lofts werden &#252;ber zwei neu geschaffene Treppenh&#228;user erschlossen. In Abstimmung mit der Denkmalpflege wurde die stra&#223;enseitige Fassade restauriert und die hofseitige Fassade mit Loggien neu gestaltet. Die Hanomag Wohnlofts erhielten 2014 den Nieders&#228;chsischen Staatspreis f&#252;r Architektur.
+                      li
+                        p
+                          strong Etz Chaim
+                          br
+                          | Gemeindezentrum und Synagoge, Fuhsestra&#223;e 6. Bauherrin: Stiftung Liberales Judentum Hannover, Architekten: Gesche Grabenhorst, Roger Ahrens (ahrens grabenhorst architekten BDA, Hannover).
+                          br
+                          | Zum zweiten Mal in Deutschland wurde ein ehemaliges Kirchengeb&#228;ude zu einem j&#252;dischen Gemeindezentrum mit Synagoge umgebaut. Es ist ein Ort j&#252;dischen Lebens entstanden, der zugleich au&#223;er-allt&#228;glich und einladend ist und sich selbstbewusst in Stadtbild und Gesellschaft pr&#228;sentiert. Eine au&#223;ergew&#246;hnliche sakrale Stimmung wird zum Ausdruck gebracht. Raumproportionen, Material, Licht- und Farbgebung verdichten sich im Spannungsfeld zwischen Moderne und Tradition zu einer &#196;sthetik, die dem Selbstverst&#228;ndnis der Liberalen J&#252;dischen Gemeinde in hohem Ma&#223;e entspricht. Etz Chaim erhielt 2012 den Staatspreis f&#252;r Architektur.
+                      li
+                        p
+                          strong Sprengel Museum Hannover mit Erweiterung
+                          br
+                          | Bauherrin: Landeshauptstadt Hannover. Architekten: Meili, Peter Architekten, Landschaftsarchitekten: M&#252;ller Illien Landschaftsarchitekten
+                          br
+                          | Mit der Erweiterung des Sprengel Museum Hannover nimmt eines der gr&#246;&#223;ten Kulturprojekte der letzten Jahre in Hannover Gestalt an. Der Kunstbestand des Hauses ist durch Ank&#228;ufe, vor allem durch Schenkungen und Dauerleihgaben, kontinuierlich angewachsen. Seine renommierten Sammlungsbest&#228;nde der Kunst des 20. und 21. Jahrhunderts haben das Museum in aller Welt bekannt gemacht. Der Erweiterungsbau umfasst als Erg&#228;nzung des bestehenden Museums einen einfachen rechteckigen K&#246;rper. Als Verbindung zwischen den verschiedenen Ebenen des Alt- und Erweiterungsbaus fungiert eine doppelgeschossige Halle, das sogenannte Placement, mit seiner gro&#223;z&#252;gigen Rampen- und Treppenspirale.
+                      li
+                        p
+                          strong Baugruppe S&#252;dstadtschule
+                          br
+                          | Schl&#228;gerstra&#223;e 36, Bauherrin: Baugemeinschaft S&#252;dstadtschule GbR, Architekten: MOSAIK architekten bda, Landschaftsarchitekten: Gr&#252;n plan
+                          br
+                          | Die Sehbehindertenschule wurde 1963 vom hannoverschen Architekten Friedrich Lindau (1915 &#8211; 2007) als Teil des sogenannten Constructa-Blocks fertiggestellt. Nach Auszug der Schule wurde das Geb&#228;ude von der Landeshauptstadt verkauft und von der Projektentwicklungsgesellschaft planW (Hannover) zusammen mit den Architekten zu einem Baugruppenprojekt (15 Wohneinheiten, zwei B&#252;ros) entwickelt. Gleichzeitig wurde die ehemalige S&#252;dstadtb&#252;cherei innerhalb des Geb&#228;udes verlagert und zu einer Kinder- und Jugendb&#252;cherei umgebaut. Das Geb&#228;ude steht unter Denkmalschutz.
+                      li
+                        p
+                          strong Stadthalle, HCC und Mars-la-Tour-Stra&#223;e
+                          br
+                          | Stadthalle. 1912-14 nach Pl&#228;nen von Paul Bonatz und Friedrich Eugen Scholer auf dem ehemaligen Milit&#228;r- und Rennbahngel&#228;nde &#8222;Kleine Bult&#8220; errichtet. Schwer kriegsgesch&#228;digt seit 1950 wieder durch Ernst Zinsser aufgebaut, diente auch als Tagungsst&#228;tte des Nieders&#228;chsischen Landtages. Dazu HCC Architekten Schweger + Partner Schweger Reifenstein Schneider Kohl Meyer, 2003, mit Parkhaus von ASP Architekten Schneider Meyer Partner, Hannover, 2012. Neubau Mars la Tour. Bauherrin formart GmbH &#38; Co. KG Niederlassung Nord. Planung Marazzi + Paul Architekten AG, Z&#252;rich | Fassadengestaltung: ASP Architekten Schneider Meyer Partner, Hannover; Dipl.-Ing. Architekten BDA Venneberg + Zech, Hannover; Architekturb&#252;ro pk nord, Hannover | Ausf&#252;hrung: wiewiorra hopp schwark architekten, Berlin | Freiraumplanung: Koeber Landschaftsarchitektur, Stuttgart. 18 Stadtvillen mit 175 Wohnungen.
+                      li
+                        strong B&#252;ntekamp. Wohnquartier in Kirchrode
+                        br
+                        | Wohnungsbau von agasta/Busch Architekten und Ingenieure, Spengler + Wiescholek Architekten Stadtplaner, coido architects und Carsten Roth Architekten
+                        br
+                        | Basierend auf einem st&#228;dtebaulichen Konzept, das agsta Architekten und Ingenieure zusammen mit Karl Busch aus Hannover erarbeitet haben, wurde im Sommer 2009 ein Architektenwettbewerb f&#252;r sechs Quartiersbausteine in Form eines kooperativen Verfahrens mit sechs B&#252;ros durchgef&#252;hrt. Die Ergebnisse wurden Basis f&#252;r den Bebauungsplan und sind in einen, die Realisierung sichernden, st&#228;dtebaulichen Vertrag &#252;berf&#252;hrt worden. Es wurde vereinbart, die ausgew&#228;hlten Entw&#252;rfe nach &#220;ber- und Durcharbeitung zu realisieren.
+  footer.site-footer.g-row
+    .footer-div.footer-bak.g-col
+      a.logo-bak.block.clean(href="http://www.bak.de/")
+        svg(xmlns="http://www.w3.org/2000/svg", viewbox="0 0 1348.7 779.5")
+          path(fill="none", d="M-148.8-141.7h1665.4v1063H-148.8z")
+          path(fill="#00C0F3", d="M297.6 146.1L357.2 0H238.1")
+          path(fill="#9DDCF9", d="M53.6 439.4L0 566.9h126.1l52-127.6H53.6zM222 331.7l75.6-185.6L238.1 0 98.8 331.7H222z")
+          path(fill="#5BCBF5", d="M417.2 439.4l52 127.6h126.1l-53.6-127.6H417.2zm79.3-107.7L357.2 0l-59.5 146.1 75.6 185.6h123.2z")
+          path(fill="#9DDCF9", d="M373.3 331.7H222l-43.9 107.7h239.1")
+          path(fill="#00C0F3", d="M417.2 439.4h124.5l-45.2-107.7H373.3")
+          path(fill="#44C8F5", d="M53.6 439.4h124.5L222 331.7H98.8")
+          g
+            path(d="M1028.6 745v-31.1h16c11.5 0 18.7 5.1 18.7 15.3 0 10.8-6.7 15.8-18.6 15.8h-16.1zm-6.3 34.5h6.3v-29.2h15.8l21.2 29.2h7.2l-21.7-29.7c12.6-1.8 18.5-10.3 18.5-20.5 0-13-9.3-20.8-23-20.8h-24.3v71zm-61 0h44.7v-5.6h-38.4v-28.4h31.6V740h-31.6v-25.9h38.2v-5.6h-44.5v71zm-81.5 0h6.1v-60h.3l22.5 40.9h5l22.5-41h.2v60.1h6.2v-70.9h-8l-23.2 43.3h-.1l-23.7-43.3h-7.8v70.9zm-81.5 0h6.1v-60h.3l22.5 40.9h5l22.5-41h.2v60.1h6.2v-70.9h-8l-23.2 43.3h-.1l-23.7-43.3h-7.8v70.9zm-56.4-27.6l13.2-36h.1l12.9 36h-26.2zm-16.3 27.6h6.3l8.2-22.4h29.8l8 22.4h6.6l-26.2-71.1h-6l-26.7 71.1zm-59.4 0h6.3v-24.8L686 741l25 38.5h7.4l-28.2-43.1 26.5-27.9H709l-36.5 38.6v-38.6h-6.3v71zM1297.3 673.2h5.9v-61h.2l39.1 61h6.2v-71h-6v60.1h-.2l-38.7-60.1h-6.5v71zm-61 0h44.7v-5.6h-38.4v-28.4h31.6v-5.5h-31.6v-25.9h38.2v-5.6h-44.5v71zm-43.4 0h6.3v-65.4h24v-5.5h-54.4v5.5h24.1v65.4zm-82.9 0h6.3v-24.8l13.5-13.7 25 38.5h7.4l-28.2-43.1 26.5-27.9h-7.7l-36.5 38.6v-38.6h-6.3v71zm-61 0h44.7v-5.6h-38.4v-28.4h31.6v-5.5h-31.6v-25.9h38.2v-5.6H1049v71zm-43.4 0h6.3v-65.4h24v-5.5h-54.4v5.5h24.1v65.4zM932.3 608h15.6v59.6h-15.6v5.7h37.6v-5.7h-15.7V608h15.7v-5.7h-37.6v5.7zm-68.6 65.2h6.3v-34h38.7v34h6.3v-70.9h-6.3v31.4H870v-31.4h-6.3v70.9zm-40.6 1.3c14.4 0 24.7-7.9 24.7-20.5v-2.8h-6.1v1.7c0 9.6-6.9 16-18.6 16-12.2 0-20.5-7.4-20.5-18.9v-24.3c0-11.6 8.4-19.2 20-19.2 11.8 0 19.1 6.3 19.1 15.9v3h6.1v-4c0-12.1-10.5-20.6-24.9-20.6-15.5 0-26.6 10.2-26.6 24.8V651c0 15.5 11.7 23.5 26.8 23.5m-82.9-35.8v-31.1h16c11.5 0 18.7 5.1 18.7 15.3 0 10.8-6.7 15.8-18.6 15.8h-16.1zm-6.3 34.5h6.3V644H756l21.2 29.2h7.2l-21.7-29.7c12.6-1.8 18.5-10.3 18.5-20.5 0-13-9.3-20.8-23-20.8h-24.3v71zm-56.4-27.6l13.2-36h.1l12.9 36h-26.2zm-16.3 27.6h6.3l8.2-22.4h29.8l8 22.4h6.6l-26.2-71.1h-6l-26.7 71.1zM1016.8 568.2c15 0 24.5-8.3 24.5-20.1 0-10.8-5.9-16-14.3-18.4l-14-4.1c-9.4-2.8-12.3-7.2-12.3-13 0-8.5 8.1-12.4 16-12.4 8.5 0 14.4 3.6 17.7 9.7l5.4-2.2c-3.8-9-12.5-12.9-23.2-12.9-12.6 0-22.2 7.3-22.2 18.4 0 9.3 5.2 14.8 15.3 17.8l14 4.1c6.6 2.1 11.4 5.4 11.4 13.7 0 8.7-7.8 13.9-17.9 13.9-10.3 0-17.7-5-20.6-13.3l-5.8 2.1c3.1 10.7 13 16.7 26 16.7m-79.5-1.2H982v-5.6h-38.4V533h31.6v-5.5h-31.6v-25.9h38.2V496h-44.5v71zm-61.6-5.6v-59.8h19.2c12.5 0 19.1 7.6 19.1 17.8v24.2c0 9.9-6.8 17.8-18.9 17.8h-19.4zm-6.3 5.6h26.1c14 0 24.8-8.9 24.8-23.8v-24c0-14.9-10.4-23.2-24.8-23.2h-26.1v71zm-70 0h5.9v-61h.2l39.1 61h6.2v-71h-6v60h-.2l-38.7-60h-6.5v71zm-44.2 1.2c15.6 0 26.2-9.1 26-24.3v-47.8H775v47.3c.4 12.1-7.3 19.2-19.5 19.2-10.8 0-19.7-5.7-19.7-19.7v-46.8h-6.3v48.2c0 17.1 12.9 23.9 25.7 23.9m-82.7-40.3v-26.6H691c8.5 0 15.2 3.9 15.2 13 0 9.3-7.7 13.5-16.1 13.5h-17.6zm0 33.7v-28.4h18.8c9.3 0 16.8 4.3 16.8 14 0 9.9-7.3 14.4-16.6 14.4h-19zm-6.3 5.4H693c10.9 0 21.5-6.2 21.5-19.6 0-8.5-5.3-15.8-15.3-17.3v-.1c8.3-2 13.2-8.9 13.2-16.6 0-11.4-7.9-17.4-19.9-17.4h-26.3v71z")
+    .footer-div.footer-sponsors.g-col
+      p Wir danken den F&#246;rderern des Deutschen Architektentags 2015:
+      .sponsors-foerderer.t-contain
+        .sponsor
+          a(href="http://www.baukosten.de/")
+            img(src="http://ln-imac.local:5757/content/sponsoren/bki/bki-logo-sw-500.gif", alt="Baukosteninformationszentrum Deutscher Architektenkammern")
+        .sponsor
+          a(href="http://www.heinze.de/")
+            img(src="http://ln-imac.local:5757/content/sponsoren/heinze/heinze-logo-500.gif", alt="Heinze")
+      p Medienpartner:
+      .sponsors-partner.t-contain
+        .sponsor
+          a(href="http://dabonline.de/")
+            img(src="http://ln-imac.local:5757/content/sponsoren/dab/dab-schriftzug-500.gif", alt="Deutsches Architektenblatt")
+  script(src="/js/app.js")
+
+  .test-area(class="wrap--to-delta")
+

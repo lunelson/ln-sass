@@ -1,0 +1,57 @@
+/*
+
+setup-grid
+  grid-placeholders
+  grid-extensions
+setup-page
+  page-placeholders
+  page-extensions
+
+
+
+$layout-mixins: ();
+@mixin grid()
+  - check map-get()
+@mixin grid-size()
+@mixin cell()
+@mixin cell-size()
+
+*/
+dl {
+  list-style-type: none;
+  counter-reset: uf27caaf3; }
+  dl > dd {
+    counter-increment: uf27caaf3; }
+    dl > dd:before {
+      content: ">> " counter(uf27caaf3) ""; }
+
+.list2 li {
+  counter-increment: u773e966b;
+  counter-reset: u773e966b; }
+  .list2 li:before {
+    content: "hello" counter(u773e966b) "world"; }
+
+ol.posts {
+  list-style-type: none;
+  counter-reset: u6e40f100; }
+  ol.posts > .post {
+    counter-increment: u6e40f100; }
+    ol.posts > .post:before {
+      content: "No. " counter(u6e40f100) ""; }
+
+.test {
+  font-size: 0rem;
+  text-align: center; }
+  .test:before, .test:after, .test > * {
+    display: inline-block;
+    vertical-align: middle; }
+  .test:before {
+    content: '';
+    height: 100%; }
+  .test > * {
+    font-size: 1rem;
+    max-width: 100%; }
+  ul + .test, li + .test {
+    color: blue; }
+  .test input[type="checkbox"] ~ h3 {
+    color: blue; }

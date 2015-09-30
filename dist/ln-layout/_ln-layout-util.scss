@@ -2,16 +2,6 @@
 // GRID MIXINS //
 /////////////////
 
-/*
-$layout-mixins: ();
-@mixin grid()
-  - check map-get()
-@mixin grid-size()
-@mixin cell()
-@mixin cell-size()
-
-*/
-
 
 // grid
 @mixin grid($margin: 0, $columns: null) {

@@ -1,0 +1,27 @@
+{
+  "name": "ln-sass",
+  "version": "1.0.0",
+  "description": "My personal sass sort-of-framework and utilities",
+  "main": "gulpfile.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "start": "gulp"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lunelson/ln-sass.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lunelson/ln-sass/issues"
+  },
+  "homepage": "https://github.com/lunelson/ln-sass#readme",
+  "dependencies": {
+    "gulp": "^3.9.0",
+    "gulp-sass": "^2.0.4"
+  }
+}

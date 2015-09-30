@@ -1,0 +1,217 @@
+extends ../_layout.jade
+block body
+
+  .test-area(class="font--base wrap--beta trim--content")
+    ul.no-style
+      // day 1
+      li.content-item.termine.g-row.t-contain
+        p.termine-heading.g-col
+          span Sonntag, 11.10.2015, Sprengel Museum, Hannover
+        ul.termine-listing.g-col
+          li#eroeffnung.termin.g-row
+            .meta.g-col
+              p.termin-time 19:00
+            .main.g-col
+              h4.termin-title Er&#246;ffnung des Deutschen Architektentags
+              p.termin-text
+                | Die Er&#246;ffnung des Deutschen Architektentags findet im Auditorium des Sprengel Museums statt:
+                | Kurt-Schwitters-Platz, 30169 Hannover
+              ul.termin-referenten.small
+                li.referent
+                  a(href="/info-dat/tab:2/#ettinger-brinckman") Barbara Ettinger-Brinckmann
+                li.referent
+                  a(href="/info-dat/tab:2/#altmeier") Peter Altmaier
+          li#architektenfest.termin.g-row
+            .meta.g-col
+              p.termin-time 19:45
+            .main.g-col
+              h4.termin-title Architektenfest
+              p.termin-text
+                | Das Architektenfest findet in den neuen R&#228;umen des Sprengel Museums:
+                | Kurt-Schwitters-Platz, 30169 Hannover
+      // day 2
+      li.content-item.termine.g-row.t-contain
+        p.termine-heading.g-col
+          span Montag, 12.10.2015, Schloss Herrenhausen, Hannover
+        ul.termine-listing.g-col
+          li#registrierung-der-teilnehmer.termin.g-row
+            .meta.g-col
+              p.termin-time 09:30
+            .main.g-col
+              h4.termin-title Registrierung der Teilnehmer
+          li#begruessung.termin.g-row
+            .meta.g-col
+              p.termin-time 10:30
+            .main.g-col
+              h4.termin-title Begr&#252;&#223;ung
+              ul.termin-referenten.small
+                li.referent
+                  a(href="/info-dat/tab:2/#schneider") Wolfgang Schneider
+                li.referent
+                  a(href="/info-dat/tab:2/#schostok") Stefan Schostok
+                li.referent
+                  a(href="/info-dat/tab:2/#weil") Stephan Weil
+          li#zukunft-planen-positionsbestimmung-und-berufspolitische-ziele.termin.g-row
+            .meta.g-col
+              p.termin-time 11:00
+            .main.g-col
+              h4.termin-title Zukunft planen: Positionsbestimmung und berufspolitische Ziele
+              ul.termin-referenten.small
+                li.referent
+                  a(href="/info-dat/tab:2/#ettinger-brinckman") Barbara Ettinger-Brinckmann
+          li#vom-wohlleben-zum-wohlergehen.termin.g-row
+            .meta.g-col
+              p.termin-time 11:15
+            .main.g-col
+              h4.termin-title Vom Wohlleben zum Wohlergehen
+              p.termin-text Keynote zum Deutschen Architektentag.
+              ul.termin-referenten.small
+                li.referent
+                  a(href="/info-dat/tab:2/#opaschowski") Prof. Dr. Horst W. Opaschowski
+          li#weichenstellungen-fuer-gute-architektur.termin.g-row
+            .meta.g-col
+              p.termin-time 11:45
+            .main.g-col
+              h4.termin-title Weichenstellungen f&#252;r gute Architektur
+              ul.termin-referenten.small
+                li.referent
+                  a(href="/info-dat/tab:2/#brenncke") Joachim Brenncke
+                li.referent
+                  a(href="/info-dat/tab:2/#gebhardt") Evelyne Gebhardt MdEP
+                li.referent
+                  a(href="/info-dat/tab:2/#adler") Gunther Adler
+                li.referent
+                  a(href="/info-dat/tab:2/#ulbig") Markus Ulbig
+                li.referent
+                  a(href="/info-dat/tab:2/#von-lojewski") Hilmar von Lojewski
+                li.referent
+                  a(href="/info-dat/tab:2/#nagel") Reiner Nagel
+          li#vorstellung-der-foren.termin.g-row
+            .meta.g-col
+              p.termin-time 12:45
+            .main.g-col
+              h4.termin-title Vorstellung der Foren
+              ul.termin-referenten.small
+                li.referent
+                  a(href="/info-dat/tab:2/#rose") Ulrike Rose
+          li#mittagspause.termin.g-row
+            .meta.g-col
+              p.termin-time 13:00
+            .main.g-col
+              h4.termin-title Mittagspause
+          li#forum-i-generalisten-und-spezialisten.termin.g-row
+            .meta.g-col
+              p.termin-time 14:00
+            .main.g-col
+              h4.termin-title Forum I: Generalisten und Spezialisten - Das Berufsbild Architekt
+              p.termin-text
+                | Moderation: Dr. Matthias Meyer, Hauptgesch&#228;ftsf&#252;hrer der Architektenkammer Niedersachsen
+              ul.termin-referenten.small
+                li.referent
+                  a(href="/info-dat/tab:2/#brenncke") Joachim Brenncke
+                li.referent
+                  a(href="/info-dat/tab:2/#hommerich") Prof. Christoph Hommerich
+                li.referent
+                  a(href="/info-dat/tab:2/#grzimek") Matthias Grzimek
+                li.referent
+                  a(href="/info-dat/tab:2/#hoppenstedt") Dr. Hendrik Hoppenstedt MdB
+          li#forum-ii-die-energiewende.termin.g-row
+            .meta.g-col
+              p.termin-time 14:00
+            .main.g-col
+              h4.termin-title Forum II: Die Energiewende - besser mit Architekten planen
+              p.termin-text
+                | Moderation: Dr. Elena Wiezorek, Hauptgesch&#228;ftsf&#252;hrerin der Architektenkammer Rheinland-Pfalz
+              ul.termin-referenten.small
+                li.referent
+                  a(href="/info-dat/tab:2/#ettinger-brinckman") Barbara Ettinger-Brinckmann
+                li.referent
+                  a(href="/info-dat/tab:2/#schuster") Prof. Heide Schuster
+                li.referent
+                  a(href="/info-dat/tab:2/#herdan") Thorsten Herdan
+                li.referent
+                  a(href="/info-dat/tab:2/#kuehn") Christian K&#252;hn MdB
+          li#forum-iii-vergabe-von-architektenleistungen-prozessqualitaet-und-bauqualitaet.termin.g-row
+            .meta.g-col
+              p.termin-time 14:00
+            .main.g-col
+              h4.termin-title Forum III: Vergabe von Architektenleistungen - Prozessqualit&#228;t und Bauqualit&#228;t
+              p.termin-text
+                | Moderation: Christof Rose, Pressesprecher der Architektenkammer Nordrhein-Westfalen
+              ul.termin-referenten.small
+                li.referent
+                  a(href="/info-dat/tab:2/#schneider") Wolfgang Schneider
+                li.referent
+                  a(href="/info-dat/tab:2/#bodemann") Uwe Bodemann
+                li.referent
+                  a(href="/info-dat/tab:2/#wehrmann") Sandra Wehrmann
+                li.referent
+                  a(href="/info-dat/tab:2/#wappner") Prof. Ludwig Wappner
+                li.referent
+                  a(href="/info-dat/tab:2/#hoffmann-guenther") G&#252;nther Hoffmann - angefragt
+          li#forum-iv-architektenhaftung-quo-vadis.termin.g-row
+            .meta.g-col
+              p.termin-time 14:00
+            .main.g-col
+              h4.termin-title Forum IV: Architektenhaftung - quo vadis?
+              p.termin-text
+                | Moderation: Rechtsanw&#228;ltin Sabine Fischer, Hauptgesch&#228;ftsf&#252;hrerin der Bayerischen Architektenkammer
+              ul.termin-referenten.small
+                li.referent
+                  a(href="/info-dat/tab:2/#schmidt") Dr. Hans-Gerd Schmidt
+                li.referent
+                  a(href="/info-dat/tab:2/#krause-allenstein") Dr. Florian Krause-Allenstein
+                li.referent
+                  a(href="/info-dat/tab:2/#leupertz") Prof. Stefan Leupertz
+                li.referent
+                  a(href="/info-dat/tab:2/#kienemund-beate") Beate Kienemund - angefragt
+          li#forum-v-digitalisierung-im-planungsprozess-chancen-und-risiken.termin.g-row
+            .meta.g-col
+              p.termin-time 14:00
+            .main.g-col
+              h4.termin-title Forum V: Digitalisierung im Planungsprozess - Chancen und Risiken
+              p.termin-text Moderation: Dr. Tillman Prinz, Bundesgesch&#228;ftsf&#252;hrer der Bundesarchitektenkammer
+              ul.termin-referenten.small
+                li.referent
+                  a(href="/info-dat/tab:2/#mueller") Martin M&#252;ller
+                li.referent
+                  a(href="/info-dat/tab:2/#may") Dr. Ilka May
+                li.referent
+                  a(href="/info-dat/tab:2/#beck") Eberhard Beck
+                li.referent
+                  a(href="/info-dat/tab:2/#gross") Michael Gross MdB
+          li#kaffeepause.termin.g-row
+            .meta.g-col
+              p.termin-time 15:00
+            .main.g-col
+              h4.termin-title Kaffeepause
+          li#architektur-im-dialog.termin.g-row
+            .meta.g-col
+              p.termin-time 15:30
+            .main.g-col
+              h4.termin-title Architektur im Dialog
+              p.termin-text
+                | Begr&#252;&#223;ung durch Herrn Dr. Krull, Genrealsekret&#228;r der Volkswagenstiftung.
+                | Zukunft planen - Vortrag von Christoph Ingenhoven.
+                | Im Anschluss: Ulrike Rose im Gespr&#228;ch mit Christoph Ingenhoven.
+              ul.termin-referenten.small
+                li.referent
+                  a(href="/info-dat/tab:2/#krull") Dr. Wilhelm Krull
+                li.referent
+                  a(href="/info-dat/tab:2/#ingenhoven") Christoph Ingenhoven
+          li#fazit-und-ausblick.termin.g-row
+            .meta.g-col
+              p.termin-time 16:15
+            .main.g-col
+              h4.termin-title Fazit und Ausblick
+              ul.termin-referenten.small
+                li.referent
+                  a(href="/info-dat/tab:2/#ettinger-brinckman") Barbara Ettinger-Brinckmann
+          li#preisverleihung.termin.g-row
+            .meta.g-col
+              p.termin-time 18:00
+            .main.g-col
+              h4.termin-title Verleihung des Deutschen Architekturpreises 2015
+              p.termin-text
+                | Gro&#223;en Festsaal des Schlosses Herrenhausen.
+                | Moderation: Bundesministerin Dr. Barbara Hendricks

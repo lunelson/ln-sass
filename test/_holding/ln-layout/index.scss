@@ -1,5 +1,3 @@
-/* test: sass-layout */
-
 @import '../../dist/ln-util/all';
 @import '../../dist/ln-media/all';
 @import '../../dist/ln-layout/all';
@@ -44,7 +42,7 @@ $mixins: ();
 
 .test {
   // @include width(1 3, (right: 1 2));
-  @include cell(null, 1 3, (right: 1 2));
+  // @include cell(null, 1 3, (right: 1 2));
 }
 
 /*

@@ -1,17 +1,3 @@
-/*
-
-typo(size, alias, line-height)
-  - set size on item (if other than current root)
-  - create corresponding scope
-  - output @content at root, if you want to style children
-
-typo-styles
-
-reset necessary
-  - all typo elements line-height inherit
-  - all typo elements margin top and bottom 0
-
-*/
 .trim--content {
   padding-top: 1px;
   padding-bottom: 1px; }
@@ -22,18 +8,21 @@ reset necessary
   font-weight: normal;
   src: url("path/to/fonts/normal-font-no-extension.eot");
   src: url("path/to/fonts/normal-font-no-extension.eot?#iefix") format("embedded-opentype"), url("path/to/fonts/normal-font-no-extension.woff") format("woff"), url("path/to/fonts/normal-font-no-extension.svg#normal-font-no-extension") format("svg"), url("path/to/fonts/normal-font-no-extension.ttf") format("truetype"); }
+
 @font-face {
   font-family: "FamilyName";
   font-style: normal;
   font-weight: bold;
   src: url("path/to/fonts/bold-font-no-extension.eot");
   src: url("path/to/fonts/bold-font-no-extension.eot?#iefix") format("embedded-opentype"), url("path/to/fonts/bold-font-no-extension.woff") format("woff"), url("path/to/fonts/bold-font-no-extension.svg#bold-font-no-extension") format("svg"), url("path/to/fonts/bold-font-no-extension.ttf") format("truetype"); }
+
 @font-face {
   font-family: "FamilyName";
   font-style: italic;
   font-weight: normal;
   src: url("path/to/fonts/italic-font-no-extension.eot");
   src: url("path/to/fonts/italic-font-no-extension.eot?#iefix") format("embedded-opentype"), url("path/to/fonts/italic-font-no-extension.woff") format("woff"), url("path/to/fonts/italic-font-no-extension.svg#italic-font-no-extension") format("svg"), url("path/to/fonts/italic-font-no-extension.ttf") format("truetype"); }
+
 .font--base {
   font-family: "FamilyName"; }
 
@@ -57,7 +46,7 @@ h2 {
 
 h3 {
   font-size: 3rem;
-  line-height: 1.1666666667;
+  line-height: 1.16667;
   margin-top: 0;
   margin-bottom: 0; }
 

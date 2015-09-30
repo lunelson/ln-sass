@@ -14,7 +14,7 @@
 }
 
 dl {
-  @include item-counter('dd', '>> ');
+  @include list-counter('dd', '>> ');
 }
 
 .list2 {
@@ -24,7 +24,7 @@ dl {
 }
 
 ol.posts {
-  @include item-counter('.post', 'No. ');
+  @include list-counter('.post', 'No. ');
 }
 
 .test {

@@ -1,26 +1,53 @@
 # ln-sass planning
 
+## reset
+
+reset-hard()
+  - meyer-style reset of all typographic block elements to size 1em and margins: 0, padding: 0
+
 ## typo
 
-- $typo-classes > $trim-classes:
-
-h2.line
-h4.trim--both
-
-div.trim--content
-  h2 haha
-  p whatever
+reset necessary
+  - all typo elements line-height inherit
+  - all typo elements margin top and bottom 0
 
 
-.trim--bottom
-.trim--both
-.trim--contents
+@mixin setup-typo($sizes)
+  - take a list of six size arguments, for standard heading levels; assume %p is at 1/0
+  - @include typo-item() for standard set of WYSIWYG elements
+  - VARIANT setup-mod-typo() uses mod-typo-item() as described below
 
-( line, contents )
-- change trim-content thing to 'content'? e.g. '.trim--content'
+@mixin typo-child($size, $suffix)
+  - output styles for '.typo > &' or '.typo--#{$suffix} > &'
+  - also creates a scope: so that within nested elements (ul li, dl dd, etc.) further styling can be done
+  - VARIANT mod-typo-item() outputs typo-item with mod-size arg, under media((for: font-size-mod)) {}
+
+@mixin typo-scope($size, $alias, $height: null, $at-root: true) // NB height should be null for auto
+  - usu. applied to a container
+  - outputs font-size and line-height if other than current default
+  - creates corresponding scope, outputs @content @at-root for child styles
+  - VARIANT: mod-typo-scope() outputs typo-scope with mod-size arg, under media((for: font-size-mod)) {}
 
 ## layout
 
+setup-grid
+  grid-placeholders
+  grid-extensions
+setup-page
+  page-placeholders
+  page-extensions
+
+
+
+$layout-mixins: ();
+@mixin grid()
+  - check map-get()
+@mixin grid-size()
+@mixin cell()
+@mixin cell-size()
+
+- grid n cell mixins output if in media query?
+- width still needs a better name
 - do unwrap and unpage classes;
 - eliminate "layout direction" ? not queryable from unwrap classes
 
