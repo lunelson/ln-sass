@@ -5,28 +5,27 @@
 reset-hard()
   - meyer-style reset of all typographic block elements to size 1em and margins: 0, padding: 0
 
-## typo
-
-reset necessary
+necessary for typo:
   - all typo elements line-height inherit
   - all typo elements margin top and bottom 0
 
+## typo
 
-@mixin setup-typo($sizes)
-  - take a list of six size arguments, for standard heading levels; assume %p is at 1/0
-  - @include typo-item() for standard set of WYSIWYG elements
-  - VARIANT setup-mod-typo() uses mod-typo-item() as described below
+- question: how to handle media queries if line-height or margin-y changes?
 
-@mixin typo-child($size, $suffix)
-  - output styles for '.typo > &' or '.typo--#{$suffix} > &'
-  - also creates a scope: so that within nested elements (ul li, dl dd, etc.) further styling can be done
-  - VARIANT mod-typo-item() outputs typo-item with mod-size arg, under media((for: font-size-mod)) {}
-
-@mixin typo-scope($size, $alias, $height: null, $at-root: true) // NB height should be null for auto
-  - usu. applied to a container
-  - outputs font-size and line-height if other than current default
-  - creates corresponding scope, outputs @content @at-root for child styles
-  - VARIANT: mod-typo-scope() outputs typo-scope with mod-size arg, under media((for: font-size-mod)) {}
+typo-scope(rem)
+    get size
+    get char-height
+    properties: append((margin-y) if(not height, line-height, ''))
+    include media((for: properties)) {
+        calc line-height
+        calc t-margin
+        [ do styles ]
+    }
+    calibrate-height()
+    @include media((for: margin-y line-height)) {
+        calibrate-height()
+    }
 
 ## layout
 

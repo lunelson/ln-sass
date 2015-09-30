@@ -17,27 +17,8 @@
 
   font-size: $size;
   line-height: $height;
-  margin-top: 0;
-  margin-bottom: 0;
-
-  // get classes and values
-  // $line: map-get($trim-classes, 'line');
-  // $content: map-get($trim-classes, 'content');
-  // $t-margin: t-margin(0rem, $height, $char-height);
-
-  // &.#{$line} { line-height: 1; }
-  // &.trim--top { margin-top: $t-margin; }
-  // &.trim--bottom { margin-bottom: $t-margin; }
-  // &.trim--both { margin-top: $t-margin; margin-bottom: $t-margin; }
-
-  // .trim--#{$content} > & {
-  //   margin-bottom: $t-margin;
-  //   margin-top: margin();
-  //   // QUESTION: does it make more sense to include this whole mixin
-  //   // inside media((for: margin-y, font-size, line-height)) ?
-  //   // @include media((for: 'margin-y')) { margin-top: margin(); }
-  //   &:first-child { margin-top: $t-margin; }
-  // }
+  // margin-top: 0;
+  // margin-bottom: 0;
 
   // allow content to be added and refer to current size and height
   $typo-curr-font: $alias !global;
