@@ -84,7 +84,7 @@ $z-indexes: (
 ////////////////
 
 
-@mixin sub-layout($selectors, $type, $options...) {
+@mixin child-layout($selectors, $type, $options...) {
 
   // table
   @if index(table table-cell table-row cell row, $type) {
@@ -134,3 +134,6 @@ $z-indexes: (
     #{children($selectors)} { font-size: 1rem; max-width: 100%; @content; }
   }
 }
+
+// alias
+@mixin sub-layout($args...) { @include child-layout($args...) { @content; } }
