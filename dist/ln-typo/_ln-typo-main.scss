@@ -1,36 +1,103 @@
-// TYPO main mixin, stable
+@mixin setup-mod-typo($sizes: 3 2 1 0 -1 -2) {
+  // mod-typo-block for %h1 through %h6 with $sizes
+  // mod-typo-block for %p with 0
+}
 
-@mixin typo($size: 1, $alias: null, $height: auto){
+@mixin setup-typo($sizes: 2.5 2 1.5 1 0.9 0.8) {
+  // typo-block for %h1 through %h6 with $sizes
+  // typo-block for %p with 1
+}
+// - take a list of six size arguments, for standard heading levels; assume %p is at 1/0
+// - @include typo-item() for standard set of WYSIWYG elements
+// - VARIANT setup-mod-typo() uses mod-typo-item() as described below
 
-  // normalize unit
+@function auto-line-height($size) {
+  $sub-lines: $typo-sub-lines or ceil($size);
+  $rel-height: medium-value('line-height') / unit-strip($size);
+  @return $rel-height * ceil($typo-min-height / $rel-height * $sub-lines) / $sub-lines;
+}
+
+// $typo-blocks: ();
+@mixin typo-block($size: 1, $alias: null, $height: null, $suffix: null) {
+
   $size: rem($size);
+  $font: font($alias);
+  $char-height: map-get($font, 'char-height') or 1;
 
-  // normalize line-height
-  @if $height == 'auto' {
+  @if not $height or $height == 'auto' { $height: auto-line-height($size); }
+  $t-margin: t-margin(0, $height, $char-height);
+
+  .typo#{if($suffix, '--#{$suffix}', '')} > & {
+
+    @if medium-orig-value('font-size') { font-size: $size; }
+    @if medium-orig-value('margin-y') { margin-top: margin-y(); }
+    @if medium-orig-value('line-height') {
+      line-height: $height;
+      margin-bottom: $t-margin;
+      &:first-child { margin-top: $t-margin; }
+    }
+
+    $typo-prev-font: $typo-curr-font;
+    $typo-prev-font-size: $typo-curr-font-size;
+    $typo-prev-line-height: $typo-curr-line-height;
+    $typo-prev-char-height: $typo-curr-char-height;
+
+    $typo-curr-font: $font !global;
+    $typo-curr-font-size: $size !global;
+    $typo-curr-line-height: $height !global;
+    $typo-curr-char-height: $char-height !global;
+
+    @content;
+
+    $typo-curr-font: $typo-prev-font !global;
+    $typo-curr-font-size: $typo-prev-font-size !global;
+    $typo-curr-line-height: $typo-prev-line-height !global;
+    $typo-curr-char-height: $typo-prev-char-height !global;
+  }
+}
+
+@mixin mod-typo-block($index: 0, $rest...) {
+  @include media((for: 'font-size-mod')) {
+    @include typo-block(mod-size($index), $rest...);
+  }
+}
+
+  // - output styles for '.typo > &' or '.typo--#{$suffix} > &'
+  // - also creates a scope: so that within nested elements (ul li, dl dd, etc.) further styling can be done
+  // - VARIANT mod-typo-block() outputs typo-item with mod-size arg, under media((for: font-size-mod)) {}
+
+@mixin typo-scope($size: 1, $alias: null, $height: null, $at-root: true){
+  $size: rem($size);
+  @if not $height or $height == 'auto' {
     $sub-lines: $typo-sub-lines or ceil($size);
     $rel-height: medium-value('line-height') / unit-strip($size);
     $height: $rel-height * ceil($typo-min-height / $rel-height * $sub-lines) / $sub-lines;
   }
-
-  // get char height
-  $char-height: map-get(font($alias), 'char-height') or 1;
+  $font: font($alias);
+  $char-height: map-get($font, 'char-height') or 1;
 
   font-size: $size;
   line-height: $height;
-  // margin-top: 0;
-  // margin-bottom: 0;
 
-  // allow content to be added and refer to current size and height
-  $typo-curr-font: $alias !global;
+  $typo-prev-font: $typo-curr-font;
+  $typo-prev-font-size: $typo-curr-font-size;
+  $typo-prev-line-height: $typo-curr-line-height;
+  $typo-prev-char-height: $typo-curr-char-height;
+
+  $typo-curr-font: $font !global;
   $typo-curr-font-size: $size !global;
   $typo-curr-line-height: $height !global;
   $typo-curr-char-height: $char-height !global;
+
   @at-root { @content; }
-  // @content;
-  $typo-curr-font: null !global;
-  $typo-curr-font-size: null !global;
-  $typo-curr-line-height: null !global;
-  $typo-curr-char-height: null !global;
+
+  $typo-curr-font: $typo-prev-font !global;
+  $typo-curr-font-size: $typo-prev-font-size !global;
+  $typo-curr-line-height: $typo-prev-line-height !global;
+  $typo-curr-char-height: $typo-prev-char-height !global;
+
 }
 
-@mixin mod-typo($mod, $rest...) { @include typo(mod-size($mod), $rest...); }
+@mixin mod-typo-scope(){
+  // outputs typo-scope with mod-size arg, under media((for: font-size-mod)) {}
+}

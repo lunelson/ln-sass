@@ -27,7 +27,7 @@ $base: (
 @include setup-layout();
 
 .test-area {
-  @include typo() {
+  @include typo-scope() {
 
     .content-item {
       // background-color: set-alpha(lightblue, 0.25);
@@ -41,7 +41,7 @@ $base: (
       // background-color: set-alpha(pink, 0.25);
       @include t-margin-top(0.5);
       .meta, .main {
-        @include typo(0.8rem) {
+        @include typo-scope(0.8rem) {
 
         }
       }

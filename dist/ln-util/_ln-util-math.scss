@@ -3,11 +3,11 @@
 //////////
 
 
-@function modular-scale($base, $power, $spread) { @return pow($base, $power / $spread); }
+@function modular-scale($base, $power, $spread) { @return _pow($base, $power / $spread); }
 
-@function mscale($index, $factor, $spread) { @return pow($factor, $index/$spread); }
+@function mscale($index, $factor, $spread) { @return _pow($factor, $index/$spread); }
 
-@function mod-scale($base, $exp, $spread) { @return pow($base, $exp/$spread); }
+@function mod-scale($base, $exp, $spread) { @return _pow($base, $exp/$spread); }
 
 @function trend($value, $c1: 0 0, $c2: 1 1) {
   $x1: nth($c1, 1); $y1: nth($c1, 2);

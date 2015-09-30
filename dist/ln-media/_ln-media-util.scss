@@ -49,9 +49,9 @@
 @function margin($args...) { @return margin-x($args...); }
 
 // modulated medium-value shortcuts
-@function mod-margin-x($index: 0, $spread: 2) { @return pow(medium-value('margin-x-mod'), $index/$spread) * medium-value('margin-x'); }
-@function mod-margin-y($index: 0, $spread: 2) { @return pow(medium-value('margin-y-mod'), $index/$spread) * medium-value('margin-y'); }
-@function mod-font-size($index: 0, $spread: 2) { @return pow(medium-value('font-size-mod'), $index/$spread) * 1rem; }
+@function mod-margin-x($index: 0, $spread: 2) { @return _pow(medium-value('margin-x-mod'), $index/$spread) * medium-value('margin-x'); }
+@function mod-margin-y($index: 0, $spread: 2) { @return _pow(medium-value('margin-y-mod'), $index/$spread) * medium-value('margin-y'); }
+@function mod-font-size($index: 0, $spread: 2) { @return _pow(medium-value('font-size-mod'), $index/$spread) * 1rem; }
 @function mod-margin($args...){ @return mod-margin-x($args...); }
 @function mod-size($args...) { @return mod-font-size($args...); }
 

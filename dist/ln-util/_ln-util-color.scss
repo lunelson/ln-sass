@@ -37,10 +37,10 @@ $colors: (
 @function grey($args...) { @return gray($args...); }
 
 // srgb gamma correction, per spec: https://en.wikipedia.org/wiki/srgb
-@function re-gamma($n) { @if $n <= 0.0031308 { @return $n * 12.92; } @else { @return 1.055 * pow($n, 1/2.4) - 0.055; } }
-@function de-gamma($n) { @if $n <= 0.04045 { @return $n / 12.92; } @else { @return pow((($n + 0.055)/1.055), 2.4); } }
-// @function re-gamma($n) { @if $n <= 0.00304 { @return $n * 12.92; } @else { @return 1.055 * pow($n, 1/2.4) - 0.055; } } // alternative
-// @function de-gamma($n) { @if $n <= 0.03928 { @return $n / 12.92; } @else { @return pow((($n + 0.055)/1.055), 2.4); } } // alternative
+@function re-gamma($n) { @if $n <= 0.0031308 { @return $n * 12.92; } @else { @return 1.055 * _pow($n, 1/2.4) - 0.055; } }
+@function de-gamma($n) { @if $n <= 0.04045 { @return $n / 12.92; } @else { @return _pow((($n + 0.055)/1.055), 2.4); } }
+// @function re-gamma($n) { @if $n <= 0.00304 { @return $n * 12.92; } @else { @return 1.055 * _pow($n, 1/2.4) - 0.055; } } // alternative
+// @function de-gamma($n) { @if $n <= 0.03928 { @return $n / 12.92; } @else { @return _pow((($n + 0.055)/1.055), 2.4); } } // alternative
 
 // srgb bt-709 brightness
 @function brightness($c) {

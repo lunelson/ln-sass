@@ -89,7 +89,7 @@
   @return false;
 }
 
-@function slice($list, $start: 1, $end: length($list), $sep: 'comma') {
+@function slice($list, $start: 1, $end: length($list), $sep: list-separator($list)) {
   $output: ();
   @if $start >= 1 and $end >= $start {
     @for $i from $start through $end {

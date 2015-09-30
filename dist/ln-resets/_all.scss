@@ -8,6 +8,6 @@
 @mixin reset-all() {
   @include reset-n3();
   @include reset-ln();
-  // @include reset-meyer();
+  @include reset-meyer();
   // @include reset-opentype();
 }

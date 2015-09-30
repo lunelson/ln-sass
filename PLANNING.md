@@ -29,12 +29,13 @@ typo-scope(rem)
 
 ## layout
 
-setup-grid
-  grid-placeholders
-  grid-extensions
-setup-page
-  page-placeholders
-  page-extensions
+- grid and cell classe have few variants so they can be done as placeholders and then extended with functions
+
+ln-layout-grid: placeholders are generated
+setup-grid()
+    - extends placeholders
+setup-page()
+    - remains as before (too many class-variants)
 
 
 
