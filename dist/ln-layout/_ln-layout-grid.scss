@@ -1,10 +1,9 @@
 // LAYOUT GRID INIT
 
-@mixin setup-layout-grid() {
+@mixin setup-grid($output: true) {
 
   // merge defaults
   $base: map-merge(( margin-x: 1rem, ), if(variable-exists('base'), $base, ()));
-
   // get values and classes
   $margin-x: map-get($base, 'margin-x');
   // $margin-x: margin-x(); // don't assume media is setup
@@ -12,8 +11,7 @@
   $cell: map-get($layout-classes, 'cell');
 
   // grid
-  // [class*="#{$grid}--"] { @extend .#{$grid}; }
-  .#{$grid} {
+  %#{$grid} {
     &:before { display: none; } // in case of salvattore
     width: calc(100% + #{$margin-x}); // necessary?
     margin-left: $margin-x / -2;
@@ -29,8 +27,7 @@
   }
 
   // cell
-  // [class*="#{$cell}--"] { @extend .#{$cell}; }
-  .#{$cell} {
+  %#{$cell} {
     min-height: 1px; // http://css-tricks.com/make-sure-columns-dont-collapse-horizontally/
     padding-left: $margin-x / 2;
     padding-right: $margin-x / 2;
@@ -45,31 +42,30 @@
   }
 
   @if variable-exists('media') {
-
     @each $alias, $medium in $media {
-
       @if map-has-key(medium-orig($alias), 'margin-x') {
-
         @include medium($alias) {
-
-          // $margin-x: map-get($medium, 'margin-x');
-          // $margin-x: medium-value('margin-x');
           $margin-x: margin-x();
 
           // grid
-          .#{$grid} {
+          %#{$grid} {
             width: calc(100% + #{$margin-x}); // necessary?
             margin-left: $margin-x / -2;
             margin-right: $margin-x / -2;
           }
 
           // cell
-          .#{$cell} {
+          %#{$cell} {
             padding-left: $margin-x / 2;
             padding-right: $margin-x / 2;
           }
         }
       }
     }
+  }
+
+  @if $output {
+    .#{$grid} { @extend %#{$grid}; }
+    .#{$cell} { @extend %#{$cell}; }
   }
 }

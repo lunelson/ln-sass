@@ -6,7 +6,7 @@
 // grid
 @mixin grid($margin: 0, $columns: null) {
   @if $columns { &::before { content: '#{$columns} .#{map-get($layout-classes, 'cell')}'; } }
-  @extend .#{map-get($layout-classes, 'grid')};
+  @extend %#{map-get($layout-classes, 'grid')};
   @include media((for: margin-x)) {
     margin-left: margin-x($margin) / -2;
     margin-right: margin-x($margin) / -2;
@@ -15,7 +15,7 @@
 
 // cell
 @mixin cell($margin: 0, $width...) {
-  @extend .#{map-get($layout-classes, 'cell')};
+  @extend %#{map-get($layout-classes, 'cell')};
   @include media((for: margin-x)) {
     padding-left: margin-x($margin) / 2;
     padding-right: margin-x($margin) / 2;

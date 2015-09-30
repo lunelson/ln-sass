@@ -18,6 +18,6 @@ $layout-mixins: ();
 // LAYOUT SETUP
 
 @mixin setup-layout() {
-  @include setup-layout-page();
-  @include setup-layout-grid();
+  @include setup-page();
+  @include setup-grid();
 }
