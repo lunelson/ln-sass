@@ -9,17 +9,9 @@
 
   // medium values
   @if not $height or $height == 'auto' { $height: auto-line-height($size); }
-  $t-margin: t-margin(0, $height, $char-height);
 
+  // output
   .typo#{if($suffix, '--#{$suffix}', '')} > & {
-
-    @if medium-orig-value('font-size') { font-size: $size; }
-    @if medium-orig-value('margin-y') { margin-top: margin-y(); }
-    @if medium-orig-value('line-height') {
-      line-height: $height;
-      margin-bottom: $t-margin;
-      &:first-child { margin-top: $t-margin; }
-    }
 
     $typo-prev-font: $typo-curr-font;
     $typo-prev-font-size: $typo-curr-font-size;
@@ -30,6 +22,14 @@
     $typo-curr-font-size: $size !global;
     $typo-curr-line-height: $height !global;
     $typo-curr-char-height: $char-height !global;
+
+    @if medium-orig-value('font-size') { font-size: $size; }
+    @if medium-orig-value('margin-y') { margin-top: t-margin(); }
+    @if medium-orig-value('line-height') {
+      line-height: $height;
+      margin-bottom: t-margin(0);
+      &:first-child { margin-top: t-margin(0); }
+    }
 
     @content;
 

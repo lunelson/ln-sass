@@ -5,14 +5,8 @@
   $size: rem($size);
   $font: font($alias);
   $char-height: map-get($font, 'char-height') or 1;
-  $auto-height: false;
-  @if not $line-height or $line-height == 'auto' {
-    $auto-height: true; // necessary?
-    $line-height: auto-line-height($size); }
+  @if not $line-height or $line-height == 'auto' { $line-height: auto-line-height($size); }
   $t-margin: t-margin(0, $line-height, $char-height);
-
-  @if medium-orig-value('font-size') { font-size: $size; }
-  @if medium-orig-value('line-height') { line-height: $line-height; }
 
   $typo-prev-font: $typo-curr-font;
   $typo-prev-font-size: $typo-curr-font-size;
@@ -23,6 +17,9 @@
   $typo-curr-font-size: $size !global;
   $typo-curr-line-height: $line-height !global;
   $typo-curr-char-height: $char-height !global;
+
+  @if medium-orig-value('font-size') { font-size: $size; }
+  @if medium-orig-value('line-height') { line-height: $line-height; }
 
   @at-root { @content; }
 
