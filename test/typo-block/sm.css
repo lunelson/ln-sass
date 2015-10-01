@@ -1,5 +1,0 @@
-.test .nest p, .other .nest p {
-  initial-selectors: .test .nest, .other .nest;
-  last-selectors: p; }
-  .test .nest h1 + p, .test .nest h2 + p, .other .nest h1 + p, .other .nest h2 + p {
-    color: blue; }

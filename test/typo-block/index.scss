@@ -54,12 +54,13 @@ $h-blocks: h1 h2 h3 h4 h5 h6;
 
 @include media((for: margin-y line-height font-size)) {
 
-  h1, .h1 { @include mod-typo-block(4) { @include adjacent-to($p-blocks){ margin-top: margin-y(2); } } }
-  h2, .h2 { @include mod-typo-block(2) { @include adjacent-to($p-blocks){ margin-top: margin-y(2); } } }
-  h3, .h3 { @include mod-typo-block(1) { @include adjacent-to($p-blocks){ margin-top: margin-y(2); } } }
-  h4, .h4 { @include mod-typo-block(0) { @include adjacent-to($p-blocks){ margin-top: margin-y(2); } } }
-  h5, .h5 { @include mod-typo-block(-0.75) { @include adjacent-to($p-blocks){ margin-top: margin-y(2); } } }
-  h6, .h6 { @include mod-typo-block(-0.5) { @include adjacent-to($p-blocks){ margin-top: margin-y(2); } } }
+  h1 { @include mod-typo-block(4) { @include adjacent-to($p-blocks){ margin-top: margin-y(2); } } }
+  h2 { @include mod-typo-block(2) { @include adjacent-to($p-blocks){ margin-top: margin-y(2); } } }
+  h3 { @include mod-typo-block(1) { @include adjacent-to($p-blocks){ margin-top: margin-y(2); } } }
+  h4 { @include mod-typo-block(0) { @include adjacent-to($p-blocks){ margin-top: margin-y(2); } } }
+  h5 { @include mod-typo-block(-0.75) { @include adjacent-to($p-blocks){ margin-top: margin-y(2); } } }
+  h6 { @include mod-typo-block(-0.5) { @include adjacent-to($p-blocks){ margin-top: margin-y(2); } } }
+
   p {
     @include typo-block() {
       @include adjacent-to(p) {
