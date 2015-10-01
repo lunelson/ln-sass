@@ -61,34 +61,27 @@
   @return $value;
 }
 
+// map-inspect
 @function map-inspect($map, $level: 1) {
   $tab: '  ';
-  $cr: '
-';
-
+  $cr: '\a';
   @if type-of($map) != 'map' {
     @return '#{inspect($map)}';
   }
-
   $indent: str-multiply($tab, $level + 1);
   $output: '(' + $cr + $indent; $i: 1;
-
   @each $key, $value in $map {
     @if type-of($value) == 'map' {
       $output: $output + '#{$key}: #{map-inspect($value, $level + 1)}';
     } @else {
       $output: $output + '#{$key}: #{$value}';
     }
-
     @if $i < length(map-keys($map)) {
       $output: $output + ',' + $cr + $indent;
     }
-
     $i: $i + 1;
   }
-
   $outdent: str-multiply($tab, $level);
-
   @return $output + $cr + $outdent + ')';
 }
 

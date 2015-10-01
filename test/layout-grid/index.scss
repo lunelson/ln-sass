@@ -17,6 +17,8 @@ $media: (
 @include setup-media();
 @include setup-layout();
 
+/* $media: #{map-inspect($media)} */
+
 $mixins: ();
 
 @mixin dummy($arg: 0) {

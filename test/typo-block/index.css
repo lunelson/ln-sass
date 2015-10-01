@@ -110,7 +110,8 @@ head {
 
 .media-trans {
   width: 0px;
-  transition: width 1ms; }
+  -webkit-transition: width 1ms;
+          transition: width 1ms; }
 
 @media (min-width: 20em) {
   body::before {
@@ -254,7 +255,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .typo > h1, .typo > .h1 {
   font-size: 2.25rem;
-  margin-top: 1rem;
+  margin-top: calc(1rem - 0.2222222222em);
   line-height: 1.2444444444;
   margin-bottom: calc(0rem - 0.2222222222em); }
   .typo > h1:first-child, .typo > .h1:first-child {
@@ -264,7 +265,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .typo > h2, .typo > .h2 {
   font-size: 1.5rem;
-  margin-top: 1rem;
+  margin-top: calc(1rem - 0.3em);
   line-height: 1.4;
   margin-bottom: calc(0rem - 0.3em); }
   .typo > h2:first-child, .typo > .h2:first-child {
@@ -274,7 +275,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .typo > h3, .typo > .h3 {
   font-size: 1.2247448729rem;
-  margin-top: 1rem;
+  margin-top: calc(1rem - 0.1715476059em);
   line-height: 1.1430952118;
   margin-bottom: calc(0rem - 0.1715476059em); }
   .typo > h3:first-child, .typo > .h3:first-child {
@@ -284,7 +285,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .typo > h4, .typo > .h4 {
   font-size: 1rem;
-  margin-top: 1rem;
+  margin-top: calc(1rem - 0.3em);
   line-height: 1.4;
   margin-bottom: calc(0rem - 0.3em); }
   .typo > h4:first-child, .typo > .h4:first-child {
@@ -294,7 +295,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .typo > h5, .typo > .h5 {
   font-size: 0.8589458336rem;
-  margin-top: 1rem;
+  margin-top: calc(1rem - 0.4149524366em);
   line-height: 1.6299048732;
   margin-bottom: calc(0rem - 0.4149524366em); }
   .typo > h5:first-child, .typo > .h5:first-child {
@@ -304,7 +305,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .typo > h6, .typo > .h6 {
   font-size: 0.903602003rem;
-  margin-top: 1rem;
+  margin-top: calc(1rem - 0.3746773443em);
   line-height: 1.5493546886;
   margin-bottom: calc(0rem - 0.3746773443em); }
   .typo > h6:first-child, .typo > .h6:first-child {
@@ -314,7 +315,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .typo > p {
   font-size: 1rem;
-  margin-top: 1rem;
+  margin-top: calc(1rem - 0.3em);
   line-height: 1.4;
   margin-bottom: calc(0rem - 0.3em); }
   .typo > p:first-child {
@@ -325,7 +326,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .typo > ul, .typo > ol, .typo > dl, .typo > table {
   font-size: 1rem;
-  margin-top: 1rem;
+  margin-top: calc(1rem - 0.3em);
   line-height: 1.4;
   margin-bottom: calc(0rem - 0.3em); }
   .typo > ul:first-child, .typo > ol:first-child, .typo > dl:first-child, .typo > table:first-child {
