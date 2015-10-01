@@ -5,6 +5,12 @@
 // | | \__ \ |_\__ \
 // |_|_|___/\__|___/
 
+// fault-tolerant version of nth
+// @function _nth($list, $n) {
+//   @if $list == () or $n < 1 or $n > length($list) { @return null; }
+//   @return nth($list, $n);
+// }
+
 // list versions of other built-ins
 @function list-max($list) { @return max($list...); }
 @function list-min($list) { @return min($list...); }
@@ -99,6 +105,8 @@
   @return $output;
 }
 
-@function get-nth($list, $n) {
-  @return if(length($list)>=$n, nth($list, $n), null);
+// a more fault-tolerant nth() function. libsass throws more errors for nth
+@function _nth($list, $n) {
+  @if length($list) == 0 or $n < 1 or $n > length($list) { @return null; }
+  @return nth($list, $n);
 }

@@ -25,12 +25,16 @@ img, video, svg, iframe {
 
 a:link, a:visited, a:hover, a:focus, a:active {
   text-decoration: none !important; }
+
 a.block {
   display: block !important; }
+
 a.clean {
   border: none !important; }
+
 a.inline-block {
   display: inline-block !important; }
+
 a span.target {
   text-decoration: underline !important; }
 
@@ -83,12 +87,14 @@ table {
   font-weight: normal;
   src: url("assets/fonts/lineto-circular-book.eot");
   src: url("assets/fonts/lineto-circular-book.eot?#iefix") format("embedded-opentype"), url("assets/fonts/lineto-circular-book.woff") format("woff"), url("assets/fonts/lineto-circular-book.svg#lineto-circular-book") format("svg"), url("assets/fonts/lineto-circular-book.ttf") format("truetype"); }
+
 @font-face {
   font-family: "Circular";
   font-style: normal;
   font-weight: bold;
   src: url("assets/fonts/lineto-circular-bold.eot");
   src: url("assets/fonts/lineto-circular-bold.eot?#iefix") format("embedded-opentype"), url("assets/fonts/lineto-circular-bold.woff") format("woff"), url("assets/fonts/lineto-circular-bold.svg#lineto-circular-bold") format("svg"), url("assets/fonts/lineto-circular-bold.ttf") format("truetype"); }
+
 .font--base {
   font-family: "Circular"; }
 
@@ -110,54 +116,48 @@ head {
 
 .media-trans {
   width: 0px;
-  -webkit-transition: width 1ms;
-          transition: width 1ms; }
+  transition: width 1ms; }
 
 @media (min-width: 20em) {
   body::before {
     content: "alpha"; }
-
   head {
     font-family: "alpha"; }
-
   .media-trans {
     width: 1px; } }
+
 @media (min-width: 30em) {
   body::before {
     content: "beta"; }
-
   head {
     font-family: "beta"; }
-
   .media-trans {
     width: 0px; } }
+
 @media (min-width: 48em) {
   body::before {
     content: "gamma"; }
-
   head {
     font-family: "gamma"; }
-
   .media-trans {
     width: 1px; } }
+
 @media (min-width: 64em) {
   body::before {
     content: "delta"; }
-
   head {
     font-family: "delta"; }
-
   .media-trans {
     width: 0px; } }
+
 @media (min-width: 80em) {
   body::before {
     content: "epsilon"; }
-
   head {
     font-family: "epsilon"; }
-
   .media-trans {
     width: 1px; } }
+
 .cf:after,
 .wrap:after,
 [class*="wrap--"]:after,
@@ -200,27 +200,32 @@ head {
   .wrap--each,
   .wrap--alpha,
   .wrap--from-alpha, .wrap--to-alpha, .wrap--to-beta, .wrap--to-gamma, .wrap--to-delta, .wrap--to-epsilon {
-    max-width: 15.7777777778rem; } }
+    max-width: 15.77778rem; } }
+
 @media screen and (min-width: 30em) {
   .wrap--each,
   .wrap--beta,
   .wrap--from-alpha, .wrap--from-beta, .wrap--to-beta, .wrap--to-gamma, .wrap--to-delta, .wrap--to-epsilon {
-    max-width: 24.6666666667rem; } }
+    max-width: 24.66667rem; } }
+
 @media screen and (min-width: 48em) {
   .wrap--each,
   .wrap--gamma,
   .wrap--from-alpha, .wrap--from-beta, .wrap--from-gamma, .wrap--to-gamma, .wrap--to-delta, .wrap--to-epsilon {
-    max-width: 40.6666666667rem; } }
+    max-width: 40.66667rem; } }
+
 @media screen and (min-width: 64em) {
   .wrap--each,
   .wrap--delta,
   .wrap--from-alpha, .wrap--from-beta, .wrap--from-gamma, .wrap--from-delta, .wrap--to-delta, .wrap--to-epsilon {
-    max-width: 54.8888888889rem; } }
+    max-width: 54.88889rem; } }
+
 @media screen and (min-width: 80em) {
   .wrap--each,
   .wrap--epsilon,
   .wrap--from-alpha, .wrap--from-beta, .wrap--from-gamma, .wrap--from-delta, .wrap--from-epsilon, .wrap--to-epsilon {
-    max-width: 69.1111111111rem; } }
+    max-width: 69.11111rem; } }
+
 .grid {
   width: calc(100% + 1rem);
   margin-left: -0.5rem;
@@ -255,11 +260,11 @@ h1, h2, h3, h4, h5, h6 {
 
 .typo > h1, .typo > .h1 {
   font-size: 2.25rem;
-  margin-top: calc(1rem - 0.2222222222em);
-  line-height: 1.2444444444;
-  margin-bottom: calc(0rem - 0.2222222222em); }
+  margin-top: calc(1rem - 0.22222em);
+  line-height: 1.24444;
+  margin-bottom: calc(0rem - 0.22222em); }
   .typo > h1:first-child, .typo > .h1:first-child {
-    margin-top: calc(0rem - 0.2222222222em); }
+    margin-top: calc(0rem - 0.22222em); }
   .typo > p + h1, .typo > p + .h1, .typo > ul + h1, .typo > ul + .h1, .typo > ol + h1, .typo > ol + .h1 {
     margin-top: 2rem; }
 
@@ -274,12 +279,12 @@ h1, h2, h3, h4, h5, h6 {
     margin-top: 2rem; }
 
 .typo > h3, .typo > .h3 {
-  font-size: 1.2247448729rem;
-  margin-top: calc(1rem - 0.1715476059em);
-  line-height: 1.1430952118;
-  margin-bottom: calc(0rem - 0.1715476059em); }
+  font-size: 1.22474rem;
+  margin-top: calc(1rem - 0.17155em);
+  line-height: 1.1431;
+  margin-bottom: calc(0rem - 0.17155em); }
   .typo > h3:first-child, .typo > .h3:first-child {
-    margin-top: calc(0rem - 0.1715476059em); }
+    margin-top: calc(0rem - 0.17155em); }
   .typo > p + h3, .typo > p + .h3, .typo > ul + h3, .typo > ul + .h3, .typo > ol + h3, .typo > ol + .h3 {
     margin-top: 2rem; }
 
@@ -294,22 +299,22 @@ h1, h2, h3, h4, h5, h6 {
     margin-top: 2rem; }
 
 .typo > h5, .typo > .h5 {
-  font-size: 0.8589458336rem;
-  margin-top: calc(1rem - 0.4149524366em);
-  line-height: 1.6299048732;
-  margin-bottom: calc(0rem - 0.4149524366em); }
+  font-size: 0.85895rem;
+  margin-top: calc(1rem - 0.41495em);
+  line-height: 1.6299;
+  margin-bottom: calc(0rem - 0.41495em); }
   .typo > h5:first-child, .typo > .h5:first-child {
-    margin-top: calc(0rem - 0.4149524366em); }
+    margin-top: calc(0rem - 0.41495em); }
   .typo > p + h5, .typo > p + .h5, .typo > ul + h5, .typo > ul + .h5, .typo > ol + h5, .typo > ol + .h5 {
     margin-top: 2rem; }
 
 .typo > h6, .typo > .h6 {
-  font-size: 0.903602003rem;
-  margin-top: calc(1rem - 0.3746773443em);
-  line-height: 1.5493546886;
-  margin-bottom: calc(0rem - 0.3746773443em); }
+  font-size: 0.9036rem;
+  margin-top: calc(1rem - 0.37468em);
+  line-height: 1.54935;
+  margin-bottom: calc(0rem - 0.37468em); }
   .typo > h6:first-child, .typo > .h6:first-child {
-    margin-top: calc(0rem - 0.3746773443em); }
+    margin-top: calc(0rem - 0.37468em); }
   .typo > p + h6, .typo > p + .h6, .typo > ul + h6, .typo > ul + .h6, .typo > ol + h6, .typo > ol + .h6 {
     margin-top: 2rem; }
 

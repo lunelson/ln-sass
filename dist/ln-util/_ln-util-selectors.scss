@@ -41,13 +41,13 @@
 }
 
 @mixin sibling-to($args...) {
-  @at-root #{sibling-to($args...)} {
+  @at-root #{unquote(sibling-to($args...))} {
     @content;
   }
 }
 
 @mixin adjacent-to($siblings) {
-  @at-root #{sibling-to($siblings, '+')} {
+  @at-root #{unquote(sibling-to($siblings, '+'))} {
     @content;
   }
 }
