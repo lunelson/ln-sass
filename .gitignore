@@ -1,8 +1,13 @@
+# generated files
 *.css
 *.map
+*.html
+
+# aks
 .sass-cache
 config.codekit
-*.html
 *-cache
 *.sublime-*
+
+# node
 node_modules
