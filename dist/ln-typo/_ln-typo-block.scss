@@ -23,7 +23,7 @@
     $typo-curr-line-height: $height !global;
     $typo-curr-char-height: $char-height !global;
 
-    @if medium-orig-value('font-size') { font-size: $size; }
+    @if medium-orig-value('font-size') and $size != 1rem { font-size: $size; }
     @if medium-orig-value('margin-y') { margin-top: t-margin(); }
     @if medium-orig-value('line-height') {
       line-height: $height;

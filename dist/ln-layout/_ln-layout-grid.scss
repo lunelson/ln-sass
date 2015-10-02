@@ -1,4 +1,4 @@
-// LAYOUT GRID INIT
+// GRID INIT
 
 @mixin setup-grid($output: true) {
 
@@ -68,4 +68,43 @@
     .#{$grid} { @extend %#{$grid}; }
     .#{$cell} { @extend %#{$cell}; }
   }
+}
+
+// GRID MIXINS
+
+// grid
+@mixin grid($margin: null, $columns: null) {
+  @if $columns { &::before { content: '#{$columns} .#{map-get($layout-classes, 'cell')}'; } }
+  @extend %#{map-get($layout-classes, 'grid')};
+  @if $margin {
+    @include media((for: margin-x)) {
+      margin-left: margin-x($margin) / -2;
+      margin-right: margin-x($margin) / -2;
+    }
+  }
+}
+
+// cell
+@mixin cell($margin: null, $span...) {
+  @extend %#{map-get($layout-classes, 'cell')};
+  @if $margin {
+    @include media((for: margin-x)) {
+      padding-left: margin-x($margin) / 2;
+      padding-right: margin-x($margin) / 2;
+    }
+  }
+  @if length($span) > 0 { @include span($span...); }
+}
+
+// span
+@mixin span($span: 1 1, $options: ()) { @include span-helper(map-merge((span: $span), $options)...); }
+@mixin span-helper($span, $right: null, $left: null, $out: null, $cycle: null) {
+  $n: nth($span, 1); $d: nth($span, 2);
+
+  width: $n / $d * 100%;
+
+  @if $right { margin-right: nth($right, 1) / if(length($right) > 1, nth($right, 2), $d) * 100%; }
+  @if $left { margin-left: nth($left, 1) / if(length($left) > 1, nth($left, 2), $d) * 100%; }
+  @if $cycle { &:nth-child(#{$cycle}n+1) { clear: left; } }
+  @else if $out { position: absolute; #{opposite($out)}: 100%; top: auto; }
 }

@@ -25,8 +25,24 @@
   @return calc(#{$margin} - #{trim-height($line-height, $char-height)});
 }
 
-// convenience mixin for typical content-area margin, first-child exception
-@mixin t-margin-top($mult) {
-  margin-top: t-margin($mult);
-  &:first-child { margin-top: t-margin(0); }
+// typo margins
+@mixin t-margins($m, $type: 't-margin'){
+  @if medium-orig-value('margin-y') { margin-top: call($type, $m); }
+  @if medium-orig-value('line-height') {
+    margin-bottom: t-margin(0);
+    &:first-child { margin-top: t-margin(0); }
+  }
 }
+
+// modulated typo margins
+@mixin mod-t-margins($mod){ @include t-margins($mod, 'mod-t-margin'); }
+
+// @mixin mod-t-margins($mod){
+//   @if medium-orig-value('margin-y') {
+//     margin-top: mod-t-margin($mod);
+//   }
+//   @if medium-orig-value('line-height') {
+//     margin-bottom: t-margin(0);
+//     &:first-child { margin-top: t-margin(0); }
+//   }
+// }

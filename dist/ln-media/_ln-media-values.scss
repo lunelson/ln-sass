@@ -1,0 +1,27 @@
+////////////////////////////
+// MEDIA OBJECT functions //
+////////////////////////////
+
+
+// medium objects
+@function medium($alias: $media-curr-alias) { @return if($alias, map-get($media, $alias), $base); }
+@function medium-orig($alias: $media-curr-alias) { @return if($alias, map-get($media-orig, $alias), $base-orig); }
+
+// medium values
+@function medium-value($key, $alias: $media-curr-alias) { @return if($alias, map-get(medium($alias), $key), map-get($base, $key)); }
+@function medium-orig-value($key, $alias: $media-curr-alias) { @return if($alias, map-get(medium-orig($alias), $key), map-get($base-orig, $key)); }
+
+// medium value shortcuts [multiples]
+@function margin-x($mult: 1) { @return if(type-of($mult) == 'string', medium-value('margin-x', $mult), medium-value('margin-x') * $mult); }
+@function margin-y($mult: 1) { @return if(type-of($mult) == 'string', medium-value('margin-y', $mult), medium-value('margin-y') * $mult); }
+
+// modulated medium-value shortcuts
+@function mod-margin-x($index: 0, $spread: 2) { @return _pow(medium-value('margin-x-mod'), $index/$spread) * medium-value('margin-x'); }
+@function mod-margin-y($index: 0, $spread: 2) { @return _pow(medium-value('margin-y-mod'), $index/$spread) * medium-value('margin-y'); }
+@function mod-size($index: 0, $spread: 2) { @return _pow(medium-value('font-size-mod'), $index/$spread) * 1rem; }
+
+// ALIASES
+@function y-margin($args...) { @return margin-y($args...); }
+@function x-margin($args...) { @return margin-x($args...); }
+@function mod-y-margin($args...){ @return mod-margin-y($args...); }
+@function mod-x-margin($args...){ @return mod-margin-x($args...); }

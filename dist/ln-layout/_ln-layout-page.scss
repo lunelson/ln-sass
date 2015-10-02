@@ -96,3 +96,21 @@
     }
   }
 }
+
+// MIXINS
+
+// PAGE
+
+// page
+@mixin page($suffix){
+  @extend .page--#{$suffix};
+}
+
+// wrap
+@mixin wrap($width){
+  @if type-of($width) == 'string' {
+    @extend .wrap--#{$width};
+  } @else {
+    @extend .wrap; max-width: $width;
+  }
+}

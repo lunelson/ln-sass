@@ -27,11 +27,6 @@ remaining proofs
 
 ## grid
 
-- rename the mixins:
-    @mixin grid()
-    @mixin grid-size()
-    @mixin cell()
-    @mixin cell-size()
 - revamp the mixins
     - will grid and cell mixins output if in media query?
         - use @at-root before extending;
