@@ -1,4 +1,5 @@
 // GRID INIT
+$grid-curr-margin: null !default;
 
 @mixin setup-grid($output: true) {
 
@@ -81,11 +82,15 @@
       margin-left: margin-x($margin) / -2;
       margin-right: margin-x($margin) / -2;
     }
+    $grid-prev-margin: $grid-curr-margin;
+    $grid-curr-margin: $margin !global;
+    @at-root { @content; }
+    $grid-curr-margin: $grid-prev-margin !global;
   }
 }
 
 // cell
-@mixin cell($margin: null, $span...) {
+@mixin cell($margin: $grid-curr-margin, $span...) {
   @extend %#{map-get($layout-classes, 'cell')};
   @if $margin {
     @include media((for: margin-x)) {

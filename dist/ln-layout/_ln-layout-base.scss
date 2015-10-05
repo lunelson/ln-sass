@@ -9,11 +9,11 @@ $layout-classes: (
   cell: 'cell'
 ) !default;
 
-$grid-alignment: left;
-$grid-is-float: false;
+$grid-alignment: left !default;
+$grid-is-float: false !default;
+$grid-curr-margin: null !default;
 
-$layout-mixins: ();
-
+// $layout-mixins: (); // not currently in use
 
 // LAYOUT SETUP
 
