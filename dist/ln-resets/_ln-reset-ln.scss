@@ -1,29 +1,93 @@
 @mixin reset-ln {
-  *, *:before, *:after { box-sizing: inherit; } // inherit box sizing (from html)
+
+  // crush most stuff with this
+  *, *:before, *:after {
+    box-sizing: inherit;
+    vertical-align: baseline;
+    font-weight: inherit;
+    font-family: inherit;
+    font-style: inherit;
+    font-size: inherit;
+    text-decoration: none;
+    border: 0 none;
+    outline: 0 none;
+    padding: 0;
+    margin: 0;
+  }
+
+  // block elements
+  address, article, aside, blockquote, body, canvas, caption, dd, del, details, div, dl, dt, fieldset, figcaption, figure, footer, form, h1, h2, h3, h4, h5, h6, header, hgroup, hr, html, ins, main, mark, nav, noscript, ol, output, p, pre, section, summary, table, tfoot, time, ul {
+  }
+
+
+  // inline elements
+  a, abbr, acronym, b, big, br, button, cite, code, dfn, em, i, input, kbd, label, map, q, samp, script, select, small, span, strong, sub, sup, tt, textarea, var {
+  }
+
+  // responsive elements; default to block
+  applet, audio, embed, iframe, img, object, svg, video {
+  }
+
+  // 1. normalize font size and style
+  // 1b. prevent iOS text size adjust after orientation change
+  // 2. set border-box sizing at root
   html {
-    box-sizing: border-box; // will be inherited by all elements
+    // text
+    font-family: sans-serif; // 1
+    -ms-text-size-adjust: 100%; // 1b
+    -webkit-text-size-adjust: 100%; // 1b
+    -webkit-font-smoothing: antialiased; // unify font rendering
+    -moz-osx-font-smoothing: grayscale; //
+    text-rendering: optimizespeed; // fixes a webkit bug re: optimizelegibility?
+    // dimensions
+    font-size: 1em;
+    line-height: normal; // ?
+    box-sizing: border-box; // 2
     width: 100vw; // avoid scrollbar width fx
     height: 100%; // for iOS < 7
     height: 100vh; // for everyone else
     overflow-y: scroll; // does this make scrollbars visible in all cases?
     overflow-x: hidden; // avoid horiz. clipping
-    -webkit-font-smoothing: antialiased; // unify font rendering
-    -moz-osx-font-smoothing: grayscale; //
+    // unwanted styles
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0); // remove webkit tap highlight color
-    text-rendering: optimizespeed; // fixes a webkit bug re: optimizelegibility?
   }
 
   body {
+    margin: 0;
     height: 100%;
   }
 
-  img, video, svg, iframe {
+  // html5 and html4 display corrections
+  article,
+  aside,
+  details,
+  figcaption,
+  figure,
+  footer,
+  header,
+  hgroup,
+  main,
+  menu,
+  nav,
+  section,
+  summary {
+    display: block;
+  }
+
+  // media elements that are usually inline
+  audio, canvas, progress, video, img, svg, iframe, form, object, table {
     display: block;
     max-width: 100%;
     height: auto;
-    &.inline { display: inline-block; }
+    border: 0; // remove border when inside 'a' in IE
+    &:not(:root) { overflow: hidden; }
+    &.inline {
+      display: inline-block;
+      vertical-align: baseline;
+    }
   }
 
+  // links
   a {
     &:link,
     &:visited,
