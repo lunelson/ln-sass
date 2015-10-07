@@ -16,15 +16,15 @@
   }
 
   // block elements
-  address, article, aside, blockquote, body, canvas, caption, dd, del, details, div, dl, dt, fieldset, figcaption, figure, footer, form, h1, h2, h3, h4, h5, h6, header, hgroup, hr, html, ins, main, mark, nav, noscript, ol, output, p, pre, section, summary, table, tfoot, time, ul {
+  address, article, aside, blockquote, body, canvas, caption, dd, details, div, dl, dt, fieldset, figcaption, figure, footer, form, h1, h2, h3, h4, h5, h6, header, hgroup, hr, html, li, main, nav, noscript, ol, p, pre, section, summary, table, tbody, thead, tfoot, ul {
   }
 
 
   // inline elements
-  a, abbr, acronym, b, big, br, button, cite, code, dfn, em, i, input, kbd, label, map, q, samp, script, select, small, span, strong, sub, sup, tt, textarea, var {
+  a, abbr, acronym, b, big, br, button, cite, code, del, dfn, em, i, input, ins, kbd, label, map, mark, output, q, samp, script, select, small, span, strong, sub, sup, time, tt, textarea, var {
   }
 
-  // responsive elements; default to block
+  // responsive elements -- block with inline option
   applet, audio, embed, iframe, img, object, svg, video {
   }
 
