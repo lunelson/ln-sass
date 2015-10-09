@@ -9,6 +9,12 @@ $layout-classes: (
   cell: 'cell'
 ) !default;
 
+$layout-wrap-strings: (
+  fromTo: 'fromTo',
+  from: 'from',
+  to: 'to'
+) !default;
+
 $grid-alignment: left !default;
 $grid-is-float: false !default;
 $grid-curr-margin: null !default;
