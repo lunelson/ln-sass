@@ -47,6 +47,26 @@ $z-indexes: (
 
 @mixin child-layout($selectors, $type, $options...) {
 
+  // contain and cover sizing
+  @if index(contain cover, $type) {
+    position: relative;
+    @if $type == 'cover' { overflow: hidden; }
+    #{children($selectors)} {
+      position: absolute;
+      top: 50%; left: 50%;
+      width: auto; height: auto;
+      transform: translate(-50%, -50%);
+      @if $type == 'contain' {
+        min-width: none; max-width: 100%;
+        min-height: none; max-height: 100%;
+      }
+      @if $type == 'cover' {
+        min-width: 100%; max-width: none;
+        min-height: 100%; max-height: none;
+      }
+    }
+  }
+
   // table
   @if index(table table-cell table-row cell row, $type) {
     width: 100%; // force auto size of children

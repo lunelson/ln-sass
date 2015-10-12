@@ -70,13 +70,13 @@
 
 // children
 @function children($selectors...) {
-  @if length($selectors) == 0 { @return '& > *'; }
+  @if length($selectors) == 0 { @return unquote('& > *'); }
   @else {
     @if type-of(nth($selectors, 1)) == list { $selectors: join((), $selectors...); }
     $out: ''; @for $n from 1 through length($selectors) {
       $out: if($n == 1, unquote('#{child(nth($selectors, 1))}'), append($out, unquote(', #{child(nth($selectors, $n))}')));
     }
-    @return '#{$out}';
+    @return unquote('#{$out}');
   }
 }
 // mixin version of above

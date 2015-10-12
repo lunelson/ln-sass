@@ -2,25 +2,49 @@
 // DEBUG //
 ///////////
 
+@mixin setup-debug($visible: true) {
 
-@if variable-exists('ln-debug') {
-    @if $ln-debug {
+  // DEFAULT UTILITY STYLES
 
-    // heights
-    @for $n from 1 to 10 {
-      .d-#{$n * 100} {
-        height: $n * 100px;
+  // heights
+  @for $n from 1 to 10 {
+    [debug~="height-#{$n * 100}"] {
+    height: $n * 100px;
+    }
+  }
+
+  // aspect ratios
+  @each $aspect in (1 1, 2 1, 1 2, 16 9, 9 16, 3 2, 2 3, 4 3, 3 4) {
+    $n: nth($aspect, 1); $d: nth($aspect, 2);
+    [debug~="aspect-#{$n}x#{$d}"] {
+      position: relative;
+      &:before {
+        display: block;
+        content: '';
+        width: 100%;
+        padding-top: $d/$n * 100%;
+        background-clip: padding-box;
+      }
+      & > * {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
       }
     }
+  }
 
-    // colors
-    .d-red { background-color: #F2CCBB; }
-    .d-yellow { background-color: #F2F2B6; }
-    .d-green { background-color: #B6F2B6; }
-    .d-cyan { background-color: #B6F2F2; }
-    .d-blue { background-color: #C2DAF2; }
-    .d-magenta { background-color: #F2CEF2; }
+  // colors
+  [debug~="color-red"] { background-color: #F2CCBB; }
+  [debug~="color-yellow"] { background-color: #F2F2B6; }
+  [debug~="color-green"] { background-color: #B6F2B6; }
+  [debug~="color-cyan"] { background-color: #B6F2F2; }
+  [debug~="color-blue"] { background-color: #C2DAF2; }
+  [debug~="color-magenta"] { background-color: #F2CEF2; }
 
+  // CONDITIONALLY VISIBLE STYLES
+  @if $visible {
     // @if $debug-toggle {
     //   $column-count: get($reference-query, column-count);
     //   $margin-x: get($reference-query, margin-x);
@@ -65,4 +89,3 @@
     // }
   }
 }
-
