@@ -86,7 +86,7 @@
         $wrap-from-keys: slice($media-keys, 1, index($media-keys, $alias));
         $wrap-to: ();
         $wrap-to-string: map-get($layout-wrap-strings, 'to');
-        $wrap-to-keys: slice($media-keys, index($media-keys, $alias) + 1, length($media-keys));
+        $wrap-to-keys: slice($media-keys, index($media-keys, $alias), length($media-keys));
         $wrap-fromTo: ();
         $wrap-fromTo-string: map-get($layout-wrap-strings, 'fromTo');
 
