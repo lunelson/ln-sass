@@ -89,6 +89,19 @@ $grid-curr-margin: null !default;
   }
 }
 
+// cell beta
+// @mixin cell($span: null, $margin: $grid-curr-margin) {
+//   @if type-of($span) == 'map' { @include cell($span...); }
+//   @extend %#{map-get($layout-classes, 'cell')};
+//   @if $margin {
+//     @include media((for: margin-x)) {
+//       padding-left: margin-x($margin) / 2;
+//       padding-right: margin-x($margin) / 2;
+//     }
+//   }
+//   @if length($span) > 0 { @include span($span...); }
+// }
+
 // cell
 @mixin cell($margin: $grid-curr-margin, $span...) {
   @extend %#{map-get($layout-classes, 'cell')};
