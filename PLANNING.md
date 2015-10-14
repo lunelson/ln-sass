@@ -2,7 +2,6 @@
 
 ## reset
 
-
 reset-hard()
   - meyer-style reset of all typographic block elements to size 1em and margins: 0, padding: 0
 
@@ -35,6 +34,14 @@ remaining proofs
         - span?
 
 ## page
+
+- fix wrap classes
+
+.wrap
+.wrap--alpha
+.wrap--alpha-to
+.wrap--to-delta
+.wrap--beta-to-epsilon
 
 - do unwrap and unpage classes;
 - eliminate "layout direction" ? not queryable from unwrap classes
