@@ -19,42 +19,59 @@ $base: (
   line-height: 1.4,
   font-size-mod: 1.5,
   margin-y: 1.5rem,
-  column-count: 2
+  margin-x: 40px,
+  page-left: 80px,
+  page-right: 40px,
+  column-count: 3
 );
 
 $media: (
   alpha: (
     breakpoint: 20em,
-    column-count: 3,
-    margin-x: 20px
+    column-count: 2
   ),
   beta: (
     breakpoint: 30em,
-    column-count: 4,
+    column-count: 5,
+    page-left: 200px,
+    page-right: 40px,
     margin-x: 40px
   ),
   gamma: (
     breakpoint: 48em,
     column-count: 6,
+    page-left: 50px,
+    page-right: 200px,
     margin-x: 50px
   ),
   delta: (
     breakpoint: 64em,
     column-count: 8,
+    page-left: 70px,
+    page-right: 70px,
     margin-x: 70px
   ),
   epsilon: (
     breakpoint: 80em,
     column-count: 10,
+    page-left: 80px,
+    page-right: 80px,
     margin-x: 80px
   )
 );
-
 
 @include reset-meyer();
 @include setup-typo();
 @include setup-media();
 @include setup-layout();
+
+.cell {
+  @include span(1 2);
+  .debug {
+    height: 50px;
+    background-color: blue;
+  }
+}
 
 body::after {
   content: '';
@@ -67,27 +84,35 @@ body::after {
   user-select: none;
   z-index: 999;
   display: block;
+
   $column-count: medium-value('column-count') or 8;
   $margin-x: margin-x();
-  $page-x: medium-value('page-left') + medium-value('page-right');
-  width: calc(100% - #{$page-x});
-  margin-left: calc((100% - #{$page-x} + #{$margin-x})/-2);
+  $page-right: medium-value('page-right');
+  $page-left: medium-value('page-left');
+  $page-sum: $page-right + $page-left;
+  $page-diff: $page-right - $page-left;
+
+  width: calc(100% - #{$page-sum} + #{$margin-x});
+  margin-left: calc((100% - #{$page-sum - $page-diff} + #{$margin-x} * 2) / -2);
   background: linear-gradient(to right,
     rgba(0,0,0,0) $margin-x,
     rgba(0,0,255,0.1) $margin-x,
-    rgba(0,0,255,0.1) calc((100% - #{$page-x}) / #{$column-count} - #{$margin-x})
+    rgba(0,0,255,0.1) calc((100% - #{$page-sum} + #{$margin-x}) / #{$column-count} - #{$margin-x})
   );
-  background-size: calc((100% - #{$page-x}) / #{$column-count});
+  background-size: calc((100% - #{$page-sum} + #{$margin-x} * 3) / #{$column-count});
 }
 @each $alias in slice(map-keys($media), 2) {
   @include media($alias) {
     $column-count: medium-value('column-count') or 8;
     $margin-x: margin-x();
+    $page-right: medium-value('page-right');
+    $page-left: medium-value('page-left');
+    $page-diff: $page-right - $page-left;
     $wrap-width: medium-value('content-width') + $margin-x;
 
     body:after {
       width: $wrap-width;
-      margin-left: ($wrap-width + $margin-x)/-2;
+      margin-left: ($wrap-width + $page-diff + $margin-x)/-2;
       background: linear-gradient(to right,
         rgba(0,0,0,0) $margin-x,
         rgba(0,0,255,0.1) $margin-x,

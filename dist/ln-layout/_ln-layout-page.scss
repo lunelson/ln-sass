@@ -81,32 +81,32 @@
 
         // wrap
         $media-keys: map-keys($media);
-        $wrap-from: ();
-        $wrap-from-string: map-get($layout-wrap-strings, 'from');
+        // $wrap-from-string: map-get($layout-wrap-strings, 'from');
         $wrap-from-keys: slice($media-keys, 1, index($media-keys, $alias));
-        $wrap-to: ();
-        $wrap-to-string: map-get($layout-wrap-strings, 'to');
+        // $wrap-to-string: map-get($layout-wrap-strings, 'to');
         $wrap-to-keys: slice($media-keys, index($media-keys, $alias), length($media-keys));
+        $wrap-from: ();
+        $wrap-to: ();
         $wrap-fromTo: ();
-        $wrap-fromTo-string: map-get($layout-wrap-strings, 'fromTo');
+        // $wrap-fromTo-string: map-get($layout-wrap-strings, 'fromTo');
 
         // wrap--fromTo
         @each $fromKey in $wrap-from-keys {
           @each $toKey in $wrap-to-keys {
             @if $fromKey != $toKey {
-              $wrap-fromTo: append($wrap-fromTo, unquote('\a.#{$wrap}--#{$wrap-fromTo-string}-#{$fromKey}-#{$toKey}'), 'comma');
+              $wrap-fromTo: append($wrap-fromTo, unquote('\a.#{$wrap}--#{$fromKey}-to-#{$toKey}'), 'comma');
             }
           }
         }
 
         // wrap--from
         @each $fromKey in $wrap-from-keys {
-          $wrap-from: append($wrap-from, unquote('\a.#{$wrap}--#{$wrap-from-string}-#{$fromKey}'), 'comma');
+          $wrap-from: append($wrap-from, unquote('\a.#{$wrap}--#{$fromKey}-to'), 'comma');
         }
 
         // wrap--to
         @each $toKey in $wrap-to-keys {
-          $wrap-to: append($wrap-to, unquote('\a.#{$wrap}--#{$wrap-to-string}-#{$toKey}'), 'comma');
+          $wrap-to: append($wrap-to, unquote('\a.#{$wrap}-to-#{$toKey}'), 'comma');
         }
 
         .#{$wrap}--each,
