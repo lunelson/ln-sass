@@ -20,9 +20,9 @@ $base: (
   font-size-mod: 1.5,
   margin-y: 1.5rem,
   margin-x: 40px,
-  page-left: 80px,
+  page-left: 40px,
   page-right: 40px,
-  column-count: 3
+  column-count: 2
 );
 
 $media: (
@@ -32,8 +32,8 @@ $media: (
   ),
   beta: (
     breakpoint: 30em,
-    column-count: 5,
-    page-left: 200px,
+    column-count: 4,
+    page-left: 40px,
     page-right: 40px,
     margin-x: 40px
   ),
@@ -41,7 +41,7 @@ $media: (
     breakpoint: 48em,
     column-count: 6,
     page-left: 50px,
-    page-right: 200px,
+    page-right: 50px,
     margin-x: 50px
   ),
   delta: (
@@ -53,7 +53,7 @@ $media: (
   ),
   epsilon: (
     breakpoint: 80em,
-    column-count: 10,
+    column-count: 12,
     page-left: 80px,
     page-right: 80px,
     margin-x: 80px
@@ -64,125 +64,71 @@ $media: (
 @include setup-typo();
 @include setup-media();
 @include setup-layout();
+@include setup-debug(true);
 
-.cell {
-  @include span(1 2);
-  .debug {
-    height: 50px;
-    background-color: blue;
-  }
+.debug {
+  height: 50px;
+  background-color: blue;
 }
 
-body::after {
-  content: '';
-  top: 0;
-  bottom: 0;
-  left: 50%;
-  position: fixed;
-  height: 100%;
-  pointer-events: none;
-  user-select: none;
-  z-index: 999;
-  display: block;
-
-  $column-count: medium-value('column-count') or 8;
-  $margin-x: margin-x();
-  $page-right: medium-value('page-right');
-  $page-left: medium-value('page-left');
-  $page-sum: $page-right + $page-left;
-  $page-diff: $page-right - $page-left;
-
-  width: calc(100% - #{$page-sum} + #{$margin-x});
-  margin-left: calc((100% - #{$page-sum - $page-diff} + #{$margin-x} * 2) / -2);
-  background: linear-gradient(to right,
-    rgba(0,0,0,0) $margin-x,
-    rgba(0,0,255,0.1) $margin-x,
-    rgba(0,0,255,0.1) calc((100% - #{$page-sum} + #{$margin-x}) / #{$column-count} - #{$margin-x})
-  );
-  background-size: calc((100% - #{$page-sum} + #{$margin-x} * 3) / #{$column-count});
-}
-@each $alias in slice(map-keys($media), 2) {
-  @include media($alias) {
-    $column-count: medium-value('column-count') or 8;
-    $margin-x: margin-x();
-    $page-right: medium-value('page-right');
-    $page-left: medium-value('page-left');
-    $page-diff: $page-right - $page-left;
-    $wrap-width: medium-value('content-width') + $margin-x;
-
-    body:after {
-      width: $wrap-width;
-      margin-left: ($wrap-width + $page-diff + $margin-x)/-2;
-      background: linear-gradient(to right,
-        rgba(0,0,0,0) $margin-x,
-        rgba(0,0,255,0.1) $margin-x,
-        rgba(0,0,255,0.1) $wrap-width / $column-count - $margin-x
-      );
-      background-size: $wrap-width / $column-count;
+@each $n in 1 2 3 4 6 8 12 {
+  .grid.span-#{$n} {
+    margin-top: 1rem;
+    .cell {
+      @include span(1 $n);
     }
   }
 }
 
+// body::after {
+//   content: '';
+//   top: 0;
+//   bottom: 0;
+//   left: 50%;
+//   position: fixed;
+//   height: 100%;
+//   pointer-events: none;
+//   user-select: none;
+//   z-index: 999;
+//   display: block;
 
-.test-area {
-  @include typo-scope() {
+//   $column-count: medium-value('column-count') or 8;
+//   $margin-x: margin-x();
+//   $page-right: medium-value('page-right');
+//   $page-left: medium-value('page-left');
+//   $page-sum: $page-right + $page-left;
+//   $page-diff: $page-right - $page-left;
 
-    .content-item {
-      // background-color: set-alpha(lightblue, 0.25);
-      @include t-margins(1);
-      & > .termine-heading, & > .termine-listing {
-        @include t-margins(1)
-      }
-    }
-
-    .termin {
-      background-color: set-alpha(pink, 0.25);
-      @include t-margins(0.75);
-      .meta, .main {
-        @include typo-scope(0.9rem) {
-          .termin-referenten {
-
-          }
-        }
-      }
-    }
-
-  }
-  .termin { @include grid(); }
-  .meta {
-    @include cell(null, 1 4);
-  }
-  .main {
-    @include cell(null, 3 4);
-  }
-}
-
-.test {
-  @include media((for: margin-x)) {
-    margin-right: margin-x() / 2;
-    color: blue;
-  }
-}
-
-
-// .content-item {
-//   background-color: lightblue;
+//   width: calc(100% - #{$page-sum} + #{$margin-x});
+//   margin-left: calc((100% - #{$page-sum - $page-diff} + #{$margin-x} * 2) / -2);
+//   background: linear-gradient(to right,
+//     rgba(0,0,0,0) $margin-x,
+//     rgba(0,0,255,0.1) $margin-x,
+//     rgba(0,0,255,0.1) calc((100% - #{$page-sum} + #{$margin-x}) / #{$column-count} - #{$margin-x})
+//   );
+//   background-size: calc((100% - #{$page-sum} + #{$margin-x} * 3) / #{$column-count});
 // }
 
+// @each $alias in slice(map-keys($media), 2) {
+//   @include media($alias) {
+//     $column-count: medium-value('column-count') or 8;
+//     $margin-x: margin-x();
+//     $page-right: medium-value('page-right');
+//     $page-left: medium-value('page-left');
+//     $page-diff: $page-right - $page-left;
+//     $wrap-width: medium-value('content-width') + $margin-x;
 
-
-
-
-
-
-
-
-// ul.no-style {
-//     list-style: none;
-//     padding: 0;
-// }
-// .test-area {
-//     ul {
-//         list-style: none;
+//     body:after {
+//       width: $wrap-width;
+//       margin-left: ($wrap-width + $page-diff + $margin-x)/-2;
+//       background: linear-gradient(to right,
+//         rgba(0,0,0,0) $margin-x,
+//         rgba(0,0,255,0.1) $margin-x,
+//         rgba(0,0,255,0.1) $wrap-width / $column-count - $margin-x
+//       );
+//       background-size: $wrap-width / $column-count;
 //     }
+//   }
 // }
+
+
