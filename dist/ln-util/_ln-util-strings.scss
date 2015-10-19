@@ -1,21 +1,35 @@
 // STRINGS
 
-@function str-remove($str, $sub) {
-  $i: str-index($str, $sub);
-  @if $i == 0 {
-    @return $str;
+// last-index
+@function str-last-index($str, $substr) {
+  $length: str-length($str);
+  @for $n from $length - str-length($substr) through 1 {
+    $index: str-index(str-slice($str, $n, $length), $substr);
+    @if $index { @return $index + $n - 1; }
   }
-  @else {
-    @return str-remove(str-slice($str, 1, $i - 1) + str-slice($str, $i + 1, str-length($str)), $sub);
-  }
+  @return null;
 }
 
-@function str-multiply($string, $n) {
+// replace
+@function str-replace($str, $search, $replace: '') {
+  $index: str-index($str, $search);
+
+  @if $index {
+    @return str-slice($str, 1, $index - 1) + $replace + str-replace(str-slice($str, $index + str-length($search)), $search, $replace);
+  }
+
+  @return $str;
+}
+
+// remove -- uses replace
+@function str-remove($str, $substr) { @return str-replace($str, $substr, ''); }
+
+// times
+@function str-times($str, $n: 1) {
   $output: '';
-  @if $n > 0 {
-    @for $i from 1 through $n {
-      $output: $output + $string;
-    }
+  @while $n > 0 {
+    $output: $output + $str;
+    $n: $n - 1;
   }
   @return $output;
 }
