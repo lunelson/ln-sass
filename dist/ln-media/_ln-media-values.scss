@@ -12,8 +12,8 @@
 @function medium-orig-value($key, $alias: $media-curr-alias) { @return if($alias, map-get(medium-orig($alias), $key), map-get($base-orig, $key)); }
 
 // medium value shortcuts [multiples]
-@function margin-x($mult: 1) { @return if(type-of($mult) == 'string', medium-value('margin-x', $mult), medium-value('margin-x') * $mult); }
-@function margin-y($mult: 1) { @return if(type-of($mult) == 'string', medium-value('margin-y', $mult), medium-value('margin-y') * $mult); }
+@function margin-x($mult: 1) { @return if(type-of($mult) == 'string', medium-value('margin-x', $mult), if(unitless($mult), medium-value('margin-x') * $mult, rem($mult))); }
+@function margin-y($mult: 1) { @return if(type-of($mult) == 'string', medium-value('margin-y', $mult), if(unitless($mult), medium-value('margin-y') * $mult, rem($mult))); }
 
 // modulated medium-value shortcuts
 @function mod-margin-x($index: 0, $spread: 2) { @return _pow(medium-value('margin-x-mod'), $index/$spread) * medium-value('margin-x'); }
