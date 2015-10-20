@@ -1,40 +1,52 @@
 extends ../_layout.jade
 block body
 
-    .proof
+    .proof.page--x
+
+        .line unwrap to page-inner
 
         .wrap(class="pink")
 
-            //- p unwrap
-            //- .unwrap(class="shaded"): p This unwraps to the width of container / page
-            //- .unwrap-right(class="shaded"): p This unwraps to the right of container / page
-            //- .unwrap-left(class="shaded"): p This unwraps to the left of container / page
+            p unwrap
+            .unwrap(class="shaded"): p This unwraps to the width of container / page
+            .unwrap--right(class="shaded"): p This unwraps to the right of container / page
+            .unwrap--left(class="shaded"): p This unwraps to the left of container / page
 
-            p unwrap-full
-            .unwrap-full(class="shaded"): p This unwraps to full width of the viewport
-            .unwrap-full-right(class="shaded"): p This unwraps to the right of viewport
-            .unwrap-full-left(class="shaded"): p This unwraps to the left of the viewport
+        .wrap--right(class="pink")
 
-        .wrap.wrap-left(class="pink")
+            p wrap--right &rarr; unwrap
+            .unwrap(class="shaded"): p This unwraps to the width of container / page
+            .unwrap--right(class="shaded"): p This unwraps to the right of container / page
+            .unwrap--left(class="shaded"): p This unwraps to the left of container / page
 
-            //- p wrap-left &rarr; unwrap
-            //- .unwrap(class="shaded"): p This unwraps to the width of container / page
-            //- .unwrap-right(class="shaded"): p This unwraps to the right of container / page
-            //- .unwrap-left(class="shaded"): p This unwraps to the left of container / page
+        .wrap--left(class="pink")
 
-            p wrap-left &rarr; unwrap-full
-            .unwrap-full(class="shaded"): p This unwraps to full width of the viewport
-            .unwrap-full-right(class="shaded"): p This unwraps to the right of viewport
-            .unwrap-full-left(class="shaded"): p This unwraps to the left of the viewport
+            p wrap--left &rarr; unwrap
+            .unwrap(class="shaded"): p This unwraps to the width of container / page
+            .unwrap--right(class="shaded"): p This unwraps to the right of container / page
+            .unwrap--left(class="shaded"): p This unwraps to the left of container / page
 
-        .wrap.wrap-right(class="pink")
+        .line unwrap to page-inner
 
-            //- p wrap-right &rarr; unwrap
-            //- .unwrap(class="shaded"): p This unwraps to the width of container / page
-            //- .unwrap-right(class="shaded"): p This unwraps to the right of container / page
-            //- .unwrap-left(class="shaded"): p This unwraps to the left of container / page
+        .wrap(class="pink")
 
-            p wrap-right &rarr; unwrap-full
-            .unwrap-full(class="shaded"): p This unwraps to full width of the viewport
-            .unwrap-full-right(class="shaded"): p This unwraps to the right of viewport
-            .unwrap-full-left(class="shaded"): p This unwraps to the left of the viewport
+            //- .unpage
+
+            p unpage
+            .unpage(class="shaded"): p This unwraps to full width of the viewport
+            .unpage--right(class="shaded"): p This unwraps to the right of viewport
+            .unpage--left(class="shaded"): p This unwraps to the left of the viewport
+
+        .wrap--left(class="pink")
+
+            p wrap--left &rarr; unpage
+            .unpage(class="shaded"): p This unwraps to full width of the viewport
+            .unpage--right(class="shaded"): p This unwraps to the right of viewport
+            .unpage--left(class="shaded"): p This unwraps to the left of the viewport
+
+        .wrap--right(class="pink")
+
+            p wrap--right &rarr; unpage
+            .unpage(class="shaded"): p This unwraps to full width of the viewport
+            .unpage--right(class="shaded"): p This unwraps to the right of viewport
+            .unpage--left(class="shaded"): p This unwraps to the left of the viewport

@@ -24,6 +24,8 @@
   // get classes
   $page: map-get($layout-classes, 'page');
   $wrap: map-get($layout-classes, 'wrap');
+  $unwrap: map-get($layout-classes, 'unwrap');
+  $unpage: map-get($layout-classes, 'unpage');
 
   // do clearfix on all
   .cf,
@@ -50,6 +52,82 @@
   }
   .#{$wrap}--left { margin-left: 0; }
   .#{$wrap}--right { margin-right: 0; }
+
+  $page-inset: calc(#{$page-right} + #{$page-left});
+  $page-offset: calc(#{$page-right} - #{$page-left});
+
+  .#{$unwrap} {
+    $unwrap-width: calc-sub(100vw, #{$page-inset});
+    $unwrap-margin: calc-sub(100%, $unwrap-width);
+    $unwrap-margin-oneside: calc-div($unwrap-margin, 2);
+    $unwrap-width-oneside: calc-add($unwrap-width, $unwrap-margin-oneside);
+
+    margin-right: 0;
+    margin-left: 0;
+    width: $unwrap-width;
+
+    &--right, &--left { width: $unwrap-width-oneside; }
+    &, &--left { margin-left: $unwrap-margin-oneside; }
+    &, &--right { margin-right: $unwrap-margin-oneside; }
+
+    .#{$wrap}--right > & {
+      &, &--right, &--left { margin-right: 0; }
+      &--right { width: 100%; }
+      &, &--left { width: $unwrap-width; margin-left: $unwrap-margin; }
+    }
+    .#{$wrap}--left > & {
+      &, &--right, &--left { margin-left: 0; }
+      &, &--right { width: $unwrap-width; margin-right: $unwrap-margin; }
+      &--left { width: 100%; }
+    }
+  }
+
+  .#{$unpage} {
+    $unpage-width: 100vw;
+    $unpage-margin: calc-sub(100%, $unpage-width);
+    $unpage-margin-right: calc-sub($unpage-margin, $page-offset);
+    $unpage-margin-left: calc-add($unpage-margin, $page-offset);
+    $unpage-width-right: calc-add($unpage-width, calc-div($unpage-margin-left, 2));
+    $unpage-width-left: calc-add($unpage-width, calc-div($unpage-margin-right, 2));
+
+    margin-right: 0;
+    margin-left: 0;
+    width: $unpage-width;
+
+    &--right { width: $unpage-width-right;}
+    &--left { width: $unpage-width-left;}
+    &, &--right { margin-right: calc-div($unpage-margin-right, 2); }
+    &, &--left { margin-left: calc-div($unpage-margin-left, 2); }
+
+    .wrap--left > & {
+      margin-right: calc-add($unpage-margin, $page-left);
+      margin-left: - $page-left;
+      &--right {
+        width: calc-sub($unpage-width, $page-left);
+        margin-right: calc-add($unpage-margin, $page-left);
+        margin-left: 0;
+      }
+      &--left {
+        width: calc-add(100%, $page-left);
+        margin-right: 0;
+        margin-left: - $page-left;
+      }
+    }
+    .wrap--right > & {
+      margin-right: - $page-right;
+      margin-left: calc-add($unpage-margin, $page-right);
+      &--right {
+        width: calc-add(100%, $page-right);
+        margin-right: - $page-right;
+        margin-left: 0;
+      }
+      &--left {
+        width: calc-sub($unpage-width, $page-right);
+        margin-left: calc-add($unpage-margin, $page-right);
+        margin-right: 0;
+      }
+    }
+  }
 
   @if variable-exists('media') {
 
@@ -114,6 +192,85 @@
         #{$wrap-fromTo}, #{$wrap-from}, #{$wrap-to} {
           max-width: medium-value('content-width');
         }
+
+        @if $page-right or $page-left {
+          $page-inset: calc(#{$page-right} + #{$page-left});
+          $page-offset: calc(#{$page-right} - #{$page-left});
+
+          .#{$unwrap} {
+            $unwrap-width: calc-sub(100vw, #{$page-inset});
+            $unwrap-margin: calc-sub(100%, $unwrap-width);
+            $unwrap-margin-oneside: calc-div($unwrap-margin, 2);
+            $unwrap-width-oneside: calc-add($unwrap-width, $unwrap-margin-oneside);
+
+            margin-right: 0;
+            margin-left: 0;
+            width: $unwrap-width;
+
+            &--right, &--left { width: $unwrap-width-oneside; }
+            &, &--left { margin-left: $unwrap-margin-oneside; }
+            &, &--right { margin-right: $unwrap-margin-oneside; }
+
+            .#{$wrap}--right > & {
+              &, &--right, &--left { margin-right: 0; }
+              &--right { width: 100%; }
+              &, &--left { width: $unwrap-width; margin-left: $unwrap-margin; }
+            }
+            .#{$wrap}--left > & {
+              &, &--right, &--left { margin-left: 0; }
+              &, &--right { width: $unwrap-width; margin-right: $unwrap-margin; }
+              &--left { width: 100%; }
+            }
+          }
+
+          .#{$unpage} {
+            $unpage-width: 100vw;
+            $unpage-margin: calc-sub(100%, $unpage-width);
+            $unpage-margin-right: calc-sub($unpage-margin, $page-offset);
+            $unpage-margin-left: calc-add($unpage-margin, $page-offset);
+            $unpage-width-right: calc-add($unpage-width, calc-div($unpage-margin-left, 2));
+            $unpage-width-left: calc-add($unpage-width, calc-div($unpage-margin-right, 2));
+
+            margin-right: 0;
+            margin-left: 0;
+            width: $unpage-width;
+
+            &--right { width: $unpage-width-right;}
+            &--left { width: $unpage-width-left;}
+            &, &--right { margin-right: calc-div($unpage-margin-right, 2); }
+            &, &--left { margin-left: calc-div($unpage-margin-left, 2); }
+
+            .wrap--left > & {
+              margin-right: calc-add($unpage-margin, $page-left);
+              margin-left: - $page-left;
+              &--right {
+                width: calc-sub($unpage-width, $page-left);
+                margin-right: calc-add($unpage-margin, $page-left);
+                margin-left: 0;
+              }
+              &--left {
+                width: calc-add(100%, $page-left);
+                margin-right: 0;
+                margin-left: - $page-left;
+              }
+            }
+            .wrap--right > & {
+              margin-right: - $page-right;
+              margin-left: calc-add($unpage-margin, $page-right);
+              &--right {
+                width: calc-add(100%, $page-right);
+                margin-right: - $page-right;
+                margin-left: 0;
+              }
+              &--left {
+                width: calc-sub($unpage-width, $page-right);
+                margin-left: calc-add($unpage-margin, $page-right);
+                margin-right: 0;
+              }
+            }
+          }
+
+        }
       }
     }
   }
@@ -131,7 +288,7 @@
 // wrap
 @mixin wrap($width){
   @if type-of($width) == 'string' {
-    @extend .wrap--#{$width};
+    @extend .#{$wrap}--#{$width};
   } @else {
     @extend .wrap; max-width: $width;
   }

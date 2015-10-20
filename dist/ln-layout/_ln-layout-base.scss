@@ -5,6 +5,8 @@ $layout-alignment: null !default;
 $layout-classes: (
   page: 'page',
   wrap: 'wrap',
+  unpage: 'unpage',
+  unwrap: 'unwrap',
   grid: 'grid',
   cell: 'cell'
 ) !default;
