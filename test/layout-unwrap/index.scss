@@ -1,10 +1,20 @@
-
 @import '../../dist/ln-resets/all';
 @include reset-ln();
 
+/*
+
+scheme for proof of concept
+
+- set html font-size to (100vw - 20px)/100
+- set body padding to 10px all directions
+- use rem wherever you would use vw
+
+*/
+
+
+
 // VARIABLES
 $proof-margin: 1rem;
-
 $vp-inset-right: 10rem;
 $vp-inset-left: 4rem;
 $vp-inset: '(#{$vp-inset-right} + #{$vp-inset-left})';

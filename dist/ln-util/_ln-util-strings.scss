@@ -3,7 +3,7 @@
 // last-index
 @function str-last-index($str, $substr) {
   $length: str-length($str);
-  @for $n from $length - str-length($substr) through 1 {
+  @for $n from $length - str-length($substr) + 1 through 1 {
     $index: str-index(str-slice($str, $n, $length), $substr);
     @if $index { @return $index + $n - 1; }
   }
