@@ -3,9 +3,9 @@
 // last-index
 @function str-last-index($str, $substr) {
   $length: str-length($str);
-  @for $n from $length - str-length($substr) + 1 through 1 {
-    $index: str-index(str-slice($str, $n, $length), $substr);
-    @if $index { @return $index + $n - 1; }
+  @for $n from $length - str-length($substr) through 1 {
+    $index: str-index(str-slice($str, $n + 1, $length), $substr);
+    @if $index { @return $index + $n; }
   }
   @return null;
 }
@@ -13,11 +13,9 @@
 // replace
 @function str-replace($str, $search, $replace: '') {
   $index: str-index($str, $search);
-
   @if $index {
     @return str-slice($str, 1, $index - 1) + $replace + str-replace(str-slice($str, $index + str-length($search)), $search, $replace);
   }
-
   @return $str;
 }
 

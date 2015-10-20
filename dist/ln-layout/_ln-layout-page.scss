@@ -193,7 +193,7 @@
           max-width: medium-value('content-width');
         }
 
-        @if $page-right or $page-left {
+        @if map-has-key($orig, 'page-right') or map-has-key($orig, 'page-left') {
           $page-inset: calc(#{$page-right} + #{$page-left});
           $page-offset: calc(#{$page-right} - #{$page-left});
 

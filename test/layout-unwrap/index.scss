@@ -1,6 +1,6 @@
 @import '../../dist/ln-sass';
 
-@include reset-ln();
+// @include reset-ln();
 
 // body styles to visualize page-right/-left
 body {
@@ -16,7 +16,7 @@ body {
 div { padding: 1px 0; margin-top: 0.25em; margin-bottom: 0.25em; }
 p { margin-top: 0.25em; margin-bottom: 0.25em; }
 .line { height: 0; border-bottom: 1px solid black; margin: 1rem 0 2rem; }
-.pink { max-width: 30rem; background-color: pink; }
+.pink { max-width: 48rem; background-color: pink; }
 .shaded { background-color: rgba(50,50,50,0.75); color: whitesmoke; }
 
 @include setup-media();
