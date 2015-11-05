@@ -1,12 +1,35 @@
-@mixin bar() {
-  @at-root { @content; }
+@import '../../dist/ln-sass';
+
+$colors: (
+  red: #FFB38C,
+  yellow: #F7F74F,
+  green: #25CFB2,
+  blue: #4A5A6B
+);
+.test {
+  red: color(red);
+  yellow: color(yellow);
+  green: color(green);
+  blue: color(blue);
+  $red-luma: brightness(color(red));
+  $yellow-luma: brightness(color(yellow));
+  $green-luma: brightness(color(green));
+  $blue-luma: brightness(color(blue));
 }
 
-.test {
-  @include bar() {
-    color: yellow;
-    .nest2 {
-      color: green;
-    }
-  }
-}
+$red-light: set-brightness(color(red), 90);
+$yellow-light: set-brightness(color(yellow), 90);
+$green-light: set-brightness(color(green), 90);
+$blue-light: set-brightness(color(blue), 90);
+
+
+$min-sat: min(saturation($red-light), saturation($yellow-light), saturation($green-light), saturation($blue-light));
+
+.debug { min-sat: $min-sat; }
+
+.swatch { height: 200px; width: 200px; }
+.red { background: scale-color($red-light, $saturation: 100%); }
+.yellow { background: scale-color($yellow-light, $saturation: 50%); }
+.green { background: scale-color($green-light, $saturation: 80%); }
+.blue { background: scale-color($blue-light, $saturation: 100%); }
+.gray { background: gray(90); }

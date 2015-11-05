@@ -22,8 +22,9 @@ $grid-curr-margin: null !default;
       @include clearfix();
     } @else {
       font-size: 0rem;
-      & > * { font-size: 1rem; }
+      & > * { font-size: 1rem; direction: ltr; }
       text-align: $grid-alignment;
+      direction: $grid-direction;
     }
   }
 

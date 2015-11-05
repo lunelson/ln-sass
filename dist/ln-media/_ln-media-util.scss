@@ -54,8 +54,9 @@
 }
 
 // multiple queries
-@mixin media-multiple($from: null, $to: null, $for: null) {
-  // correct 'for' options
+@mixin media-multiple($from: null, $to: null, $until: null, $for: null) {
+  // normalize inputs
+  $to: $to or $until or null;
   @if $for {
     @if contains($for, typo) { $for: join($for, margin-y line-height font-size-mod); }
     @if contains($for, margin-y) { $for: join($for, margin-y-mod); }
@@ -70,13 +71,15 @@
       if($from, index($media-keys, $from), 1),
       if($to, index($media-keys, $to) - 1, length($media-keys)));
   // conditional per-medium actions
-
-  @each $key in $sliced-keys {
+  $slice-length: length($sliced-keys);
+  @for $n from 1 through $slice-length {
+    $key: nth($sliced-keys, $n);
     $orig-keys: map-keys(medium-orig($key));
-    @if not $for { @include media-single($key) { @content; } }
-    @else if contains-any($orig-keys, $for) {
-      @include media-single($key) { @content; }
-    }
+    $args: if($n == $slice-length, $key, $key $to);
+    // if there's no "for" condition, do the medium
+    @if not $for { @include media-single($args...) { @content; } }
+    // if there is a "for" condition, do medium only if the "for" key exists for medium
+    @else if contains-any($orig-keys, $for) { @include media-single($args...) { @content; } }
   }
 }
 

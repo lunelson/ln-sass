@@ -17,6 +17,7 @@ $layout-wrap-strings: (
   to: 'to'
 ) !default;
 
+$grid-direction: ltr !default;
 $grid-alignment: left !default;
 $grid-is-float: false !default;
 $grid-curr-margin: null !default;
