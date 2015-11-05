@@ -75,7 +75,7 @@
   @for $n from 1 through $slice-length {
     $key: nth($sliced-keys, $n);
     $orig-keys: map-keys(medium-orig($key));
-    $args: if($n == $slice-length, $key, $key $to);
+    $args: if($n < $slice-length, $key, $key $to);
     // if there's no "for" condition, do the medium
     @if not $for { @include media-single($args...) { @content; } }
     // if there is a "for" condition, do medium only if the "for" key exists for medium
