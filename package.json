@@ -9,7 +9,7 @@
   "private": true,
   "scripts": {
     "start": "gulp",
-    "test": "gulp test",
+    "test": "gulp test"
   },
   "repository": {
     "type": "git",
