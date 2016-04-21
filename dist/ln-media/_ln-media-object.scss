@@ -21,6 +21,8 @@
     // line-length: 30,
     // column-ratio: 1 // n.b. wherever this is less than one, will override breakpoint
   ), $base)) !global;
+  // $page-x: map-get($base, 'page-right') + map-get($base, 'page-left');
+  // $base: map-merge($base, ('content-width': 'calc(100% - #{$page-x})' ));
 
   // backup $media; if media is not empty, proceed
   $media-orig: $media !global;

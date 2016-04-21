@@ -11,9 +11,10 @@
     font-weight: $weight; // this should be both word and number values
     src: url('#{$dir}#{$file}.eot'); // IE9 Compat Modes
     src: url('#{$dir}#{$file}.eot?#iefix') format('embedded-opentype'),
-       url('#{$dir}#{$file}.woff') format('woff'),
-       url('#{$dir}#{$file}.svg##{$file}') format('svg'),
-       url('#{$dir}#{$file}.ttf') format('truetype');
+       url('#{$dir}#{$file}.svg##{$file}') format('svg');
+       //url('#{$dir}#{$file}.woff') format('woff'),
+       // url('#{$dir}#{$file}.svg##{$file}') format('svg'),
+       // url('#{$dir}#{$file}.ttf') format('truetype');
   }
 }
 

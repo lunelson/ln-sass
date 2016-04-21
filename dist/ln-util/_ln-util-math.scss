@@ -16,9 +16,16 @@
   @return $y1 + $m * ($value - $x1);
 }
 
-@function sum(){}
+@function sum($numlist){
+  $result: 0; @each $num in $numlist {
+    $result: $result + $num;
+  }
+  @return $result;
+}
 
-@function average(){}
+@function average($numlist){
+  @return sum($numlist) / length($numlist);
+}
 
 @function weighted-average(){}
 

@@ -1,14 +1,11 @@
 // TYPO BLOCK
 
-@mixin typo-block($size: 1, $alias: null, $height: null, $suffix: null) {
+@mixin typo-block($size: 1rem, $alias: null, $line-height: null, $suffix: null) {
 
-  // stable values
-  $size: rem($size);
-  $font: font($alias);
+  $size: rem($size); // assure size is in rem
+  $font: font($alias); // get the font map
   $char-height: map-get($font, 'char-height') or 1;
-
-  // medium values
-  @if not $height or $height == 'auto' { $height: auto-line-height($size); }
+  $line-height: $line-height or auto-line-height($size); // no line-height spec'd = 'auto'
 
   // output
   .typo#{if($suffix, '--#{$suffix}', '')} > & {
@@ -20,13 +17,13 @@
 
     $typo-curr-font: $font !global;
     $typo-curr-font-size: $size !global;
-    $typo-curr-line-height: $height !global;
+    $typo-curr-line-height: $line-height !global;
     $typo-curr-char-height: $char-height !global;
 
     @if medium-orig-value('font-size') and $size != 1rem { font-size: $size; }
     @if medium-orig-value('margin-y') { margin-top: t-margin(); }
     @if medium-orig-value('line-height') {
-      line-height: $height;
+      line-height: $line-height;
       margin-bottom: t-margin(0);
       &:first-child { margin-top: t-margin(0); }
     }

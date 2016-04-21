@@ -1,0 +1,116 @@
+//////////
+// typo //
+//////////
+
+@mixin typo($font-size: null, $options: ()){
+
+  // do the setup if it is not done
+  @if not $done-typo-setup { @at-root { @include setup-typo(); } }
+
+  // parse options
+  $font-alias: map-get($options, font-alias) or map-get($options, font);
+  $line-height: map-get($options, line-height) or map-get($options, height);
+  $output: if(map-has-key($options, output), map-get($options, output), true); // output unless explicit false
+
+  // parse classes
+  // $line: map-get($trim-classes, 'line');
+  $self: map-get($trim-classes, 'self');
+  $area: map-get($trim-classes, 'area');
+
+  // // KILL THESE
+  // $styles: if(map-has-key($options, style), map-get($options, style), true); // style output unless explicit false
+  // $margin: map-get($options, margin) or 1; // default std margin
+  // $area: map-get($options, area);
+
+  // define arguments
+  $font-size: $font-size or $typo-curr-font-size or 1; $rem-size: rem($font-size); // assure size is in rem
+  $font: font($font-alias) or $typo-curr-font; // get the font map
+  $char-height: map-get($font, 'char-height') or $typo-curr-char-height or 1;
+  $line-height: $line-height or $typo-curr-line-height or auto-line-height($rem-size); // no line-height spec'd = 'auto'
+
+  // store prev and set curr scope vars
+  $typo-prev-font: $typo-curr-font;
+  $typo-prev-font-size: $typo-curr-font-size;
+  $typo-prev-line-height: $typo-curr-line-height;
+  $typo-prev-char-height: $typo-curr-char-height;
+
+  $typo-curr-font: $font !global;
+  $typo-curr-font-size: $rem-size !global;
+  $typo-curr-line-height: $line-height !global;
+  $typo-curr-char-height: $char-height !global;
+
+  // TODO: make these conditional on media(())
+  // add &, & > * {} as selector; group $output underneath it
+  font-size: unit-assert($rem-size, em);
+  line-height: $line-height;
+
+  // TODO: rename 'output' to 'global'; default to false
+  // i.e. require for global defs - (global: true)
+  // thus combine this mixin with 'typo-scope', the latter being defaut
+  @if $output {
+    // TODO: change to '&.typo, .typo > &'
+    &.t-#{$self},
+    .t-each > &, // good for flex column layouts ?
+    .t-#{$area} > &,
+    [class*='t-#{$area}--'] > & {
+      margin-top: t-margin(0);
+      margin-bottom: t-margin(0);
+    }
+    @each $alias, $mult in $typo-mults {
+      .t-#{$area}--#{$alias} > * + & { margin-top: t-margin($mult); }  }
+    .t-#{$area} > * + & { margin-top: t-margin(); }
+    .t-#{$area} > & { @content; }
+    // .t-area--#{$alias} { margin-top: t-margin($mult); }
+
+    // $area-selector: if($area, '.t-area#{$area} > &','.t-area > &, &.t-#{$self}');
+    // #{$area-selector} {
+    //   line-height: $line-height;
+    //   margin-top: t-margin(0);
+    //   margin-bottom: t-margin(0);
+    // }
+  } /* @else {
+    @content; // non-global declaration, @content output
+  } */
+
+  // $this: last-parents();
+  // @at-root {
+  //   #{$this} {
+  //     font-size: $rem-size;
+  //     @if $styles {
+  //       .t-area > #{$this}, #{$this}.t-#{$self} {
+  //         line-height: $line-height;
+  //         margin-top: t-margin(0);
+  //         margin-bottom: t-margin(0);
+  //       }
+  //       .t-area > * + #{$this} { margin-top: t-margin($margin); }
+  //       .t-area #{$this} { @content; }
+  //     }
+  //   }
+  // }
+
+  // @if medium-orig-value('font-size') { font-size: $rem-size; }
+  // @if $styles {
+  //   @if medium-orig-value('margin-y') or medium-orig-value('line-height') {
+  //     .t-area > * + & { margin-top: t-margin($margin); }
+  //     .t-area > &, &.t-#{$self} {
+  //       line-height: $line-height;
+  //       margin-top: t-margin(0);
+  //       margin-bottom: t-margin(0);
+  //     }
+  //   }
+  //   // TODO: find a way to not repeat this if using media queries?
+  //   .t-area & { @content; }
+  // }
+
+  // restore curr scope vars to prev
+  $typo-curr-font: $typo-prev-font !global;
+  $typo-curr-font-size: $typo-prev-font-size !global;
+  $typo-curr-line-height: $typo-prev-line-height !global;
+  $typo-curr-char-height: $typo-prev-char-height !global;
+
+}
+
+// // modular version
+// @mixin mod-typo-scope($mod: 0, $rest...){
+//   @include typo-scope(mod-size($mod), $rest...) { @content; }
+// }

@@ -1,0 +1,20 @@
+// NB only encode functions required
+
+@import "encode/encode";
+
+$media: (
+  a: (
+    breakpoint: 30em
+  ),
+  b: (
+    breakpoint: 30em
+  ),
+  c: (
+    breakpoint: 45em
+  ),
+  d: (
+    breakpoint: 75em
+  ),
+);
+
+@include json-encode($media, regular);

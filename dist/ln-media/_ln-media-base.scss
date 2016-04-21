@@ -1,6 +1,18 @@
 // MEDIA GLOBALS
 
-$base: () !default;
+$base: (
+  font-size: 16px,
+  line-height: 1.5,
+  font-size-mod: 1.5,
+  margin-x: 1rem,
+  margin-x-mod: 2,
+  margin-y: 1rem,
+  margin-y-mod: 2,
+  page-top: 1rem,
+  page-right: 1rem,
+  page-bottom: 1rem,
+  page-left: 1rem,
+) !default;
 $media: (
   alpha: (breakpoint: 20em),
   beta: (breakpoint: 30em),

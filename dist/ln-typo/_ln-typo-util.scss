@@ -1,9 +1,30 @@
 // TYPO UTIL
 
+// new shit
+@function size($size){ @return unit-assert(map-get($typo-sizes, $size), em); }
+@function mult($mult){ @return map-get($typo-mults, $mult); }
+
+// medium value shortcuts [multiples]
+@function margin-x($mult: 1) { @return if(type-of($mult) == 'string', medium-value('margin-x', $mult), if(unitless($mult), medium-value('margin-x') * $mult, rem($mult))); }
+@function margin-y($mult: 1) { @return if(type-of($mult) == 'string', medium-value('margin-y', $mult), if(unitless($mult), medium-value('margin-y') * $mult, rem($mult))); }
+
+// // modulated medium-value shortcuts
+// @function mod-margin-x($index: 0, $spread: 2) { @return _pow(medium-value('margin-x-mod'), $index/$spread) * medium-value('margin-x'); }
+// @function mod-margin-y($index: 0, $spread: 2) { @return _pow(medium-value('margin-y-mod'), $index/$spread) * medium-value('margin-y'); }
+// @function mod-size($index: 0, $spread: 2) { @return _pow(medium-value('font-size-mod'), $index/$spread) * 1rem; }
+
+// // ALIASES
+// @function y-margin($args...) { @return margin-y($args...); }
+// @function x-margin($args...) { @return margin-x($args...); }
+// @function mod-y-margin($args...){ @return mod-margin-y($args...); }
+// @function mod-x-margin($args...){ @return mod-margin-x($args...); }
+
+
 // auto-line-height function WRT size
 @function auto-line-height($size) {
   $sub-lines: $typo-sub-lines or ceil($size);
-  $rel-height: medium-value('line-height') / unit-strip($size);
+  $base-height: if(function-exists('medium-value'), medium-value('line-height') or 1.5, 1.5);
+  $rel-height: $base-height / unit-strip($size);
   @return $rel-height * ceil($typo-min-height / $rel-height * $sub-lines) / $sub-lines;
 }
 
@@ -12,6 +33,8 @@
   $line-height: $line-height or medium-value('line-height'); $char-height: $char-height or 1;
   @return unit-assert($line-height - $char-height, em) / 2;
 }
+@function trim(){ @return 0; }
+@function untrim(){ @return 0; }
 
 // typo/trim margin -- mult
 @function t-margin($mult: 1, $line-height: $typo-curr-line-height, $char-height: $typo-curr-char-height){
@@ -19,23 +42,23 @@
   @return calc(#{$margin} - #{trim-height($line-height, $char-height)});
 }
 
-// typo/trim margin -- mod
-@function mod-t-margin($mod: 0, $line-height: $typo-curr-line-height, $char-height: $typo-curr-char-height){
-  $margin: if(unitless($mod), mod-margin-y($mod), $mod);
-  @return calc(#{$margin} - #{trim-height($line-height, $char-height)});
-}
+// // typo/trim margin -- mod
+// @function mod-t-margin($mod: 0, $line-height: $typo-curr-line-height, $char-height: $typo-curr-char-height){
+//   $margin: if(unitless($mod), mod-margin-y($mod), $mod);
+//   @return calc(#{$margin} - #{trim-height($line-height, $char-height)});
+// }
 
-// typo margins
-@mixin t-margins($m, $type: 't-margin'){
-  @if medium-orig-value('margin-y') { margin-top: call($type, $m); }
-  @if medium-orig-value('line-height') {
-    margin-bottom: t-margin(0);
-    &:first-child { margin-top: t-margin(0); }
-  }
-}
+// // typo margins
+// @mixin t-margins($m, $type: 't-margin'){
+//   @if medium-orig-value('margin-y') { margin-top: call($type, $m); }
+//   @if medium-orig-value('line-height') {
+//     margin-bottom: t-margin(0);
+//     &:first-child { margin-top: t-margin(0); }
+//   }
+// }
 
-// modulated typo margins
-@mixin mod-t-margins($mod){ @include t-margins($mod, 'mod-t-margin'); }
+// // modulated typo margins
+// @mixin mod-t-margins($mod){ @include t-margins($mod, 'mod-t-margin'); }
 
 // @mixin mod-t-margins($mod){
 //   @if medium-orig-value('margin-y') {

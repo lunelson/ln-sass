@@ -31,7 +31,7 @@
   }
   @return $output;
 }
-
+@function str-multiply($args...) { @return str-times($args...); }
 // KEYWORDS
 
 @function opposite($dirs) {

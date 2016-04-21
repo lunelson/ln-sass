@@ -1,22 +1,7 @@
 'use strict';
 
-var gulp = require('gulp');
-var sass = require('gulp-sass');
-var sourcemaps = require('gulp-sourcemaps');
-var autoprefixer = require('gulp-autoprefixer');
+var gulp  = require('gulp');
+var mocha = require('gulp-mocha');
+gulp.task('mocha', function() { gulp.src('test/test_sass.js', {read: false}).pipe(mocha({reporter: 'spec'})); });
+gulp.task('test', function() { gulp.watch(['scss/**/*.scss'], ['mocha']); });
 
-gulp.task('default', function () {
-    return gulp.src('src/**/*.css')
-});
-
-gulp.task('sass', function () {
-  gulp.src(['./test/**/*.scss', '!./test/_holding/**/*.scss'], {base: './test'})
-    .pipe(sourcemaps.init())
-    .pipe(sass().on('error', sass.logError))
-    .pipe(autoprefixer())
-    .pipe(sourcemaps.write('.'))
-    .pipe(gulp.dest('./test'));
-});
-
-gulp.task('watch', function () { gulp.watch(['./**/*.scss'], ['sass']); });
-gulp.task('default', ['sass', 'watch']);

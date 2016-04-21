@@ -26,8 +26,8 @@ $colors: (
 ///////////////
 
 // blacken/shade, whiten/tint
-@function shade($color, $percent){ @return mix($color, black, $percent); }
-@function tint($color, $percent){ @return mix($color, white, $percent); }
+@function shade($color, $percent){ @return mix(black, $color, $percent); }
+@function tint($color, $percent){ @return mix(white, $color, $percent); }
 
 @function blacken($args...) { @return shade($args...); }
 @function whiten($args...) { @return tint($args...); }

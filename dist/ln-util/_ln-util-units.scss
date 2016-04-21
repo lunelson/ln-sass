@@ -50,9 +50,10 @@
 @function rem($values...) {
   @if $values == null { @return null; }
   @if type-of(nth($values, 1)) == 'list' { $values: nth($values, 1); } // ie if SSV
-  $pixels: unit-strip(medium-value('font-size')); $result: ();
+  $font-size: if(function-exists('medium-value'), medium-value('font-size') or 16, 16);
+  $result: ();
   @each $value in $values {
-    @if unit($value) == 'px' { $result: append($result, unit-assert($value / $pixels, rem), 'space'); }
+    @if unit($value) == 'px' { $result: append($result, unit-assert($value / unit-strip($font-size), rem), 'space'); }
     @else { $result: append($result, unit-assert($value, rem), 'space'); }
   }
   @return if(length($result) > 1, $result, nth($result, 1));
@@ -61,10 +62,11 @@
 @function px($values...) {
   @if $values == null { @return null; }
   @if type-of(nth($values, 1)) == 'list' { $values: nth($values, 1); }
-  $pixels: unit-strip(medium-value('font-size')); $result: ();
+  $font-size: if(function-exists('medium-value'), medium-value('font-size') or 16, 16);
+  $result: ();
   @each $value in $values {
     @if unit($value) == 'px' { $result: append($result, $value, 'space'); }
-    @else { $result: append($result, unit-assert($value * $pixels, 'px'), 'space'); }
+    @else { $result: append($result, unit-assert($value * unit-strip($font-size), 'px'), 'space'); }
   }
   @return if(length($result) > 1, $result, nth($result, 1));
 }

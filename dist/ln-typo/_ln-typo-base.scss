@@ -2,6 +2,8 @@
 // TYPO GLOBALS //
 //////////////////
 
+$typo-sizes: () !default;
+$typo-mults: () !default;
 
 $typo-curr-font: null !default;
 $typo-curr-font-size: 1rem !default;
@@ -10,10 +12,12 @@ $typo-curr-char-height: null !default;
 
 $typo-min-height: 1.125 !default;
 $typo-sub-lines: 2 !default;
+$done-typo-setup: false !default;
 
 $trim-classes: (
   line: 'line',
-  content: 'content'
+  self: 'self',
+  area: 'area'
 ) !default;
 
 $fonts: (
@@ -50,13 +54,47 @@ $fonts: (
 // TYPO SETUP //
 ////////////////
 
+@mixin setup-typo($options: null, $sizes: (), $mults: (), $output: true) {
+  @if $options { @include setup-typo($options...); } @else {
 
-@mixin setup-typo(){
+    $typo-sizes: $sizes !global;
+    $typo-mults: $mults !global;
 
-  // setup typo container class
-  // .trim--#{map-get($trim-classes, 'content')} { padding-top: 1px; padding-bottom: 1px; }
+    $line: map-get($trim-classes, 'line');
+    // $self: map-get($trim-classes, 'self');
+    $area: map-get($trim-classes, 'area');
 
-  // setup fonts
-  @include setup-fonts();
-
+    @if $output {
+      .t-#{$line} {
+        line-height: 1 !important;
+        margin-top: 0 !important;
+        margin-bottom: 0 !important;
+      }
+      @include media((for: margin-y)) {
+        .t-#{$area} > * + * { margin-top: margin-y(); }
+        @each $alias, $mult in $typo-mults {
+          .t-#{$area}--#{$alias} > * + * { margin-top: margin-y($mult); }
+        }
+      }
+    }
+    $done-typo-setup: true !global;
+  }
 }
+
+// @mixin setup-typo($options){
+//   $line: map-get($trim-classes, 'line');
+//   $self: map-get($trim-classes, 'self');
+//   $area: map-get($trim-classes, 'area');
+
+//   // base classes
+//   .t-#{$line} {
+//     line-height: 1 !important;
+//     margin-top: 0 !important;
+//     margin-bottom: 0 !important;
+//   }
+//   @include media((for: margin-y)) {
+//     .t-#{$content} > * + * { margin-top: margin-y(); }
+//   }
+
+//   $done-typo-setup: true !global;
+// }

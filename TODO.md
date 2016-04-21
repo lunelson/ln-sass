@@ -1,3 +1,22 @@
+# Sass
+
+add on npm?
+    npm private?
+Implement testing with true and mocha
+bring back in as module, linked to local copy; switch branches as necessary
+
+layout
+    posn
+    posn--f
+    posn--f-...
+    posn--a
+    posn--a-...
+
+selector
+    sel-initial
+    sel-last
+    sel-add-before-last
+
 # ln-sass planning
 
 ## reset

@@ -1,12 +1,11 @@
 // TYPO SCOPE
 
-@mixin typo-scope($size: 1, $alias: null, $line-height: null, $at-root: true){
+@mixin typo-scope($size: 1, $alias: null, $line-height: null, $at-root: false){
 
-  $size: rem($size);
-  $font: font($alias);
+  $size: rem($size); // assure size is in rem
+  $font: font($alias); // get the font map
   $char-height: map-get($font, 'char-height') or 1;
-  @if not $line-height or $line-height == 'auto' { $line-height: auto-line-height($size); }
-  $t-margin: t-margin(0, $line-height, $char-height);
+  $line-height: $line-height or auto-line-height($size); // no line-height spec'd = 'auto'
 
   $typo-prev-font: $typo-curr-font;
   $typo-prev-font-size: $typo-curr-font-size;
@@ -21,7 +20,8 @@
   @if medium-orig-value('font-size') and $size != 1rem { font-size: $size; }
   @if medium-orig-value('line-height') { line-height: $line-height; }
 
-  @at-root { @content; }
+  @if $at-root { @at-root { @content; } }
+  @else { @content; }
 
   $typo-curr-font: $typo-prev-font !global;
   $typo-curr-font-size: $typo-prev-font-size !global;

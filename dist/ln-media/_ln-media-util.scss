@@ -5,28 +5,22 @@
 
 // normalize medium units
 @function normalize-medium($medium) {
-
   // correct for font-size and line-height units/non-units
   $font-size: map-get($medium, 'font-size');
   $line-height: map-get($medium, 'line-height');
   @if unit($font-size) != 'px' { $font-size: unit-strip($font-size) * 16px; }
   @if unit($line-height) == 'px' { $line-height: $line-height / $font-size; }
-  $corrections: (
+  $normal: (
     'font-size': $font-size,
     'line-height': $line-height,
     'html-scale': unit-strip($font-size / 16px)
   );
-  // TODO: additional function to resolve breakpoint units and/or versus column-count
-  // $breakpoint: map-get($medium, 'breakpoint');
-  // @if $breakpoint and unit($breakpoint) != 'em' {
-  //   $corrections: map-merge($corrections, ('breakpoint': $breakpoint));
-  // }
   // merge additional corrections if necessary
   @each $key, $value in map-remove($medium, 'font-size', 'line-height', 'breakpoint') {
-    @if unit($value) == 'px' { $corrections: map-merge($corrections, ($key: $value / $font-size * 1rem)); }
+    @if unit($value) == 'px' { $normal: map-merge($normal, ($key: $value / $font-size * 1rem)); }
   }
   // return merged corrections
-  @return map-merge($medium, $corrections);
+  @return map-merge($medium, $normal);
 }
 
 
@@ -36,57 +30,76 @@
 
 
 // media query string
-@function media-query-string($alias1: null, $alias2: null) {
+@function media-query-string($min: null, $max: null) {
+  $min: if(map-has-key($media, $min), get($media, $min, 'breakpoint'), $min);
+  $max: if(map-has-key($media, $max), get($media, $max, 'breakpoint'), $max);
   @return 'screen'
-    + if($alias1, ' and (min-width: #{get($media, $alias1, breakpoint)})', '')
-    + if($alias2, ' and (max-width: #{get($media, $alias2, breakpoint) - 0.001})', '');
+    + if($min, ' and (min-width: #{$min})', '')
+    + if($max, ' and (max-width: #{$max - 0.001})', '');
 }
 
 // single query
-@mixin media-single($args...) {
-  // save alias reference; assign current
-  $media-prev-alias: $media-curr-alias;
-  $media-curr-alias: nth($args, 1) or map-prev-key($media, nth($args, 2)) !global;
-  // run the content in medium
-  @media #{media-query-string($args...)} { @content }
-  // reset the medium (no nesting; could just reset to null)
+@mixin media-single($min, $max: null) {
+  // save alias if it's a valid min string
+  $media-prev-alias: null;
+  @if map-has-key($media, $min) {
+    $media-prev-alias: $media-curr-alias;
+    $media-curr-alias: $min !global;
+  }
+  // output the query
+  @media #{media-query-string($min, $max)} { @content }
+  // reset the alias
   $media-curr-alias: $media-prev-alias !global;
 }
 
 // multiple queries
-@mixin media-multiple($from: null, $to: null, $until: null, $for: null) {
+@mixin media-multiple($from: null, $to: null, $for: null, $at: null) {
   // normalize inputs
-  $to: $to or $until or null;
-  @if $for {
-    @if contains($for, typo) { $for: join($for, margin-y line-height font-size-mod); }
-    @if contains($for, margin-y) { $for: join($for, margin-y-mod); }
-    @if contains($for, font-size) { $for: join($for, font-size-mod); }
-    @if contains($for, margin-x) { $for: join($for, margin-x-mod); }
-  }
-  // output the @content for $base medium if $from is null
-  @if $from == null { @content; }
-  // determine other referenced media
-  $media-keys: map-keys($media);
-  $sliced-keys: slice($media-keys,
-      if($from, index($media-keys, $from), 1),
-      if($to, index($media-keys, $to) - 1, length($media-keys)));
-  // conditional per-medium actions
-  $slice-length: length($sliced-keys);
-  @for $n from 1 through $slice-length {
-    $key: nth($sliced-keys, $n);
-    $orig-keys: map-keys(medium-orig($key));
-    $args: if($n < $slice-length, $key, $key $to);
-    // if there's no "for" condition, do the medium
-    @if not $for { @include media-single($args...) { @content; } }
-    // if there is a "for" condition, do medium only if the "for" key exists for medium
-    @else if contains-any($orig-keys, $for) { @include media-single($args...) { @content; } }
+  // $from: $from or nth(map-keys($media), 1);
+  // $to: $to or null;
+  // @if $for {
+  //   @if contains($for, typo) { $for: join($for, margin-y line-height font-size-mod); }
+  //   @if contains($for, margin-y) { $for: join($for, margin-y-mod); }
+  //   @if contains($for, font-size) { $for: join($for, font-size-mod); }
+  //   @if contains($for, margin-x) { $for: join($for, margin-x-mod); }
+  // }
+
+  @if $at {
+    @each $medium in $at {
+      $orig-keys: map-keys(medium-orig($medium));
+      // if there's no "for" condition, do the medium
+      @if not $for { @include media-single($medium) { @content; } }
+      // if there is a "for" condition, do medium only if the "for" key exists for medium
+      @else if contains-any($orig-keys, $for) { @include media-single($medium) { @content; } }
+    }
+  } @else {
+    // output the @content for $base medium if $from is null
+    @if $from == null { @content; }
+
+    // determine other referenced media
+    $media-keys: map-keys($media);
+    $from-index: if($from, index($media-keys, $from), 1);
+    $to-index: if($to, index($media-keys, $to) - 1, length($media-keys));
+    $sliced-keys: join(slice($media-keys, $from-index, $to-index), $to);
+    $sliced-length: length($sliced-keys);
+
+    // conditional per-medium actions
+    @for $n from 1 to $sliced-length {
+      $curr: nth($sliced-keys, $n);
+      // $next: nth($sliced-keys, $n + 1);
+      $orig-keys: map-keys(medium-orig($curr));
+      // if there's no "for" condition, do the medium
+      @if not $for { @include media-single($curr, $to) { @content; } }
+      // if there is a "for" condition, do medium only if the "for" key exists for medium
+      @else if contains-any($orig-keys, $for) { @include media-single($curr, $to) { @content; } }
+    }
   }
 }
 
 // unified media query mixin -- calls mixins above
 @mixin media($args...) {
   $arg1: nth($args, 1);
-  @if type-of($arg1) == 'map' { @include media-multiple($arg1...) { @content; } }
+  @if index('map' 'list', type-of($arg1)) { @include media-multiple($arg1...) { @content; } }
   @else { @include media-single($args...) { @content; } }
 }
 
