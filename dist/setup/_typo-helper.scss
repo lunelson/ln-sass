@@ -109,8 +109,18 @@ $curr-font-val: null;
   @return ($lh - $ch) / 2 * 1em;
 }
 
-// new typo helper,
-@mixin typo($s:'base', $l:'auto', $f: 'base') {
+// @include adj-t-margin(null) // *+* untrim
+// @include adj-t-margin(null, p) // *+p untrim
+// @include adj-t-margin(2) // *+* t-margin(2)
+// @include adj-t-margin(2, $list) *+{$list} t-margin(2)
+@mixin adj-t-margin($m, $siblings: '*') {
+  @include adjacent-to($siblings) {
+    margin-top: if($m, t-margin($m), trim());
+  }
+}
+
+// typo-x -- @extends existing typo-classes
+@mixin typo-x($s:'base', $l:'auto', $f: 'base') {
   @at-root & {
     @extend .s#{mod-class($s)};
     @if $l != 'auto' { @extend .l#{mod-class($l)}; }
@@ -130,40 +140,7 @@ $curr-font-val: null;
   }
 }
 
-// typo2
-@mixin typo2($size: null, $line: null, $font: null) {
-
-  $font: if($font != 'base', map-get($fonts, $font), null);
-  $font-family: if($font, map-get($font, 'font-family'), null);
-  $size-adjust: if($font, map-get($font, 'size-adjust') or 1, 1);
-
-  $sizes: map-get(medium(), 'sizes');
-  $size: get($sizes, $size) or $size or 1;
-
-  $lines: map-get(medium(), 'lines');
-  $line-key: map-has-key($lines, $line);
-  $line: if($line-key, map-get($lines, $line) * mval('line-height'), if($line=='auto', auto-height($size), $line or mval('line-height')));
-
-  font-family: $font-family;
-  font-size: unit-assert($size, rem) * $size-adjust;
-  line-height: $line;
-
-  $prev-size-val: $curr-size-val;
-  $prev-line-val: $curr-line-val;
-  $prev-font-val: $curr-font-val;
-  $curr-size-val: $size !global;
-  $curr-line-val: $line !global;
-  $curr-font-val: $font !global;
-
-  @at-root #{insert-sels('[class*="typo"]', '>')} { font-size: unit-assert($size, em) * $size-adjust; @content; }
-
-  $curr-size-val: $prev-size-val !global;
-  $curr-line-val: $prev-line-val !global;
-  $curr-font-val: $prev-font-val !global;
-}
-
-// typo3
-@mixin typo3($s: null, $l: null, $f: null) {
+@mixin typo($s: null, $l: null, $f: null) {
 
   $prev-size-val: $curr-size-val;
   $prev-line-val: $curr-line-val;
@@ -200,18 +177,14 @@ $curr-font-val: null;
   $curr-font-val: $prev-font-val !global;
 }
 
+// typo-block
 $curr-typo-block: false;
-// $curr-typo-sels: null;
-
 @mixin typo-block($m: $curr-mult-y-key) {
-  // $prev-typo-sels: $curr-typo-sels;
-  // $curr-typo-sels: & !global;
   & > * + * { margin-top: mult-y($m) * mval('margin-y');}
   $prev-mult-y-key: $curr-mult-y-key;
   $curr-mult-y-key: $m !global;
   $curr-typo-block: true !global;
   @content;
-  // $curr-typo-sels: $prev-typo-sels !global;
   $curr-mult-y-key: $prev-mult-y-key !global;
   $curr-typo-block: false !global;
 }
