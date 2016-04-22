@@ -1,0 +1,238 @@
+////////////////////
+// MULT FUNCTIONS //
+////////////////////
+
+// mod
+@function mod($index, $factor: 2, $spread: 2) { @return _pow($factor, $index/$spread); }
+
+// size
+$curr-size-val: null !default;
+$curr-size-key: null !default;
+@function size($s: $curr-size-key) {
+  @if $curr-size-val { @return $curr-size-val; }
+  @else if type-of($s) == 'list' { @return apply(append($s, map-get(medium(), 'size-mod'))); }
+  @else if type-of($s) == 'string' { @return get(medium(), 'sizes', $s); }
+  @else if type-of($s) == 'number' {
+    @if index('' 'em' 'rem' 'px', unit($s)) { @return px($s) / get(medium(), 'font-size'); }
+    @else { @return $s; }
+  } @else { @return $s or 1; }
+}
+
+// line, auto-line
+$curr-line-val: null !default; // only the multiplier
+$curr-line-key: null !default;
+$typo-min-line: 1.125 !default;
+$typo-sub-line: 2 !default;
+@function auto-line($size: null) {
+  $size: $size or size();
+  $sub-lines: $typo-sub-line or ceil($size);
+  $min-lines: $typo-min-line;
+  $rel-height: mval('line-height') / unit-strip($size);
+  @return ceil($min-lines / $rel-height * $sub-lines) / $sub-lines / unit-strip($size);
+}
+@function line($l: $curr-line-key) {
+  @if $curr-line-val { @return $curr-line-val; }
+  @else if $l == 'auto' { @return auto-line(); }
+  @else if type-of($l) == 'string' { @return get(medium(), 'lines', $l); }
+  @else if type-of($l) == 'number' {
+    @if index('em' 'rem' 'px', unit($l)) { @return unit-strip(rem($l)) / get(medium(), 'line-height'); }
+    @else { @return $l; }
+  } @else { @return $l or 1; }
+}
+
+// mult-y
+$curr-mult-y-val: null !default;
+$curr-mult-y-key: null !default;
+@function mult-y($m: $curr-mult-y-key) {
+  @if $curr-mult-y-val { @return $curr-mult-y-val; }
+  @else if type-of($m) == 'list' { @return apply(append($m, map-get(medium(), 'mult-y-mod') or map-get(medium(), 'mult-mod'))); }
+  @else if type-of($m) == 'string' { @return get(medium(), 'mults-y', $m); }
+  @else if type-of($m) == 'number' { @return unit-strip(rem($m));
+  } @else { @return $m or 1; }
+}
+
+// mult-x
+$curr-mult-x-val: null !default;
+$curr-mult-x-key: null !default;
+@function mult-x($m: $curr-mult-x-key) {
+  @if $curr-mult-x-val { @return $curr-mult-x-val; }
+  @else if type-of($m) == 'list' { @return apply(append($m, map-get(medium(), 'mult-x-mod') or map-get(medium(), 'mult-mod'))); }
+  @else if type-of($m) == 'string' { @return get(medium(), 'mults-x', $m); }
+  @else if type-of($m) == 'number' { @return unit-strip(rem($m));
+  } @else { @return $m or 1; }
+}
+
+/////////////////////
+// VALUE FUNCTIONS //
+/////////////////////
+
+// font
+$curr-font-key: 'base';
+$curr-font-val: null;
+@function font($key: $curr-font-key) {
+  @return $curr-font-val or map-get($fonts, $key);
+}
+
+// char-height
+@function char-height($key: $curr-font-key) {
+  @return map-get(font($key), 'char-height');
+}
+
+// line-height
+@function line-height($key: $curr-line-key) {
+  @if $key == 'auto' { @return auto-height(); }
+  @else {
+    $line: $curr-line-val or line($key);
+    @return mval('line-height') * $line;
+  }
+}
+
+// auto-height
+@function auto-height($size: null) {
+  $size: $size or size();
+  $sub-lines: $typo-sub-line or ceil($size);
+  $min-lines: $typo-min-line;
+  $rel-height: mval('line-height') / unit-strip($size);
+  @return $rel-height * ceil($min-lines / $rel-height * $sub-lines) / $sub-lines;
+}
+
+@function margin-y($m: $curr-mult-y-key) { @return mval('margin-y') * ($curr-mult-y-val or mult-y($m)); }
+@function margin-x($m: $curr-mult-x-key) { @return mval('margin-x') * ($curr-mult-x-val or mult-x($m)); }
+
+@function t-margin($m: $curr-mult-y-key) {
+  @return calc(#{margin-y($m)} - #{trim()});
+}
+
+@function trim($lh: null, $ch: null){
+  $lh: $lh or line-height();
+  $ch: $ch or char-height();
+  @return ($lh - $ch) / 2 * 1em;
+}
+
+// new typo helper,
+@mixin typo($s:'base', $l:'auto', $f: 'base') {
+  @at-root & {
+    @extend .s#{mod-class($s)};
+    @if $l != 'auto' { @extend .l#{mod-class($l)}; }
+    @if $f != 'base' { @extend .f--#{$f}; }
+  }
+  [class*='typo'] & {
+    $prev-size-key: $curr-size-key;
+    $prev-line-key: $curr-line-key;
+    $prev-font-key: $curr-font-key;
+    $curr-size-key: $s !global;
+    $curr-line-key: $l !global;
+    $curr-font-key: $f !global;
+    @content;
+    $curr-size-key: $prev-size-key !global;
+    $curr-line-key: $prev-line-key !global;
+    $curr-font-key: $prev-font-key !global;
+  }
+}
+
+// typo2
+@mixin typo2($size: null, $line: null, $font: null) {
+
+  $font: if($font != 'base', map-get($fonts, $font), null);
+  $font-family: if($font, map-get($font, 'font-family'), null);
+  $size-adjust: if($font, map-get($font, 'size-adjust') or 1, 1);
+
+  $sizes: map-get(medium(), 'sizes');
+  $size: get($sizes, $size) or $size or 1;
+
+  $lines: map-get(medium(), 'lines');
+  $line-key: map-has-key($lines, $line);
+  $line: if($line-key, map-get($lines, $line) * mval('line-height'), if($line=='auto', auto-height($size), $line or mval('line-height')));
+
+  font-family: $font-family;
+  font-size: unit-assert($size, rem) * $size-adjust;
+  line-height: $line;
+
+  $prev-size-val: $curr-size-val;
+  $prev-line-val: $curr-line-val;
+  $prev-font-val: $curr-font-val;
+  $curr-size-val: $size !global;
+  $curr-line-val: $line !global;
+  $curr-font-val: $font !global;
+
+  @at-root #{insert-sels('[class*="typo"]', '>')} { font-size: unit-assert($size, em) * $size-adjust; @content; }
+
+  $curr-size-val: $prev-size-val !global;
+  $curr-line-val: $prev-line-val !global;
+  $curr-font-val: $prev-font-val !global;
+}
+
+// typo3
+@mixin typo3($s: null, $l: null, $f: null) {
+
+  $prev-size-val: $curr-size-val;
+  $prev-line-val: $curr-line-val;
+  $prev-font-val: $curr-font-val;
+
+  $size: size($s);
+  $curr-size-val: $size !global;
+
+  $line: line($l);
+  $curr-line-val: $line !global;
+
+  $font: if($f != 'base', font($f), null);
+  $curr-font-val: $font !global;
+
+  $font-family: if($font, map-get($font, 'font-family'), null);
+  $size-adjust: if($font, map-get($font, 'size-adjust') or 1, 1);
+  $size-unit: if($curr-typo-block, 'em', 'rem');
+
+  font-family: $font-family;
+  font-size: unit-assert($size, $size-unit) * $size-adjust;
+  line-height: $line * mval('line-height');
+
+  $typo-sels: if($curr-typo-block,'',$typo-sels);
+  @if not $curr-typo-block { @at-root #{insert-grandparents($typo-sels)} { font-size: unit-assert($size, em) * $size-adjust; } }
+  @at-root #{insert-grandparents($typo-sels,'>')} {
+    margin-top: t-margin(0);
+    margin-bottom: t-margin(0);
+    @content;
+  }
+  @at-root #{insert-grandparents($typo-sels,'> * +')} { margin-top: t-margin(); }
+
+  $curr-size-val: $prev-size-val !global;
+  $curr-line-val: $prev-line-val !global;
+  $curr-font-val: $prev-font-val !global;
+}
+
+$curr-typo-block: false;
+// $curr-typo-sels: null;
+
+@mixin typo-block($m: $curr-mult-y-key) {
+  // $prev-typo-sels: $curr-typo-sels;
+  // $curr-typo-sels: & !global;
+  & > * + * { margin-top: mult-y($m) * mval('margin-y');}
+  $prev-mult-y-key: $curr-mult-y-key;
+  $curr-mult-y-key: $m !global;
+  $curr-typo-block: true !global;
+  @content;
+  // $curr-typo-sels: $prev-typo-sels !global;
+  $curr-mult-y-key: $prev-mult-y-key !global;
+  $curr-typo-block: false !global;
+}
+
+///////////
+// FONTS //
+///////////
+
+
+// font face mixin
+@mixin font-face($family, $dir, $file, $style, $weight) {
+  @font-face {
+    font-family: $family;
+    font-style: $style;
+    font-weight: $weight; // this should be both word and number values
+    src: url('#{$dir}#{$file}.eot'); // IE9 Compat Modes
+    src: url('#{$dir}#{$file}.eot?#iefix') format('embedded-opentype'),
+       url('#{$dir}#{$file}.svg##{$file}') format('svg');
+       //url('#{$dir}#{$file}.woff') format('woff'),
+       // url('#{$dir}#{$file}.svg##{$file}') format('svg'),
+       // url('#{$dir}#{$file}.ttf') format('truetype');
+  }
+}
+

@@ -1,0 +1,43 @@
+/////////////////
+// GRID MIXINS //
+/////////////////
+
+// span
+@mixin span($span, $opts: null, $right: null, $left: null, $out: null, $cycle: null) {
+  @if type-of($opts) == 'map' { @include span(map-merge((span: $span), $opts)...); }
+  @else {
+    $n: nth($span, 1);
+    $d: nth($span, 2);
+    width: $n / $d * 100%;
+
+    @if $right { margin-right: nth($right, 1) / if(length($right) > 1, nth($right, 2), $d) * 100%; }
+    @if $left { margin-left: nth($left, 1) / if(length($left) > 1, nth($left, 2), $d) * 100%; }
+    @if $cycle { &:nth-child(#{$cycle}n+1) { clear: left; } }
+    @else if $out { position: absolute; #{opposite($out)}: 100%; top: auto; }
+  }
+}
+
+// fspan
+@mixin fspan($n, $d: 1){
+  @if type-of($n) == list {
+    $list: $n;
+    $n: nth($list, 1);
+    $d: nth($list, 2);
+  }
+  width: $n / $d * 100%;
+}
+
+//////////
+// SPAN //
+//////////
+
+@function gcd($a, $b) {
+  @if $b == 0 { @return abs($a); }
+  @return gcd($b, $a % $b);
+}
+
+@function reduce($n, $d) {
+  $g: gcd($n, $d);
+  @return ($n/$g, $d/$g)
+}
+

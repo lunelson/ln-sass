@@ -1,0 +1,30 @@
+@import '../../dist/all';
+
+// @include base-setup();
+// @include typo-setup();
+
+@include test-module('typo-util') {
+
+  // size
+  @include test('mod function') {
+
+    $desc: 'return $curr-size-val, if set';
+    $curr-size-val: 2 !global;
+    $input: size();
+    $expect: 2;
+    @include assert-equal($input, $expect, $desc);
+    $curr-size-val: null !global;
+
+    // $desc: 'return mod() if given list';
+    // $input: size(mod 2);
+    // $expect: 2;
+    // @include assert-equal($input, $expect, $desc);
+
+    // @include assert-equal($input, $expect,'return mult if given string');
+    // @include assert-equal($input, $expect,'return rel mult if given unit');
+    // @include assert-equal($input, $expect,'return input val if given % unit');
+    // @include assert-equal($input, $expect,'return input as-is, if none of above');
+    // @include assert-equal($input, $expect,'return 1 if given null');
+  }
+}
+

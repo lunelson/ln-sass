@@ -1,0 +1,153 @@
+@mixin page-setup(){
+
+  /////////////
+  // margins //
+  /////////////
+
+  @include media((for: margin-y mults-y)) {
+
+    @each $m, $mult in map-merge((base: 1), mval('mults-y')) {
+      $margin-y: $mult * mval('margin-y');
+      .sect#{mod-class($m)} { @extend .my#{mod-class($m)}; }
+      .my#{mod-class($m)} { @extend .mt#{mod-class($m)}, .mb#{mod-class($m)}; }
+      .mt#{mod-class($m)} { margin-top: $margin-y; }
+      .mb#{mod-class($m)} { margin-bottom: $margin-y; }
+    }
+  }
+
+  @include media((for: margin-x mults-x)) {
+
+    @each $m, $mult in map-merge((base: 1), mval('mults-x')) {
+      $margin-x: $mult * mval('margin-x');
+      .mx#{mod-class($m)} { @extend .mr#{mod-class($m)}, .ml#{mod-class($m)}; }
+      .mr#{mod-class($m)} { margin-right: $margin-x; }
+      .ml#{mod-class($m)} { margin-left: $margin-x; }
+    }
+  }
+
+  //////////
+  // wrap //
+  //////////
+
+  .wrap, [class*='wrap--'] { margin-right: auto; margin-left: auto; }
+  .wrap--left { margin-left: 0; }
+  .wrap--right { margin-right: 0; }
+
+  $media-keys: map-keys($media);
+  $media-length: length($media-keys);
+
+  @for $n from 1 through $media-length {
+
+    // create placeholders
+    $m: nth($media-keys, $n);
+    @include media($m) { %wrap--#{$m} { max-width: mval(content-width); } }
+
+    .wrap--each { @extend %wrap--#{$m}; }
+    @for $i from $n through 1 { .wrap--#{nth($media-keys, $i)}-thru {  @extend %wrap--#{$m}; } }
+    @for $i from $n through $media-length { .wrap--thru-#{nth($media-keys, $i)} {  @extend %wrap--#{$m}; } }
+  }
+
+  @each $set in power-set($media-keys) {
+    .wrap--#{to-string($set, '-')} {
+      @each $m in $set { @extend %wrap--#{$m}; }
+    }
+  }
+
+  @each $set in range-set($media-keys) {
+    $i: nth($set,1);
+    $j: nth($set,2);
+    $set: slice($media-keys, $i, $j);
+    .wrap--#{nth($media-keys, $i)}-thru-#{nth($media-keys, $j)} {
+      @each $m in $set { @extend %wrap--#{$m}; }
+    }
+  }
+
+  @include media((for: outer-top outer-bottom)) {
+
+    ////////////
+    // page-y //
+    ////////////
+
+    $outer-top: mval('outer-top');
+    $outer-bottom: mval('outer-bottom');
+
+    .page--y { @extend .page--top, .page--bottom; }
+    .page--top { padding-top: $outer-top; }
+    .page--bottom { padding-bottom: $outer-bottom; }
+
+  }
+
+  @include media((for: outer-right outer-left)) {
+
+    // TODO: pontentially changes these to .spread and .unwrap respectively
+
+    ////////////
+    // page-x //
+    ////////////
+
+    $outer-right: mval('outer-right');
+    $outer-left: mval('outer-left');
+
+    .page { @extend .page--right, .page--left; }
+    .page--right { padding-right: $outer-right; }
+    .page--left { padding-left: $outer-left; }
+
+    ////////////
+    // unpage //
+    ////////////
+
+    $page-inset: calc(#{$outer-right} + #{$outer-left});
+    $page-offset: calc(#{$outer-right} - #{$outer-left});
+
+    $unpage-width: 100vw;
+    $unpage-margin: sub-calc(100%, $unpage-width);
+    $unpage-margin-right: sub-calc($unpage-margin, $page-offset);
+    $unpage-margin-left: add-calc($unpage-margin, $page-offset);
+    $unpage-width-right: add-calc($unpage-width, div-calc($unpage-margin-left, 2));
+    $unpage-width-left: add-calc($unpage-width, div-calc($unpage-margin-right, 2));
+
+    .unpage {
+      margin-right: 0;
+      margin-left: 0;
+      max-width: none !important;
+
+      width: $unpage-width;
+
+      &--right { width: $unpage-width-right;}
+      &--left { width: $unpage-width-left;}
+      &, &--right { margin-right: div-calc($unpage-margin-right, 2); }
+      &, &--left { margin-left: div-calc($unpage-margin-left, 2); }
+
+      .wrap--left > & {
+        margin-right: add-calc($unpage-margin, $outer-left);
+        margin-left: - $outer-left;
+        &--right {
+          width: sub-calc($unpage-width, $outer-left);
+          margin-right: add-calc($unpage-margin, $outer-left);
+          margin-left: 0;
+        }
+        &--left {
+          width: add-calc(100%, $outer-left);
+          margin-right: 0;
+          margin-left: - $outer-left;
+        }
+      }
+
+      .wrap--right > & {
+        margin-right: - $outer-right;
+        margin-left: add-calc($unpage-margin, $outer-right);
+        &--right {
+          width: add-calc(100%, $outer-right);
+          margin-right: - $outer-right;
+          margin-left: 0;
+        }
+        &--left {
+          width: sub-calc($unpage-width, $outer-right);
+          margin-left: add-calc($unpage-margin, $outer-right);
+          margin-right: 0;
+        }
+      }
+    }
+
+  }
+}

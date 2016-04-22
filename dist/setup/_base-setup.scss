@@ -1,0 +1,89 @@
+
+@mixin base-setup(){
+
+  //////////
+  // BASE //
+  //////////
+
+  // backup $base as spec'd
+  $base-orig: $base !global;
+
+  // merge spec'd $base with defaults
+  $base: map-merge((
+    // bases
+    font-size: 16px,
+    line-height: 1.5,
+    margin-x: 1rem,
+    margin-y: 1.5rem,
+    outer-top: 1rem,
+    outer-right: 1rem,
+    outer-bottom: 1rem,
+    outer-left: 1rem,
+    // mults and mods
+    lines: (),
+    sizes: (),
+    mults-x: (),
+    mults-y: (),
+    size-mod: 1.5,
+    mult-mod: 1.5
+  ), $base) !global;
+
+  // normalize $base primitives
+  $base: normalize-medium($base) !global;
+
+  // base styles
+  html { font-size: unit-assert(map-get($base, 'html-scale'), em); }
+  body { line-height: map-get($base, 'line-height'); }
+
+  ///////////
+  // MEDIA //
+  ///////////
+
+  // backup $media
+  $media-orig: $media !global;
+
+  // collect and sort the breakpoint media
+  $media: maps-sort($media, 'breakpoint') !global;
+  // temp for recursive merging
+  $reference: $base;
+
+  @each $m, $medium in $media {
+
+    // merge current medium against ref-medium, normalize primitive values
+    $reference: normalize-medium(map-merge($reference, $medium));
+
+    // get and merge sub-maps
+    $sizes: map-merge(map-get($reference, 'sizes'), map-get($medium, 'sizes') or ());
+    $lines: map-merge(map-get($reference, 'lines'), map-get($medium, 'lines') or ());
+    $mults-x: map-merge(map-get($reference, 'mults-x'), map-get($medium, 'mults-x') or ());
+    $mults-y: map-merge(map-get($reference, 'mults-y'), map-get($medium, 'mults-y') or ());
+
+    // calc and merge additional props
+    $breakpoint: map-get($reference, 'breakpoint');
+    $body-width: unit-assert($breakpoint / map-get($reference, 'html-scale'), rem);
+    $outer-x: map-get($reference, 'outer-right') + map-get($reference, 'outer-left');
+
+    // merge these back to reference
+    $reference: map-merge($reference, (
+      'body-width': $body-width,
+      'content-width': $body-width - $outer-x,
+      'sizes': $sizes,
+      'lines': $lines,
+      'mults-x': $mults-x,
+      'mults-y': $mults-y,
+    ));
+
+    // merge reference back to master
+    $media: map-merge($media, ($m: $reference)) !global;
+
+    // styles, if they were spec'd
+    @media (min-width: #{map-get($reference, 'breakpoint')}) {
+      @if map-has-key($medium, 'font-size') { html { font-size: unit-assert(map-get($reference, 'html-scale'), em); } }
+      @if map-has-key($medium, 'line-height') { body { line-height: map-get($reference, 'line-height'); } }
+    }
+  }
+
+  // output global sass as JSON for js parsing
+  $globals: if(variable-exists('globals'), $globals, ());
+  @include sass-to-js(map-merge($globals, (media: $media)));
+}

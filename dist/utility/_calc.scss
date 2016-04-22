@@ -1,0 +1,29 @@
+// CALC functions
+
+@function pre-calc($value){
+  @if type-of($value) == 'string' {
+    $is-calc: str-index($value, 'calc') == 1;
+    $start: str-index($value, '(');
+    $end: str-last-index($value, ')');
+    @if $is-calc and $start and $end {
+      @return unquote(str-slice($value, $start, $end));
+    } @else {
+      @return unquote('(#{$value})');
+    }
+  } @else {
+    @return unquote('#{$value}');
+  }
+}
+
+// re-calc... ?
+@function re-calc($calc1, $calc2, $op: '+'){
+  @return unquote('calc(#{pre-calc($calc1)} #{$op} #{pre-calc($calc2)})');
+}
+
+// add/sub -- both args can be calc()
+@function add-calc($calc1, $calc2){ @return unquote('calc(#{pre-calc($calc1)} + #{pre-calc($calc2)})'); }
+@function sub-calc($calc1, $calc2){ @return unquote('calc(#{pre-calc($calc1)} - #{pre-calc($calc2)})'); }
+
+// mul/div -- second arg must be number
+@function mul-calc($calc, $n){ @return unquote('calc(#{pre-calc($calc)} * #{$n})'); }
+@function div-calc($calc, $n){ @return unquote('calc(#{pre-calc($calc)} / #{$n})'); }

@@ -1,0 +1,173 @@
+// SELECTORS
+
+// get last parents in & list(s)
+@function last-parents($parents: &) {
+  $out: ();
+  @each $list in & {
+    $last: nth($list, length($list));
+    @if not index($out, $last) {
+      $out: append($out, $last, 'comma');
+    }
+  }
+  @return $out;
+}
+
+// get initial parents in & list(s)
+@function initial-parents($parents: &) {
+  $out: ();
+  @each $list in & {
+    $initial: slice($list, 1,  length($list) - 1);
+    @if not index($out, $initial) {
+      $out: append($out, $initial, 'comma');
+    }
+  }
+  @return $out;
+}
+
+// make selector-string for immediate parent(s) as sibling to $siblings
+@function sibling-to($siblings: (), $op: '~'){
+  $initials: initial-parents();
+  $lasts: last-parents();
+  $siblings: if(length($siblings)==0, $lasts, $siblings); // use self if no arg given
+  $out: '';
+  @if length(nth($initials, 1)) > 0 {
+    @for $i from 1 through length($initials) {
+      @for $s from 1 through length($siblings) {
+        @for $l from 1 through length($lasts) {
+          $out: if(
+            ($i $s $l) == (1 1 1),
+            '#{nth($initials, $i)} #{nth($siblings, $s)} #{$op} #{nth($lasts, $l)}',
+            $out + ', #{nth($initials, $i)} #{nth($siblings, $s)} #{$op} #{nth($lasts, $l)}'
+          );
+        }
+      }
+    }
+  } @else {
+    @for $s from 1 through length($siblings) {
+      @for $l from 1 through length($lasts) {
+        $out: if(
+          ($s $l) == (1 1),
+          '#{nth($siblings, $s)} #{$op} #{nth($lasts, $l)}',
+          $out + ', #{nth($siblings, $s)} #{$op} #{nth($lasts, $l)}'
+        );
+      }
+    }
+  }
+  @return $out;
+}
+
+// revamped version of sibling-to
+@function insert-sels($sels: (), $op: ''){
+  $inits: initial-parents();
+  $lasts: last-parents();
+  $sels: if(length($sels)==0, $lasts, $sels); // use self if no arg given
+  $out: '';
+  @if length(nth($inits, 1)) > 0 {
+    @for $i from 1 through length($inits) {
+      @for $s from 1 through length($sels) {
+        @for $l from 1 through length($lasts) {
+          $out: append($out, #{nth($inits, $i)} #{nth($sels, $s)} #{$op} #{nth($lasts, $l)}, 'comma');
+        }
+      }
+    }
+  } @else {
+    @for $s from 1 through length($sels) {
+      @for $l from 1 through length($lasts) {
+        $out: append($out, #{nth($sels, $s)} #{$op} #{nth($lasts, $l)}, 'comma');
+      }
+    }
+  }
+  @return $out;
+}
+
+@function slice-parents($start, $end) {
+  $out: (); // @each $list in & {
+    @for $i from 1 through length(&) {
+    $list: nth(&, $i); // temp fix 3.3.2
+    $slice: slice($list, 1,  length($list) - $i);
+    @if not index($out, $slice) {
+      $out: append($out, $slice, 'comma');
+    }
+  }
+  @return $out;
+}
+
+@function insert-grandparents($sels, $op: '') {
+  $inits: initial-parents();
+  $lasts: last-parents();
+  $sels: if(length($sels)==0, $lasts, $sels); // use self if no arg given
+  $out: ();
+  @if length(nth($inits, 1)) > 0 and last-parents($inits) != $sels {
+    @for $i from 1 through length($inits) {
+      @for $s from 1 through length($sels) {
+        @for $l from 1 through length($lasts) {
+          $out: append($out, #{nth($inits, $i)} #{nth($sels, $s)} #{$op} #{nth($lasts, $l)}, 'comma');
+        }
+      }
+    }
+  } @else {
+    @for $s from 1 through length($sels) {
+      @for $l from 1 through length($lasts) {
+        $out: append($out, #{nth($sels, $s)} #{$op} #{nth($lasts, $l)}, 'comma');
+      }
+    }
+  }
+  @return $out;
+}
+
+
+@mixin sibling-to($args...) {
+  @at-root #{unquote(sibling-to($args...))} {
+    @content;
+  }
+}
+
+@mixin adjacent-to($siblings: ()) {
+  @at-root #{unquote(sibling-to($siblings, '+'))} {
+    @content;
+  }
+}
+
+
+// OLDER
+
+// child [helper]
+@function child($selector) {
+  @if $selector {
+    @if str-index($selector, '&'){
+      @return '#{$selector}';
+    } @else {
+      @return '& > #{$selector}';
+    }
+  } @else {
+    @return '& > *';
+  }
+}
+
+// children
+@function children($selectors...) {
+  @if length($selectors) == 0 { @return unquote('& > *'); }
+  @else {
+    @if type-of(nth($selectors, 1)) == list { $selectors: join((), $selectors...); }
+    $out: ''; @for $n from 1 through length($selectors) {
+      $out: if($n == 1, unquote('#{child(nth($selectors, 1))}'), append($out, unquote(', #{child(nth($selectors, $n))}')));
+    }
+    @return unquote('#{$out}');
+  }
+}
+// mixin version of above
+@mixin children($args...) { #{children($args...)} { @content; } }
+
+// QUANTITY QUERIES
+
+    // @include nth-among(1,1) {}
+    // @include among(1) {}
+    // @include among(2) {}
+    // @include among(3, null) {}
+    // http://quantityqueries.com/
+    // http://alistapart.com/article/quantity-queries-for-css
+    // https://www.google.de/webhp?sourceid=chrome-instant&ion=1&espv=2&es_th=1&ie=UTF-8#q=quantity%20queries&es_th=1
+    // http://www.smashingmagazine.com/2015/07/constructing-css-quantity-queries-on-the-fly/
+    // https://css-tricks.com/quantity-queries-for-css/
+    // http://www.sitepoint.com/using-sass-quantity-queries/
+

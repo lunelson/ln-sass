@@ -1,0 +1,4 @@
+// mod-class helper for setups
+@function mod-class($m) {
+  @return if($m=='base', '', '--#{$m}');
+}
