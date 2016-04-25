@@ -113,14 +113,14 @@ $curr-font-val: null;
 // @include adj-t-margin(null, p) // *+p untrim
 // @include adj-t-margin(2) // *+* t-margin(2)
 // @include adj-t-margin(2, $list) *+{$list} t-margin(2)
-@mixin adj-t-margin($m, $siblings: '*') {
-  @include adjacent-to($siblings) {
+@mixin adj-t-margin($m: null, $siblings: '*') {
+  @include adj-sib($siblings) {
     margin-top: if($m, t-margin($m), trim());
   }
 }
 
-// typo-x -- @extends existing typo-classes
-@mixin typo-x($s:'base', $l:'auto', $f: 'base') {
+// typo-child-x -- @extends existing typo-classes
+@mixin typo-child-x($s:'base', $l:'auto', $f: 'base') {
   @at-root & {
     @extend .s#{mod-class($s)};
     @if $l != 'auto' { @extend .l#{mod-class($l)}; }
@@ -140,7 +140,7 @@ $curr-font-val: null;
   }
 }
 
-@mixin typo($s: null, $l: null, $f: null) {
+@mixin typo-child($s: null, $l: null, $f: null) {
 
   $prev-size-val: $curr-size-val;
   $prev-line-val: $curr-line-val;
@@ -164,13 +164,13 @@ $curr-font-val: null;
   line-height: $line * mval('line-height');
 
   $typo-sels: if($curr-typo-block,'',$typo-sels);
-  @if not $curr-typo-block { @at-root #{insert-grandparents($typo-sels)} { font-size: unit-assert($size, em) * $size-adjust; } }
-  @at-root #{insert-grandparents($typo-sels,'>')} {
+  @if not $curr-typo-block { @at-root #{sel-insert-parents($typo-sels)} { font-size: unit-assert($size, em) * $size-adjust; } }
+  @at-root #{sel-insert-parents($typo-sels,'>')} {
     margin-top: t-margin(0);
     margin-bottom: t-margin(0);
     @content;
   }
-  @at-root #{insert-grandparents($typo-sels,'> * +')} { margin-top: t-margin(); }
+  @at-root #{sel-insert-parents($typo-sels,'> * +')} { margin-top: t-margin(); }
 
   $curr-size-val: $prev-size-val !global;
   $curr-line-val: $prev-line-val !global;
@@ -179,7 +179,7 @@ $curr-font-val: null;
 
 // typo-block
 $curr-typo-block: false;
-@mixin typo-block($m: $curr-mult-y-key) {
+@mixin typo($m: $curr-mult-y-key) {
   & > * + * { margin-top: mult-y($m) * mval('margin-y');}
   $prev-mult-y-key: $curr-mult-y-key;
   $curr-mult-y-key: $m !global;
