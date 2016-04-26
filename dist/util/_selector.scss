@@ -62,6 +62,11 @@
     @content;
   }
 }
+@mixin adj-self {
+  @at-root #{sel-insert-parents(sel-lasts(), '+')} {
+    @content;
+  }
+}
 
 ///////////
 // OLDER //
