@@ -12,23 +12,23 @@
   @return if($index <= length($keys), nth($keys, $index), null);
 }
 
-@function map-values($map, $keys...) {
-  $out:(); $keys: if(length($keys) == 0, map-keys($map), $keys);
+@function map-values($map, $keys: ()) {
+  $values:();
+  $keys: if(length($keys) == 0, map-keys($map), $keys);
   @each $key in $keys {
     $value: map-get($map, $key);
-    $out: if($value, append($out, $value), $out);
-    // $out: append($out, map-get($map, $key));
+    $values: if($value, append($values, $value), $values);
   }
-  @return if($out != (), $out, null);
+  @return if($values != (), $values, null);
 }
 
-@function map-has-keys($map, $keys...){
+@function map-has-keys($map, $keys: ()){
   @if length($keys) > 0 {
-    $key: nth($keys, 1); $has-key: map-has-key($map, $key);
+    $key: nth($keys, 1);
     @if length($keys) > 1 {
-      @return map-has-keys(map-get($map, $key), slice($keys, 2)...);
+      @return map-has-keys(map-get($map, $key), slice($keys, 2));
     }
-    @return $has-key;
+    @return map-has-key($map, $key);
   }
   @return false;
 }
@@ -47,7 +47,6 @@
   $key-length: $keys-and-value-length - 1;
   $value: nth($keys-and-value, $keys-and-value-length);
   $value-is-map: type-of($value) == 'map';
-
   @if $key-length == 0 {
     $value: map-merge($map, if($value-is-map or length($value) == 0, $value, ($value: ())));
   } @else {
@@ -57,7 +56,6 @@
       $value: if(type-of($old) == 'map', map-merge($old, $new), $new);
     }
   }
-
   @return $value;
 }
 
