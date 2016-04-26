@@ -5,7 +5,7 @@
 /////////
 
 // get last parents in & list(s)
-@function sel-lasts($parents: &) {
+@function sel-lasts {
   $out: ();
   @each $list in & {
     $last: nth($list, length($list));
@@ -17,7 +17,7 @@
 }
 
 // get initial parents in & list(s)
-@function sel-initials($parents: &) {
+@function sel-initials {
   $out: ();
   @each $list in & {
     $initial: slice($list, 1,  length($list) - 1);
@@ -29,10 +29,11 @@
 }
 
 @function sel-insert-parents($selectors, $combinator: '') {
-  $initials: sel-initials();
-  $lasts: sel-lasts();
-  $selectors: if(length($selectors)==0, $lasts, selector-parse($selectors)); // use self if no arg given
   $out: ();
+  $lasts: sel-lasts();
+  $initials: sel-initials();
+  $selectors: if(length($selectors)==0, '', $selectors);
+  // $selectors: if(length($selectors)==0, $lasts, $selectors); // use self if no arg given
   @if length(nth($initials, 1)) > 0 {
     @for $i from 1 through length($initials) {
       @for $s from 1 through length($selectors) {
@@ -51,12 +52,23 @@
   @return selector-parse($out);
 }
 
+@mixin sib-to($sibs: '*') {
+  @at-root #{sel-insert-parents($sibs, '~')} {
+    @content;
+  }
+}
+@mixin adj-to($sibs: '*') {
+  @at-root #{sel-insert-parents($sibs, '+')} {
+    @content;
+  }
+}
+
 ///////////
 // OLDER //
 ///////////
 
 // get last parents in & list(s)
-@function last-parents($parents: &) {
+@function last-parents {
   $out: ();
   @each $list in & {
     $last: nth($list, length($list));
@@ -68,7 +80,7 @@
 }
 
 // get initial parents in & list(s)
-@function initial-parents($parents: &) {
+@function initial-parents {
   $out: ();
   @each $list in & {
     $initial: slice($list, 1,  length($list) - 1);

@@ -1,9 +1,18 @@
-# Sass
+# LN-Sass
 
-add on npm?
-    npm private?
-Implement testing with true and mocha
-bring back in as module, linked to local copy; switch branches as necessary
+- break up file-names
+- eliminate unused typo-helpers
+
+    base
+    base-fn
+    base-mix
+    base-setup
+
+    typo
+    typo-fn
+    typo-mix
+    typo-setup
+
 
 layout
     posn

@@ -165,12 +165,13 @@ $curr-font-val: null;
 
   $typo-sels: if($curr-typo-block,'',$typo-sels);
   @if not $curr-typo-block { @at-root #{sel-insert-parents($typo-sels)} { font-size: unit-assert($size, em) * $size-adjust; } }
+  // @at-root #{sel-insert-parents($typo-sels,'> * +')} { margin-top: t-margin(); }
   @at-root #{sel-insert-parents($typo-sels,'>')} {
     margin-top: t-margin(0);
     margin-bottom: t-margin(0);
+    @include adj-to { margin-top: t-margin(); }
     @content;
   }
-  @at-root #{sel-insert-parents($typo-sels,'> * +')} { margin-top: t-margin(); }
 
   $curr-size-val: $prev-size-val !global;
   $curr-line-val: $prev-line-val !global;
