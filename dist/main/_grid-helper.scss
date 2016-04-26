@@ -27,17 +27,3 @@
   width: $n / $d * 100%;
 }
 
-//////////
-// SPAN //
-//////////
-
-@function gcd($a, $b) {
-  @if $b == 0 { @return abs($a); }
-  @return gcd($b, $a % $b);
-}
-
-@function reduce($n, $d) {
-  $g: gcd($n, $d);
-  @return ($n/$g, $d/$g)
-}
-

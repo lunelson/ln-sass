@@ -34,7 +34,7 @@
   @return gcd($b, $a % $b);
 }
 
-@function reduce-fraction($n, $d) {
+@function reduce($n, $d) {
   $g: gcd($n, $d);
   @return ($n/$g, $d/$g)
 }
