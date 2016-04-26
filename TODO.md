@@ -14,6 +14,21 @@
     posn--a // absolute
     posn--a-...
 
+### main/base
+
+- media functions/mixins
+
+    @function media-keys-for
+
+    @mixin media2(a,b) {}
+
+    @mixin media2((split: a d e)) {}
+    @mixin media2((where: margin-y)) {}
+
+    @mixin media2((keys: a d e)) {}
+    @mixin media2((vals: margin-y)) {}
+
+
 ### main/grid
 
 - revamp the mixins
@@ -23,7 +38,54 @@
     - width still needs a better name
         - span?
 
+    // SPAN2
+    @function span($span: 1 2, $opts:(), $left: null, $right: null) {
+      @if type-of($opts) == 'map' { @return span($span, $opts...); }
+      @else {
+        @return $span $left $right
+      }
+    }
+    // article: using map splats for flexible argument patterns
+    .test {
+      span: span(3 4, (right: hi, left: there));
+      span: span(3 4, $right: no);
+    }
+
+
 ### main/page
+
+- write wrap and grid mixins
+
+
+    p.aside {
+      @include wrap(a,c,e);
+      @include grid(xs);
+      // alt idea: provide strings to extend
+      @include typo(s--sm, m--xl, l--std) {
+        @include align-top(std);
+      }
+      @include media-for()
+    }
+
+    @mixin wrap($min, $max: null){
+      // @extend %wrap--
+      @if type-of($min) == 'list' {
+        // @extend %wrap--x-y-z
+      } @else if $min {
+        @if $max {
+          // @extend %wrap--x-thru-y
+        } @else {
+          // @extend %wrap--x-thru
+        }
+      } @else if $max {
+       // @extend %wrap--thru-x
+      }
+    }
+    @mixin grid($mult: 'std'){}
+    @mixin cell($mult: 'std'){}
+    @mixin fgrid($mult: 'std'){}
+    @mixin fcell($mult: 'std'){}
+
 
 - fix wrap classes
 
