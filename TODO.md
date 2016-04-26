@@ -1,58 +1,20 @@
 # LN-Sass
 
+## main
+
 - break up file-names
-- eliminate unused typo-helpers
-
-    base
-    base-fn
-    base-mix
-    base-setup
-
-    typo
-    typo-fn
-    typo-mix
-    typo-setup
-
-
-layout
-    posn
-    posn--f
+- rename selector functions again
+    parents-last
+    parents-initial
+    parents-insert('.typo', '*')
+- add layout classes
+    posn // relative
+    posn--f // fixed
     posn--f-...
-    posn--a
+    posn--a // absolute
     posn--a-...
 
-selector
-    sel-initial
-    sel-last
-    sel-add-before-last
-
-# ln-sass planning
-
-## reset
-
-reset-hard()
-  - meyer-style reset of all typographic block elements to size 1em and margins: 0, padding: 0
-
-- other thotz re reset
-    - font normalization
-    - svg normalization
-    - supports for picturefill 2
-    - other html5 shit
-
-necessary for typo:
-  - all typo elements line-height inherit
-  - all typo elements margin top and bottom 0
-
-## typo
-
-- *basically locked!*
-- nice to have
-    - add code to auto-extend if pre-included and not currently in media query
-
-remaining proofs
-    - can you still style lists and tables properly
-
-## grid
+### main/grid
 
 - revamp the mixins
     - will grid and cell mixins output if in media query?
@@ -61,7 +23,7 @@ remaining proofs
     - width still needs a better name
         - span?
 
-## page
+### main/page
 
 - fix wrap classes
 
@@ -88,11 +50,26 @@ remaining proofs
     .unpage--right
     .unpage--left
 
-## vx units
+### main/typo
+
+- eliminate unused typo-helpers
+- finish typo testing
+    - can you still style lists and tables properly
+    - protocol for defining local stuff
+
+## util
+
+### util/reset
+
+- make a reset-hard() mixin
+    (meyer-style reset of all typographic block elements to size 1em and margins: 0, padding: 0)
+- other thotz re reset
+    - font normalization
+    - svg normalization
+    - supports for picturefill 2
+    - other html5 shit
+
+### util/vx units
 
 - add an extra variable to `vx` function, to allow an arbitrary other element inserted in to the calc expression
 	- NB this will allow vx-based typo-margins, for example, by inserting `trim-height()`
-
-## media
-
--   implement JSON output of query-data to head { font-family }
