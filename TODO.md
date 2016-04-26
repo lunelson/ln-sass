@@ -98,19 +98,19 @@
 - do unwrap and unpage classes;
 - eliminate "layout direction" ? not queryable from unwrap classes
 
-    .unwrap
-    .wrap--right &
-    .wrap--left &
-    .unwrap--left
-    .wrap--right &
-    .wrap--left &
-    .unwrap--right
-    .wrap--right &
-    .wrap--left &
+  .unwrap
+  .wrap--right &
+  .wrap--left &
+  .unwrap--left
+  .wrap--right &
+  .wrap--left &
+  .unwrap--right
+  .wrap--right &
+  .wrap--left &
 
-    .unpage--x
-    .unpage--right
-    .unpage--left
+  .unpage--x
+  .unpage--right
+  .unpage--left
 
 ### main/typo
 
@@ -118,6 +118,22 @@
 - finish typo testing
     - can you still style lists and tables properly
     - protocol for defining local stuff
+
+```scss
+.test {
+  // make placeholders
+  $p: '%#{unique-id()}';
+  $h: '%#{unique-id()}';
+
+  // make styles
+  #{$p} { color: blue; }
+  #{$h} { color: red; }
+
+  // extend
+  h1, h2, h3 { @extend #{$h}; }
+  p, ul, ol { @extend #{$p}; }
+}
+```
 
 ## util
 
