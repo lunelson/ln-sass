@@ -24,7 +24,7 @@ $curr-mult-x-key: null !default;
 // size
 @function size($s: $curr-size-key) {
   @if $curr-size-val { @return $curr-size-val; }
-  @else if type-of($s) == 'list' { @return apply(append($s, map-get(medium(), 'size-mod'))); }
+  @else if type-of($s) == 'list' { @return call(join($s, map-get(medium(), 'size-mod'))...); }
   @else if type-of($s) == 'string' { @return get(medium(), 'sizes', $s); }
   @else if type-of($s) == 'number' {
     @if index('' 'em' 'rem' 'px', unit($s)) { @return px($s) / get(medium(), 'font-size'); }
