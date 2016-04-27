@@ -1,23 +1,35 @@
-// typo-child-x -- @extends existing typo-classes
-@mixin typo-child-x($s:'base', $l:'auto', $f: 'base') {
-  @at-root & {
-    @extend .s#{mod-class($s)};
-    @if $l != 'auto' { @extend .l#{mod-class($l)}; }
-    @if $f != 'base' { @extend .f--#{$f}; }
-  }
-  [class*='typo'] & {
-    $prev-size-key: $curr-size-key;
-    $prev-line-key: $curr-line-key;
-    $prev-font-key: $curr-font-key;
-    $curr-size-key: $s !global;
-    $curr-line-key: $l !global;
-    $curr-font-key: $f !global;
-    @content;
-    $curr-size-key: $prev-size-key !global;
-    $curr-line-key: $prev-line-key !global;
-    $curr-font-key: $prev-font-key !global;
-  }
+// TODO
+// rename the main mixins:
+// typo-setup
+// typo-scope
+// typo
+
+// TODO
+// - is there a reliable way to integrate css-columns?
+// - is there a reliable way to integrate outriding elements?
+
+
+//////////
+// typo //
+//////////
+
+$typo-selectors: '[class*="typo--"]', '.typo' !default;
+$curr-typo-block: false !default;
+
+@mixin typo($m: $curr-mult-y-key) {
+  $parent: &;
+  #{if($parent!=null,'&',$typo-selectors)} > * + * { margin-top: mult-y($m) * mval('margin-y'); }
+  $prev-mult-y-key: $curr-mult-y-key;
+  $curr-mult-y-key: $m !global;
+  $curr-typo-block: if($parent!=null, true, false) !global;
+  @content;
+  $curr-mult-y-key: $prev-mult-y-key !global;
+  $curr-typo-block: false !global;
 }
+
+////////////////
+// typo-child //
+////////////////
 
 @mixin typo-child($s: null, $l: null, $f: null) {
 
@@ -42,10 +54,10 @@
   font-size: unit-assert($size, $size-unit) * $size-adjust;
   line-height: $line * mval('line-height');
 
-  $typo-sels: if($curr-typo-block,'',$typo-sels);
-  @if not $curr-typo-block { @at-root #{sel-insert-parents($typo-sels)} { font-size: unit-assert($size, em) * $size-adjust; } }
-  // @at-root #{sel-insert-parents($typo-sels,'> * +')} { margin-top: t-margin(); }
-  @at-root #{sel-insert-parents($typo-sels,'>')} {
+  $typo-selectors: if($curr-typo-block,'',$typo-selectors);
+  @if not $curr-typo-block { @at-root #{sel-insert-parents($typo-selectors)} { font-size: unit-assert($size, em) * $size-adjust; } }
+  // @at-root #{sel-insert-parents($typo-selectors,'> * +')} { margin-top: t-margin(); }
+  @at-root #{sel-insert-parents($typo-selectors,'>')} {
     margin-top: t-margin(0);
     margin-bottom: t-margin(0);
     @include adj-to { margin-top: t-margin(); }
@@ -57,16 +69,29 @@
   $curr-font-val: $prev-font-val !global;
 }
 
-// typo-block
-$curr-typo-block: false;
-@mixin typo($m: $curr-mult-y-key) {
-  & > * + * { margin-top: mult-y($m) * mval('margin-y');}
-  $prev-mult-y-key: $curr-mult-y-key;
-  $curr-mult-y-key: $m !global;
-  $curr-typo-block: true !global;
-  @content;
-  $curr-mult-y-key: $prev-mult-y-key !global;
-  $curr-typo-block: false !global;
+//////////////////
+// typo-child-x //
+//////////////////
+
+// extends existing classes
+@mixin typo-child-x($s:'base', $l:'auto', $f: 'base') {
+  @at-root & {
+    @extend .s#{mod-class($s)};
+    @if $l != 'auto' { @extend .l#{mod-class($l)}; }
+    @if $f != 'base' { @extend .f--#{$f}; }
+  }
+  [class*='typo'] & {
+    $prev-size-key: $curr-size-key;
+    $prev-line-key: $curr-line-key;
+    $prev-font-key: $curr-font-key;
+    $curr-size-key: $s !global;
+    $curr-line-key: $l !global;
+    $curr-font-key: $f !global;
+    @content;
+    $curr-size-key: $prev-size-key !global;
+    $curr-line-key: $prev-line-key !global;
+    $curr-font-key: $prev-font-key !global;
+  }
 }
 
 ///////////

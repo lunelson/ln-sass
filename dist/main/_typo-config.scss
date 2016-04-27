@@ -7,10 +7,6 @@
 //       __/ | |
 //      |___/|_|
 
-$typo-min-height: 1.125 !default;
-$typo-sub-lines: 2 !default;
-$typo-sels: '[class*="typo"]' '.typo' !default;
-
 $fonts: (
   base: (
     font-family: (Arial, sans-serif),
@@ -34,10 +30,3 @@ $fonts: (
     spacing-end: 50,
   )
 ) !default;
-
-// TODO
-// - provide options to typo-setup() mixin, to output size, mult, line classes ?
-//   - or just leave them as placeholders, for the typo mixin?
-// - allow an %f--${$f} class for per-font char-height retrieval for line() func
-// - is there a reliable way to integrate css-columns?
-// - is there a reliable way to integrate outriding elements?

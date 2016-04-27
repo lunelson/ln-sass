@@ -1,8 +1,8 @@
 // SELECTORS
 
-/////////
-// NEW //
-/////////
+@function unique-selector() {
+  @return unquote("%#{unique-id()}");
+}
 
 // get last parents in & list(s)
 @function sel-lasts {
