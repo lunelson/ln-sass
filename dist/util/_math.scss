@@ -16,9 +16,10 @@
   @return $y1 + $m * ($value - $x1);
 }
 
-@function sum($numlist){
-  $result: 0; @each $num in $numlist {
-    $result: $result + $num;
+@function sum($list){
+  $result: 0;
+  @each $n in $list {
+    $result: $result + $n;
   }
   @return $result;
 }

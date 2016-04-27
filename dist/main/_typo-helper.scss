@@ -1,3 +1,19 @@
+
+$typo-min-line: 1.125 !default;
+$typo-sub-line: 2 !default;
+
+$curr-font-key: 'base';
+$curr-font-val: null;
+
+$curr-size-val: null !default;
+$curr-size-key: null !default;
+$curr-line-val: null !default; // only the multiplier
+$curr-line-key: null !default;
+$curr-mult-y-val: null !default;
+$curr-mult-y-key: null !default;
+$curr-mult-x-val: null !default;
+$curr-mult-x-key: null !default;
+
 ////////////////////
 // MULT FUNCTIONS //
 ////////////////////
@@ -6,8 +22,6 @@
 @function mod($index, $factor: 2, $spread: 2) { @return _pow($factor, $index/$spread); }
 
 // size
-$curr-size-val: null !default;
-$curr-size-key: null !default;
 @function size($s: $curr-size-key) {
   @if $curr-size-val { @return $curr-size-val; }
   @else if type-of($s) == 'list' { @return apply(append($s, map-get(medium(), 'size-mod'))); }
@@ -18,11 +32,7 @@ $curr-size-key: null !default;
   } @else { @return $s or 1; }
 }
 
-// line, auto-line
-$curr-line-val: null !default; // only the multiplier
-$curr-line-key: null !default;
-$typo-min-line: 1.125 !default;
-$typo-sub-line: 2 !default;
+// auto-line
 @function auto-line($size: null) {
   $size: $size or size();
   $sub-lines: $typo-sub-line or ceil($size);
@@ -30,6 +40,8 @@ $typo-sub-line: 2 !default;
   $rel-height: mval('line-height') / unit-strip($size);
   @return ceil($min-lines / $rel-height * $sub-lines) / $sub-lines / unit-strip($size);
 }
+
+// line
 @function line($l: $curr-line-key) {
   @if $curr-line-val { @return $curr-line-val; }
   @else if $l == 'auto' { @return auto-line(); }
@@ -41,8 +53,6 @@ $typo-sub-line: 2 !default;
 }
 
 // mult-y
-$curr-mult-y-val: null !default;
-$curr-mult-y-key: null !default;
 @function mult-y($m: $curr-mult-y-key) {
   @if $curr-mult-y-val { @return $curr-mult-y-val; }
   @else if type-of($m) == 'list' { @return apply(append($m, map-get(medium(), 'mult-y-mod') or map-get(medium(), 'mult-mod'))); }
@@ -52,8 +62,6 @@ $curr-mult-y-key: null !default;
 }
 
 // mult-x
-$curr-mult-x-val: null !default;
-$curr-mult-x-key: null !default;
 @function mult-x($m: $curr-mult-x-key) {
   @if $curr-mult-x-val { @return $curr-mult-x-val; }
   @else if type-of($m) == 'list' { @return apply(append($m, map-get(medium(), 'mult-x-mod') or map-get(medium(), 'mult-mod'))); }
@@ -66,21 +74,41 @@ $curr-mult-x-key: null !default;
 // VALUE FUNCTIONS //
 /////////////////////
 
+
 // font
-$curr-font-key: 'base';
-$curr-font-val: null;
 @function font($key: $curr-font-key) {
   @return $curr-font-val or map-get($fonts, $key);
 }
 
 // char-height
-@function char-height($key: $curr-font-key) { @return map-get(font($key), 'char-height'); }
+@function char-height($key: $curr-font-key) {
+  @return map-get(font($key), 'char-height');
+}
 
 // line-height
-@function line-height($key: $curr-line-key) { @return mval('line-height') * ($curr-line-val or line($key)); }
+@function line-height($key: $curr-line-key) {
+  @return mval('line-height') * ($curr-line-val or line($key));
+}
 
 // trim-height
-@function trim-height($lh: null, $ch: null){ @return (($lh or line-height()) - ($ch or char-height())) / 2 * 1em; }
+@function trim-height($lh: null, $ch: null){
+  @return (($lh or line-height()) - ($ch or char-height())) / 2 * 1em;
+}
+
+// margin-y
+@function margin-y($m: $curr-mult-y-key) {
+  @return mval('margin-y') * ($curr-mult-y-val or mult-y($m));
+}
+
+// t-margin
+@function t-margin($m: $curr-mult-y-key) {
+  @return calc(#{margin-y($m)} - #{trim-height()});
+}
+
+// margin-x
+@function margin-x($m: $curr-mult-x-key) {
+  @return mval('margin-x') * ($curr-mult-x-val or mult-x($m));
+}
 
 // auto-height
 // @function auto-height($size: null) {
@@ -90,11 +118,6 @@ $curr-font-val: null;
 //   $rel-height: mval('line-height') / unit-strip($size);
 //   @return $rel-height * ceil($min-lines / $rel-height * $sub-lines) / $sub-lines;
 // }
-
-@function margin-y($m: $curr-mult-y-key) { @return mval('margin-y') * ($curr-mult-y-val or mult-y($m)); }
-@function margin-x($m: $curr-mult-x-key) { @return mval('margin-x') * ($curr-mult-x-val or mult-x($m)); }
-
-@function t-margin($m: $curr-mult-y-key) { @return calc(#{margin-y($m)} - #{trim-height()}); }
 
 // trim -- deprecated
 // @function trim($lh: null, $ch: null){
