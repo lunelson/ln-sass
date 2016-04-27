@@ -110,6 +110,15 @@ $curr-mult-x-key: null !default;
   @return mval('margin-x') * ($curr-mult-x-val or mult-x($m));
 }
 
+/*
+TODO:
+
+margin and padding mixins
+margin(t r b l) / (y x) .. etc.
+padding(t r b l) / (y x) .. etc
+
+*/
+
 // auto-height
 // @function auto-height($size: null) {
 //   $size: $size or size();
