@@ -2,6 +2,14 @@
 // GRID MIXINS //
 /////////////////
 
+/*
+TODO:
+
+update span mixin
+consider whether grid and flex-grid mixins can work without needing classes on the children?
+
+ */
+
 // span
 @mixin span($span, $opts: null, $right: null, $left: null, $out: null, $cycle: null) {
   @if type-of($opts) == 'map' { @include span(map-merge((span: $span), $opts)...); }
