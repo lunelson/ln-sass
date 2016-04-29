@@ -16,23 +16,6 @@
   padding: 0;
 }
 
-@mixin flex($dir: row) {
-  display: flex;
-  @if index(y col column, $dir) {
-    flex-direction: column;
-    & > * {
-      flex: 1 0 auto; // best for column direction
-      max-width: 100%; // fix overflow in IE
-      // overflow: hidden;
-    }
-  } @else {
-    & > * {
-      flex: 1 1 0%; // best for row
-      // overflow: hidden;
-    }
-  }
-}
-
 @mixin abs-align($args...) {
   $args: if(type-of(nth($args, 1))=='list', nth($args, 1), $args);
   $x: if(index($args,  'right'), 100%, if(index($args, 'center'), 50%, 0%));
