@@ -1,4 +1,5 @@
 @import 'true';
+@import '../dist/all';
 
 //////////
 // MAIN //
@@ -21,7 +22,7 @@
 // @import 'util/calc--test';
 // @import 'util/color--test';
 // @import 'util/debug--test';
-// @import 'util/function--test';
+@import 'util/function--test';
 // @import 'util/json--test';
 // @import 'util/list--test';
 // @import 'util/ln--test';
