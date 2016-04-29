@@ -118,7 +118,7 @@
       &, &--right { margin-right: div-calc($unpage-margin-right, 2); }
       &, &--left { margin-left: div-calc($unpage-margin-left, 2); }
 
-      .wrap--left > & {
+      .wrap--left & {
         margin-right: add-calc($unpage-margin, $outer-left);
         margin-left: - $outer-left;
         &--right {
@@ -133,7 +133,7 @@
         }
       }
 
-      .wrap--right > & {
+      .wrap--right & {
         margin-right: - $outer-right;
         margin-left: add-calc($unpage-margin, $outer-right);
         &--right {
