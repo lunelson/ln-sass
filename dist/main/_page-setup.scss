@@ -96,6 +96,52 @@
     // unpage //
     ////////////
 
+    /*
+    // NEW VERSION
+
+    $page-offset: sub-calc($outer-right, $outer-left);
+    $unpage-margin: sub-calc(100%, 100vw);
+    $unpage-margin-right: div-calc(sub-calc($unpage-margin, $page-offset), 2);
+    $unpage-margin-left: div-calc(add-calc($unpage-margin, $page-offset), 2);
+
+    .unpage {
+      margin-right: 0;
+      margin-left: 0;
+      max-width: none;
+      width: 100vw;
+      &--right { width: add-calc(100vw, $unpage-margin-left);}
+      &--left { width: add-calc(100vw, $unpage-margin-right);}
+      &, &--right { margin-right: $unpage-margin-right; }
+      &, &--left { margin-left: $unpage-margin-left; }
+    }
+
+    .unpage--fromRight {
+      &, &--right { margin-right: - $outer-right;}
+      &, &--left { margin-left: add-calc($unpage-margin, $outer-right); }
+      &--right {
+        width: add-calc(100%, $outer-right);
+        margin-left: 0;
+      }
+      &--left {
+        width: sub-calc(100vw, $outer-right);
+        margin-right: 0;
+      }
+    }
+
+    .unpage--fromLeft {
+      &, &--right { margin-right: add-calc($unpage-margin, $outer-left); }
+      &, &--left { margin-left: - $outer-left; }
+      &--right {
+        width: sub-calc(100vw, $outer-left);
+        margin-left: 0;
+      }
+      &--left {
+        width: add-calc(100%, $outer-left);
+        margin-right: 0;
+      }
+    }
+    */
+
     $page-inset: calc(#{$outer-right} + #{$outer-left});
     $page-offset: calc(#{$outer-right} - #{$outer-left});
 
