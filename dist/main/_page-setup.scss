@@ -96,9 +96,6 @@
     // unpage //
     ////////////
 
-    /*
-    // NEW VERSION
-
     $page-offset: sub-calc($outer-right, $outer-left);
     $unpage-margin: sub-calc(100%, 100vw);
     $unpage-margin-right: div-calc(sub-calc($unpage-margin, $page-offset), 2);
@@ -116,82 +113,28 @@
     }
 
     .unpage--fromRight {
-      &, &--right { margin-right: - $outer-right;}
-      &, &--left { margin-left: add-calc($unpage-margin, $outer-right); }
-      &--right {
+      &, &.unpage--right { margin-right: - $outer-right;}
+      &, &.unpage--left { margin-left: add-calc($unpage-margin, $outer-right); }
+      &.unpage--right {
         width: add-calc(100%, $outer-right);
         margin-left: 0;
       }
-      &--left {
+      &.unpage--left {
         width: sub-calc(100vw, $outer-right);
         margin-right: 0;
       }
     }
 
     .unpage--fromLeft {
-      &, &--right { margin-right: add-calc($unpage-margin, $outer-left); }
-      &, &--left { margin-left: - $outer-left; }
-      &--right {
+      &, &.unpage--right { margin-right: add-calc($unpage-margin, $outer-left); }
+      &, &.unpage--left { margin-left: - $outer-left; }
+      &.unpage--right {
         width: sub-calc(100vw, $outer-left);
         margin-left: 0;
       }
-      &--left {
+      &.unpage--left {
         width: add-calc(100%, $outer-left);
         margin-right: 0;
-      }
-    }
-    */
-
-    $page-inset: calc(#{$outer-right} + #{$outer-left});
-    $page-offset: calc(#{$outer-right} - #{$outer-left});
-
-    $unpage-width: 100vw;
-    $unpage-margin: sub-calc(100%, $unpage-width);
-    $unpage-margin-right: sub-calc($unpage-margin, $page-offset);
-    $unpage-margin-left: add-calc($unpage-margin, $page-offset);
-    $unpage-width-right: add-calc($unpage-width, div-calc($unpage-margin-left, 2));
-    $unpage-width-left: add-calc($unpage-width, div-calc($unpage-margin-right, 2));
-
-    .unpage {
-      margin-right: 0;
-      margin-left: 0;
-      max-width: none !important;
-
-      width: $unpage-width;
-
-      &--right { width: $unpage-width-right;}
-      &--left { width: $unpage-width-left;}
-      &, &--right { margin-right: div-calc($unpage-margin-right, 2); }
-      &, &--left { margin-left: div-calc($unpage-margin-left, 2); }
-
-      .wrap--left & {
-        margin-right: add-calc($unpage-margin, $outer-left);
-        margin-left: - $outer-left;
-        &--right {
-          width: sub-calc($unpage-width, $outer-left);
-          margin-right: add-calc($unpage-margin, $outer-left);
-          margin-left: 0;
-        }
-        &--left {
-          width: add-calc(100%, $outer-left);
-          margin-right: 0;
-          margin-left: - $outer-left;
-        }
-      }
-
-      .wrap--right & {
-        margin-right: - $outer-right;
-        margin-left: add-calc($unpage-margin, $outer-right);
-        &--right {
-          width: add-calc(100%, $outer-right);
-          margin-right: - $outer-right;
-          margin-left: 0;
-        }
-        &--left {
-          width: sub-calc($unpage-width, $outer-right);
-          margin-left: add-calc($unpage-margin, $outer-right);
-          margin-right: 0;
-        }
       }
     }
 
