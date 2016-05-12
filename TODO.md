@@ -1,8 +1,27 @@
 # LN-Sass
 
-### jade
+### typo
+new ideas
 
-mixins accepting filter blocks?
+```scss
+@mixin stack($m, $l, $f)
+  $parent-sel: &
+  $scope-sel: & or $stack-sel
+  $typo-sel: unique-placeholder();
+  #{$scope-sel}{
+    * + * { margin-top ... }
+    * + #{$typo-sel} { margin-top ... }
+    $curr-typo-sel: $typo-sel;
+    @content;
+  }
+
+@mixin typo($s, $l, $f)
+  // do size
+  @if $line != $curr-line
+    // recalc trim
+  @else
+    @extend #{$curr-typo-sel}
+  ```
 
 ## main
 
