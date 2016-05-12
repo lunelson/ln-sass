@@ -1,37 +1,38 @@
 // TODO
 // rename the main mixins:
-// typo-setup
-// typo-scope
-// typo
-
-// TODO
+  // typo-setup
 // - is there a reliable way to integrate css-columns?
 // - is there a reliable way to integrate outriding elements?
 
+
+////////////////
+// typo-scope //
+////////////////
+
+$typo-sels: '[class*="typo--"]', '.typo' !default;
+$curr-typo-scope: false !default;
+
+@mixin typo-scope($m: $curr-mult-y-key, $s: $curr-size-key, $l: $curr-line-key, $f: $curr-font-key) {
+  // cache prevs
+  $prev-mult-y-key: $curr-mult-y-key;
+  // set currs globally
+  $curr-mult-y-key: $m !global;
+  // resolve for &
+  $parent-sel: &; $scope-sel: if($parent-sel!=null,'&',$typo-sels);
+  $curr-typo-scope: if($parent-sel!=null, true, false) !global;
+  // do output
+  #{$scope-sel} > * + * { margin-top: calc(#{mult-y($m) * mval('margin-y')} + #{trim-height()}); }
+  @content;
+  // restore prevs globally
+  $curr-mult-y-key: $prev-mult-y-key !global;
+  $curr-typo-scope: false !global;
+}
 
 //////////
 // typo //
 //////////
 
-$typo-selectors: '[class*="typo--"]', '.typo' !default;
-$curr-typo-block: false !default;
-
-@mixin typo($m: $curr-mult-y-key) {
-  $parent: &;
-  #{if($parent!=null,'&',$typo-selectors)} > * + * { margin-top: mult-y($m) * mval('margin-y'); }
-  $prev-mult-y-key: $curr-mult-y-key;
-  $curr-mult-y-key: $m !global;
-  $curr-typo-block: if($parent!=null, true, false) !global;
-  @content;
-  $curr-mult-y-key: $prev-mult-y-key !global;
-  $curr-typo-block: false !global;
-}
-
-////////////////
-// typo-child //
-////////////////
-
-@mixin typo-child($s: null, $l: null, $f: null) {
+@mixin typo($s: $curr-size-key, $l: $curr-line-key, $f: $curr-font-key) {
 
   $prev-size-val: $curr-size-val;
   $prev-line-val: $curr-line-val;
@@ -48,16 +49,16 @@ $curr-typo-block: false !default;
 
   $font-family: if($font, map-get($font, 'font-family'), null);
   $size-adjust: if($font, map-get($font, 'size-adjust') or 1, 1);
-  $size-unit: if($curr-typo-block, 'em', 'rem');
+  $size-unit: if($curr-typo-scope, 'em', 'rem');
 
   font-family: $font-family;
   font-size: unit-assert($size, $size-unit) * $size-adjust;
   line-height: $line * mval('line-height');
 
-  $typo-selectors: if($curr-typo-block,'',$typo-selectors);
-  @if not $curr-typo-block { @at-root #{sel-insert-parents($typo-selectors)} { font-size: unit-assert($size, em) * $size-adjust; } }
-  // @at-root #{sel-insert-parents($typo-selectors,'> * +')} { margin-top: t-margin(); }
-  @at-root #{sel-insert-parents($typo-selectors,'>')} {
+  $typo-sels: if($curr-typo-scope,'',$typo-sels);
+  @if not $curr-typo-scope { @at-root #{sel-insert-parents($typo-sels)} { font-size: unit-assert($size, em) * $size-adjust; } }
+  // @at-root #{sel-insert-parents($typo-sels,'> * +')} { margin-top: t-margin(); }
+  @at-root #{sel-insert-parents($typo-sels,'>')} {
     margin-top: t-margin(0);
     margin-bottom: t-margin(0);
     @include adj-to { margin-top: t-margin(); }

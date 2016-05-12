@@ -7,6 +7,24 @@
 //       __/ | |
 //      |___/|_|
 
+$typo-min-line: 1.125 !default;
+$typo-sub-line: 2 !default;
+$typo-sels: '[class*="typo--"]', '.typo' !default;
+
+$curr-font-key: 'base';
+$curr-font-val: null;
+
+$curr-size-val: null !default;
+$curr-size-key: null !default;
+$curr-line-val: null !default; // only the multiplier
+$curr-line-key: null !default;
+$curr-mult-y-val: null !default;
+$curr-mult-y-key: null !default;
+$curr-mult-x-val: null !default;
+$curr-mult-x-key: null !default;
+
+$curr-typo-scope: false !default;
+
 $fonts: (
   base: (
     font-family: (Arial, sans-serif),
