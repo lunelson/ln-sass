@@ -55,11 +55,11 @@
 
     // unwanted styles
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0); // remove webkit tap highlight color
-  }
-  html, body {
     width: 100vw;
     padding-right: calc(100vw - 100%);
 
+  }
+  html, body {
   }
   body {
     margin: 0;

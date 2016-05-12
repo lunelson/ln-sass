@@ -138,5 +138,25 @@
       }
     }
 
+    .hold, [class*='hold--'] { position: relative; }
+
+    .hold--abs {}
+    .hold--cover {}
+    .hold--contain {}
+    .hold--aspect {
+      height: 0;
+      overflow: hidden;
+      padding: 0 0 100%;
+      &>img, &>svg, &>object, &>iframe, &>video, &>picture {
+        display: block;
+        position: absolute;
+        top: 0; left: 0;
+        width: 100%;
+        &:not(img) {
+          height: 100%;
+        }
+      }
+    }
+
   }
 }
