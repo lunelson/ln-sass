@@ -2,20 +2,8 @@
 // FLEX AND GRID //
 ///////////////////
 
-// flex-y
-@mixin flex-y($cell: '*') {
-  display: flex;
-  flex-direction: column;
-  & > #{$cell} {
-    flex: 1 0 auto; // best for column direction
-    min-height: auto;
-    height: auto;
-    max-width: 100%; // fix overflow in IE
-  }
-}
-
-// flex
-@mixin flex($mult: null, $cols: null, $cell: '*') {
+// flex-grid
+@mixin flex-grid($mult: null, $cols: null, $cell: '*') {
   $gutter: if($mult, margin-x($mult), null);
   display: flex;
   width: if($gutter, calc(100% + #{$gutter}), null);
@@ -24,7 +12,6 @@
   @if $cols { flex-wrap: wrap; }
   & > #{$cell} {
     flex: if($cols, 0 1 auto, 1 1 auto);
-    // min-width: 0; // https://css-tricks.com/flexbox-truncated-text/
     width: if($cols, (100%/#{$cols}), 0%);
     padding-right: if($gutter, $gutter/2, null);
     padding-left: if($gutter, $gutter/2, null);
@@ -38,18 +25,18 @@
   width: if($gutter, calc(100% + #{$gutter}), null);
   margin-right: if($gutter, $gutter/-2, null);
   margin-left: if($gutter, $gutter/-2, null);
-  @if $cell {
-    position: relative;
-    font-size: 0rem;
-    @if $cols and $cell != '*' { &:before { display: none; content: '#{$cols} #{$cell}'; } } // for salvattore
-    & > #{$cell} {
-      display: inline-block;
-      vertical-align: top;
-      font-size: 1rem;
-      width: if($cols, 100%/$cols, 100%);
-      padding-right: if($gutter, $gutter/2, null);
-      padding-left: if($gutter, $gutter/2, null);
-    }
+  position: relative;
+  font-size: 0rem;
+  @if $cols and $cell != '*' { // for salvattore...
+    &:before { display: none; content: '#{$cols} #{$cell}'; } }
+  & > #{$cell} {
+    display: inline-block;
+    vertical-align: top;
+    min-height: 1px; // http://css-tricks.com/make-sure-columns-dont-collapse-horizontally/
+    font-size: 1rem;
+    width: if($cols, 100%/$cols, 100%);
+    padding-right: if($gutter, $gutter/2, null);
+    padding-left: if($gutter, $gutter/2, null);
   }
 }
 

@@ -10,15 +10,22 @@
   [class*='cell--'] { @extend .cell; }
 
   .fgrid { display: flex; }
+
   .grid {
-    &:before { display: none; } // in case of salvattore
+    display: block;
     position: relative; // for 'out' positioned cells which are absolute
     font-size: 0rem;
     & > * { font-size: 1rem; direction: ltr; }
   }
 
   .fcell, .cell { background-clip: content-box; }
-  .fcell { flex: 1 1 0%; }
+
+  .fcell {
+    flex: 1 1 auto;
+    min-width: 0%; // https://css-tricks.com/flexbox-truncated-text/
+    width: 0%;
+  }
+
   .cell {
     min-height: 1px; // http://css-tricks.com/make-sure-columns-dont-collapse-horizontally/
     font-size: 1rem;

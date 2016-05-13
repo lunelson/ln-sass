@@ -9,9 +9,11 @@
 
 // medium values
 @function medium-value($key, $m: $curr-medium-key) { @return if($m, map-get(medium($m), $key), map-get($base, $key)); }
+@function medium-value-orig($key, $m: $curr-medium-key) { @return if($m, map-get(medium-orig($m), $key), map-get($base-orig, $key)); }
+
+// aliases of above
 @function mval($args...){ @return medium-value($args...); }
-@function medium-orig-value($key, $m: $curr-medium-key) { @return if($m, map-get(medium-orig($m), $key), map-get($base-orig, $key)); }
-@function mval-orig($args...){ @return medium-orig-value($args...); }
+@function mval-orig($args...){ @return medium-value-orig($args...); }
 
 ////////////////////////////
 // normalize medium units //
@@ -140,8 +142,8 @@
   $groups: (
     font-size sizes size-mod,
     line-height lines,
-    margin-y mults-y mult-y-mod,
-    margin-x mults-x mult-x-mod,
+    margin-y mults-y mult-y-mod mult-mod,
+    margin-x mults-x mult-x-mod mult-mod,
   );
   @each $prop in $props {
     @each $group in $groups {

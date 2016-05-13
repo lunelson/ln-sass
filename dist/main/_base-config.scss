@@ -14,11 +14,11 @@ $media: (
   c: (breakpoint: 64em),
   d: (breakpoint: 80em),
 ) !default;
-$media-hd-ratio: 3 2 !default;
 
 $base-orig: ();
 $media-orig: ();
 
+$media-hd-ratio: 3 2 !default;
 $globals: () !default;
 
 $curr-medium-key: null !default;
