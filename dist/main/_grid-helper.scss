@@ -24,6 +24,7 @@
   @if $cols { flex-wrap: wrap; }
   & > #{$cell} {
     flex: if($cols, 0 1 auto, 1 1 auto);
+    min-width: 0; // https://css-tricks.com/flexbox-truncated-text/
     width: if($cols, (100%/#{$cols}), 0%);
     padding-right: if($gutter, $gutter/2, null);
     padding-left: if($gutter, $gutter/2, null);
