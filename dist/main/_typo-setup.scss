@@ -11,8 +11,8 @@
   $font-keys: join(null, map-keys($fonts));
   @each $f in $font-keys {
     body #{if($f, '.f--' + $f,'')} {
-      $font-family: get($fonts, $f or 'base', 'font-family');
-      font-family: $font-family;
+      font-family: get($fonts, $f or 'base', 'font-family');
+      font-size: 1rem * get($fonts, $f or 'base', 'size-adjust');;
       #{if($f,'&','*')} {
         $spacing-max: get($fonts, $f or 'base', 'spacing-max');
         $spacing-end: get($fonts, $f or 'base', 'spacing-end');
