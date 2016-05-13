@@ -29,6 +29,8 @@ $fonts: (
   base: (
     font-family: (Arial, sans-serif),
     char-height: 1,
+    em-factor: 1,
+    ex-factor: 1,
     size-adjust: 1,
     spacing-max: 0.5,
     spacing-end: 50,
@@ -36,6 +38,8 @@ $fonts: (
   serif: (
     font-family: (Georgia, serif),
     char-height: 1,
+    em-factor: 1,
+    ex-factor: 1,
     size-adjust: 1,
     spacing-max: 0.5,
     spacing-end: 50,
@@ -43,6 +47,8 @@ $fonts: (
   mono: (
     font-family: (Consolas, mono),
     char-height: 1,
+    em-factor: 1,
+    ex-factor: 1,
     size-adjust: 1,
     spacing-max: 0.5,
     spacing-end: 50,
