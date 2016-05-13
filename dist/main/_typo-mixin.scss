@@ -4,25 +4,22 @@
 // - is there a reliable way to integrate css-columns?
 // - is there a reliable way to integrate outriding elements?
 
-
-////////////////
-// typo-scope //
-////////////////
-
 $typo-sels: '[class*="typo--"]', '.typo' !default;
 $curr-typo-scope: false !default;
 
 @mixin typo-scope($m: $curr-mult-y-key, $s: $curr-size-key, $l: $curr-line-key, $f: $curr-font-key) {
-  // cache prevs
+  // cache prevs; set currs globally
   $prev-mult-y-key: $curr-mult-y-key;
-  // set currs globally
   $curr-mult-y-key: $m !global;
+
   // resolve for &
   $parent-sel: &; $scope-sel: if($parent-sel!=null,'&',$typo-sels);
   $curr-typo-scope: if($parent-sel!=null, true, false) !global;
+
   // do output
   #{$scope-sel} > * + * { margin-top: calc(#{mult-y($m) * mval('margin-y')} + #{trim-height()}); }
   @content;
+
   // restore prevs globally
   $curr-mult-y-key: $prev-mult-y-key !global;
   $curr-typo-scope: false !global;
