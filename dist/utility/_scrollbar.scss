@@ -1,0 +1,70 @@
+////////////////
+// SCROLLBARS //
+////////////////
+
+// ref: https://css-tricks.com/custom-scrollbars-in-webkit/
+// ref: https://webkit.org/blog/363/styling-scrollbars/
+// mixin: http://codepen.io/HugoGiraudel/pen/KFDuB?editors=0100
+
+// IE
+
+body {
+  // scrollbar-base-color: #C0C0C0;
+  // scrollbar-base-color: #C0C0C0;
+  // scrollbar-3dlight-color: #C0C0C0;
+  // scrollbar-highlight-color: #C0C0C0;
+  // scrollbar-track-color: #EBEBEB;
+  // scrollbar-arrow-color: black;
+  // scrollbar-shadow-color: #C0C0C0;
+  // scrollbar-dark-shadow-color: #C0C0C0;
+}
+
+// CHROME/SAFARI
+
+// the whole bar
+::-webkit-scrollbar {}
+// the up/down buttons
+::-webkit-scrollbar-button {}
+// the area in which the thumb moves
+::-webkit-scrollbar-track {}
+// the area of track not occupied by thumb
+::-webkit-scrollbar-track-piece {}
+// the thumb, which moves in the track
+::-webkit-scrollbar-thumb {}
+// the corner where tracks meet
+::-webkit-scrollbar-corner {}
+// the resize tab which sits in the -corner
+::-webkit-resizer {
+  // pseudo-class which applies to any scrollbar pieces that have a horizontal orientation.
+  &:horizontal {}
+  // pseudo-class which applies to any scrollbar pieces that have a vertical orientation.
+  &:vertical {}
+  // pseudo-class which applies to buttons and track pieces. It indicates whether or not the button or track piece will decrement the view’s position when used (e.g., up on a vertical scrollbar, left on a horizontal scrollbar).
+  &:decrement {}
+  // pseudo-class which applies to buttons and track pieces. It indicates whether or not a button or track piece will increment the view’s position when used (e.g., down on a vertical scrollbar, right on a horizontal scrollbar).
+  &:increment {}
+  // pseudo-class which applies to buttons and track pieces. It indicates whether the object is placed before the thumb.
+  &:start {}
+  // pseudo-class which applies to buttons and track pieces. It indicates whether the object is placed after the thumb.
+  &:end {}
+  // pseudo-class which applies to buttons and track pieces. It is used to detect whether a button is part of a pair of buttons that are together at the same end of a scrollbar. For track pieces it indicates whether the track piece abuts a pair of buttons.
+  &:double-button {}
+  // pseudo-class which applies to buttons and track pieces. It is used to detect whether a button is by itself at the end of a scrollbar. For track pieces it indicates whether the track piece abuts a singleton button.
+  &:single-button {}
+  // pseudo-class which applies to track pieces and indicates whether or not the track piece runs to the edge of the scrollbar, i.e., there is no button at that end of the track.
+  &:no-button {}
+  // pseudo-class which applies to all scrollbar pieces and indicates whether or not a scrollbar corner is present.
+  &:corner-present {}
+  // pseudo-class which applies to all scrollbar pieces and indicates whether or not the window containing the scrollbar is currently active. (In recent nightlies, this pseudo-class now applies to ::selection as well. We plan to extend it to work with any content and to propose it as a new standard pseudo-class.)
+  &:window-inactive {}
+}
+
+@mixin scrollbars($size, $fg-color, $bg-color: mix($fg-color, white, 50%)) {
+  // Chrome/Safari
+  ::-webkit-scrollbar { width:  $size; height: $size; }
+  ::-webkit-scrollbar-thumb { background-color: $fg-color; }
+  ::-webkit-scrollbar-track { background-color: $bg-color; }
+  // IE
+  body { scrollbar-face-color: $fg-color; scrollbar-track-color: $bg-color; }
+}
+

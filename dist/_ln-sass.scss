@@ -1,34 +1,71 @@
 // UTILITIES
+
 @import 'utility/reset/all';
+
 @import 'utility/ln';
 @import 'utility/math';
 @import 'utility/unit';
+
 @import 'utility/animation';
 @import 'utility/calc';
 @import 'utility/color';
-@import 'utility/function';
 @import 'utility/debug';
+@import 'utility/display';
+@import 'utility/function';
 @import 'utility/json';
 @import 'utility/list';
 @import 'utility/map';
 @import 'utility/maps';
 @import 'utility/misc';
+@import 'utility/position';
+@import 'utility/scrollbar';
 @import 'utility/selector';
 @import 'utility/string';
+@import 'utility/z-index';
 
 // CURR and DONE VARIABLES
+
 $curr-medium-key: null !default;
+
 $curr-size-key: null !default;
 $curr-line-key: null !default;
 $curr-font-key: null !default;
 $curr-mult-y-key: null !default;
 $curr-mult-x-key: null !default;
+
+$curr-size-val: null !default; // kill
+$curr-line-val: null !default; // kill
+$curr-font-val: null !default; // kill
+$curr-mult-y-val: null !default; // kill
+$curr-mult-x-val: null !default; // kill
+
+$curr-typo-scope: false !default;
+
 $done-base-setup: false !default;
 $done-grid-setup: false !default;
 $done-page-setup: false !default;
 $done-typo-setup: false !default;
 
 // MEDIA
+
+@import 'media/config';
+@import 'media/helper';
+@import 'media/mixin';
+@import 'media/setup';
+// @import 'media/setup-alt';
+
 // LAYOUT
+
+@import 'layout/config';
+@import 'layout/helper';
+@import 'layout/mixin';
+@import 'layout/setup';
+
 // THEME
+
 // TYPO
+
+@import 'typo/config';
+@import 'typo/helper';
+@import 'typo/mixin';
+@import 'typo/setup';

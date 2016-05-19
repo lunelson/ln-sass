@@ -1,82 +1,29 @@
-@mixin grid-setup(){
-
-  //////////
-  // grid //
-  //////////
-
-  [class*='fgrid--'] { @extend .fgrid; }
-  [class*='grid--'] { @extend .grid; }
-  [class*='fcell--'] { @extend .fcell; }
-  [class*='cell--'] { @extend .cell; }
-
-  .fgrid { display: flex; }
-
-  .grid {
-    display: block;
-    position: relative; // for 'out' positioned cells which are absolute
-    font-size: 0rem;
-    & > * { font-size: 1rem; direction: ltr; }
-  }
-
-  .fcell, .cell { background-clip: content-box; }
-
-  .fcell {
-    flex: 1 1 auto;
-    min-width: 0%; // https://css-tricks.com/flexbox-truncated-text/
-    width: 0%;
-  }
-
-  .cell {
-    min-height: 1px; // http://css-tricks.com/make-sure-columns-dont-collapse-horizontally/
-    font-size: 1rem;
-    direction: ltr;
-    width: 100%;
-    display: inline-block;
-    vertical-align: top;
-  }
-
-  @include media((for: margin-x mults-x)) {
-    @each $m, $mult in map-merge((base: 1), mval('mults-x')) {
-      $margin: $mult * mval('margin-x');
-      .fgrid#{mod-class($m)}, .grid#{mod-class($m)} {
-        margin-left: $margin / -2;
-        margin-right: $margin / -2;
-        width: calc(100% + #{$margin});
-      }
-       .fcell#{mod-class($m)}, .cell#{mod-class($m)} {
-        padding-left: $margin / 2;
-        padding-right: $margin / 2;
-      }
-    }
-  }
-}
-
-@mixin page-setup(){
+@mixin layout-setup(){
 
   /////////////
   // margins //
   /////////////
 
-  @include media((for: margin-y mults-y)) {
+  // @include media((for: margin-y mults-y)) {
 
-    @each $m, $mult in map-merge((base: 1), mval('mults-y')) {
-      $margin-y: $mult * mval('margin-y');
-      .sect#{mod-class($m)} { @extend .my#{mod-class($m)}; }
-      .my#{mod-class($m)} { @extend .mt#{mod-class($m)}, .mb#{mod-class($m)}; }
-      .mt#{mod-class($m)} { margin-top: $margin-y; }
-      .mb#{mod-class($m)} { margin-bottom: $margin-y; }
-    }
-  }
+  //   @each $m, $mult in map-merge((base: 1), medium-value('mults-y')) {
+  //     $margin-y: $mult * medium-value('margin-y');
+  //     .sect#{mult-class($m)} { @extend .my#{mult-class($m)}; }
+  //     .my#{mult-class($m)} { @extend .mt#{mult-class($m)}, .mb#{mult-class($m)}; }
+  //     .mt#{mult-class($m)} { margin-top: $margin-y; }
+  //     .mb#{mult-class($m)} { margin-bottom: $margin-y; }
+  //   }
+  // }
 
-  @include media((for: margin-x mults-x)) {
+  // @include media((for: margin-x mults-x)) {
 
-    @each $m, $mult in map-merge((base: 1), mval('mults-x')) {
-      $margin-x: $mult * mval('margin-x');
-      .mx#{mod-class($m)} { @extend .mr#{mod-class($m)}, .ml#{mod-class($m)}; }
-      .mr#{mod-class($m)} { margin-right: $margin-x; }
-      .ml#{mod-class($m)} { margin-left: $margin-x; }
-    }
-  }
+  //   @each $m, $mult in map-merge((base: 1), medium-value('mults-x')) {
+  //     $margin-x: $mult * medium-value('margin-x');
+  //     .mx#{mult-class($m)} { @extend .mr#{mult-class($m)}, .ml#{mult-class($m)}; }
+  //     .mr#{mult-class($m)} { margin-right: $margin-x; }
+  //     .ml#{mult-class($m)} { margin-left: $margin-x; }
+  //   }
+  // }
 
   //////////
   // wrap //
@@ -93,7 +40,7 @@
 
     // create placeholders
     $m: nth($media-keys, $n);
-    @include media($m) { %wrap--#{$m} { max-width: mval(content-width); } }
+    @include media($m) { %wrap--#{$m} { max-width: medium-value(content-width); } }
 
     .wrap--each { @extend %wrap--#{$m}; }
     @for $i from $n through 1 { .wrap--#{nth($media-keys, $i)}-thru {  @extend %wrap--#{$m}; } }
@@ -121,8 +68,8 @@
     // page-y //
     ////////////
 
-    $outer-top: mval('outer-top');
-    $outer-bottom: mval('outer-bottom');
+    $outer-top: medium-value('outer-top');
+    $outer-bottom: medium-value('outer-bottom');
 
     .page--y { @extend .page--top, .page--bottom; }
     .page--top { padding-top: $outer-top; }
@@ -138,8 +85,8 @@
     // page-x //
     ////////////
 
-    $outer-right: mval('outer-right');
-    $outer-left: mval('outer-left');
+    $outer-right: medium-value('outer-right');
+    $outer-left: medium-value('outer-left');
 
     .page { @extend .page--right, .page--left; @extend %clip; }
     .page--right { padding-right: $outer-right; }
@@ -189,6 +136,77 @@
         width: add-calc(100%, $outer-left);
         margin-right: 0;
       }
+    }
+  }
+
+
+  //////////
+  // grid //
+  //////////
+
+  [class*='fgrid--'] { @extend %fgrid; }
+  [class*='grid--'] { @extend %grid; }
+  [class*='fcell--'] { @extend %fcell; }
+  [class*='cell--'] { @extend %cell; }
+
+  .fgrid, %fgrid { display: flex; }
+
+  .grid, %grid {
+    display: block;
+    position: relative; // for 'out' positioned cells which are absolute
+    font-size: 0rem;
+    & > * { font-size: 1rem; direction: ltr; }
+  }
+
+  .fcell, %fcell, .cell, %cell { background-clip: content-box; }
+
+  .fcell, %fcell {
+    flex: 1 1 auto;
+    min-width: 0%; // https://css-tricks.com/flexbox-truncated-text/
+    width: 0%;
+  }
+
+  .cell, %cell {
+    min-height: 1px; // http://css-tricks.com/make-sure-columns-dont-collapse-horizontally/
+    font-size: 1rem;
+    direction: ltr;
+    width: 100%;
+    display: inline-block;
+    vertical-align: top;
+  }
+
+  @include media((for: margin-x mults-x mults)) {
+    @each $m, $mult in map-merge((base: 1), medium-value('mults-x') or medium-value('mults')) {
+      $margin: $mult * medium-value('margin-x');
+      .fgrid#{mult-class($m)}, .grid#{mult-class($m)} {
+        margin-left: $margin / -2;
+        margin-right: $margin / -2;
+        width: calc(100% + #{$margin});
+      }
+       .fcell#{mult-class($m)}, .cell#{mult-class($m)} {
+        padding-left: $margin / 2;
+        padding-right: $margin / 2;
+      }
+    }
+  }
+
+  ///////////
+  // stack //
+  ///////////
+
+  [class*='stack--'] { @extend %stack; }
+  .stack, %stack {
+    padding-top: 0.1px;
+    padding-bottom: 0.1px;
+    & > * {
+      margin-top: 0;
+      margin-bottom: 0;
+    }
+  }
+
+  @include media((for: margin-y mults-y mults)) {
+    @each $m, $mult in map-merge((base: 1), medium-value('mults-y') or medium-value('mults')) {
+      .stack#{mult-class($m)} > * + * { margin-top: $mult * medium-value('margin-y'); }
     }
   }
 
@@ -325,6 +343,7 @@
     @include flex-y();
   }
 
+  // this is for flex aspect divs
   [class*='flex--'] {
     @extend %flex;
     &:before {
@@ -405,7 +424,4 @@
     }
   }
 
-}
-
-@mixin setup-page-helpers {
 }

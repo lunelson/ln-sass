@@ -1,3 +1,11 @@
+# new
+
+medium/mixin
+medium/setup-alt
+typo/mixin [font]
+
+
+
 # LN-Sass
 
 ### typo
@@ -75,67 +83,15 @@ new ideas
     }
 
 
-### main/page
+### layout
 
-- write wrap and grid mixins
-
-
-    p.aside {
-      @include wrap(a,c,e);
-      @include grid(xs);
-      // alt idea: provide strings to extend
-      @include typo(s--sm, m--xl, l--std) {
-        @include align-top(std);
-      }
-      @include media-for()
-    }
-
-    @mixin wrap($min, $max: null){
-      // @extend %wrap--
-      @if type-of($min) == 'list' {
-        // @extend %wrap--x-y-z
-      } @else if $min {
-        @if $max {
-          // @extend %wrap--x-thru-y
-        } @else {
-          // @extend %wrap--x-thru
-        }
-      } @else if $max {
-       // @extend %wrap--thru-x
-      }
-    }
-    @mixin grid($mult: 'std'){}
-    @mixin cell($mult: 'std'){}
-    @mixin fgrid($mult: 'std'){}
-    @mixin fcell($mult: 'std'){}
-
-
-- fix wrap classes
-
-.wrap
-.wrap--alpha
-.wrap--alpha-to
-.wrap--to-delta
-.wrap--beta-to-epsilon
-
-- do unwrap and unpage classes;
-- eliminate "layout direction" ? not queryable from unwrap classes
-
-  .unwrap
-  .wrap--right &
-  .wrap--left &
-  .unwrap--left
-  .wrap--right &
-  .wrap--left &
+- write wrap mixin
+- do unwrap classes correctly
   .unwrap--right
-  .wrap--right &
-  .wrap--left &
+  .unwrap--right-from-right
+  etc.
 
-  .unpage--x
-  .unpage--right
-  .unpage--left
-
-### main/typo
+### typo
 
 - eliminate unused typo-helpers
 - finish typo testing

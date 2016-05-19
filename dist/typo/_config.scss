@@ -1,34 +1,7 @@
-//  _
-// | |
-// | |_ _   _ _ __   ___
-// | __| | | | '_ \ / _ \
-// | |_| |_| | |_) | (_) |
-//  \__|\__, | .__/ \___/
-//       __/ | |
-//      |___/|_|
-
-$typo-min-line: 1.125 !default;
-$typo-sub-line: 2 !default;
-$typo-sels: '[class*="typo--"]', '.typo' !default;
-
-$curr-font-key: 'base';
-$curr-font-val: null;
-
-$curr-size-val: null !default;
-$curr-size-key: null !default;
-$curr-line-val: null !default; // only the multiplier
-$curr-line-key: null !default;
-$curr-mult-y-val: null !default;
-$curr-mult-y-key: null !default;
-$curr-mult-x-val: null !default;
-$curr-mult-x-key: null !default;
-
-$curr-typo-scope: false !default;
 
 $fonts: (
   base: (
     font-family: (Arial, sans-serif),
-    char-height: 1,
     em-factor: 1,
     ex-factor: 1,
     size-adjust: 1,
@@ -37,7 +10,6 @@ $fonts: (
   ),
   serif: (
     font-family: (Georgia, serif),
-    char-height: 1,
     em-factor: 1,
     ex-factor: 1,
     size-adjust: 1,
@@ -45,8 +17,7 @@ $fonts: (
     spacing-end: 50,
   ),
   mono: (
-    font-family: (Consolas, mono),
-    char-height: 1,
+    font-family: (Monaco, mono),
     em-factor: 1,
     ex-factor: 1,
     size-adjust: 1,
@@ -54,3 +25,7 @@ $fonts: (
     spacing-end: 50,
   )
 ) !default;
+
+$typo-min-line: 1.125 !default;
+$typo-sub-line: 2 !default;
+$typo-sels: '[class*="typo--"]', '.typo' !default;

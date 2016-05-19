@@ -1,3 +1,24 @@
+$base-defaults: (
+  // bases
+  font-size: 16px,
+  line-height: 1.5,
+  margin-x: 2rem,
+  margin-y: 2rem,
+  inner-x: 2rem,
+  inner-y: 2rem,
+  outer-top: 2rem,
+  outer-right: 2rem,
+  outer-bottom: 2rem,
+  outer-left: 2rem,
+  // mults and mods
+  lines: (),
+  sizes: (),
+  mults-x: (),
+  mults-y: (),
+  size-mod: 1.5,
+  mult-mod: 1.5
+);
+
 $base: () !default;
 
 $media: (

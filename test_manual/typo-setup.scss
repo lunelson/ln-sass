@@ -1,0 +1,13 @@
+@import '../dist/ln-sass';
+
+$base: (
+  lines: (s: 0.8, l: 1.6),
+  sizes: (s: 0.8, l: 1.6),
+  mults-x: (s: 0.8, l: 1.6),
+  mults-y: (s: 0.8, l: 1.6),
+);
+
+
+@include media-setup();
+@include layout-setup();
+@include typo-setup();

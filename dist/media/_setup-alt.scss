@@ -93,5 +93,5 @@
 
   // output global sass as JSON for js parsing
   $globals: if(variable-exists('globals'), $globals, ());
-  @include sass-to-js(map-merge($globals, (media: $media)));
+  @include json-content(map-merge($globals, (media: $media)));
 }

@@ -1,103 +1,7 @@
-// TODO
-// rename the main mixins:
-  // typo-setup
-// - is there a reliable way to integrate css-columns?
-// - is there a reliable way to integrate outriding elements?
-
-$typo-sels: '[class*="typo--"]', '.typo' !default;
-$curr-typo-scope: false !default;
-
-@mixin typo-scope($m: $curr-mult-y-key, $s: $curr-size-key, $l: $curr-line-key, $f: $curr-font-key) {
-  // cache prevs; set currs globally
-  $prev-mult-y-key: $curr-mult-y-key;
-  $curr-mult-y-key: $m !global;
-
-  // resolve for &
-  $parent-sel: &; $scope-sel: if($parent-sel!=null,'&',$typo-sels);
-  $curr-typo-scope: if($parent-sel!=null, true, false) !global;
-
-  // do output
-  #{$scope-sel} > * + * { margin-top: calc(#{mult-y($m) * mval('margin-y')} + #{trim-height()}); }
-  @content;
-
-  // restore prevs globally
-  $curr-mult-y-key: $prev-mult-y-key !global;
-  $curr-typo-scope: false !global;
-}
-
-//////////
-// typo //
-//////////
-
-@mixin typo($s: $curr-size-key, $l: $curr-line-key, $f: $curr-font-key) {
-
-  $prev-size-val: $curr-size-val;
-  $prev-line-val: $curr-line-val;
-  $prev-font-val: $curr-font-val;
-
-  $size: size($s);
-  $curr-size-val: $size !global;
-
-  $line: line($l);
-  $curr-line-val: $line !global;
-
-  $font: if($f != 'base', font($f), null);
-  $curr-font-val: $font !global;
-
-  $font-family: if($font, map-get($font, 'font-family'), null);
-  $size-adjust: if($font, map-get($font, 'size-adjust') or 1, 1);
-  $size-unit: if($curr-typo-scope, 'em', 'rem');
-
-  font-family: $font-family;
-  font-size: unit-assert($size, $size-unit) * $size-adjust;
-  line-height: $line * mval('line-height');
-
-  $typo-sels: if($curr-typo-scope,'',$typo-sels);
-  @if not $curr-typo-scope { @at-root #{sel-insert-parents($typo-sels)} { font-size: unit-assert($size, em) * $size-adjust; } }
-  // @at-root #{sel-insert-parents($typo-sels,'> * +')} { margin-top: t-margin(); }
-  @at-root #{sel-insert-parents($typo-sels,'>')} {
-    margin-top: t-margin(0);
-    margin-bottom: t-margin(0);
-    @include adj-to { margin-top: t-margin(); }
-    @content;
-  }
-
-  $curr-size-val: $prev-size-val !global;
-  $curr-line-val: $prev-line-val !global;
-  $curr-font-val: $prev-font-val !global;
-}
-
-//////////////////
-// typo-child-x //
-//////////////////
-
-// extends existing classes
-@mixin typo-child-x($s:'base', $l:'auto', $f: 'base') {
-  @at-root & {
-    @extend .s#{mod-class($s)};
-    @if $l != 'auto' { @extend .l#{mod-class($l)}; }
-    @if $f != 'base' { @extend .f--#{$f}; }
-  }
-  [class*='typo'] & {
-    $prev-size-key: $curr-size-key;
-    $prev-line-key: $curr-line-key;
-    $prev-font-key: $curr-font-key;
-    $curr-size-key: $s !global;
-    $curr-line-key: $l !global;
-    $curr-font-key: $f !global;
-    @content;
-    $curr-size-key: $prev-size-key !global;
-    $curr-line-key: $prev-line-key !global;
-    $curr-font-key: $prev-font-key !global;
-  }
-}
-
 ///////////
-// FONTS //
+// fonts //
 ///////////
 
-
-// font face mixin
 @mixin font-face($family, $dir, $file, $style, $weight) {
   @font-face {
     font-family: $family;
@@ -112,3 +16,111 @@ $curr-typo-scope: false !default;
   }
 }
 
+@mixin font() {}
+
+//////////////////
+// stack / typo //
+//////////////////
+
+$curr-stack-sel: null !default;
+
+@mixin stack($m: $curr-mult-y-key, $s: $curr-size-key, $l: $curr-line-key, $f: $curr-font-key, $typo: true) {
+
+  $prev-mult-y-key: $curr-mult-y-key;
+  $prev-size-key: $curr-size-key;
+  $prev-line-key: $curr-line-key;
+  $prev-font-key: $curr-font-key;
+
+  $curr-mult-y-key: $m !global;
+  $curr-size-key: $s !global;
+  $curr-line-key: $l !global;
+  $curr-font-key: $f !global;
+
+  // $parent-sel: &;
+  // $curr-stack-sel: $parent-sel !global;
+  $curr-stack-sel: & !global;
+
+  // if we're not at root level
+  // @if $parent-sel {
+  // }
+  padding-top: 0.1px;
+  padding-bottom: 0.1px;
+  & > * { margin-top: 0; margin-bottom: 0; }
+  & > * + * { margin-top: margin-y($m); }
+
+  // output content, nested or not
+  @content;
+
+  // restore prevs globally
+  // $curr-stack-sel: false !global;
+  $curr-stack-sel: null !global;
+  // $stack-typo-item-sel: null !global;
+  $curr-mult-y-key: $prev-mult-y-key !global;
+  $curr-size-key: $prev-size-key !global;
+  $curr-line-key: $prev-line-key !global;
+  $curr-font-key: $prev-font-key !global;
+}
+
+// BLOCKS
+
+@mixin typo-item($s: $curr-size-key, $l: $curr-line-key, $f: $curr-font-key) {
+
+  $same-size-key: ($s == $curr-size-key);
+  $same-line-key: ($l == $curr-line-key);
+  $same-font-key: ($f == $curr-font-key);
+
+  $prev-size-key: $curr-size-key;
+  $prev-line-key: $curr-line-key;
+  $prev-font-key: $curr-font-key;
+
+  $curr-size-key: $s !global;
+  $curr-line-key: $l !global;
+  $curr-font-key: $f !global;
+
+  $size: size($s);
+  $line: line($l);
+  $font: if($f, font($f), null);
+
+  $font-family: if($font, map-get($font, 'font-family'), null);
+  $size-adjust: if($font, map-get($font, 'size-adjust') or 1, 1);
+  // font: inspect($f);
+  font-family: $font-family;
+  line-height: $line * medium-value('line-height');
+  // font-size: unit-assert($size, if($curr-stack-sel, 'em', 'rem')) * $size-adjust;
+
+
+
+  @if $curr-stack-sel {
+    font-size: unit-assert($size, em) * $size-adjust;
+    @at-root #{sel-insert-parents('','>')} {
+      margin-top: typo-em-margin(0);
+      margin-bottom: typo-em-margin(0);
+      @include adj-to() { margin-top: typo-ex-margin(); }
+      @content;
+    }
+    // & > #{$typo-sel}/* , & > .typo */ { margin-top: typo-em-margin(0); margin-bottom: typo-em-margin(0); }
+    // & > * + #{$typo-sel}/* , & > * + .typo */ { margin-top: typo-ex-margin(); }
+
+    // // if we are inside a block
+    // @extend #{$stack-typo-item-sel};
+    // @content;
+  } @else {
+    // if we are at root level
+    @each $m, $mult in map-merge((base: 1), medium-value('mults-y') or medium-value('mults')) {
+      $stack-sel: '.stack#{mult-class($m)}';
+      @at-root #{sel-insert-parents($stack-sel)} {
+        font-size: unit-assert($size, em) * $size-adjust;
+      }
+      @at-root #{sel-insert-parents($stack-sel,'>')} {
+        margin-top: typo-em-margin(0);
+        margin-bottom: typo-em-margin(0);
+        @include adj-to() { margin-top: typo-ex-margin(if($m=='base',1,$m)); }
+        @content;
+      }
+    }
+  }
+
+  $curr-size-key: $prev-size-key !global;
+  $curr-line-key: $prev-line-key !global;
+  $curr-font-key: $prev-font-key !global;
+}

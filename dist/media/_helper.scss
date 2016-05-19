@@ -1,7 +1,3 @@
-////////////////////////////
-// MEDIA OBJECT functions //
-////////////////////////////
-
 
 // medium objects
 @function medium($m: $curr-medium-key) { @return if($m, map-get($media, $m), $base); }
@@ -15,10 +11,7 @@
 @function mval($args...){ @return medium-value($args...); }
 @function mval-orig($args...){ @return medium-value-orig($args...); }
 
-////////////////////////////
-// normalize medium units //
-////////////////////////////
-
+// normalize units in medium
 @function medium-normalize($medium) {
 
   // correct for font-size and line-height units/non-units
@@ -41,5 +34,14 @@
   }
   // return merged corrections
   @return map-merge($medium, $normal);
+}
+
+// media query string
+@function width-query($min: null, $max: null) {
+  $min: if(map-has-key($media, $min), get($media, $min, 'breakpoint'), $min);
+  $max: if(map-has-key($media, $max), get($media, $max, 'breakpoint'), $max);
+  @return 'screen'
+    + if($min, ' and (min-width: #{$min})', '')
+    + if($max, ' and (max-width: #{$max - 0.001})', '');
 }
 

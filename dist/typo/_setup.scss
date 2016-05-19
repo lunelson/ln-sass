@@ -1,122 +1,15 @@
-// problems:
-  // .f--XXXX has to be applied to indiv text block elements
-  //
+@mixin typo-setup($output: true){
 
-
-// TODO: @mixin font(), to extend .f--#{$font}
-
-@mixin typo-setup($output-all: false){
-
-  // the font classes
   $font-keys: join(null, map-keys($fonts));
   @each $f in $font-keys {
-    body #{if($f, '.f--' + $f,'')} {
+    // body #{if($f, if($f=='base', '.font', '.font--' + $f),'')} {
+    body #{if($f, '.font--' + $f,'')} {
       font-family: get($fonts, $f or 'base', 'font-family');
       font-size: 1rem * get($fonts, $f or 'base', 'size-adjust');;
-      #{if($f,'&','*')} {
+      * {
         $spacing-max: get($fonts, $f or 'base', 'spacing-max');
         $spacing-end: get($fonts, $f or 'base', 'spacing-end');
         letter-spacing: calc(#{$spacing-max}px - #{$spacing-max/$spacing-end}em);
-      }
-    }
-  }
-
-  // the line class
-  .line {
-    line-height: 1 !important;
-    margin-top: 0 !important;
-    margin-bottom: 0 !important;
-  }
-  .nb-line {
-    @extend .line;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-  }
-
-  // the base typo class
-  [class*='typo'] {
-    padding-top: 1px;
-    padding-bottom: 1px;
-    // margin-top: -1px;
-    // margin-bottom: -1px;
-    & > * {
-      margin-top: 0;
-      margin-bottom: 0;
-    }
-  }
-
-  @if $output-all {
-
-    @include media((for: sizes lines mults-y font-size line-height)) {
-
-      // html { font-size: mval('html-scale') * 1em; }
-
-      $lines: map-merge((base: 1), mval(lines));
-      $sizes: map-merge((base: 1), mval(sizes));
-      $mults: map-merge((base: 1), mval(mults-y));
-
-      $line-keys: join(null, map-keys($lines));
-      @each $l in $line-keys {
-        body #{if($l, '.l--' + $l,'')} { line-height: line($l) * mval('line-height'); }
-      }
-
-      @each $s, $size in $sizes {
-
-        .s#{mod-class($s)} {
-          font-size: $size * 1rem;
-          line-height: auto-height($size);
-          @each $f in remove($font-keys, base) {
-            [class*='typo'] &#{if($f, '.f--' + $f,'')} {
-              @if not $f { font-size: $size * 1em; }
-              margin-top: calc(0rem - #{trim(auto-height($size), char-height($f))});
-              margin-bottom: calc(0rem - #{trim(auto-height($size), char-height($f))});
-            }
-          }
-
-          @each $l, $line in $lines {
-
-            &.l#{mod-class($l)} {
-              line-height: $line * mval('line-height');
-              @each $f in remove($font-keys, base) {
-                [class*='typo'] &#{if($f, '.f--' + $f,'')} {
-                  margin-top: calc(0rem - #{trim($line * mval('line-height'), char-height($f))});
-                  margin-bottom: calc(0rem - #{trim($line * mval('line-height'), char-height($f))});
-                }
-              }
-            }
-          }
-        }
-      }
-
-      @each $m, $mult in $mults {
-
-        .typo#{mod-class($m)} {
-
-          & > * + * { margin-top: $mult * mval('margin-y');}
-
-          @each $s, $size in $sizes {
-
-            & > * + .s#{mod-class($s)} {
-              @each $f in remove($font-keys, base) {
-                &#{if($f, '.f--' + $f,'')} {
-                  margin-top: calc(#{$mult * mval('margin-y')} - #{trim(auto-height($size), char-height($f))});
-                }
-              }
-
-              @each $l, $line in $lines {
-
-                &.l#{mod-class($l)} {
-                  @each $f in remove($font-keys, base) {
-                    &#{if($f, '.f--' + $f, '')} {
-                      margin-top: calc(#{$mult * mval('margin-y')} - #{trim($line * mval('line-height'), char-height($f))});
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
       }
     }
   }

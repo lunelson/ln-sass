@@ -1,0 +1,65 @@
+@import '../dist/ln-sass';
+
+$base: (
+  lines: (s: 0.8, l: 1.6),
+  sizes: (s: 0.8, l: 1.6),
+  mults-x: (s: 0.8, l: 1.6),
+  mults-y: (s: 0.8, l: 1.6),
+);
+
+
+@include media-setup();
+@include layout-setup();
+@include typo-setup();
+
+///////////
+// TESTS //
+///////////
+
+.helper {
+  ex-margin: inspect(typo-ex-margin(s));
+}
+
+/* stack */
+.stack-test {
+  @include stack();
+}
+
+/* root-typo */
+.root-typo-test {
+  @include typo-item(2);
+}
+
+/* stack -> nested-typo */
+.stack-test-big {
+  @include stack(3) {
+    .nested-typo-test {
+      @include typo-item(2);
+    }
+    .nested-typo-test2 {
+      @include typo-item(1.5,1.5);
+    }
+  }
+}
+
+/* example */
+.tldr-text {
+  @include stack() {
+    p {
+      @include typo-item() {
+        @include adj-to(h4) {
+          // margin-top: typo-margin(1.5);
+        }
+      }
+    }
+    h4 {
+      font-weight: bold;
+      @include typo-item(1.25, 0.9) {
+        @include adj-to(p) {
+          margin-top: typo-margin(3);
+        }
+      }
+    }
+  }
+}
+

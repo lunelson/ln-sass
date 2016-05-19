@@ -1,0 +1,42 @@
+////////////
+// basics //
+////////////
+
+@mixin clip {
+  overflow: hidden !important;
+}
+
+@mixin hide {
+  display: none;
+  visibility: hidden;
+}
+
+@mixin show($display: block) {
+  display: $display;
+  visibility: visible;
+}
+
+/////////////
+// flexbox //
+/////////////
+
+@mixin flex($cell: '*') {
+  display: flex;
+  & > #{$cell} {
+    flex: 1 1 auto;
+    min-width: 0%; // https://css-tricks.com/flexbox-truncated-text/
+    width: 0%;
+  }
+}
+
+@mixin flex-y($cell: '*') {
+  display: flex;
+  flex-direction: column;
+  & > #{$cell} {
+    flex: 1 0 auto; // best for column direction
+    min-height: auto;
+    height: auto;
+    max-width: 100%; // fix overflow in IE
+  }
+}
+

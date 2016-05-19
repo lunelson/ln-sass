@@ -2,22 +2,6 @@
 // FLEX AND GRID //
 ///////////////////
 
-// flex-grid
-@mixin flex-grid($mult: null, $cols: null, $cell: '*') {
-  $gutter: if($mult, margin-x($mult), null);
-  display: flex;
-  width: if($gutter, calc(100% + #{$gutter}), null);
-  margin-right: if($gutter, $gutter/-2, null);
-  margin-left: if($gutter, $gutter/-2, null);
-  @if $cols { flex-wrap: wrap; }
-  & > #{$cell} {
-    flex: if($cols, 0 1 auto, 1 1 auto);
-    width: if($cols, (100%/#{$cols}), 0%);
-    padding-right: if($gutter, $gutter/2, null);
-    padding-left: if($gutter, $gutter/2, null);
-  }
-}
-
 // grid
 @mixin grid($mult: null, $cols: null, $cell: '*') {
   $gutter: if($mult, margin-x($mult), null);
@@ -31,10 +15,27 @@
     &:before { display: none; content: '#{$cols} #{$cell}'; } }
   & > #{$cell} {
     display: inline-block;
+    direction: rtl;
     vertical-align: top;
     min-height: 1px; // http://css-tricks.com/make-sure-columns-dont-collapse-horizontally/
     font-size: 1rem;
     width: if($cols, 100%/$cols, 100%);
+    padding-right: if($gutter, $gutter/2, null);
+    padding-left: if($gutter, $gutter/2, null);
+  }
+}
+
+// flex-grid
+@mixin flex-grid($mult: null, $cols: null, $cell: '*') {
+  $gutter: if($mult, margin-x($mult), null);
+  display: flex;
+  width: if($gutter, calc(100% + #{$gutter}), null);
+  margin-right: if($gutter, $gutter/-2, null);
+  margin-left: if($gutter, $gutter/-2, null);
+  @if $cols { flex-wrap: wrap; }
+  & > #{$cell} {
+    flex: if($cols, 0 1 auto, 1 1 auto);
+    width: if($cols, (100%/#{$cols}), 0%);
     padding-right: if($gutter, $gutter/2, null);
     padding-left: if($gutter, $gutter/2, null);
   }
@@ -57,293 +58,20 @@
 }
 
 ////////////
-// basics //
+// UNWRAP //
 ////////////
 
-@mixin clip {
-  overflow: hidden !important;
-}
-
-@mixin hide {
-  display: none;
-  visibility: hidden;
-}
-
-@mixin show($display: block) {
-  display: $display;
-  visibility: visible;
-}
-
-/////////////
-// flexbox //
-/////////////
-
-@mixin flex($cell: '*') {
-  display: flex;
-  & > #{$cell} {
-    flex: 1 1 auto;
-    min-width: 0%; // https://css-tricks.com/flexbox-truncated-text/
-    width: 0%;
-  }
-}
-
-@mixin flex-y($cell: '*') {
-  display: flex;
-  flex-direction: column;
-  & > #{$cell} {
-    flex: 1 0 auto; // best for column direction
-    min-height: auto;
-    height: auto;
-    max-width: 100%; // fix overflow in IE
-  }
-}
-
-////////////////////////////////////
-// abs brute force position stuff //
-////////////////////////////////////
-
-@mixin abs-align($args...) {
-  $args: if(type-of(nth($args, 1))=='list', nth($args, 1), $args);
-  $x: if(index($args,  'right'), 100%, if(index($args, 'center'), 50%, 0%));
-  $y: if(index($args, 'bottom'), 100%, if(index($args, 'middle'), 50%, 0%));
-  left: $x; top: $y;
-  transform: translate(-$x, -$y);
-}
-
-@mixin turn($dir: cw, $align: center) {
-  white-space: nowrap;
-  position: absolute;
-  top: 50%;
-  @if $dir == "ccw" {
-    transform-origin: right top;
-    @if $align == 'right' {
-      right: 0;
-      transform: rotate(-90deg) translateY(-100%) translateX(50%);
-    } @else if $align == 'left' {
-      right: 100%;
-      transform: rotate(-90deg) translateX(50%);
-    } @else {
-      right: 50%;
-      transform: rotate(-90deg) translateY(-50%) translateX(50%);
-    }
-  }
-  @else {
-    transform-origin: left top;
-    @if $align == 'right' {
-      left: 100%;
-      transform: rotate(90deg) translateX(-50%);
-    } @else if $align == 'left' {
-      left: 0;
-      transform: rotate(90deg) translateY(-100%) translateX(-50%);
-    } @else {
-      left: 50%;
-      transform: rotate(90deg) translateY(-50%) translateX(-50%);
-    }
-  }
-}
-
-/////////////
-// z-index //
-/////////////
-
-$z-indexes: (
-  baked: 30,
-  stoned: 20,
-  buzzed: 10,
-  sober: 0,
-  asleep: -10
-) !default;
-
-@function z-index($name) { @return map-get($z-indexes, $name); }
-@function z($name) { @return z-index($name); }
-
-/////////////////
-// positioning //
-/////////////////
-
-@mixin position($pos, $args...) {
-  position: $pos;
-  @each $arg in $args { #{nth($arg, 1)}: nth($arg, 2); }
-}
-@mixin absolute($args...) { @include position(absolute, $args...); }
-@mixin fixed($args...) { @include position(fixed, $args...); }
-@mixin relative($args...) { @include position(relative, $args...); }
-
-@mixin clearfix {
-  &:after {
-    content:"";
-    display:table;
-    clear:both;
-  }
-}
-@mixin clearfix-legacy(){
-  & { *zoom: 1; }
-  &:before, &:after { content: ""; display: table; }
-  &:after { clear: both; }
-}
-
-
-////////////////
-// sub-layout //
-////////////////
-
-
-@mixin child-layout($selectors, $type, $options...) {
-
-  // contain and cover sizing
-  @if index(contain cover, $type) {
-    position: relative;
-    @if $type == 'cover' { overflow: hidden; }
-    #{children($selectors)} {
-      position: absolute;
-      top: 50%; left: 50%;
-      width: auto; height: auto;
-      transform: translate(-50%, -50%);
-      @if $type == 'contain' {
-        min-width: none; max-width: 100%;
-        min-height: none; max-height: 100%;
-      }
-      @if $type == 'cover' {
-        min-width: 100%; max-width: none;
-        min-height: 100%; max-height: none;
-      }
-    }
-  }
-
-  // table
-  @if index(table table-cell table-row cell row, $type) {
-    width: 100%; // force auto size of children
-    display: table;
-    table-layout: fixed;
-    border-collapse: collapse;
-    #{children($selectors)} {
-      @if index(table-row row, $type) {
-        display: table-row;
-        height: auto; // base setting
-        @if index($options, left) { text-align: left; }
-        @else if index($options, right) { text-align: right;}
-        @else { text-align: center; }
-      }
-      @else {
-        display: table-cell;
-        width: auto; // base setting
-        @if index($options, bottom) { vertical-align: bottom; }
-        @else if index($options, top) { vertical-align: top;}
-        @else { vertical-align: middle; }
-      }
-      overflow: hidden;
-      @content;
-    }
-  }
-
-  // inline-block
-  @else if index(inline-block iblock ib, $type) {
-    font-size: 0rem; // alternate: 0.5px for Opera?
-    &::before, &::after, #{children($selectors)} {
-      display: inline-block;
-      @if index($options, bottom) { vertical-align: bottom; }
-      @else if index($options, middle) { vertical-align: middle;}
-      @else { vertical-align: top; }
-    }
-    @if index($options, justify) {
-      text-align: justify;
-      text-justify: distribute-all-lines; // for IE
-      &::after { content: ''; width: 100%; }
-    }
-    @else {
-      @if index($options, right) { text-align: right;}
-      @else if index($options, center) or index($options, centre) { text-align: center; }
-      @else { text-align: left; }
-      &::before { content: ''; height: 100%; }
-    }
-    #{children($selectors)} { font-size: 1rem; max-width: 100%; @content; }
-  }
-}
-
-// alias
-@mixin sub-layout($args...) { @include child-layout($args...) { @content; } }
-
-////////////////
-// SCROLLBARS //
-////////////////
-
-// ref: https://css-tricks.com/custom-scrollbars-in-webkit/
-// ref: https://webkit.org/blog/363/styling-scrollbars/
-// mixin: http://codepen.io/HugoGiraudel/pen/KFDuB?editors=0100
-
-// IE
-
-body {
-  // scrollbar-base-color: #C0C0C0;
-  // scrollbar-base-color: #C0C0C0;
-  // scrollbar-3dlight-color: #C0C0C0;
-  // scrollbar-highlight-color: #C0C0C0;
-  // scrollbar-track-color: #EBEBEB;
-  // scrollbar-arrow-color: black;
-  // scrollbar-shadow-color: #C0C0C0;
-  // scrollbar-dark-shadow-color: #C0C0C0;
-}
-
-// CHROME/SAFARI
-
-// the whole bar
-::-webkit-scrollbar {}
-// the up/down buttons
-::-webkit-scrollbar-button {}
-// the area in which the thumb moves
-::-webkit-scrollbar-track {}
-// the area of track not occupied by thumb
-::-webkit-scrollbar-track-piece {}
-// the thumb, which moves in the track
-::-webkit-scrollbar-thumb {}
-// the corner where tracks meet
-::-webkit-scrollbar-corner {}
-// the resize tab which sits in the -corner
-::-webkit-resizer {
-  // pseudo-class which applies to any scrollbar pieces that have a horizontal orientation.
-  &:horizontal {}
-  // pseudo-class which applies to any scrollbar pieces that have a vertical orientation.
-  &:vertical {}
-  // pseudo-class which applies to buttons and track pieces. It indicates whether or not the button or track piece will decrement the view’s position when used (e.g., up on a vertical scrollbar, left on a horizontal scrollbar).
-  &:decrement {}
-  // pseudo-class which applies to buttons and track pieces. It indicates whether or not a button or track piece will increment the view’s position when used (e.g., down on a vertical scrollbar, right on a horizontal scrollbar).
-  &:increment {}
-  // pseudo-class which applies to buttons and track pieces. It indicates whether the object is placed before the thumb.
-  &:start {}
-  // pseudo-class which applies to buttons and track pieces. It indicates whether the object is placed after the thumb.
-  &:end {}
-  // pseudo-class which applies to buttons and track pieces. It is used to detect whether a button is part of a pair of buttons that are together at the same end of a scrollbar. For track pieces it indicates whether the track piece abuts a pair of buttons.
-  &:double-button {}
-  // pseudo-class which applies to buttons and track pieces. It is used to detect whether a button is by itself at the end of a scrollbar. For track pieces it indicates whether the track piece abuts a singleton button.
-  &:single-button {}
-  // pseudo-class which applies to track pieces and indicates whether or not the track piece runs to the edge of the scrollbar, i.e., there is no button at that end of the track.
-  &:no-button {}
-  // pseudo-class which applies to all scrollbar pieces and indicates whether or not a scrollbar corner is present.
-  &:corner-present {}
-  // pseudo-class which applies to all scrollbar pieces and indicates whether or not the window containing the scrollbar is currently active. (In recent nightlies, this pseudo-class now applies to ::selection as well. We plan to extend it to work with any content and to propose it as a new standard pseudo-class.)
-  &:window-inactive {}
-}
-
-@mixin scrollbars($size, $fg-color, $bg-color: mix($fg-color, white, 50%)) {
-  // Chrome/Safari
-  ::-webkit-scrollbar { width:  $size; height: $size; }
-  ::-webkit-scrollbar-thumb { background-color: $fg-color; }
-  ::-webkit-scrollbar-track { background-color: $bg-color; }
-  // IE
-  body { scrollbar-face-color: $fg-color; scrollbar-track-color: $bg-color; }
-}
-
-@mixin unpage-offset($offset-right: 0%, $offset-left: 0%, $align: null, $basis: null) {
+@mixin unwrap-offset($offset-right: 0%, $offset-left: 0%, $align: null, $basis: null) {
 
   $outer-right: add-calc(#{mval('outer-right')}, #{$offset-right});
   $outer-left: add-calc(#{mval('outer-left')}, #{$offset-left});
   $page-offset: sub-calc($outer-right, $outer-left);
-  $unpage-margin: sub-calc(100%, 100vw);
-  $unpage-margin-right: div-calc(sub-calc($unpage-margin, $page-offset), 2);
-  $unpage-margin-left: div-calc(add-calc($unpage-margin, $page-offset), 2);
+  $unwrap-margin: sub-calc(100%, 100vw);
+  $unwrap-margin-right: div-calc(sub-calc($unwrap-margin, $page-offset), 2);
+  $unwrap-margin-left: div-calc(add-calc($unwrap-margin, $page-offset), 2);
 
   @if $basis == 'right' {
-    // FROM RIGHT
+    // -from-right
     @if $align == 'right' {
       width: add-calc(100%, $outer-right) !important;
       margin-right: sub-calc(0%, $outer-right) !important;
@@ -351,36 +79,36 @@ body {
     } @else if $align == 'left' {
       width: sub-calc(100vw, $outer-right) !important;
       margin-right: 0 !important;
-      margin-left: add-calc($unpage-margin, $outer-right) !important;
+      margin-left: add-calc($unwrap-margin, $outer-right) !important;
     } @else {
       margin-right: sub-calc(0%, $outer-right) !important;
-      margin-left: add-calc($unpage-margin, $outer-right) !important;
+      margin-left: add-calc($unwrap-margin, $outer-right) !important;
     }
   } @else if $basis == 'left' {
-    // FROM LEFT
+    // -from-left
     @if $align == 'right' {
       width: sub-calc(100vw, $outer-left) !important;
-      margin-right: add-calc($unpage-margin, $outer-left) !important;
+      margin-right: add-calc($unwrap-margin, $outer-left) !important;
       margin-left: 0 !important;
     } @else if $align == 'left' {
       width: add-calc(100%, $outer-left) !important;
       margin-right: 0 !important;
       margin-left: sub-calc(0%, $outer-left) !important;
     } @else {
-      margin-right: add-calc($unpage-margin, $outer-left) !important;
+      margin-right: add-calc($unwrap-margin, $outer-left) !important;
       margin-left: sub-calc(0%, $outer-left) !important;
     }
   } @else {
-    // FROM CENTER
+    // [-from-center]
     @if $align == 'right' {
-      width: add-calc(100vw, $unpage-margin-left) !important;
-      margin-right: $unpage-margin-right !important;
+      width: add-calc(100vw, $unwrap-margin-left) !important;
+      margin-right: $unwrap-margin-right !important;
     } @else if $align == 'left' {
-      width: add-calc(100vw, $unpage-margin-right) !important;
-      margin-left: $unpage-margin-left !important;
+      width: add-calc(100vw, $unwrap-margin-right) !important;
+      margin-left: $unwrap-margin-left !important;
     } @else {
-      margin-right: $unpage-margin-right !important;
-      margin-left: $unpage-margin-left !important;
+      margin-right: $unwrap-margin-right !important;
+      margin-left: $unwrap-margin-left !important;
     }
   }
 }

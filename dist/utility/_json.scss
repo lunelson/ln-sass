@@ -36,7 +36,7 @@
   @error "Unknown type for #{$value} (#{$type}).";
 }
 
-@mixin sass-to-js($json) {
+@mixin json-content($json) {
   $json: json-encode($json);
 
   // All browsers except IE8-

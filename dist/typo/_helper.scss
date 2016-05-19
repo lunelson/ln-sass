@@ -2,130 +2,67 @@
 // MULT FUNCTIONS //
 ////////////////////
 
-// mod
+
+
 @function mod($index, $factor: 2, $spread: 2) { @return _pow($factor, $index/$spread); }
 
-// size
-@function size($s: $curr-size-key) {
-  @if $curr-size-val { @return $curr-size-val; }
-  @else if type-of($s) == 'list' { @return call(join($s, map-get(medium(), 'size-mod'))...); }
-  @else if type-of($s) == 'string' { @return get(medium(), 'sizes', $s); }
-  @else if type-of($s) == 'number' {
-    @if index('' 'em' 'rem' 'px', unit($s)) { @return px($s) / get(medium(), 'font-size'); }
-    @else { @return $s; }
-  } @else { @return $s or 1; }
-}
-
-// auto-line
 @function auto-line($size: null) {
   $size: $size or size();
   $sub-lines: $typo-sub-line or ceil($size);
   $min-lines: $typo-min-line;
-  $rel-height: mval('line-height') / unit-strip($size);
+  $rel-height: medium-value('line-height') / unit-strip($size);
   @return ceil($min-lines / $rel-height * $sub-lines) / $sub-lines / unit-strip($size);
 }
 
-// line
+@function size($s: $curr-size-key) {
+  @if type-of($s) == 'list' { @return call(join($s, medium-value('size-mod'))...); }
+  @else if type-of($s) == 'string' { @return map-get(medium-value('sizes'), $s); }
+  @else if type-of($s) == 'number' {
+    @if index('' 'em' 'rem' 'px', unit($s)) { @return px($s) / medium-value('font-size'); }
+    @else { @return $s; } }
+  @else { @return $s or 1; }
+}
+
 @function line($l: $curr-line-key) {
-  @if $curr-line-val { @return $curr-line-val; }
-  @else if $l == 'auto' { @return auto-line(); }
-  @else if type-of($l) == 'string' { @return get(medium(), 'lines', $l); }
+  @if $l == 'auto' { @return auto-line(); }
+  @else if type-of($l) == 'string' { @return map-get(medium-value('lines'), $l); }
   @else if type-of($l) == 'number' {
-    @if index('em' 'rem' 'px', unit($l)) { @return unit-strip(rem($l)) / get(medium(), 'line-height'); }
-    @else { @return $l; }
-  } @else { @return $l or 1; }
+    @if index('em' 'rem' 'px', unit($l)) { @return unit-strip(rem($l)) / medium-value('line-height'); }
+    @else { @return $l; } }
+  @else { @return $l or 1; }
 }
 
-// mult-y
 @function mult-y($m: $curr-mult-y-key) {
-  @if $curr-mult-y-val { @return $curr-mult-y-val; }
-  @else if type-of($m) == 'list' { @return apply(append($m, map-get(medium(), 'mult-y-mod') or map-get(medium(), 'mult-mod'))); }
-  @else if type-of($m) == 'string' { @return get(medium(), 'mults-y', $m); }
-  @else if type-of($m) == 'number' { @return unit-strip(rem($m));
-  } @else { @return $m or 1; }
+  @if type-of($m) == 'list' { @return apply(append($m, medium-value('mult-y-mod') or medium-value('mult-mod'))); }
+  @else if type-of($m) == 'string' { @return map-get(medium-value('mults-y') or medium-value('mults'), $m); }
+  @else if type-of($m) == 'number' { @return unit-strip(rem($m)); }
+  @else { @return $m or 1; }
 }
 
-// mult-x
 @function mult-x($m: $curr-mult-x-key) {
-  @if $curr-mult-x-val { @return $curr-mult-x-val; }
-  @else if type-of($m) == 'list' { @return apply(append($m, map-get(medium(), 'mult-x-mod') or map-get(medium(), 'mult-mod'))); }
-  @else if type-of($m) == 'string' { @return get(medium(), 'mults-x', $m); }
-  @else if type-of($m) == 'number' { @return unit-strip(rem($m));
-  } @else { @return $m or 1; }
+  @if type-of($m) == 'list' { @return apply(append($m, medium-value('mult-x-mod') or medium-value('mult-mod'))); }
+  @else if type-of($m) == 'string' { @return map-get(medium-value('mults-x') or medium-value('mults'), $m); }
+  @else if type-of($m) == 'number' { @return unit-strip(rem($m)); }
+  @else { @return $m or 1; }
 }
 
 /////////////////////
 // VALUE FUNCTIONS //
 /////////////////////
 
+@function font($key: $curr-font-key) { @return map-get($fonts, $key or 'base'); }
 
-// font
-@function font($key: $curr-font-key) {
-  @return $curr-font-val or map-get($fonts, $key);
-}
+@function ex-factor($f: $curr-font-key) { @return map-get(font($f), 'ex-factor'); }
+@function em-factor($f: $curr-font-key) { @return map-get(font($f), 'em-factor'); }
 
-// char-height
-@function char-height($key: $curr-font-key) {
-  @return map-get(font($key), 'char-height');
-}
+@function line-height($l: $curr-line-key) { @return medium-value('line-height') * line($l); }
 
-// line-height
-@function line-height($key: $curr-line-key) {
-  @return mval('line-height') * ($curr-line-val or line($key));
-}
+@function ex-trim { @return div-calc(sub-calc(line-height()*1em, ex-factor()*1ex), 2); }
+@function em-trim { @return (line-height()*1em - em-factor()*1em)/2; }
 
-// trim-height
-@function trim-height($lh: null, $ch: null){
-  @return (($lh or line-height()) - ($ch or char-height())) / 2 * 1em;
-}
+@function margin-y($m: $curr-mult-y-key) { @return medium-value('margin-y') * mult-y($m); }
+@function margin-x($m: $curr-mult-x-key) { @return medium-value('margin-x') * mult-x($m); }
 
-// margin-y
-@function margin-y($m: $curr-mult-y-key) {
-  @return mval('margin-y') * ($curr-mult-y-val or mult-y($m));
-}
-
-// t-margin
-@function t-margin($m: $curr-mult-y-key) {
-  @return calc(#{margin-y($m)} - #{trim-height()});
-}
-
-// margin-x
-@function margin-x($m: $curr-mult-x-key) {
-  @return mval('margin-x') * ($curr-mult-x-val or mult-x($m));
-}
-
-/*
-TODO:
-
-margin and padding mixins
-margin(t r b l) / (y x) .. etc.
-padding(t r b l) / (y x) .. etc
-
-*/
-
-// auto-height
-// @function auto-height($size: null) {
-//   $size: $size or size();
-//   $sub-lines: $typo-sub-line or ceil($size);
-//   $min-lines: $typo-min-line;
-//   $rel-height: mval('line-height') / unit-strip($size);
-//   @return $rel-height * ceil($min-lines / $rel-height * $sub-lines) / $sub-lines;
-// }
-
-// trim -- deprecated
-// @function trim($lh: null, $ch: null){
-//   $lh: $lh or line-height();
-//   $ch: $ch or char-height();
-//   @return ($lh - $ch) / 2 * 1em;
-// }
-
-// // @include adj-t-margin(null) // *+* untrim
-// // @include adj-t-margin(null, p) // *+p untrim
-// // @include adj-t-margin(2) // *+* t-margin(2)
-// // @include adj-t-margin(2, $list) *+{$list} t-margin(2)
-// @mixin adj-t-margin($m: null, $siblings: '*') {
-//   @include adj-sib($siblings) {
-//     margin-top: if($m, t-margin($m), trim());
-//   }
-// }
-
+@function typo-ex-margin($m: $curr-mult-y-key) { @return sub-calc(margin-y($m), ex-trim()); }
+@function typo-em-margin($m: $curr-mult-y-key) { @return sub-calc(margin-y($m), em-trim()); }
+@function typo-margin($args...) { @return typo-ex-margin($args...); }
