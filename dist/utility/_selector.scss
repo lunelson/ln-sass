@@ -52,17 +52,17 @@
   @return selector-parse($out);
 }
 
-@mixin sib-to($sibs: '*') {
+@mixin sibling-to($sibs: '*') {
   @at-root #{sel-insert-parents($sibs, '~')} {
     @content;
   }
 }
-@mixin adj-to($sibs: '*') {
+@mixin adjacent-to($sibs: '*') {
   @at-root #{sel-insert-parents($sibs, '+')} {
     @content;
   }
 }
-@mixin adj-self {
+@mixin adjacent-self {
   @at-root #{sel-insert-parents(sel-lasts(), '+')} {
     @content;
   }

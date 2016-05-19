@@ -50,7 +50,7 @@
 // VALUE FUNCTIONS //
 /////////////////////
 
-@function font($key: $curr-font-key) { @return map-get($fonts, $key or 'base'); }
+@function font($f: $curr-font-key) { @return map-get($fonts, ($f or 'base')); }
 
 @function ex-factor($f: $curr-font-key) { @return map-get(font($f), 'ex-factor'); }
 @function em-factor($f: $curr-font-key) { @return map-get(font($f), 'em-factor'); }

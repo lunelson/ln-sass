@@ -42,22 +42,51 @@ $base: (
   }
 }
 
+/* context-typo */
+.typo-context {
+  .context-typo-test {
+    @include typo-item(2);
+  }
+  .context-typo-test2 {
+    @include typo-item(1.5,1.5);
+  }
+}
+
 /* example */
 .tldr-text {
   @include stack() {
     p {
       @include typo-item() {
-        @include adj-to(h4) {
-          // margin-top: typo-margin(1.5);
+        @include adjacent-to(h4) {
+          margin-top: typo-margin(1.5);
         }
       }
     }
     h4 {
       font-weight: bold;
       @include typo-item(1.25, 0.9) {
-        @include adj-to(p) {
+        @include adjacent-to(p) {
           margin-top: typo-margin(3);
         }
+      }
+    }
+  }
+}
+
+/* example */
+.other-text {
+  p {
+    @include typo-item() {
+      @include adjacent-to(h4) {
+        margin-top: typo-margin(1.5);
+      }
+    }
+  }
+  h4 {
+    font-weight: bold;
+    @include typo-item(1.25, 0.9) {
+      @include adjacent-to(p) {
+        margin-top: typo-margin(3);
       }
     }
   }

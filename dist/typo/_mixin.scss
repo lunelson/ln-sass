@@ -36,32 +36,24 @@ $curr-stack-sel: null !default;
   $curr-line-key: $l !global;
   $curr-font-key: $f !global;
 
-  // $parent-sel: &;
-  // $curr-stack-sel: $parent-sel !global;
   $curr-stack-sel: & !global;
 
-  // if we're not at root level
-  // @if $parent-sel {
-  // }
+  // stack styles
   padding-top: 0.1px;
   padding-bottom: 0.1px;
   & > * { margin-top: 0; margin-bottom: 0; }
   & > * + * { margin-top: margin-y($m); }
 
-  // output content, nested or not
+  // content
   @content;
 
-  // restore prevs globally
-  // $curr-stack-sel: false !global;
   $curr-stack-sel: null !global;
-  // $stack-typo-item-sel: null !global;
+
   $curr-mult-y-key: $prev-mult-y-key !global;
   $curr-size-key: $prev-size-key !global;
   $curr-line-key: $prev-line-key !global;
   $curr-font-key: $prev-font-key !global;
 }
-
-// BLOCKS
 
 @mixin typo-item($s: $curr-size-key, $l: $curr-line-key, $f: $curr-font-key) {
 
@@ -83,38 +75,31 @@ $curr-stack-sel: null !default;
 
   $font-family: if($font, map-get($font, 'font-family'), null);
   $size-adjust: if($font, map-get($font, 'size-adjust') or 1, 1);
-  // font: inspect($f);
+
   font-family: $font-family;
   line-height: $line * medium-value('line-height');
-  // font-size: unit-assert($size, if($curr-stack-sel, 'em', 'rem')) * $size-adjust;
 
-
-
+  // if in a stack
   @if $curr-stack-sel {
     font-size: unit-assert($size, em) * $size-adjust;
     @at-root #{sel-insert-parents('','>')} {
       margin-top: typo-em-margin(0);
       margin-bottom: typo-em-margin(0);
-      @include adj-to() { margin-top: typo-ex-margin(); }
+      @include adjacent-to() { margin-top: typo-ex-margin(); }
       @content;
     }
-    // & > #{$typo-sel}/* , & > .typo */ { margin-top: typo-em-margin(0); margin-bottom: typo-em-margin(0); }
-    // & > * + #{$typo-sel}/* , & > * + .typo */ { margin-top: typo-ex-margin(); }
+  }
 
-    // // if we are inside a block
-    // @extend #{$stack-typo-item-sel};
-    // @content;
-  } @else {
-    // if we are at root level
+  // if not in a stack
+  @else {
+    font-size: unit-assert($size, rem) * $size-adjust;
+    @at-root #{sel-insert-parents('.stack' '%stack')} { font-size: unit-assert($size, em) * $size-adjust; }
     @each $m, $mult in map-merge((base: 1), medium-value('mults-y') or medium-value('mults')) {
       $stack-sel: '.stack#{mult-class($m)}';
-      @at-root #{sel-insert-parents($stack-sel)} {
-        font-size: unit-assert($size, em) * $size-adjust;
-      }
       @at-root #{sel-insert-parents($stack-sel,'>')} {
         margin-top: typo-em-margin(0);
         margin-bottom: typo-em-margin(0);
-        @include adj-to() { margin-top: typo-ex-margin(if($m=='base',1,$m)); }
+        @include adjacent-to() { margin-top: typo-ex-margin(if($m=='base',1,$m)); }
         @content;
       }
     }
