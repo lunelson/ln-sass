@@ -1,0 +1,45 @@
+////////////////////////////
+// MEDIA OBJECT functions //
+////////////////////////////
+
+
+// medium objects
+@function medium($m: $curr-medium-key) { @return if($m, map-get($media, $m), $base); }
+@function medium-orig($m: $curr-medium-key) { @return if($m, map-get($media-orig, $m), $base-orig); }
+
+// medium values
+@function medium-value($key, $m: $curr-medium-key) { @return if($m, map-get(medium($m), $key), map-get($base, $key)); }
+@function medium-value-orig($key, $m: $curr-medium-key) { @return if($m, map-get(medium-orig($m), $key), map-get($base-orig, $key)); }
+
+// aliases of above
+@function mval($args...){ @return medium-value($args...); }
+@function mval-orig($args...){ @return medium-value-orig($args...); }
+
+////////////////////////////
+// normalize medium units //
+////////////////////////////
+
+@function medium-normalize($medium) {
+
+  // correct for font-size and line-height units/non-units
+  $font-size: map-get($medium, 'font-size');
+  $line-height: map-get($medium, 'line-height');
+  $base-size: if($medium == $base, 16px, map-get($base, 'font-size'));
+  @if unit($font-size) != 'px' { $font-size: unit-strip($font-size) * $base-size; }
+  @if unit($line-height) == 'px' { $line-height: $line-height / $font-size; }
+
+  // put these in a new map
+  $normal: (
+    'font-size': $font-size,
+    'line-height': $line-height,
+    'html-scale': unit-strip($font-size / 16px)
+  );
+
+  // merge additional corrections if necessary
+  @each $key, $value in map-remove($medium, 'font-size', 'line-height', 'breakpoint', 'sizes', 'lines', 'mults-x', 'mults-y') {
+    @if unit($value) == 'px' { $normal: map-merge($normal, ($key: $value / $font-size * 1rem)); }
+  }
+  // return merged corrections
+  @return map-merge($medium, $normal);
+}
+

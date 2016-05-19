@@ -1,0 +1,19 @@
+$base: () !default;
+
+$media: (
+  a: (breakpoint: 32em),
+  b: (breakpoint: 48em),
+  c: (breakpoint: 64em),
+  d: (breakpoint: 80em),
+) !default;
+
+$media-alt: (
+  c4: ( column-count: 4 ),
+  c6: ( column-count: 6 ),
+  c8: ( column-count: 8 ),
+  c10: ( column-count: 10 ),
+  c12: ( column-count: 12 ),
+) !default;
+
+$media-hd-ratio: 3 2 !default;
+$globals: () !default;

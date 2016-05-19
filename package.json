@@ -28,5 +28,8 @@
     "gulp-notify": "^2.2.0",
     "gulp-plumber": "^1.1.0",
     "sass-true": "~2.0.2"
+  },
+  "dependencies": {
+    "sassdash": "^0.8.2"
   }
 }

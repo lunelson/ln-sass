@@ -23,6 +23,7 @@ My personal sass sort-of-framework and utilities
 - change base/media to
     $media-base
     $media
+    @function medium-normalize
     @mixin media()
     @mixin media-for()
     @mixin media-each()

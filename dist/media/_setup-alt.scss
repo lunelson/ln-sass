@@ -1,14 +1,17 @@
 
-@mixin base-setup(){
+// - start with media object that has column-counts, not breakpoints
+//   - (can have other properties)
+// - assume smallest query represents the reading-column
+// - feed the mixin an EM value for reading-line-length
+  // remove breakpoints
+  // merge actual against default column counts? NO
+  // based on first one, associate line-length with a column-count
+
+@mixin base-setup-alt(){
 
   //////////
   // BASE //
   //////////
-
-  // TODO
-  // - ?? convert to inner-x, inner-y from 'margin-' ??
-  // - use single set of mults, and mult-mod
-  // - write margin() and padding() mixins which accept mult/key in same way as margin-x and margin-y
 
   // backup $base as spec'd
   $base-orig: $base !global;
@@ -18,14 +21,12 @@
     // bases
     font-size: 16px,
     line-height: 1.5,
-    margin-x: 2rem,
-    margin-y: 2rem,
-    inner-x: 2rem,
-    inner-y: 2rem,
-    outer-top: 2rem,
-    outer-right: 2rem,
-    outer-bottom: 2rem,
-    outer-left: 2rem,
+    margin-x: 1rem,
+    margin-y: 1.5rem,
+    outer-top: 1rem,
+    outer-right: 1rem,
+    outer-bottom: 1rem,
+    outer-left: 1rem,
     // mults and mods
     lines: (),
     sizes: (),
@@ -36,7 +37,7 @@
   ), $base) !global;
 
   // normalize $base primitives
-  $base: normalize-medium($base) !global;
+  $base: medium-normalize($base) !global;
 
   // base styles
   html { font-size: unit-assert(map-get($base, 'html-scale'), em); }
@@ -57,7 +58,7 @@
   @each $m, $medium in $media {
 
     // merge current medium against ref-medium, normalize primitive values
-    $reference: normalize-medium(map-merge($reference, $medium));
+    $reference: medium-normalize(map-merge($reference, $medium));
 
     // get and merge sub-maps
     $sizes: map-merge(map-get($reference, 'sizes'), map-get($medium, 'sizes') or ());

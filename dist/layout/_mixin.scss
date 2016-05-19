@@ -1,3 +1,61 @@
+///////////////////
+// FLEX AND GRID //
+///////////////////
+
+// flex-grid
+@mixin flex-grid($mult: null, $cols: null, $cell: '*') {
+  $gutter: if($mult, margin-x($mult), null);
+  display: flex;
+  width: if($gutter, calc(100% + #{$gutter}), null);
+  margin-right: if($gutter, $gutter/-2, null);
+  margin-left: if($gutter, $gutter/-2, null);
+  @if $cols { flex-wrap: wrap; }
+  & > #{$cell} {
+    flex: if($cols, 0 1 auto, 1 1 auto);
+    width: if($cols, (100%/#{$cols}), 0%);
+    padding-right: if($gutter, $gutter/2, null);
+    padding-left: if($gutter, $gutter/2, null);
+  }
+}
+
+// grid
+@mixin grid($mult: null, $cols: null, $cell: '*') {
+  $gutter: if($mult, margin-x($mult), null);
+  display: block;
+  width: if($gutter, calc(100% + #{$gutter}), null);
+  margin-right: if($gutter, $gutter/-2, null);
+  margin-left: if($gutter, $gutter/-2, null);
+  position: relative;
+  font-size: 0rem;
+  @if $cols and $cell != '*' { // for salvattore...
+    &:before { display: none; content: '#{$cols} #{$cell}'; } }
+  & > #{$cell} {
+    display: inline-block;
+    vertical-align: top;
+    min-height: 1px; // http://css-tricks.com/make-sure-columns-dont-collapse-horizontally/
+    font-size: 1rem;
+    width: if($cols, 100%/$cols, 100%);
+    padding-right: if($gutter, $gutter/2, null);
+    padding-left: if($gutter, $gutter/2, null);
+  }
+}
+
+// span
+@mixin span($span: 1 1, $opts: null, $right: null, $left: null, $out: null) {
+  @if type-of($opts) == 'map' { @include span($span, $opts...); }
+  @else {
+    $n: nth($span, 1);
+    $d: nth($span, 2);
+    width: $n / $d * 100%;
+    @if $right { margin-right: nth($right, 1) / if(length($right) > 1, nth($right, 2), $d) * 100%; }
+    @if $left { margin-left: nth($left, 1) / if(length($left) > 1, nth($left, 2), $d) * 100%; }
+    @else if $out {
+      $out: map-get($out, (left: right, right: left));
+      position: absolute; #{($out)}: 100%; top: auto;
+    }
+  }
+}
+
 ////////////
 // basics //
 ////////////
@@ -273,4 +331,56 @@ body {
   ::-webkit-scrollbar-track { background-color: $bg-color; }
   // IE
   body { scrollbar-face-color: $fg-color; scrollbar-track-color: $bg-color; }
+}
+
+@mixin unpage-offset($offset-right: 0%, $offset-left: 0%, $align: null, $basis: null) {
+
+  $outer-right: add-calc(#{mval('outer-right')}, #{$offset-right});
+  $outer-left: add-calc(#{mval('outer-left')}, #{$offset-left});
+  $page-offset: sub-calc($outer-right, $outer-left);
+  $unpage-margin: sub-calc(100%, 100vw);
+  $unpage-margin-right: div-calc(sub-calc($unpage-margin, $page-offset), 2);
+  $unpage-margin-left: div-calc(add-calc($unpage-margin, $page-offset), 2);
+
+  @if $basis == 'right' {
+    // FROM RIGHT
+    @if $align == 'right' {
+      width: add-calc(100%, $outer-right) !important;
+      margin-right: sub-calc(0%, $outer-right) !important;
+      margin-left: 0 !important;
+    } @else if $align == 'left' {
+      width: sub-calc(100vw, $outer-right) !important;
+      margin-right: 0 !important;
+      margin-left: add-calc($unpage-margin, $outer-right) !important;
+    } @else {
+      margin-right: sub-calc(0%, $outer-right) !important;
+      margin-left: add-calc($unpage-margin, $outer-right) !important;
+    }
+  } @else if $basis == 'left' {
+    // FROM LEFT
+    @if $align == 'right' {
+      width: sub-calc(100vw, $outer-left) !important;
+      margin-right: add-calc($unpage-margin, $outer-left) !important;
+      margin-left: 0 !important;
+    } @else if $align == 'left' {
+      width: add-calc(100%, $outer-left) !important;
+      margin-right: 0 !important;
+      margin-left: sub-calc(0%, $outer-left) !important;
+    } @else {
+      margin-right: add-calc($unpage-margin, $outer-left) !important;
+      margin-left: sub-calc(0%, $outer-left) !important;
+    }
+  } @else {
+    // FROM CENTER
+    @if $align == 'right' {
+      width: add-calc(100vw, $unpage-margin-left) !important;
+      margin-right: $unpage-margin-right !important;
+    } @else if $align == 'left' {
+      width: add-calc(100vw, $unpage-margin-right) !important;
+      margin-left: $unpage-margin-left !important;
+    } @else {
+      margin-right: $unpage-margin-right !important;
+      margin-left: $unpage-margin-left !important;
+    }
+  }
 }
