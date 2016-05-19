@@ -17,7 +17,7 @@ My personal sass sort-of-framework and utilities
 - revise typo-setup mixin to create .typo-- variants only
 - revise typo-item mixin to invoke all named mult-y contexts
 - change typo to
-    @mixin typo()
+    @mixin typo() / typo-stack()
     @mixin typo-item()
     @function typo-margin()
 - change base/media to
@@ -29,11 +29,16 @@ My personal sass sort-of-framework and utilities
 
 >    // NEW PARADIGM
     .page
-        .wrap--c2-c6
-            .fgrid--s
-                .stack // at this point, might as well forgo the stack class, since you can't inherit the spacing ??
+        .wrap--c2-c6.wrap--left
+            .unwrap--right.unwrap--from-left
+                .page--right
+                    //-...
+            .grid--s
+                .stack
                     h3
                     p
+                    .cols--s
+                    .stack
                 .stack--s
                     .hold--x
                         .hold--asp
@@ -46,3 +51,30 @@ My personal sass sort-of-framework and utilities
 npm install
 npm test
 ```
+
+## new file structure
+
+layout
+    config
+    helper
+    mixin
+    setup
+media
+    config
+    helper
+    mixin
+    setup
+    setup-alt
+    setup-util
+theme
+    config
+    [color]
+    setup
+typo
+    config
+    [font]
+    helper
+    mixin
+    setup
+utility
+    ...
