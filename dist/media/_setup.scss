@@ -11,6 +11,12 @@
   // merge spec'd $base against defaults, and normalize
   $base: medium-normalize(map-merge($base-defaults, $base)) !global;
 
+  @if $output {
+    // base styles
+    html { font-size: unit-assert(map-get($base, 'html-scale'), em); }
+    body { line-height: map-get($base, 'line-height'); }
+  }
+
   ///////////
   // MEDIA //
   ///////////
@@ -60,9 +66,6 @@
   }
 
   @if $output {
-    // base styles
-    html { font-size: unit-assert(map-get($base, 'html-scale'), em); }
-    body { line-height: map-get($base, 'line-height'); }
     // output global sass as JSON for js parsing
     $globals: if(variable-exists('globals'), $globals, ());
     @include json-content(map-merge($globals, (media: $media)));

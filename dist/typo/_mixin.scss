@@ -83,7 +83,7 @@ $curr-stack-sel: null !default;
     @at-root #{sel-insert-parents('','>')} {
       margin-top: typo-em-margin(0);
       margin-bottom: typo-em-margin(0);
-      @include adjacent-to() { margin-top: typo-ex-margin(); }
+      @include adjacent-to('*') { margin-top: typo-ex-margin(); }
       @content;
     }
   }
@@ -95,9 +95,12 @@ $curr-stack-sel: null !default;
     @each $m, $mult in map-merge((base: 1), medium-value('mults-y') or medium-value('mults')) {
       $stack-sel: '.stack#{mult-class($m)}';
       @at-root #{sel-insert-parents($stack-sel,'>')} {
+      // parent: inspect(&);
         margin-top: typo-em-margin(0);
         margin-bottom: typo-em-margin(0);
-        @include adjacent-to() { margin-top: typo-ex-margin(if($m=='base',1,$m)); }
+        @at-root #{sel-insert-parents('*', '+')} {
+          margin-top: typo-ex-margin(if($m=='base',1,$m));
+        }
         @content;
       }
     }

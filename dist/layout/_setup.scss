@@ -139,76 +139,7 @@
     }
   }
 
-
-  //////////
-  // grid //
-  //////////
-
-  [class*='fgrid--'] { @extend %fgrid; }
-  [class*='grid--'] { @extend %grid; }
-  [class*='fcell--'] { @extend %fcell; }
-  [class*='cell--'] { @extend %cell; }
-
-  .fgrid, %fgrid { display: flex; }
-
-  .grid, %grid {
-    display: block;
-    position: relative; // for 'out' positioned cells which are absolute
-    font-size: 0rem;
-    & > * { font-size: 1rem; direction: ltr; }
-  }
-
-  .fcell, %fcell, .cell, %cell { background-clip: content-box; }
-
-  .fcell, %fcell {
-    flex: 1 1 auto;
-    min-width: 0%; // https://css-tricks.com/flexbox-truncated-text/
-    width: 0%;
-  }
-
-  .cell, %cell {
-    min-height: 1px; // http://css-tricks.com/make-sure-columns-dont-collapse-horizontally/
-    font-size: 1rem;
-    direction: ltr;
-    width: 100%;
-    display: inline-block;
-    vertical-align: top;
-  }
-
-  @include media((for: margin-x mults-x mults)) {
-    @each $m, $mult in map-merge((base: 1), medium-value('mults-x') or medium-value('mults')) {
-      $margin: $mult * medium-value('margin-x');
-      .fgrid#{mult-class($m)}, .grid#{mult-class($m)} {
-        margin-left: $margin / -2;
-        margin-right: $margin / -2;
-        width: calc(100% + #{$margin});
-      }
-       .fcell#{mult-class($m)}, .cell#{mult-class($m)} {
-        padding-left: $margin / 2;
-        padding-right: $margin / 2;
-      }
-    }
-  }
-
-  ///////////
-  // stack //
-  ///////////
-
-  [class*='stack--'] { @extend %stack; }
-  .stack, %stack {
-    padding-top: 0.1px;
-    padding-bottom: 0.1px;
-    & > * {
-      margin-top: 0;
-      margin-bottom: 0;
-    }
-  }
-
-  @include media((for: margin-y mults-y mults)) {
-    @each $m, $mult in map-merge((base: 1), medium-value('mults-y') or medium-value('mults')) {
-      .stack#{mult-class($m)} > * + * { margin-top: $mult * medium-value('margin-y'); }
-    }
-  }
+  @include layout-setup-grid();
 
   /////////////
   // iscroll //
