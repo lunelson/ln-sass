@@ -1,0 +1,14 @@
+@import '../../dist/ln-sass';
+
+$media: (
+  a: (breakpoint: 32em),
+  b: (font-size: 2rem, breakpoint: 48em),
+  c: (breakpoint: 64em),
+  d: (breakpoint: 80em),
+) !default;
+
+@include media-setup();
+
+.media-helper-test {
+  media: inspect(media-for(font-size));
+}

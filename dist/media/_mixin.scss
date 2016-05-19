@@ -79,39 +79,3 @@
 // alias
 @mixin hd($args...) { @include hidpi($args...) { @content; } }
 
-/////////////////////
-// MEDIA MIXINS II //
-/////////////////////
-
-@function media-for($props){
-  $keys: ();
-  $groups: (
-    font-size sizes size-mod,
-    line-height lines,
-    margin-y mults-y mult-y-mod mult-mod,
-    margin-x mults-x mult-x-mod mult-mod,
-  );
-  @each $prop in $props {
-    @each $group in $groups {
-      @if index($group, $prop) {
-        $props: join($props, $group);
-      }
-    }
-  }
-  @each $m, $medium in $media-orig {
-    @if contains-any(map-keys($medium), $props) {
-      $keys: append($keys, $m);
-    }
-  }
-  @return $keys;
-}
-
-@mixin media-each($keys: map-keys($media)) {
-  @each $min-max in pair-set($keys) {
-    @include media($min-max...) {
-      @content;
-    }
-  }
-}
-
-@mixin media-for($props) { @include media-each(media-for($props)) { @content; } }
