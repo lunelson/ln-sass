@@ -2,12 +2,24 @@
 // MEDIA MIXINS II //
 /////////////////////
 
+// single query
+@mixin medium($min, $max: null) {
+  $prev-medium-key: $curr-medium-key;
+  $curr-medium-key: $min !global;
+  @media #{width-query($min, $max)} { @content }
+  $curr-medium-key: $prev-medium-key !global;
+}
+
 @mixin media-each($keys: map-keys($media)) {
-  @each $min-max in pair-set($keys) {
-    @include media($min-max...) {
-      @content;
+  @if length($keys) == 0 { @content; }
+  @else {
+    @each $pair in pair-set($keys) {
+      @include medium($pair...) {
+        @content;
+      }
     }
   }
 }
 
 @mixin media-for($props) { @include media-each(media-for($props)) { @content; } }
+@mixin typo-media() { @include media-each(media-for(margin-y line-height)) { @content; } }

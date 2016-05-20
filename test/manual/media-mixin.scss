@@ -1,14 +1,36 @@
 @import '../../dist/ln-sass';
 
 $media: (
-  a: (breakpoint: 32em),
-  b: (font-size: 2rem, breakpoint: 48em),
-  c: (breakpoint: 64em),
-  d: (breakpoint: 80em),
-) !default;
+  a: (
+    breakpoint: 32em,
+  ),
+  b: (
+    breakpoint: 48em,
+    font-size: 2rem,
+    margin-x: 5rem,
+  ),
+  c: (
+    breakpoint: 64em,
+    margin-y: 3rem,
+  ),
+  d: (
+    breakpoint: 80em,
+    line-height: 2,
+  ),
+);
 
 @include media-setup();
 
 .media-helper-test {
-  media: inspect(media-for(font-size));
+  size-media: inspect(media-for(font-size));
+  margin-y-media: inspect(media-for(margin-y line-height));
+  typo-media: inspect(media-for(typo));
+  @include media-for(margin-y line-height) {
+    color: red;
+  }
+  @include media-for(margin-x) {
+    color: blue;
+  }
 }
+
+/* #{map-inspect($media)} */

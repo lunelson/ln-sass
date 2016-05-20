@@ -49,6 +49,7 @@ $done-typo-setup: false !default;
 // MEDIA
 
 @import 'media/config';
+@import 'media/func';
 @import 'media/helper';
 @import 'media/mixin';
 @import 'media/mixin2';

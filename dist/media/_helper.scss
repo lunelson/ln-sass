@@ -1,16 +1,3 @@
-
-// medium objects
-@function medium($m: $curr-medium-key) { @return if($m, map-get($media, $m), $base); }
-@function medium-orig($m: $curr-medium-key) { @return if($m, map-get($media-orig, $m), $base-orig); }
-
-// medium values
-@function medium-value($key, $m: $curr-medium-key) { @return if($m, map-get(medium($m), $key), map-get($base, $key)); }
-@function medium-value-orig($key, $m: $curr-medium-key) { @return if($m, map-get(medium-orig($m), $key), map-get($base-orig, $key)); }
-
-// aliases of above
-@function mval($args...){ @return medium-value($args...); }
-@function mval-orig($args...){ @return medium-value-orig($args...); }
-
 // normalize units in medium
 @function medium-normalize($medium) {
 
@@ -45,13 +32,13 @@
     + if($max, ' and (max-width: #{$max - 0.001})', '');
 }
 
-@function media-for($props...){
+@function media-for($props){
   $keys: ();
   $groups: (
     font-size sizes size-mod,
     line-height lines,
-    margin-y mults-y mult-y-mod mult-mod,
-    margin-x mults-x mult-x-mod mult-mod,
+    margin-y mults-y mults mult-y-mod mult-mod,
+    margin-x mults-x mults mult-x-mod mult-mod,
   );
   @each $prop in $props {
     @each $group in $groups {
