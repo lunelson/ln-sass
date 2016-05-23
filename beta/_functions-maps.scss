@@ -1,0 +1,66 @@
+// ++++ MAP FUNCTIONS, new in 3.3
+
+// map-get($map, $key)
+// returns the value for key. If no value found, returns null
+
+// map-merge($map1, $map2)
+// merges two maps together into a new map; second map takes precedence in case of duplicate keys
+// a good way to modify an existing map, i.e. supply replacement values as second map
+
+// map-keys($map)
+// returns all the keys as a comma-separated list
+
+// map-values($map)
+// returns all the values as a comma-separated list
+
+// map-has-key($map, $key)
+// returns whether or not map has given key; equivalent to contains() for lists
+
+// construct a string representation of the map
+@function map-debug($map) {
+	$result: unquote("( ");
+	@each $key, $value in $map {
+		@if type_of($value) == 'map' {
+			$result: unquote("#{$result} #{$key}: #{map-debug($value)}");
+		} @else { $result: unquote("#{$result}#{$key}: #{$value}, "); } }
+	$result: unquote("#{$result} )");
+	$result: str-remove($result,",  )");
+	$result: str-remove($result,"  ");
+	@return quote($result); }
+
+// modified map-has-key function: returns key if positive
+@function has($map, $key) {
+	@if map-has-key($map, $key) { @return $key; }
+	@return false; }
+
+// has() function, applied to check multiple keys
+@function has-any($map, $keys...) {
+	@each $key in $keys { @if map-has-key($map, $key) { @return $key; } }
+	@return false; }
+
+// alias of map-get() -- currently commented out while I'm still using get() alias as nested get
+// @function get($map, $key) { @return map-get($map, $key); }
+
+// get() any of the supplied keys
+@function get-any($map, $keys...) {
+	@each $key in $keys { @if map-has-key($map, $key) { @return map-get($map, $key); } }
+	@return null; }
+
+// nested "get" function
+@function n-get($map, $keys...) {
+	@each $key in $keys { @if $map == null { @return null; } @else { $map: map-get($map, $key); } }
+	@return $map; }
+
+// to be worked on:
+
+// @function has($map, $key) {} // return key if found
+// @function has-any($map, $keys...) {} // use has()
+
+// @function get($map, $key) {} // alias
+// @function get-any($map, $keys...) {} // get($map,has-any($map,$keys...))
+
+// @function nhas($map, $key) {} // look through each level and return key list
+// @function nhas-any($map, $keys...) {} // use nhas()
+
+// @function nget($map, $keys...) {} // nested get
+// @function nget-any($map, $keys...) {} // nget($map,nhas-any($map,$keys...))

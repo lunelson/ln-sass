@@ -1,0 +1,85 @@
+$debug: false !default;
+
+// minimal default font-data
+// * should eventually use multiple samples and interpolate the value
+$font-data: body ( metrics ( capline 0.375, baseline 0.375)) !default;
+
+// minimal default typo sizing
+$base-font-size: 16px !default;
+$base-line-height: 24px !default;
+$base-leading: $base-line-height / $base-font-size !default; // auto
+$minimum-leading: 1.25 !default;
+
+// minimum default dimension
+$base-margin-y: assert($base-leading, rem) !default;
+
+// type_set mixin
+@mixin type_set($spec, $args...) {
+
+	// handle presence of alias along with size, if $spec is a list
+	$local-font-size: 0; $font-alias: 'body';
+	@if length($spec) > 1 { $local-font-size: strip(collect-numbers($spec)); $font-alias: collect-strings($spec); }
+	@else { $local-font-size: strip($spec); }
+
+	// calculate base values for leading and margins
+	$relative-font-size: $local-font-size / strip($base-font-size);
+	$local-leading: strip(1 / $relative-font-size * $base-leading);
+	$local-y-margin: assert(1 / $relative-font-size * $base-margin-y, em);
+	$sub-leading-division: ceil($relative-font-size) + 1;
+	$line-height: strip($local-leading * ceil($minimum-leading / $local-leading * $sub-leading-division) / $sub-leading-division);
+
+	// retrieve font metrics, calculate margin trim
+	$capline: nkv($font-data, #{$font-alias}, metrics, capline) or nkv($font-data, body, metrics, capline);
+	$baseline: nkv($font-data, #{$font-alias}, metrics, baseline) or nkv($font-data, body, metrics, baseline);
+	// $trim: 0;
+	// * $trim removed in favor of $trim-values list
+	$trim-values: ();
+	@if $capline and $baseline {
+		// $avg-char-height: average($capline, $baseline);
+		// $trim: assert($avg-char-height - $line-height / 2, em);
+		// * now calculating a list of top and bottom values, instead of an average which requires an offset
+		$trim-values: assert($capline - $line-height / 2, em) assert($baseline - $line-height / 2, em);
+	}
+
+	// lookups for margin and trim factors
+	// $trim-defaults-per-margin: 'top' 'bottom', 'bottom' 'top', 'above' 'below', 'below' 'above', 'both' 'none', 'none' 'both';
+	// * new defaults, trimming 'both' for all cases except margin both
+	$trim-defaults-per-margin: 'top' 'both', 'bottom' 'both', 'above' 'both', 'below' 'both', 'both' 'none', 'none' 'both';
+	$margin-factors: 'top' 1 0, 'above' 1 0, 'bottom' 0 1, 'below' 0 1, 'both' 1 1, 'none' 0 0;
+	$trim-factors: 'top' -1 1, 'above' -1 1, 'bottom' 1 -1, 'below' 1 -1, 'both' -1 -1, 'none' 0 0;
+
+	// calc final values for margins
+	$margin-arg: kv($args, margin) or kv($args, m) or above;
+	$trim-arg: kv($args, trim) or kv($args, t) or kv($trim-defaults-per-margin, $margin-arg);
+	// $margin-top-value: nth(nkv($margin-factors, $margin-arg), 1) * $local-y-margin - nth(nkv($trim-factors, $trim-arg), 1) * $trim;
+	// $margin-bottom-value: nth(nkv($margin-factors, $margin-arg), 2) * $local-y-margin - nth(nkv($trim-factors, $trim-arg), 2) * $trim;
+	$margin-top-value: nth(nkv($margin-factors, $margin-arg), 1) * $local-y-margin;
+	$margin-bottom-value: nth(nkv($margin-factors, $margin-arg), 2) * $local-y-margin;
+	$trim-top-value: nth(nkv($trim-factors, $trim-arg), 1) * nth($trim-values, 1);
+	$trim-bottom-value: nth(nkv($trim-factors, $trim-arg), 2) * nth($trim-values, 2);
+
+	// extend the vertical offset for font-alias
+	// * removed this; now calculating top and bottom trip separately
+	// @extend %#{$font-alias}-vertical-offset !optional;
+
+	// do output
+	font-size: rem($local-font-size);
+	line-height: $line-height;
+	margin-top: $margin-top-value - $trim-top-value;
+	margin-bottom: $margin-bottom-value - $trim-bottom-value;
+	// @if ($margin-arg == 'top' or $margin-arg == 'above') { &:first-child, &.first-child, &.first { margin-top: $margin-bottom-value; } }
+	// @if ($margin-arg == 'bottom' or $margin-arg == 'below') { &:last-child, &.last-child, &.last { margin-bottom: $margin-top-value; } }
+	// * finally, apply the opposite margin value to own trim-value in forced subtraction
+	@if ($margin-arg == 'top' or $margin-arg == 'above') { &:first-child, &.first-child, &.first { margin-top: $margin-bottom-value + nth($trim-values, 1); } }
+	@if ($margin-arg == 'bottom' or $margin-arg == 'below') { &:last-child, &.last-child, &.last { margin-bottom: $margin-top-value + nth($trim-values, 2); } }
+}
+
+@mixin type_margin($dir: top) {
+	@if index(bottom below after, $dir) {
+		margin-bottom: $base-margin-y;
+		&:last-child { margin-top: 0; }
+	} @else {
+		margin-top: $base-margin-y;
+		&:first-child { margin-top: 0; }
+	}
+}

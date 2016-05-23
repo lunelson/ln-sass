@@ -33,4 +33,15 @@ $media: (
   }
 }
 
+.empty-test {
+  @include margin(1 null null);
+  @include padding(1 null null);
+  // @include media-each() {
+  //   color: green;
+  // }
+  // @include media-each(()) {
+  //   color: green;
+  // }
+}
+
 /* #{map-inspect($media)} */

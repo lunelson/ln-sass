@@ -1,2 +1,95 @@
-@mixin margin(){}
-@mixin padding(){}
+@mixin margin($args: $curr-mult-y-key $curr-mult-x-key) {
+  $t: nth($args, 1);
+  $r: if(length($args)>1, nth($args, 2), nth($args, 1));
+  $b: if(length($args)>2, nth($args, 3), nth($args, 1));
+  $l: if(length($args)>3, nth($args, 4), if(length($args)>1, nth($args, 2), nth($args, 1)));
+  @if not index($t $r $b $l, null) { margin: margin-y($t) margin-x($r) margin-y($b) margin-x($l); }
+  @else {
+    margin-top: if($t, margin-y($t), null);
+    margin-right: if($r, margin-x($r), null);
+    margin-bottom: if($b, margin-y($b), null);
+    margin-left: if($l, margin-x($l), null);
+  }
+}
+
+@mixin padding($args: $curr-mult-y-key $curr-mult-x-key) {
+  $t: nth($args, 1);
+  $r: if(length($args)>1, nth($args, 2), nth($args, 1));
+  $b: if(length($args)>2, nth($args, 3), nth($args, 1));
+  $l: if(length($args)>3, nth($args, 4), if(length($args)>1, nth($args, 2), nth($args, 1)));
+  @if not index($t $r $b $l, null) { padding: margin-y($t) margin-x($r) margin-y($b) margin-x($l); }
+  @else {
+    padding-top: if($t, margin-y($t), null);
+    padding-right: if($r, margin-x($r), null);
+    padding-bottom: if($b, margin-y($b), null);
+    padding-left: if($l, margin-x($l), null);
+  }
+}
+
+// // margin; compact syntax version
+// @mixin margin($args) {
+//   @if length($args) == 1 {
+//     margin: $args;
+//   } @else if length($args) == 2 {
+//     @if index($args, null) {
+//       margin-top: nth($args,1);
+//       margin-right: nth($args,2);
+//       margin-bottom: nth($args,1);
+//       margin-left: nth($args,2);
+//     } @else {
+//       margin: $args;
+//     }
+//   } @else if length($args) == 3 {
+//     @if index($args, null) {
+//       margin-top: nth($args,1);
+//       margin-right: nth($args,2);
+//       margin-bottom: nth($args,3);
+//       margin-left: nth($args,2);
+//     } @else {
+//       margin: $args;
+//     }
+//   } @else if length($args) == 4 {
+//     @if index($args, null) {
+//       margin-top: nth($args,1);
+//       margin-right: nth($args,2);
+//       margin-bottom: nth($args,3);
+//       margin-left: nth($args,4);
+//     } @else {
+//       margin: $args;
+//     }
+//   }
+// }
+
+// // padding; compact syntax version
+// @mixin padding($args) {
+//   @if length($args) == 1 {
+//     padding: $args;
+//   } @else if length($args) == 2 {
+//     @if index($args, null) {
+//       padding-top: nth($args,1);
+//       padding-right: nth($args,2);
+//       padding-bottom: nth($args,1);
+//       padding-left: nth($args,2);
+//     } @else {
+//       padding: $args;
+//     }
+//   } @else if length($args) == 3 {
+//     @if index($args, null) {
+//       padding-top: nth($args,1);
+//       padding-right: nth($args,2);
+//       padding-bottom: nth($args,3);
+//       padding-left: nth($args,2);
+//     } @else {
+//       padding: $args;
+//     }
+//   } @else if length($args) == 4 {
+//     @if index($args, null) {
+//       padding-top: nth($args,1);
+//       padding-right: nth($args,2);
+//       padding-bottom: nth($args,3);
+//       padding-left: nth($args,4);
+//     } @else {
+//       padding: $args;
+//     }
+//   }
+// }

@@ -1,0 +1,153 @@
+// ++++ WRAP / UNWRAP
+
+// take away wrapper
+@function unlist($list) { @return nth($list, 1); }
+@function unwrap($list) { @return nth($list, 1); }
+
+// add wrapper
+@function list($item) { @return ($item,); }
+@function wrap($item) { @return ($item,); }
+
+// ++++ CONVERT
+
+// convert spaced lists to comma ones
+@function csv($list) {
+    @if list-separator($list) == 'space' {
+        $out: (); @each $item in $list { $out: append($out, $item, comma); }
+        @return $out;
+    } @else {
+        @return $list;
+    }
+}
+
+// convert comma lists to spaced ones
+@function ssv($list) {
+    @if list-separator($list) == 'comma' {
+        $out: (); @each $item in $list { $out: append($out, $item, space); }
+        @return $out;
+    } @else {
+        @return $list;
+    }
+}
+
+
+// +++++++++ COLLECTION and REJECTION
+
+// reject by item comparison
+@function reject($list, $item) { // same as compass reject() function
+	$out:();
+	@each $arg in $list { @if $arg != $item { $out: append($out, $arg); } }
+	@return if($out == (), empty, $out); }
+	@function except($args...) { @return reject($args...); }
+// collect and reject by type comparison
+@function collect-types($list, $type) {
+		$out: ();
+		@if length($list) == 1 { $list: nth($list, 1); }
+		@each $item in $list {
+				@if type_of($item) == $type {
+						$out: append($out, $item);
+				}
+		}
+		@return if(length($out) == 1, nth($out, 1), $out); }
+@function reject-types($list, $type) {
+		@if length($list) == 1 { $list: nth($list, 1); }
+		@each $item in $list {
+				@if type_of($item) == $type {
+						$list: reject($list, $item);
+				}
+		}
+		@return if(length($list) == 1, nth($list, 1), $list); }
+// shortcuts for above
+@function collect-strings($list) { @return collect-types($list, 'string'); }
+@function reject-strings($list) { @return reject-types($list, 'string'); }
+@function collect-numbers($list) { @return collect-types($list, 'number'); }
+@function reject-numbers($list) { @return reject-types($list, 'number'); }
+@function collect-bools($list) { @return collect-types($list, 'bool'); }
+@function reject-bools($list) { @return reject-types($list, 'bool'); }
+// @function collect-nulls($list) { @return collect-types($list, 'null'); }
+// @function reject-nulls($list) { @return reject-types($list, 'null'); }
+
+// ++++++++++ LIST LOOKUPS and ITERATIONS
+
+// key-value (kv); simple
+@function key-value($map, $key) { // simple pair retrieval
+	@each $pair in $map { $index: index($pair, $key);
+	@if $index { @return nth($pair, 3 - $index); } }
+	@return false; }
+	// alias
+	@function kv($args...) { @return key-value($args...); }
+// nested-key-value (nkv); more complex and robust, maybe slower
+@function nested-key-value($list, $keys...) {
+	$key: nth($keys, 1);
+	@if length($list) == 1 { $list: nth($list, 1); }
+	@if index($list, $key) {
+		$list: reject($list, $key);
+		@if length($keys) > 1 {
+			$keys: reject($keys, $key);
+			@return nested-key-value($list, $keys...);
+		} @else {
+			@return if(length($list) == 1, nth($list, 1), $list);
+		}
+	} @else {
+		@each $sub-list in $list {
+			@if index($sub-list, $key) {
+				$sub-list: reject($sub-list, $key);
+				@if length($keys) > 1 {
+					$keys: reject($keys, $key);
+					@return nested-key-value($sub-list, $keys...);
+				} @else {
+					@return if(length($sub-list) == 1, nth($sub-list, 1), $sub-list);
+				}
+			}
+		}
+	}
+	@return false; }
+	// alias
+	@function nkv($args...) { @return nested-key-value($args...); }
+
+// ++++++++++ MAP LOOKUPS and ITERATIONS
+
+// compound version of map-get, arbitrary level of depth
+@function get($map, $keys...) {
+    @each $key in $keys {
+        @if $map == null { @return null; } @else { $map: map-get($map, $key); }
+    } @return $map;
+}
+
+// an iterative map-output mixin, arbitrary level of depth
+@mixin iterate($map, $keys...) {
+    @each $key, $value in get($map, $keys...) {
+        #{$key}: $value;
+    }
+}
+
+// ++++++++++ LIST CONTAINMENT (needs rework)
+
+// containment: alias for index()
+@function contains($list, $key) { @return index($list,$key) != false; }
+
+// recursive function to test presence of any of multiple keys
+@function contains-any($list, $keys...) {
+		$result: false;
+		@each $key in $keys {
+				@each $sub-list in $list {
+						@if length($sub-list) > 1 {
+								$result: $result or contains-any($sub-list, $keys...);
+						} @else if index($sub-list, $key) {
+								$result: true;
+						}
+				}
+		}
+		@return $result;
+}
+
+// these might be no longer useful
+@function nested-contains($list, $key) {
+	@each $sub-list in $list { @if index($sub-list, $key) != false { @return true; } }
+	@return false;
+}
+@function nested-index($list, $key) {
+	@each $sub-list in $list { @if index($sub-list, $key) != false { @return (index($list, $sub-list) index($sub-list, $key)); } }
+	@return false;
+}
+

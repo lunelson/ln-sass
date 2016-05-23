@@ -10,6 +10,7 @@
   $curr-medium-key: $prev-medium-key !global;
 }
 
+// todo: rename this to simply 'media'
 @mixin media-each($keys: map-keys($media)) {
   @if length($keys) == 0 { @content; }
   @else {
