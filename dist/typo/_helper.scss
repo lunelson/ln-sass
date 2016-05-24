@@ -65,4 +65,8 @@
 
 @function typo-ex-margin($m: $curr-mult-y-key) { @return sub-calc(margin-y($m), ex-trim()); }
 @function typo-em-margin($m: $curr-mult-y-key) { @return sub-calc(margin-y($m), em-trim()); }
-@function typo-margin($args...) { @return typo-ex-margin($args...); }
+
+@function typo-margin($m: $curr-mult-y-key, $unit: 'ex') {
+  @return sub-calc(margin-y($m), call('#{$unit}-trim')); }
+
+@function t-margin($args...) { @return typo-margin($args...); }

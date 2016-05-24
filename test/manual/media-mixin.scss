@@ -34,8 +34,10 @@ $media: (
 }
 
 .empty-test {
-  @include margin(1 null null);
-  @include padding(1 null null);
+  @include margin(1 null);
+  @include padding(1 null);
+  margin-top: t-margin(1);
+  margin-bottom: t-margin(1, em);
   // @include media-each() {
   //   color: green;
   // }
