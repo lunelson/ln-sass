@@ -61,9 +61,10 @@ $done-typo-setup: false !default;
 @import 'layout/config';
 @import 'layout/helper';
 @import 'layout/mixin';
-@import 'layout/setup-page';
-@import 'layout/setup-grid';
 @import 'layout/setup-util';
+@import 'layout/setup-grid';
+@import 'layout/setup-misc';
+@import 'layout/setup-page';
 @import 'layout/setup';
 
 // THEME

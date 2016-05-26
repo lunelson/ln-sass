@@ -45,12 +45,64 @@
   // hold--contain
   //     object-fit
 
-  .hold, %hold, [class*="hold--"] { position: relative; }
+  .hold, %hold { position: relative; }
 
-  .hold--abs {}
-  .hold--cover {}
-  .hold--contain {}
+  // .hold--abs, %hold--abs {
+  //   @extend %hold;
+  //   z-index: 0; // make sure container can clip
+  //   & > *:not(picture),
+  //   & > picture > img {
+  //     z-index: 0; // make sure container can clip
+  //     display: block;
+  //     position: absolute;
+  //     width: 100%;
+  //     top: 50%; left: 50%;
+  //     transform: translate(-50%, -50%);
+  //   }
+  //   & > iframe {
+  //     z-index: 0; // make sure container can clip
+  //     top: 0;
+  //     left: 0;
+  //     height: 100%;
+  //     transform: none;
+  //   }
+  //   // & > picture {
+  //   //   width: 100% !important;
+  //   //   height: 100% !important;
+  //   //   // position: relative;
+  //   // }
+  // }
+  // .hold--bg[data-bg-size='cover'] { background-size: cover; }
+  // .hold--bg[data-bg-size='contain'] { background-size: contain; }
+
+  // .hold--cover {
+  //   @extend %hold--abs;
+  //   overflow: hidden;
+  //   & > *:not(picture),
+  //   & > picture > img {
+  //     width: auto !important;
+  //     height: auto !important;
+  //     min-width: calc(100% + 2px);
+  //     min-height: calc(100% + 2px);
+  //     max-width: none;
+  //     max-height: none;
+  //   }
+  // }
+  // .hold--contain {
+  //   @extend %hold--abs;
+  //   & > *:not(picture),
+  //   & > picture > img {
+  //     width: auto !important;
+  //     height: auto !important;
+  //     min-width: none;
+  //     min-height: none;
+  //     max-width: 100%;
+  //     max-height: 100%;
+  //   }
+  // }
+
   .hold--aspect {
+    @extend %hold;
     height: 0;
     overflow: hidden;
     padding: 0 0 100%;
@@ -62,59 +114,6 @@
       &:not(img) {
         height: 100%;
       }
-    }
-  }
-
-  .hold--abs, %hold--abs {
-    z-index: 0; // make sure container can clip
-    & > *:not(picture),
-    & > picture > img {
-      z-index: 0; // make sure container can clip
-      display: block;
-      position: absolute;
-      width: 100%;
-      top: 50%; left: 50%;
-      transform: translate(-50%, -50%);
-    }
-    & > iframe {
-      z-index: 0; // make sure container can clip
-      top: 0;
-      left: 0;
-      height: 100%;
-      transform: none;
-    }
-    // & > picture {
-    //   width: 100% !important;
-    //   height: 100% !important;
-    //   // position: relative;
-    // }
-  }
-  .hold--bg[data-bg-size='cover'] { background-size: cover; }
-  .hold--bg[data-bg-size='contain'] { background-size: contain; }
-
-  .hold--cover {
-    @extend %hold--abs;
-    overflow: hidden;
-    & > *:not(picture),
-    & > picture > img {
-      width: auto !important;
-      height: auto !important;
-      min-width: calc(100% + 2px);
-      min-height: calc(100% + 2px);
-      max-width: none;
-      max-height: none;
-    }
-  }
-  .hold--contain {
-    @extend %hold--abs;
-    & > *:not(picture),
-    & > picture > img {
-      width: auto !important;
-      height: auto !important;
-      min-width: none;
-      min-height: none;
-      max-width: 100%;
-      max-height: 100%;
     }
   }
 

@@ -84,17 +84,17 @@
   }
 
   // media elements that are usually inline
-  audio, canvas, progress, video, img, svg, iframe, form, object, table {
+  audio, canvas, progress, video, img, svg, iframe, form, object, table, picture {
     display: block;
     max-width: 100%;
     height: auto;
     border: 0; // remove border when inside 'a' in IE
-    &[srcset] { width: 100%; }
+    &[srcset], &[source] { width: 100%; }
     &:not(:root) { overflow: hidden; }
-    &.inline {
-      display: inline-block;
-      vertical-align: baseline;
-    }
+    // &.inline {
+    //   display: inline-block;
+    //   vertical-align: baseline;
+    // }
   }
 
   // links
