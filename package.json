@@ -1,8 +1,8 @@
 {
   "name": "ln-sass",
-  "version": "1.0.0",
+  "version": "0.0.6",
   "description": "My personal sass sort-of-framework and utilities",
-  "main": "gulpfile.js",
+  "main": "index.js",
   "directories": {
     "test": "test"
   },

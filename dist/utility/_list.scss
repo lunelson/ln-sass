@@ -24,6 +24,11 @@
   @return $output;
 }
 
+// new version uses ZIP
+@function csv($list) {
+  @return zip($list);
+}
+
 // convert a list to comma-separated values
 @function csv-old($list) {
   $output: ();
@@ -33,10 +38,6 @@
   @return $output;
 }
 
-// new version uses ZIP
-@function csv($list) {
-  @return zip($list);
-}
 
 @function remove($list, $tests...) {
   $out:(); $sep: list-separator($list);
@@ -95,6 +96,13 @@
   @return false;
 }
 
+// a more fault-tolerant nth() function. libsass throws more errors for nth
+@function _nth($list, $n) {
+  @if length($list) == 0 or $n < 1 or $n > length($list) { @return null; }
+  @return nth($list, $n);
+}
+
+// TODO: make sure slice supports same logic/signature as native str-slice function
 @function slice($list, $start: 1, $end: length($list), $sep: list-separator($list)) {
   $output: ();
   @if $start >= 1 and $end >= $start {
@@ -106,30 +114,39 @@
   @return $output;
 }
 
-// a more fault-tolerant nth() function. libsass throws more errors for nth
-@function _nth($list, $n) {
-  @if length($list) == 0 or $n < 1 or $n > length($list) { @return null; }
-  @return nth($list, $n);
-}
+////////////////////
+// list to string //
+////////////////////
 
-@function slice($list, $start: 1, $end: length($list), $sep: list-separator($list)) {
-  $output: ();
-  @if $start >= 1 and $end >= $start {
-    @for $i from $start through $end {
-      $output: append($output, nth($list, $i), $sep);
-    }
-  }
-  @return $output;
-}
-
-@function to-string($list, $glue: '') {
+@function list-to-string($list, $glue: '') {
   $result: '';
   $length: length($list);
   @for $n from 1 through $length {
-    $result: $result + nth($list, $n) + if($n == $length,'',$glue);
+    $result: $result + (nth($list, $n) or '') + if($n == $length,'',$glue);
   }
   @return $result;
 }
+@function to-string($args...) { @return list-to-string($args...); }
+@function snake-string($list) { @return list-to-string($list, '_'); }
+@function kebab-string($list) { @return list-to-string($list, '-'); }
+
+/////////////////////
+// sets from lists //
+/////////////////////
+
+// TODO: make these functions the new way
+@function combination-set($list) {
+  $result: ((),);
+  @for $i from 1 through length($list) {
+    @for $j from 1 through length($result) {
+      $result: append($result, (join(nth($result, $j), nth($list, $i))));
+    }
+  }
+  @return slice($result, 2);
+}
+
+@function sequence-pair-set($list, $ends: false) {}
+@function range-pair-set($list) {}
 
 @function power-set($list) {
   $result: ((),);
@@ -151,13 +168,12 @@
   @return $result;
 }
 
-@function pair-set($list) {
+@function pair-set($list, $ends: true) {
   $result: ();
   @for $n from 1 through length($list) + 1 {
-    $m: $n - 1;
-    $a: if($m == 0, null, nth($list, $m));
+    $m: $n - 1; $a: if($m == 0, null, nth($list, $m));
     $b: if($n > length($list), null, nth($list, $n));
     $result: append($result, ($a $b), 'comma');
   }
-  @return $result;
+  @return if($ends, $result, slice($result, 2, length($result) - 1));
 }
