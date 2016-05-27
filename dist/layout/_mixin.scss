@@ -47,6 +47,7 @@
   @else {
     $n: nth($span, 1);
     $d: nth($span, 2);
+    flex-grow: 0;
     width: $n / $d * 100%;
     @if $right { margin-right: nth($right, 1) / if(length($right) > 1, nth($right, 2), $d) * 100%; }
     @if $left { margin-left: nth($left, 1) / if(length($left) > 1, nth($left, 2), $d) * 100%; }
@@ -61,14 +62,14 @@
 // UNWRAP //
 ////////////
 
-@mixin unwrap-offset($offset-right: 0%, $offset-left: 0%, $align: null, $basis: null) {
+@mixin unpage-offset($offset-right: 0%, $offset-left: 0%, $align: null, $basis: null) {
 
   $outer-right: add-calc(#{mval('outer-right')}, #{$offset-right});
   $outer-left: add-calc(#{mval('outer-left')}, #{$offset-left});
   $page-offset: sub-calc($outer-right, $outer-left);
-  $unwrap-margin: sub-calc(100%, 100vw);
-  $unwrap-margin-right: div-calc(sub-calc($unwrap-margin, $page-offset), 2);
-  $unwrap-margin-left: div-calc(add-calc($unwrap-margin, $page-offset), 2);
+  $unpage-margin: sub-calc(100%, 100vw);
+  $unpage-margin-right: div-calc(sub-calc($unpage-margin, $page-offset), 2);
+  $unpage-margin-left: div-calc(add-calc($unpage-margin, $page-offset), 2);
 
   @if $basis == 'right' {
     // -from-right
@@ -79,36 +80,36 @@
     } @else if $align == 'left' {
       width: sub-calc(100vw, $outer-right) !important;
       margin-right: 0 !important;
-      margin-left: add-calc($unwrap-margin, $outer-right) !important;
+      margin-left: add-calc($unpage-margin, $outer-right) !important;
     } @else {
       margin-right: sub-calc(0%, $outer-right) !important;
-      margin-left: add-calc($unwrap-margin, $outer-right) !important;
+      margin-left: add-calc($unpage-margin, $outer-right) !important;
     }
   } @else if $basis == 'left' {
     // -from-left
     @if $align == 'right' {
       width: sub-calc(100vw, $outer-left) !important;
-      margin-right: add-calc($unwrap-margin, $outer-left) !important;
+      margin-right: add-calc($unpage-margin, $outer-left) !important;
       margin-left: 0 !important;
     } @else if $align == 'left' {
       width: add-calc(100%, $outer-left) !important;
       margin-right: 0 !important;
       margin-left: sub-calc(0%, $outer-left) !important;
     } @else {
-      margin-right: add-calc($unwrap-margin, $outer-left) !important;
+      margin-right: add-calc($unpage-margin, $outer-left) !important;
       margin-left: sub-calc(0%, $outer-left) !important;
     }
   } @else {
     // [-from-center]
     @if $align == 'right' {
-      width: add-calc(100vw, $unwrap-margin-left) !important;
-      margin-right: $unwrap-margin-right !important;
+      width: add-calc(100vw, $unpage-margin-left) !important;
+      margin-right: $unpage-margin-right !important;
     } @else if $align == 'left' {
-      width: add-calc(100vw, $unwrap-margin-right) !important;
-      margin-left: $unwrap-margin-left !important;
+      width: add-calc(100vw, $unpage-margin-right) !important;
+      margin-left: $unpage-margin-left !important;
     } @else {
-      margin-right: $unwrap-margin-right !important;
-      margin-left: $unwrap-margin-left !important;
+      margin-right: $unpage-margin-right !important;
+      margin-left: $unpage-margin-left !important;
     }
   }
 }
