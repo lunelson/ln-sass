@@ -3,17 +3,22 @@ layout-helpers
 layout-mixins
 layout-setup-base
 layout-setup-grid
-layout-setup-misc
 layout-setup-page
+layout-setup-xtra
 media-functions
 media-helpers
 media-mixins
 media-setup
+// theme-functions
+// theme-helpers
+// theme-mixins
+// theme-setup
 typo-functions
 typo-helpers
 typo-mixins
-typo-setup-base
+typo-setup-fonts
 typo-setup-stack
+util-...
 
 # new
 

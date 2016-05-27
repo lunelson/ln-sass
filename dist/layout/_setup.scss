@@ -25,10 +25,8 @@
   //   }
   // }
 
-  @include layout-setup-page();
-
-  @include layout-setup-grid();
-
   @include layout-setup-util();
-
+  @include layout-setup-page();
+  @include layout-setup-grid();
+  @include layout-setup-misc();
 }

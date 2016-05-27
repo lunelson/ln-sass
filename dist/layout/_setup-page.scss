@@ -8,31 +8,47 @@
   .wrap--right { margin-right: 0; }
 
   $media-keys: map-keys($media);
+  $media-combos: power-set($media-keys);
   $media-length: length($media-keys);
 
-  @for $n from 1 through $media-length {
-
-    // create placeholders
-    $m: nth($media-keys, $n);
-    @include media($m) { %wrap--#{$m} { max-width: medium-value(content-width); } }
-
-    .wrap--each { @extend %wrap--#{$m}; }
-    @for $i from $n through 1 { .wrap--#{nth($media-keys, $i)}-thru {  @extend %wrap--#{$m}; } }
-    @for $i from $n through $media-length { .wrap--thru-#{nth($media-keys, $i)} {  @extend %wrap--#{$m}; } }
-  }
-
-  @each $set in power-set($media-keys) {
-    .wrap--#{to-string($set, '-')} {
-      @each $m in $set { @extend %wrap--#{$m}; }
+  // wrap--each
+  .wrap--each {
+    @include media-each() {
+      max-width: medium-value('content-width');
     }
   }
 
+  // wrap--to-x, // wrap--x-to
+  @for $i from 1 through $media-length {
+    .wrap--#{nth($media-keys, $i)}-to {
+      @include media-each(slice($media-keys, $i)) {
+        max-width: medium-value('content-width');
+      }
+    }
+    .wrap--to-#{nth($media-keys, $i)} {
+      @include media-each(slice($media-keys, 1, $i)) {
+        max-width: medium-value('content-width');
+      }
+    }
+  }
+
+  // wrap--[combos]
+  @each $combo in $media-combos {
+    $combo-string: to-string($combo, '-');
+    .wrap--#{$combo-string} {
+      @include media-each($combo) {
+        max-width: medium-value('content-width');
+      }
+    }
+  }
+
+  // wrap--[ranges]
   @each $set in range-set($media-keys) {
-    $i: nth($set,1);
-    $j: nth($set,2);
-    $set: slice($media-keys, $i, $j);
-    .wrap--#{nth($media-keys, $i)}-thru-#{nth($media-keys, $j)} {
-      @each $m in $set { @extend %wrap--#{$m}; }
+    $i: nth($set,1); $j: nth($set,2);
+    .wrap--#{nth($media-keys, $i)}-to-#{nth($media-keys, $j)} {
+      @include media-each(slice($media-keys, $i, $j)) {
+        max-width: medium-value('content-width');
+      }
     }
   }
 
@@ -70,6 +86,13 @@
     // unpage //
     ////////////
 
+    /* TODO
+    - do unwrap classes correctly
+      .unwrap--right
+      .unwrap--right-from-right
+      etc.
+     */
+
     $page-offset: sub-calc($outer-right, $outer-left);
     $unpage-margin: sub-calc(100%, 100vw);
     $unpage-margin-right: div-calc(sub-calc($unpage-margin, $page-offset), 2);
@@ -86,7 +109,7 @@
       &, &--left { margin-left: $unpage-margin-left; }
     }
 
-    .unpage--fromRight {
+    .unpage--from-right {
       &, &.unpage--right { margin-right: - $outer-right;}
       &, &.unpage--left { margin-left: add-calc($unpage-margin, $outer-right); }
       &.unpage--right {
@@ -99,7 +122,7 @@
       }
     }
 
-    .unpage--fromLeft {
+    .unpage--from-left {
       &, &.unpage--right { margin-right: add-calc($unpage-margin, $outer-left); }
       &, &.unpage--left { margin-left: - $outer-left; }
       &.unpage--right {
