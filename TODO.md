@@ -1,32 +1,28 @@
 layout-functions
 layout-helpers
 layout-mixins
-layout-setup-base
-layout-setup-grid
-layout-setup-page
-layout-setup-xtra
+layout-setup--base
+layout-setup--grid
+layout-setup--page
+layout-setup--xtra
+
 media-functions
 media-helpers
 media-mixins
 media-setup
+
 // theme-functions
 // theme-helpers
 // theme-mixins
 // theme-setup
+
 typo-functions
 typo-helpers
 typo-mixins
-typo-setup-fonts
-typo-setup-stack
+typo-setup--fonts
+typo-setup--stack
+
 util-...
-
-# new
-
-medium/mixin
-medium/setup-alt
-typo/mixin [font]
-
-
 
 # LN-Sass
 

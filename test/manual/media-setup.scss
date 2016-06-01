@@ -1,5 +1,5 @@
-@import '../dist/ln-sass';
+@import '../../dist/ln-sass';
 
-@include media-setup();
+@include media-setup(false);
 
 /* #{map-inspect($media)} */

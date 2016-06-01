@@ -1,0 +1,74 @@
+@import '../../dist/ln-sass';
+
+$base: (
+  font-size: 14px,
+  inner-x: 1rem,
+  outer-right: 0.5rem,
+  outer-left: 0.5rem,
+  column-width: 24rem,
+  column-basis: 5,
+);
+
+$media: (
+  c4: (
+    column-count: 4
+  ),
+  c6: (
+    font-size: 16px,
+    inner-x: 1.5rem,
+    outer-right: 1rem,
+    outer-left: 1rem,
+    column-width: 30rem,
+    column-basis: 5,
+    column-count: 6
+  ),
+  c8: (
+    font-size: 18px,
+    column-count: 8
+  ),
+  c10: (
+    font-size: 20px,
+    inner-x: 2rem,
+    outer-right: 2rem,
+    outer-left: 2rem,
+    column-count: 10
+  ),
+  c12: (
+    column-basis: 6,
+    column-count: 12
+  ),
+);
+
+/*
+  normalize-media-breakpoints
+  normalize-medium-values
+
+ */
+
+
+$reference: $base;
+@each $m, $medium in $media {
+  $reference: map-merge($reference, $medium) !global;
+
+  $font-size: map-get($reference, font-size);
+  $inner-x: map-get($reference, inner-x);
+  $outer-right: map-get($reference, outer-right);
+  $outer-left: map-get($reference, outer-left);
+
+  $column-width: map-get($reference, column-width);
+  $column-basis: map-get($reference, column-basis);
+  $column-count: map-get($reference, column-count);
+  $column-ratio: $column-basis/$column-count;
+
+  $html-scale: $font-size / 16px;
+  $content-width: ($column-width + $inner-x) / $column-ratio - $inner-x;
+  $breakpoint: unit-assert(($content-width + $outer-right + $outer-left) * $html-scale, em);
+
+  $reference: map-merge($reference, (
+    html-scale: $html-scale,
+    content-width: $content-width,
+    breakpoint: $breakpoint,
+  ));
+  $media: map-merge($media, ($m: $reference)) !global;
+}
+/* #{map-inspect($media)} */
