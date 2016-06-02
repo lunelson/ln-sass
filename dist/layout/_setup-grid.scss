@@ -9,6 +9,7 @@
   // [class*='fcell--'] { @extend %fcell; }
   // [class*='cell--'] { @extend %cell; }
 
+  @include mod-base('fgrid', false);
   .fgrid, %fgrid {
     display: flex;
     & > * {
@@ -18,6 +19,7 @@
     }
   }
 
+  @include mod-base('grid', false);
   .grid, %grid {
     display: block;
     position: relative; // for 'out' positioned cells which are absolute
@@ -52,8 +54,6 @@
   @include media((for: margin-x mults-x mults)) {
     @each $m, $mult in map-merge((base: 1), medium-value('mults-x') or medium-value('mults')) {
       $margin: $mult * medium-value('margin-x');
-      .fgrid#{mult-class($m)} { @extend %fgrid; }
-      .grid#{mult-class($m)} { @extend %grid; }
       .fgrid#{mult-class($m)}, .grid#{mult-class($m)} {
         margin-left: $margin / -2;
         margin-right: $margin / -2;

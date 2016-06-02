@@ -1,45 +1,32 @@
 @mixin layout-setup-page {
 
-  @include media((for: outer-top outer-bottom)) {
+  .page--y { @extend .page--top, .page--bottom; }
+  .page { @extend .page--right, .page--left, %clip; }
+  .unpage {
+      margin-right: 0;
+      margin-left: 0;
+      max-width: none;
+      width: 100vw;
+  }
 
-    ////////////
-    // page-y //
-    ////////////
+  @include media((for: outer-top outer-bottom)) {
 
     $outer-top: medium-value('outer-top');
     $outer-bottom: medium-value('outer-bottom');
 
-    .page--y { @extend .page--top, .page--bottom; }
     .page--top { padding-top: $outer-top; }
     .page--bottom { padding-bottom: $outer-bottom; }
 
   }
 
+
   @include media((for: outer-right outer-left)) {
-
-    // TODO: pontentially changes these to .spread and .unwrap respectively
-
-    ////////////
-    // page-x //
-    ////////////
 
     $outer-right: medium-value('outer-right');
     $outer-left: medium-value('outer-left');
 
-    .page { @extend .page--right, .page--left, %clip; }
     .page--right { padding-right: $outer-right; }
     .page--left { padding-left: $outer-left; }
-
-    ////////////
-    // unpage //
-    ////////////
-
-    /* TODO
-    - do unwrap classes correctly
-      .unwrap--right
-      .unwrap--right-from-right
-      etc.
-     */
 
     $page-offset: sub-calc($outer-right, $outer-left);
     $unpage-margin: sub-calc(100%, 100vw);
@@ -47,10 +34,6 @@
     $unpage-margin-left: div-calc(add-calc($unpage-margin, $page-offset), 2);
 
     .unpage {
-      margin-right: 0;
-      margin-left: 0;
-      max-width: none;
-      width: 100vw;
       &--right { width: add-calc(100vw, $unpage-margin-left);}
       &--left { width: add-calc(100vw, $unpage-margin-right);}
       &, &--right { margin-right: $unpage-margin-right; }
