@@ -8,6 +8,8 @@ $base-defaults: (
   outer-right: 2rem,
   outer-bottom: 2rem,
   outer-left: 2rem,
+  copy-width: 30rem,
+  copy-columns: 4,
   // mults and mods
   lines: (),
   sizes: (),
@@ -27,11 +29,11 @@ $media: (
 ) !default;
 
 $media-alt: (
-  c4: ( column-count: 4 ),
-  c6: ( column-count: 6 ),
-  c8: ( column-count: 8 ),
-  c10: ( column-count: 10 ),
-  c12: ( column-count: 12 ),
+  c4: ( grid-columns: 4 ),
+  c6: ( grid-columns: 6 ),
+  c8: ( grid-columns: 8 ),
+  c10: ( grid-columns: 10 ),
+  c12: ( grid-columns: 12 ),
 ) !default;
 
 $media-hd-ratio: 3 2 !default;

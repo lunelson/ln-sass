@@ -1,13 +1,5 @@
 
-// - start with media object that has column-counts, not breakpoints
-//   - (can have other properties)
-// - assume smallest query represents the reading-column
-// - feed the mixin an EM value for reading-line-length
-  // remove breakpoints
-  // merge actual against default column counts? NO
-  // based on first one, associate line-length with a column-count
-
-@mixin base-setup-alt(){
+@mixin media-setup-alt($output: true) {
 
   //////////
   // BASE //
@@ -16,42 +8,25 @@
   // backup $base as spec'd
   $base-orig: $base !global;
 
-  // merge spec'd $base with defaults
-  $base: map-merge((
-    // bases
-    font-size: 16px,
-    line-height: 1.5,
-    margin-x: 1rem,
-    margin-y: 1.5rem,
-    outer-top: 1rem,
-    outer-right: 1rem,
-    outer-bottom: 1rem,
-    outer-left: 1rem,
-    // mults and mods
-    lines: (),
-    sizes: (),
-    mults-x: (),
-    mults-y: (),
-    size-mod: 1.5,
-    mult-mod: 1.5
-  ), $base) !global;
+  // merge spec'd $base against defaults, and normalize
+  $base: medium-normalize(map-merge($base-defaults, $base)) !global;
 
-  // normalize $base primitives
-  $base: medium-normalize($base) !global;
-
-  // base styles
-  html { font-size: unit-assert(map-get($base, 'html-scale'), em); }
-  body { line-height: map-get($base, 'line-height'); }
+  @if $output {
+    // base styles
+    html { font-size: unit-assert(map-get($base, 'html-scale'), em); }
+    body { line-height: map-get($base, 'line-height'); }
+  }
 
   ///////////
   // MEDIA //
   ///////////
 
+  // collect and sort the breakpoint media
+  $media: maps-sort($media, 'column-count') !global;
+
   // backup $media
   $media-orig: $media !global;
 
-  // collect and sort the breakpoint media
-  $media: maps-sort($media, 'breakpoint') !global;
   // temp for recursive merging
   $reference: $base;
 
@@ -67,14 +42,22 @@
     $mults-y: map-merge(map-get($reference, 'mults-y'), map-get($medium, 'mults-y') or ());
 
     // calc and merge additional props
-    $breakpoint: map-get($reference, 'breakpoint');
-    $body-width: unit-assert($breakpoint / map-get($reference, 'html-scale'), rem);
+    $font-size: map-get($reference, 'font-size');
+    $margin-x: map-get($reference, 'margin-x');
     $outer-x: map-get($reference, 'outer-right') + map-get($reference, 'outer-left');
 
-    // merge these back to reference
+    $copy-width: map-get($reference, 'copy-width');
+    $copy-columns: map-get($reference, 'copy-columns');
+    $grid-columns: map-get($reference, 'grid-columns');
+    $copy-vs-grid: $copy-columns/$grid-columns;
+
+    $content-width: ($copy-width + $margin-x) / $copy-vs-grid - $margin-x;
+    $outer-width: $content-width + $outer-x;
+    $breakpoint: unit-assert($outer-width * map-get($reference, 'html-scale'), em);
+
     $reference: map-merge($reference, (
-      'body-width': $body-width,
-      'content-width': $body-width - $outer-x,
+      'content-width': $content-width,
+      'breakpoint': $breakpoint,
       'sizes': $sizes,
       'lines': $lines,
       'mults-x': $mults-x,
@@ -84,10 +67,10 @@
     // merge reference back to master
     $media: map-merge($media, ($m: $reference)) !global;
 
-    // styles, if they were spec'd
-    @media (min-width: #{map-get($reference, 'breakpoint')}) {
-      @if map-has-key($medium, 'font-size') { html { font-size: unit-assert(map-get($reference, 'html-scale'), em); } }
-      @if map-has-key($medium, 'line-height') { body { line-height: map-get($reference, 'line-height'); } }
+    // styles, if they were are in $media-orig and if $output is true
+    @media (min-width: #{$breakpoint}) {
+      @if $output and map-has-key($medium, 'font-size') { html { font-size: unit-assert(map-get($reference, 'html-scale'), em); } }
+      @if $output and map-has-key($medium, 'line-height') { body { line-height: map-get($reference, 'line-height'); } }
     }
   }
 

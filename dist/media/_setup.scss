@@ -21,11 +21,12 @@
   // MEDIA //
   ///////////
 
+  // collect and sort the breakpoint media
+  $media: maps-sort($media, 'breakpoint') !global;
+
   // backup $media
   $media-orig: $media !global;
 
-  // collect and sort the breakpoint media
-  $media: maps-sort($media, 'breakpoint') !global;
   // temp for recursive merging
   $reference: $base;
 
@@ -42,13 +43,12 @@
 
     // calc and merge additional props
     $breakpoint: map-get($reference, 'breakpoint');
-    $body-width: unit-assert($breakpoint / map-get($reference, 'html-scale'), rem);
+    $outer-width: unit-assert($breakpoint / map-get($reference, 'html-scale'), rem);
     $outer-x: map-get($reference, 'outer-right') + map-get($reference, 'outer-left');
 
     // merge these back to reference
     $reference: map-merge($reference, (
-      'body-width': $body-width,
-      'content-width': $body-width - $outer-x,
+      'content-width': $outer-width - $outer-x,
       'sizes': $sizes,
       'lines': $lines,
       'mults-x': $mults-x,
@@ -59,7 +59,7 @@
     $media: map-merge($media, ($m: $reference)) !global;
 
     // styles, if they were are in $media-orig and if $output is true
-    @media (min-width: #{map-get($reference, 'breakpoint')}) {
+    @media (min-width: #{$breakpoint}) {
       @if $output and map-has-key($medium, 'font-size') { html { font-size: unit-assert(map-get($reference, 'html-scale'), em); } }
       @if $output and map-has-key($medium, 'line-height') { body { line-height: map-get($reference, 'line-height'); } }
     }

@@ -58,7 +58,7 @@ $done-typo-setup: false !default;
 @import 'media/mixin';
 @import 'media/mixin2';
 @import 'media/setup';
-// @import 'media/setup-alt';
+@import 'media/setup-alt';
 
 // LAYOUT
 
@@ -69,6 +69,7 @@ $done-typo-setup: false !default;
 @import 'layout/setup-grid';
 @import 'layout/setup-misc';
 @import 'layout/setup-page';
+@import 'layout/setup-wrap';
 @import 'layout/setup';
 
 // THEME

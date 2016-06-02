@@ -1,56 +1,4 @@
 @mixin layout-setup-page {
-    //////////
-  // wrap //
-  //////////
-
-  .wrap, [class*='wrap--'] { margin-right: auto; margin-left: auto; }
-  .wrap--left { margin-left: 0; }
-  .wrap--right { margin-right: 0; }
-
-  $media-keys: map-keys($media);
-  $media-combos: power-set($media-keys);
-  $media-length: length($media-keys);
-
-  // wrap--each
-  .wrap--each {
-    @include media-each() {
-      max-width: medium-value('content-width');
-    }
-  }
-
-  // wrap--to-x, // wrap--x-to
-  @for $i from 1 through $media-length {
-    .wrap--#{nth($media-keys, $i)}-to {
-      @include media-each(slice($media-keys, $i)) {
-        max-width: medium-value('content-width');
-      }
-    }
-    .wrap--to-#{nth($media-keys, $i)} {
-      @include media-each(slice($media-keys, 1, $i)) {
-        max-width: medium-value('content-width');
-      }
-    }
-  }
-
-  // wrap--[combos]
-  @each $combo in $media-combos {
-    $combo-string: to-string($combo, '-');
-    .wrap--#{$combo-string} {
-      @include media-each($combo) {
-        max-width: medium-value('content-width');
-      }
-    }
-  }
-
-  // wrap--[ranges]
-  @each $set in range-set($media-keys) {
-    $i: nth($set,1); $j: nth($set,2);
-    .wrap--#{nth($media-keys, $i)}-to-#{nth($media-keys, $j)} {
-      @include media-each(slice($media-keys, $i, $j)) {
-        max-width: medium-value('content-width');
-      }
-    }
-  }
 
   @include media((for: outer-top outer-bottom)) {
 
@@ -78,7 +26,7 @@
     $outer-right: medium-value('outer-right');
     $outer-left: medium-value('outer-left');
 
-    .page { @extend .page--right, .page--left; @extend %clip; }
+    .page { @extend .page--right, .page--left, %clip; }
     .page--right { padding-right: $outer-right; }
     .page--left { padding-left: $outer-left; }
 

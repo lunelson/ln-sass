@@ -18,8 +18,9 @@
   // clip //
   //////////
 
+  @include mod-base('clip', false);
   .clip, %clip { @include clip; }
-  .clip--circle { @extend %clip; border-radius: 50%; }
+  .clip--circle { border-radius: 50%; }
 
   //////////
   // hide //
@@ -44,7 +45,7 @@
   //     object-fit
   // hold--contain
   //     object-fit
-
+  @include mod-base('hold', false);
   .hold, %hold { position: relative; }
 
   // .hold--abs, %hold--abs {
@@ -102,7 +103,6 @@
   // }
 
   .hold--aspect {
-    @extend %hold;
     height: 0;
     overflow: hidden;
     padding: 0 0 100%;
@@ -123,7 +123,7 @@
   /// NB flex-basis is buggy cross browser; better use 'auto' and set 'width' instead
   /// NB flex-shrink is buggy cross browser; better avoid and keep at 0
 
-  .flex, .flex, %flex {
+  .flex, %flex {
     @include flex();
   }
 
@@ -132,8 +132,7 @@
   }
 
   // this is for flex aspect divs
-  [class*='flex--'] {
-    @extend %flex;
+  @include mod-base('flex', false) {
     &:before {
       content: '';
       display: table; // non-inline display req'd for IE; block fails in FF
@@ -176,7 +175,7 @@
   // TURN //
   //////////
 
-  .turn, [class*='turn--'] {
+  .turn, [class^="turn--"], [class*=" turn--"] {
     white-space: pre;
     position: absolute;
     top: 50%;

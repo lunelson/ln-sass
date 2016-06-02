@@ -2,40 +2,40 @@
 
 $base: (
   font-size: 14px,
-  inner-x: 1rem,
+  margin-x: 1rem,
   outer-right: 0.5rem,
   outer-left: 0.5rem,
-  column-width: 24rem,
-  column-basis: 5,
+  copy-width: 24rem,
+  copy-columns: 5,
 );
 
 $media: (
   c4: (
-    column-count: 4
+    grid-columns: 4
   ),
   c6: (
     font-size: 16px,
-    inner-x: 1.5rem,
+    margin-x: 1.5rem,
     outer-right: 1rem,
     outer-left: 1rem,
-    column-width: 30rem,
-    column-basis: 5,
-    column-count: 6
+    copy-width: 30rem,
+    copy-columns: 5,
+    grid-columns: 6
   ),
   c8: (
     font-size: 18px,
-    column-count: 8
+    grid-columns: 8
   ),
   c10: (
     font-size: 20px,
-    inner-x: 2rem,
+    margin-x: 2rem,
     outer-right: 2rem,
     outer-left: 2rem,
-    column-count: 10
+    grid-columns: 10
   ),
   c12: (
-    column-basis: 6,
-    column-count: 12
+    copy-columns: 6,
+    grid-columns: 12
   ),
 );
 
@@ -48,20 +48,20 @@ $media: (
 
 $reference: $base;
 @each $m, $medium in $media {
-  $reference: map-merge($reference, $medium) !global;
+  $reference: map-merge($reference, $medium);
 
   $font-size: map-get($reference, font-size);
-  $inner-x: map-get($reference, inner-x);
+  $margin-x: map-get($reference, margin-x);
   $outer-right: map-get($reference, outer-right);
   $outer-left: map-get($reference, outer-left);
 
-  $column-width: map-get($reference, column-width);
-  $column-basis: map-get($reference, column-basis);
-  $column-count: map-get($reference, column-count);
-  $column-ratio: $column-basis/$column-count;
+  $copy-width: map-get($reference, copy-width);
+  $copy-columns: map-get($reference, copy-columns);
+  $grid-columns: map-get($reference, grid-columns);
+  $text-col-ratio: $copy-columns/$grid-columns;
 
   $html-scale: $font-size / 16px;
-  $content-width: ($column-width + $inner-x) / $column-ratio - $inner-x;
+  $content-width: ($copy-width + $margin-x) / $text-col-ratio - $margin-x;
   $breakpoint: unit-assert(($content-width + $outer-right + $outer-left) * $html-scale, em);
 
   $reference: map-merge($reference, (
