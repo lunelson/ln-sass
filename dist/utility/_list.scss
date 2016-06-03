@@ -102,6 +102,9 @@
   @return nth($list, $n);
 }
 
+@function first($list) { @return nth($list, 1); }
+@function last($list) { @return nth($list, length($list)); }
+
 // TODO: make sure slice supports same logic/signature as native str-slice function
 @function slice($list, $start: 1, $end: length($list), $sep: list-separator($list)) {
   $output: ();
@@ -146,7 +149,21 @@
 }
 
 @function sequence-pair-set($list, $ends: false) {}
-@function range-pair-set($list) {}
+
+
+@function range-pair-set($list, $ext-start: true, $ext-end: true) {
+  @if length($list) == 0 { @return $list; }
+  $result: ();
+  @for $n from 1 through length($list) + 1 {
+    $m: $n - 1; $a: if($m == 0, null, nth($list, $m));
+    $b: if($n > length($list), null, nth($list, $n));
+    $result: append($result, ($a $b), 'comma');
+  }
+  $length: length($result);
+  $start: if($ext-start, 1, 2);
+  $end: if($ext-end, $length, $length - 1);
+  @return slice($result, $start, $end);
+}
 
 @function power-set($list) {
   $result: ((),);

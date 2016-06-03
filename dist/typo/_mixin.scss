@@ -2,6 +2,12 @@
 // fonts //
 ///////////
 
+/* TODO
+  - update to use a global $font-folder; pass $file as 'subfolder/filename.ext'
+  - update to include woff2
+  - update to use local ?
+  - update to allow specifying which types are available: eot, svg, woff, woff2, ttf
+*/
 @mixin font-face($family, $dir, $file, $style, $weight) {
   @font-face {
     font-family: $family;
@@ -91,13 +97,16 @@ $curr-stack-sel: null !default;
   // if not in a stack
   @else {
     font-size: unit-assert($size, rem) * $size-adjust;
-    @at-root #{sel-insert-parents('.stack' '%stack')} { font-size: unit-assert($size, em) * $size-adjust; }
+    @at-root #{sel-insert-parents('.stack' '%stack')} {
+      font-size: unit-assert($size, em) * $size-adjust;
+    }
+    @at-root #{sel-insert-parents('.stack' '%stack', '>')} {
+      margin-top: typo-em-margin(0);
+      margin-bottom: typo-em-margin(0);
+    }
     @each $m, $mult in map-merge((base: 1), medium-value('mults-y') or medium-value('mults')) {
       $stack-sel: '.stack#{mult-class($m)}';
       @at-root #{sel-insert-parents($stack-sel,'>')} {
-      // parent: inspect(&);
-        margin-top: typo-em-margin(0);
-        margin-bottom: typo-em-margin(0);
         @at-root #{sel-insert-parents('*', '+')} {
           margin-top: typo-ex-margin(if($m=='base',1,$m));
         }

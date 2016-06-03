@@ -2,7 +2,14 @@
 // MEDIA MIXINS II //
 /////////////////////
 
-// single query
+/*
+  medium(a,b)
+  media(a b c)
+  media-each() -> alias above
+  media-find(prop)
+  media-slice(a, b)
+*/
+
 @mixin medium($min, $max: null) {
   $prev-medium-key: $curr-medium-key;
   $curr-medium-key: $min !global;
@@ -10,11 +17,12 @@
   $curr-medium-key: $prev-medium-key !global;
 }
 
-// todo: rename this to simply 'media'
-@mixin media-each($keys: map-keys($media)) {
-  @if length($keys) == 0 { @content; }
+// todo: rename this to simply 'media' when you've deprecated old media mixins
+@mixin media-each($keys: map-keys($media), $ext-start: true, $ext-end: true) {
+  $set: range-pair-set($keys, $ext-start, $ext-end);
+  @if length($set) == 0 { @content; }
   @else {
-    @each $pair in pair-set($keys) {
+    @each $pair in $set {
       @include medium($pair...) {
         @content;
       }
@@ -22,5 +30,22 @@
   }
 }
 
-@mixin media-for($props) { @include media-each(media-for($props)) { @content; } }
-@mixin typo-media() { @include media-each(media-for(margin-y line-height)) { @content; } }
+@mixin media-for($props) {
+  @include media-each(media-for($props)) {
+    @content;
+  }
+}
+
+@mixin media-slice($start-key: null, $end-key: null) {
+  $media-keys: map-keys($media);
+  $media-length: length($media-keys);
+  $start: if($start-key, index($media-keys, $start-key) or 1, 1);
+  $end: if($end-key, index($media-keys, $end-key) or $media-length, $media-length);
+  $range: slice($media-keys, $start, $end);
+  $ext-start: ($start-key or nth($media-keys, $start)) == first($media-keys);
+  $ext-end: ($end-key or nth($media-keys, $end)) == last($media-keys);
+  @include media-each($range, $ext-start, $ext-end) {
+    @content;
+  }
+}
+// @mixin typo-media() { @include media-each(media-for(margin-y line-height)) { @content; } }

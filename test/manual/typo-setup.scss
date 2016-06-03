@@ -1,4 +1,4 @@
-@import '../dist/ln-sass';
+@import '../../dist/ln-sass';
 
 $base: (
   lines: (s: 0.8, l: 1.6),
@@ -9,5 +9,29 @@ $base: (
 
 
 @include media-setup();
-@include layout-setup();
+
 @include typo-setup();
+
+// p { @include typo-item; }
+
+// .nest p { @include typo-item(0.85, 1.1 ); }
+
+.cell-test {
+  @include cell-span(4);
+  @include cell-left(1);
+  @include cell-right(-1);
+}
+
+.test {
+  keys: map-keys($media);
+  @include media-slice(null,c) {
+    color: white;
+  }
+
+  @include media-slice(c) {
+    color: red;
+  }
+  @include media-slice(b,b) {
+    color: red;
+  }
+}

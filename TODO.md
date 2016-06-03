@@ -1,58 +1,81 @@
-layout-functions
-layout-helpers
-layout-mixins
-layout-setup--base
+## function
+
+- parents-last
+- parents-initial
+- sibling-of
+- adjacent-to
+
+## files
+
+config
+function
+function-media
+function-layout
+function-typo
+helper
+helper-media
+helper-layout
+helper-typo
+
+mixin
+mixin-font
+mixin-grid
+mixin-page
+mixin-stack
+mixin-typo
+reset
+reset-ln
+reset-meyer
+setup
+setup-base
+setup-media
+setup-elem
+setup-font
+setup-grid
+setup-page
+setup-stack
+setup-theme
+setup-unpage
+setup-wrap
+utils
+utils-string
+
+## files
+
+media-function
+media-helper
+media-mixin
+media-setup
+media-setup--alt
+
+layout-function
+layout-helper
+layout-mixin--helper
+layout-mixin--grid
+layout-setup--element
+layout-setup--helper
 layout-setup--grid
-layout-setup--page
+layout-setup--unpage
+layout-setup--wrap
 layout-setup--xtra
 
-media-functions
-media-helpers
-media-mixins
-media-setup
-
-// theme-functions
-// theme-helpers
-// theme-mixins
+// theme-function
+// theme-helper
+// theme-mixin
 // theme-setup
 
-typo-functions
-typo-helpers
-typo-mixins
+typo-function
+typo-helper
+typo-mixin
 typo-setup--fonts
 typo-setup--stack
 
 util-...
 
-# LN-Sass
-
-### typo
-new ideas
-
-```scss
-@mixin stack($m, $l, $f)
-  $parent-sel: &
-  $scope-sel: & or $stack-sel
-  $typo-sel: unique-placeholder();
-  #{$scope-sel}{
-    * + * { margin-top ... }
-    * + #{$typo-sel} { margin-top ... }
-    $curr-typo-sel: $typo-sel;
-    @content;
-  }
-
-@mixin typo($s, $l, $f)
-  // do size
-  @if $line != $curr-line
-    // recalc trim
-  @else
-    @extend #{$curr-typo-sel}
-  ```
-
 ## main
 
 - break up file-names
-- rename selector functions again
+- rename selector function again
     parents-last
     parents-initial
     parents-insert('.typo', '*')
@@ -65,7 +88,7 @@ new ideas
 
 ### main/base
 
-- media functions/mixins
+- media function/mixin
 
     @function media-keys-for
 
@@ -80,8 +103,8 @@ new ideas
 
 ### main/grid
 
-- revamp the mixins
-    - will grid and cell mixins output if in media query?
+- revamp the mixin
+    - will grid and cell mixin output if in media query?
         - use @at-root before extending;
         - do a media((for: margin-x)) for any arguments
     - width still needs a better name
@@ -111,7 +134,7 @@ new ideas
 
 ### typo
 
-- eliminate unused typo-helpers
+- eliminate unused typo-helper
 - finish typo testing
     - can you still style lists and tables properly
     - protocol for defining local stuff

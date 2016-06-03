@@ -21,8 +21,8 @@
   // MEDIA //
   ///////////
 
-  // collect and sort the breakpoint media
-  $media: maps-sort($media, 'column-count') !global;
+  // sorting by column-count won't necessarily work well
+  // $media: maps-sort($media, 'column-count') !global;
 
   // backup $media
   $media-orig: $media !global;
