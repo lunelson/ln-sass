@@ -1,0 +1,63 @@
+@mixin typo-setup($output: true){
+
+  ///////////
+  // fonts //
+  ///////////
+
+  $font-keys: join(null, map-keys($fonts));
+
+  @each $f in $font-keys {
+    // body #{if($f, if($f=='base', '.font', '.font--' + $f),'')} {
+    body #{if($f, '.font--' + $f,'')} {
+      font-family: get($fonts, $f or 'base', 'font-family');
+      font-size: 1rem * get($fonts, $f or 'base', 'size-adjust');;
+      * {
+        $spacing-max: get($fonts, $f or 'base', 'spacing-max');
+        $spacing-end: get($fonts, $f or 'base', 'spacing-end');
+        letter-spacing: calc(#{$spacing-max}px - #{$spacing-max/$spacing-end}em);
+      }
+    }
+  }
+
+  ///////////
+  // stack //
+  ///////////
+
+  ///////////
+  // stack //
+  ///////////
+
+  // [class*='stack--'] { @extend %stack; }
+  // .stack, %stack {
+  //   padding-top: 0.1px;
+  //   padding-bottom: 0.1px;
+  //   & > * {
+  //     margin-top: 0;
+  //     margin-bottom: 0;
+  //   }
+  // }
+
+  // @include media((for: margin-y mults-y mults)) {
+  //   @each $m, $mult in map-merge((base: 1), medium-value('mults-y') or medium-value('mults')) {
+  //     .stack#{multify($m)} > * + * { margin-top: $mult * medium-value('margin-y'); }
+  //   }
+  // }
+
+
+  @include bem-base('stack', false);
+
+  .stack, %stack {
+    padding-top: 0.1px;
+    padding-bottom: 0.1px;
+    & > * { margin-top: 0; margin-bottom: 0; }
+  }
+
+  @include media((for: margin-y mults-y mults)) {
+    @each $m, $mult in map-merge((base: 1), medium-value('mults-y') or medium-value('mults')) {
+      $margin: $mult * medium-value('margin-y');
+      .stack#{multify($m)} {
+        & > * + * { margin-top: $margin; }
+      }
+    }
+  }
+}

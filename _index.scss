@@ -1,3 +1,92 @@
+// DEPS
+
 @import "node_modules/sassdash/index";
 
-@import "dist/ln-sass"
+// RESETS
+
+@import 'util-reset-ln';
+@import 'util-reset-meyer';
+@import 'util-reset-norm3';
+@import 'util-reset-norm4';
+@import 'util-reset-opentype';
+// @import 'util-reset-tripoli-minimal';
+// @import 'util-reset-yui3';
+
+// UTILITIES
+
+@import 'util-math';
+@import 'util-unit';
+
+@import 'util-animation';
+@import 'util-calc';
+@import 'util-color';
+@import 'util-debug';
+@import 'util-display';
+@import 'util-function';
+@import 'util-json';
+@import 'util-list';
+@import 'util-map';
+@import 'util-maps';
+@import 'util-misc';
+@import 'util-position';
+@import 'util-scrollbar';
+@import 'util-selector';
+@import 'util-string';
+@import 'util-svg';
+@import 'util-z-index';
+
+@import 'util-custom';
+
+// MEDIA
+
+@import 'config-media';
+@import 'function-media';
+@import 'helper-media';
+@import 'mixin-media';
+@import 'mixin-media-v2';
+@import 'setup-media';
+@import 'setup-media-alt';
+
+// LAYOUT
+
+@import 'config-layout';
+@import 'helper-layout';
+@import 'mixin-layout';
+@import 'setup-layout';
+@import 'setup-grid';
+@import 'setup-misc';
+@import 'setup-page';
+@import 'setup-wrap';
+
+// THEME
+
+// TYPO
+
+@import 'config-typo';
+@import 'helper-typo';
+@import 'mixin-typo';
+@import 'setup-typo';
+
+
+// CURR and DONE VARIABLES
+
+$curr-medium-key: null !default;
+
+$curr-size-key: null !default;
+$curr-line-key: null !default;
+$curr-font-key: null !default;
+$curr-mult-y-key: null !default;
+$curr-mult-x-key: null !default;
+
+$curr-size-val: null !default; // kill
+$curr-line-val: null !default; // kill
+$curr-font-val: null !default; // kill
+$curr-mult-y-val: null !default; // kill
+$curr-mult-x-val: null !default; // kill
+
+$curr-typo-scope: false !default;
+
+$done-base-setup: false !default;
+$done-grid-setup: false !default;
+$done-page-setup: false !default;
+$done-typo-setup: false !default;

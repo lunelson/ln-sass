@@ -1,0 +1,15 @@
+
+// output string for mult-key $m
+@function multify($m) {
+  @return if($m=='base', '', '--#{$m}');
+}
+
+// establish attr selector-based extend class, for $base
+// Sergey Zarouski technique; referenced by https://www.smashingmagazine.com/2016/06/battling-bem-extended-edition-common-problems-and-how-to-avoid-them/
+@mixin bem-base($base, $loud: true) {
+  @at-root { [class^="#{$base}--"], [class*=" #{$base}--"] {
+    @if $loud { @extend .#{$base}; }
+    @else { @extend %#{$base} !optional; }
+    @content;
+  } }
+}

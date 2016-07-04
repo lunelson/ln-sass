@@ -1,0 +1,130 @@
+////////////
+// basics //
+////////////
+
+@mixin clip {
+  overflow: hidden !important;
+}
+
+@mixin hide {
+  display: none;
+  visibility: hidden;
+}
+
+@mixin show($display: block) {
+  display: $display;
+  visibility: visible;
+}
+
+/////////////
+// flexbox //
+/////////////
+
+@mixin flex($cell: '*') {
+  display: flex;
+  & > #{$cell} {
+    flex: 1 1 auto;
+    min-width: 0%; // https://css-tricks.com/flexbox-truncated-text/
+    width: 0%;
+  }
+}
+
+@mixin flex-y($cell: '*') {
+  display: flex;
+  flex-direction: column;
+  & > #{$cell} {
+    flex: 1 0 auto; // best for column direction
+    min-height: auto;
+    height: auto;
+    max-width: 100%; // fix overflow in IE
+  }
+}
+
+////////////
+// UNWRAP //
+////////////
+
+@mixin unpage-offset($offset-right: 0%, $offset-left: 0%, $align: null, $basis: null) {
+
+  $outer-right: add-calc(#{mval('outer-right')}, #{$offset-right});
+  $outer-left: add-calc(#{mval('outer-left')}, #{$offset-left});
+  $page-offset: sub-calc($outer-right, $outer-left);
+  $unpage-margin: sub-calc(100%, 100vw);
+  $unpage-margin-right: div-calc(sub-calc($unpage-margin, $page-offset), 2);
+  $unpage-margin-left: div-calc(add-calc($unpage-margin, $page-offset), 2);
+
+  @if $basis == 'right' {
+    // -from-right
+    @if $align == 'right' {
+      width: add-calc(100%, $outer-right) !important;
+      margin-right: sub-calc(0%, $outer-right) !important;
+      margin-left: 0 !important;
+    } @else if $align == 'left' {
+      width: sub-calc(100vw, $outer-right) !important;
+      margin-right: 0 !important;
+      margin-left: add-calc($unpage-margin, $outer-right) !important;
+    } @else {
+      margin-right: sub-calc(0%, $outer-right) !important;
+      margin-left: add-calc($unpage-margin, $outer-right) !important;
+    }
+  } @else if $basis == 'left' {
+    // -from-left
+    @if $align == 'right' {
+      width: sub-calc(100vw, $outer-left) !important;
+      margin-right: add-calc($unpage-margin, $outer-left) !important;
+      margin-left: 0 !important;
+    } @else if $align == 'left' {
+      width: add-calc(100%, $outer-left) !important;
+      margin-right: 0 !important;
+      margin-left: sub-calc(0%, $outer-left) !important;
+    } @else {
+      margin-right: add-calc($unpage-margin, $outer-left) !important;
+      margin-left: sub-calc(0%, $outer-left) !important;
+    }
+  } @else {
+    // [-from-center]
+    @if $align == 'right' {
+      width: add-calc(100vw, $unpage-margin-left) !important;
+      margin-right: $unpage-margin-right !important;
+    } @else if $align == 'left' {
+      width: add-calc(100vw, $unpage-margin-right) !important;
+      margin-left: $unpage-margin-left !important;
+    } @else {
+      margin-right: $unpage-margin-right !important;
+      margin-left: $unpage-margin-left !important;
+    }
+  }
+}
+
+@mixin debug-grid($m: $curr-mult-x-key, $color: set-alpha(pink, 0.25)) {
+  body::after {
+    content: '';
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    position: fixed;
+    height: 100%;
+    pointer-events: none;
+    user-select: none;
+    z-index: 999;
+    display: block;
+    @include media-each(){
+      @if $curr-medium-key {
+        $grid-columns: medium-value('grid-columns') or 8;
+        $margin-x: margin-x($m);
+        $outer-right: medium-value('outer-right');
+        $outer-left: medium-value('outer-left');
+        $page-offset: $outer-right - $outer-left;
+        $content-width: medium-value('content-width') + $margin-x;
+        width: $content-width;
+        margin-left: ($content-width + $page-offset + $margin-x)/-2;
+        background: linear-gradient(to right,
+          rgba(0,0,0,0) $margin-x,
+          $color $margin-x,
+          $color $content-width / $grid-columns - $margin-x
+        );
+        background-size: $content-width / $grid-columns;
+      }
+    }
+  }
+}

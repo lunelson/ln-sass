@@ -1,0 +1,85 @@
+///////////
+// grids //
+///////////
+
+// grid
+@mixin grid($mult: null, $cols: null, $cell: '*') {
+  $gutter: if($mult, margin-x($mult), null);
+  display: block;
+  width: if($gutter, calc(100% + #{$gutter}), null);
+  margin-right: if($gutter, $gutter/-2, null);
+  margin-left: if($gutter, $gutter/-2, null);
+  position: relative;
+  font-size: 0rem;
+  @if $cols and $cell != '*' { // for salvattore...
+    &:before { display: none; content: '#{$cols} #{$cell}'; } }
+  & > #{$cell} {
+    display: inline-block;
+    direction: rtl;
+    vertical-align: top;
+    min-height: 1px; // http://css-tricks.com/make-sure-columns-dont-collapse-horizontally/
+    font-size: 1rem;
+    width: if($cols, 100%/$cols, 100%);
+    padding-right: if($gutter, $gutter/2, null);
+    padding-left: if($gutter, $gutter/2, null);
+  }
+}
+
+// flex-grid
+@mixin flex-grid($mult: null, $cols: null, $cell: '*') {
+  $gutter: if($mult, margin-x($mult), null);
+  display: flex;
+  width: if($gutter, calc(100% + #{$gutter}), null);
+  margin-right: if($gutter, $gutter/-2, null);
+  margin-left: if($gutter, $gutter/-2, null);
+  @if $cols { flex-wrap: wrap; }
+  & > #{$cell} {
+    flex: if($cols, 0 1 auto, 1 1 auto);
+    width: if($cols, (100%/#{$cols}), 0%);
+    padding-right: if($gutter, $gutter/2, null);
+    padding-left: if($gutter, $gutter/2, null);
+  }
+}
+
+// span
+@mixin cell($span: 1 1, $opts: null, $right: null, $left: null, $out: null) {
+  @if type-of($opts) == 'map' { @include cell($span, $opts...); }
+  @else {
+    $n: nth($span, 1);
+    $d: _nth($span, 2) or medium-value('grid-columns') or 4;;
+    flex-grow: 0;
+    width: $n / $d * 100%;
+    @if $right { margin-right: nth($right, 1) / if(length($right) > 1, nth($right, 2), $d) * 100%; }
+    @if $left { margin-left: nth($left, 1) / if(length($left) > 1, nth($left, 2), $d) * 100%; }
+    @else if $out {
+      $out: map-get($out, (left: right, right: left));
+      position: absolute; #{($out)}: 100%; top: auto;
+    }
+  }
+}
+
+// new school
+
+@mixin cell-span($n, $d: null) {
+  $d: $d or medium-value('grid-columns') or 4;
+  width: percentage($n/$d);
+  flex-grow: 0;
+}
+
+@mixin cell-align($opts: null, $right: null, $left: null, $out: null) {
+  @if type-of($opts) == 'map' { @include cell-align($opts...); }
+  @else if $left or $right {
+    @if $right {
+      $n: nth($right, 1);
+      $d: _nth($right, 2) or medium-value('grid-columns') or 4;;
+      margin-right: percentage($n/$d); }
+    @if $left {
+      $n: nth($left, 1);
+      $d: _nth($left, 2) or medium-value('grid-columns') or 4;;
+      margin-left: percentage($n/$d); }
+  }
+  @else if $out {
+    $side: map-get($out, (left: right, right: left));
+    position: absolute; #{($side)}: 100%; top: auto;
+  }
+}
