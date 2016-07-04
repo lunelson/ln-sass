@@ -1,6 +1,6 @@
-/////////////
-// globals //
-/////////////
+///////////
+// media //
+///////////
 
 $base: () !default;
 
@@ -23,9 +23,9 @@ $media-hd-ratio: 3 2 !default;
 $globals: () !default;
 $curr-medium-key: null !default;
 
-/////////////
-// globals //
-/////////////
+//////////
+// typo //
+//////////
 
 $typo-min-line: 1.125 !default;
 $typo-sub-line: 2 !default;
@@ -62,4 +62,3 @@ $fonts: (
     spacing-end: 50,
   )
 ) !default;
-

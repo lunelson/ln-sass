@@ -18,7 +18,7 @@
     }
   }
 
-  .fgrid {
+  .fgrid, .flex-grid {
     display: flex;
     & > * {
       flex: 1 1 auto;
@@ -53,7 +53,7 @@
     @each $m, $mult in map-merge((base: 1), medium-value('mults-x') or medium-value('mults')) {
       $margin: $mult * medium-value('margin-x');
 
-      .fgrid#{multify($m)}, .grid#{multify($m)} {
+      .fgrid#{multify($m)}, .flex-grid#{multify($m)}, .grid#{multify($m)} {
         margin-left: $margin / -2;
         margin-right: $margin / -2;
         width: calc(100% + #{$margin});

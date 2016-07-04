@@ -1,66 +1,48 @@
-//////////////////////////////////
-// MEDIA FUNCTIONS AND MIXINS I //
-//////////////////////////////////
+////////////////////
+// media mixins 2 //
+////////////////////
 
-// single query
-@mixin media-single($min, $max: null) {
+// single
+@mixin medium($min, $max: null) {
   $prev-medium-key: $curr-medium-key;
   $curr-medium-key: $min !global;
   @media #{width-query($min, $max)} { @content }
   $curr-medium-key: $prev-medium-key !global;
 }
 
-// multiple queries
-@mixin media-multi($from: null, $to: null, $for: null, $at: null) {
-  // normalize inputs
-  // $from: $from or nth(map-keys($media), 1);
-  // $to: $to or null;
-  // @if $for {
-  //   @if contains($for, typo) { $for: join($for, margin-y line-height font-size-mod); }
-  //   @if contains($for, margin-y) { $for: join($for, margin-y-mod); }
-  //   @if contains($for, font-size) { $for: join($for, font-size-mod); }
-  //   @if contains($for, margin-x) { $for: join($for, margin-x-mod); }
-  // }
-
-  @if $at {
-    @each $medium in $at {
-      $orig-keys: map-keys(medium-orig($medium));
-      // if there's no "for" condition, do the medium
-      @if not $for { @include media-single($medium) { @content; } }
-      // if there is a "for" condition, do medium only if the "for" key exists for medium
-      @else if contains-any($orig-keys, $for) { @include media-single($medium) { @content; } }
-    }
-  } @else {
-    // output the @content for $base medium if $from is null
-    @if $from == null { @content; }
-
-    // determine other referenced media
-    $media-keys: map-keys($media);
-    $from-index: if($from, index($media-keys, $from), 1);
-    $to-index: if($to, index($media-keys, $to) - 1, length($media-keys));
-    $sliced-keys: join(slice($media-keys, $from-index, $to-index), $to);
-    $sliced-length: length($sliced-keys);
-
-    // conditional per-medium actions
-    @for $n from 1 to $sliced-length {
-      $curr: nth($sliced-keys, $n);
-      // $next: nth($sliced-keys, $n + 1);
-      $orig-keys: map-keys(medium-orig($curr));
-      // if there's no "for" condition, do the medium
-      @if not $for { @include media-single($curr, $to) { @content; } }
-      // if there is a "for" condition, do medium only if the "for" key exists for medium
-      @else if contains-any($orig-keys, $for) { @include media-single($curr, $to) { @content; } }
+// multiple
+@mixin media-each($keys: map-keys($media), $add-head: true, $add-tail: true) {
+  $set: range-pair-set($keys, $add-head, $add-tail);
+  @if length($set) == 0 { @content; }
+  @else {
+    @each $pair in $set {
+      @include medium($pair...) {
+        @content;
+      }
     }
   }
 }
 
-// unified media query mixin -- calls mixins above
-@mixin media($args...) {
-  $arg1: nth($args, 1);
-  @if index('map' 'list', type-of($arg1)) { @include media-multi($arg1...) { @content; } }
-  @else { @include media-single($args...) { @content; } }
+// multiple, for
+@mixin media-for($props) {
+  @include media-each(media-for($props)) {
+    @content;
+  }
 }
 
+// multiple, range (sliced)
+@mixin media-range($start-key: null, $end-key: null) {
+  $media-keys: map-keys($media);
+  $media-length: length($media-keys);
+  $start: if($start-key, (index($media-keys, $start-key) or 1), 1);
+  $end: if($end-key, (index($media-keys, $end-key) or $media-length), $media-length);
+  $range: slice($media-keys, $start, $end);
+  $add-head: ($start-key or nth($media-keys, $start)) == first($media-keys);
+  $add-tail: ($end-key or nth($media-keys, $end)) == last($media-keys);
+  @include media-each($range, $add-head, $add-tail) {
+    @content;
+  }
+}
 
 // hidpi / retina query; should combine with media() via nesting
 @mixin hidpi($ratio: $media-hd-ratio) {
@@ -78,4 +60,3 @@
 }
 // alias
 @mixin hd($args...) { @include hidpi($args...) { @content; } }
-

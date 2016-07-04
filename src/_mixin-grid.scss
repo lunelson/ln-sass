@@ -41,7 +41,11 @@
   }
 }
 
-// span
+///////////////////
+// cell controls //
+///////////////////
+
+// combined span and alignment
 @mixin cell($span: 1 1, $opts: null, $right: null, $left: null, $out: null) {
   @if type-of($opts) == 'map' { @include cell($span, $opts...); }
   @else {
@@ -58,16 +62,14 @@
   }
 }
 
-///////////////////
-// cell controls //
-///////////////////
-
+// span only
 @mixin cell-span($n, $d: null) {
   $d: $d or medium-value('grid-columns') or 4;
   width: percentage($n/$d);
   flex-grow: 0;
 }
 
+// alignment only
 @mixin cell-align($opts: null, $right: null, $left: null, $out: null) {
   @if type-of($opts) == 'map' { @include cell-align($opts...); }
   @else if $left or $right {

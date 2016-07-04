@@ -1,11 +1,15 @@
-// medium objects
-@function medium($m: $curr-medium-key) { @return if($m, map-get($media, $m) or $base, $base); }
-@function medium-orig($m: $curr-medium-key) { @return if($m, map-get($media-orig, $m) or $base, $base-orig); }
+////////////////////////////////////////
+// core media-object access functions //
+////////////////////////////////////////
 
-// medium values
-@function medium-value($key, $m: $curr-medium-key) { @return if($m, map-get(medium($m), $key), map-get($base, $key)); }
-@function medium-value-orig($key, $m: $curr-medium-key) { @return if($m, map-get(medium-orig($m), $key), map-get($base-orig, $key)); }
+  // medium objects
+  @function medium($m: $curr-medium-key) { @return if($m, map-get($media, $m) or $base, $base); }
+  @function medium-orig($m: $curr-medium-key) { @return if($m, map-get($media-orig, $m) or $base, $base-orig); }
 
-// aliases of above
-@function mval($args...){ @return medium-value($args...); }
-@function mval-orig($args...){ @return medium-value-orig($args...); }
+  // medium values
+  @function medium-value($key, $m: $curr-medium-key) { @return if($m, map-get(medium($m), $key), map-get($base, $key)); }
+  @function medium-value-orig($key, $m: $curr-medium-key) { @return if($m, map-get(medium-orig($m), $key), map-get($base-orig, $key)); }
+
+  // aliases of above
+  @function mval($args...){ @return medium-value($args...); }
+  @function mval-orig($args...){ @return medium-value-orig($args...); }

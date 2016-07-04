@@ -1,0 +1,81 @@
+////////////////////
+// media mixins 1 //
+////////////////////
+
+// single query
+@mixin media-single($min, $max: null) {
+  $prev-medium-key: $curr-medium-key;
+  $curr-medium-key: $min !global;
+  @media #{width-query($min, $max)} { @content }
+  $curr-medium-key: $prev-medium-key !global;
+}
+
+// multiple queries
+@mixin media-multi($from: null, $to: null, $for: null, $at: null) {
+  // normalize inputs
+  // $from: $from or nth(map-keys($media), 1);
+  // $to: $to or null;
+  // @if $for {
+  //   @if contains($for, typo) { $for: join($for, margin-y line-height font-size-mod); }
+  //   @if contains($for, margin-y) { $for: join($for, margin-y-mod); }
+  //   @if contains($for, font-size) { $for: join($for, font-size-mod); }
+  //   @if contains($for, margin-x) { $for: join($for, margin-x-mod); }
+  // }
+
+  @if $at {
+    @each $medium in $at {
+      $orig-keys: map-keys(medium-orig($medium));
+      // if there's no "for" condition, do the medium
+      @if not $for { @include media-single($medium) { @content; } }
+      // if there is a "for" condition, do medium only if the "for" key exists for medium
+      @else if contains-any($orig-keys, $for) { @include media-single($medium) { @content; } }
+    }
+  } @else {
+    // output the @content for $base medium if $from is null
+    @if $from == null { @content; }
+
+    // determine other referenced media
+    $media-keys: map-keys($media);
+    $from-index: if($from, index($media-keys, $from), 1);
+    $to-index: if($to, index($media-keys, $to) - 1, length($media-keys));
+    $sliced-keys: join(slice($media-keys, $from-index, $to-index), $to);
+    $sliced-length: length($sliced-keys);
+
+    // conditional per-medium actions
+    @for $n from 1 to $sliced-length {
+      $curr: nth($sliced-keys, $n);
+      // $next: nth($sliced-keys, $n + 1);
+      $orig-keys: map-keys(medium-orig($curr));
+      // if there's no "for" condition, do the medium
+      @if not $for { @include media-single($curr, $to) { @content; } }
+      // if there is a "for" condition, do medium only if the "for" key exists for medium
+      @else if contains-any($orig-keys, $for) { @include media-single($curr, $to) { @content; } }
+    }
+  }
+}
+
+// unified media query mixin -- calls mixins above
+@mixin media($args...) {
+  $arg1: nth($args, 1);
+  @if index('map' 'list', type-of($arg1)) { @include media-multi($arg1...) { @content; } }
+  @else { @include media-single($args...) { @content; } }
+}
+
+
+// hidpi / retina query; should combine with media() via nesting
+@mixin hidpi($ratio: $media-hd-ratio) {
+  $n: nth($ratio, 1); $d: nth($ratio, 2);
+  $ratio: ($n / $d);
+  @media screen and
+  (-webkit-min-device-pixel-ratio: $ratio),
+  (min--moz-device-pixel-ratio: $ratio),
+  (-o-min-device-pixel-ratio: #{$n}/#{$d}),
+  (min-device-pixel-ratio: $ratio),
+  (min-resolution: $ratio * 96dpi),
+  (min-resolution: $ratio * 1dppx) {
+    @content;
+  }
+}
+// alias
+@mixin hd($args...) { @include hidpi($args...) { @content; } }
+

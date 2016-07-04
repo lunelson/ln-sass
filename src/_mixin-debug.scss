@@ -1,0 +1,36 @@
+////////////////
+// debug grid //
+////////////////
+
+@mixin debug-grid($m: $curr-mult-x-key, $color: set-alpha(pink, 0.25)) {
+  body::after {
+    content: '';
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    position: fixed;
+    height: 100%;
+    pointer-events: none;
+    user-select: none;
+    z-index: 999;
+    display: block;
+    @include media-each(){
+      @if $curr-medium-key {
+        $grid-columns: medium-value('grid-columns') or 8;
+        $margin-x: margin-x($m);
+        $outer-right: medium-value('outer-right');
+        $outer-left: medium-value('outer-left');
+        $page-offset: $outer-right - $outer-left;
+        $content-width: medium-value('content-width') + $margin-x;
+        width: $content-width;
+        margin-left: ($content-width + $page-offset + $margin-x)/-2;
+        background: linear-gradient(to right,
+          rgba(0,0,0,0) $margin-x,
+          $color $margin-x,
+          $color $content-width / $grid-columns - $margin-x
+        );
+        background-size: $content-width / $grid-columns;
+      }
+    }
+  }
+}

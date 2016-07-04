@@ -2,65 +2,65 @@
 // normalize //
 ///////////////
 
-@function normalize-medium($medium) {
+  @function normalize-medium($medium) {
 
-  // correct for font-size and line-height units/non-units
-  $font-size: map-get($medium, 'font-size');
-  $line-height: map-get($medium, 'line-height');
-  $base-size: if($medium == $base, 16px, map-get($base, 'font-size'));
-  @if unit($font-size) != 'px' { $font-size: unit-strip($font-size) * $base-size; }
-  @if unit($line-height) == 'px' { $line-height: $line-height / $font-size; }
+    // correct for font-size and line-height units/non-units
+    $font-size: map-get($medium, 'font-size');
+    $line-height: map-get($medium, 'line-height');
+    $base-size: if($medium == $base, 16px, map-get($base, 'font-size'));
+    @if unit($font-size) != 'px' { $font-size: unit-strip($font-size) * $base-size; }
+    @if unit($line-height) == 'px' { $line-height: $line-height / $font-size; }
 
-  // put these in a new map
-  $normal: (
-    'font-size': $font-size,
-    'line-height': $line-height,
-    'html-scale': unit-strip($font-size / 16px)
-  );
+    // put these in a new map
+    $normal: (
+      'font-size': $font-size,
+      'line-height': $line-height,
+      'html-scale': unit-strip($font-size / 16px)
+    );
 
-  // merge additional corrections if necessary
-  @each $key, $value in map-remove($medium, 'font-size', 'line-height', 'breakpoint', 'sizes', 'lines', 'mults-x', 'mults-y') {
-    @if unit($value) == 'px' { $normal: map-merge($normal, ($key: $value / $font-size * 1rem)); }
+    // merge additional corrections if necessary
+    @each $key, $value in map-remove($medium, 'font-size', 'line-height', 'breakpoint', 'sizes', 'lines', 'mults-x', 'mults-y') {
+      @if unit($value) == 'px' { $normal: map-merge($normal, ($key: $value / $font-size * 1rem)); }
+    }
+    // return merged corrections
+    @return map-merge($medium, $normal);
   }
-  // return merged corrections
-  @return map-merge($medium, $normal);
-}
 
 //////////////////
 // query string //
 //////////////////
 
-@function width-query($min: null, $max: null) {
-  $min: if(map-has-key($media, $min), get($media, $min, 'breakpoint'), $min);
-  $max: if(map-has-key($media, $max), get($media, $max, 'breakpoint'), $max);
-  @return 'screen'
-    + if($min, ' and (min-width: #{$min})', '')
-    + if($max, ' and (max-width: #{$max - 0.001})', '');
-}
+  @function width-query($min: null, $max: null) {
+    $min: if(map-has-key($media, $min), get($media, $min, 'breakpoint'), $min);
+    $max: if(map-has-key($media, $max), get($media, $max, 'breakpoint'), $max);
+    @return 'screen'
+      + if($min, ' and (min-width: #{$min})', '')
+      + if($max, ' and (max-width: #{$max - 0.001})', '');
+  }
 
 ///////////////
 // media-for //
 ///////////////
 
-@function media-for($props){
-  $keys: ();
-  $groups: (
-    font-size sizes size-mod,
-    line-height lines,
-    margin-y mults-y mults mult-y-mod mult-mod,
-    margin-x mults-x mults mult-x-mod mult-mod,
-  );
-  @each $prop in $props {
-    @each $group in $groups {
-      @if index($group, $prop) {
-        $props: join($props, $group);
+  @function media-for($props){
+    $keys: ();
+    $groups: (
+      font-size sizes size-mod,
+      line-height lines,
+      margin-y mults-y mults mult-y-mod mult-mod,
+      margin-x mults-x mults mult-x-mod mult-mod,
+    );
+    @each $prop in $props {
+      @each $group in $groups {
+        @if index($group, $prop) {
+          $props: join($props, $group);
+        }
       }
     }
-  }
-  @each $m, $medium in $media-orig {
-    @if contains-any(map-keys($medium), $props) {
-      $keys: append($keys, $m);
+    @each $m, $medium in $media-orig {
+      @if contains-any(map-keys($medium), $props) {
+        $keys: append($keys, $m);
+      }
     }
+    @return $keys;
   }
-  @return $keys;
-}

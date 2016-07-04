@@ -1,83 +1,8 @@
-@mixin setup-page {
+//////////
+// wrap //
+//////////
 
-  ///////////
-  // outer //
-  ///////////
-
-  .outer--y { @extend .outer--top, .outer--bottom, %clip; }
-  .outer { @extend .outer--right, .outer--left, %clip; }
-  .unwrap {
-      margin-right: 0;
-      margin-left: 0;
-      max-width: none;
-      width: 100vw;
-  }
-
-  @include media((for: outer-top outer-bottom)) {
-
-    $outer-top: medium-value('outer-top');
-    $outer-bottom: medium-value('outer-bottom');
-
-    .outer--top { padding-top: $outer-top; }
-    .outer--bottom { padding-bottom: $outer-bottom; }
-
-  }
-
-
-  @include media((for: outer-right outer-left)) {
-
-    $outer-right: medium-value('outer-right');
-    $outer-left: medium-value('outer-left');
-
-    .outer--right { padding-right: $outer-right; }
-    .outer--left { padding-left: $outer-left; }
-
-    ////////////
-    // unwrap //
-    ////////////
-
-    $outer-offset: sub-calc($outer-right, $outer-left);
-    $unwrap-margin: sub-calc(100%, 100vw);
-    $unwrap-margin-right: div-calc(sub-calc($unwrap-margin, $outer-offset), 2);
-    $unwrap-margin-left: div-calc(add-calc($unwrap-margin, $outer-offset), 2);
-
-    .unwrap {
-      &--right { width: add-calc(100vw, $unwrap-margin-left);}
-      &--left { width: add-calc(100vw, $unwrap-margin-right);}
-      &, &--right { margin-right: $unwrap-margin-right; }
-      &, &--left { margin-left: $unwrap-margin-left; }
-    }
-
-    .unwrap--from-right {
-      &, &.unwrap--right { margin-right: - $outer-right;}
-      &, &.unwrap--left { margin-left: add-calc($unwrap-margin, $outer-right); }
-      &.unwrap--right {
-        width: add-calc(100%, $outer-right);
-        margin-left: 0;
-      }
-      &.unwrap--left {
-        width: sub-calc(100vw, $outer-right);
-        margin-right: 0;
-      }
-    }
-
-    .unwrap--from-left {
-      &, &.unwrap--right { margin-right: add-calc($unwrap-margin, $outer-left); }
-      &, &.unwrap--left { margin-left: - $outer-left; }
-      &.unwrap--right {
-        width: sub-calc(100vw, $outer-left);
-        margin-left: 0;
-      }
-      &.unwrap--left {
-        width: add-calc(100%, $outer-left);
-        margin-right: 0;
-      }
-    }
-  }
-
-  //////////
-  // wrap //
-  //////////
+@mixin setup-wrap {
 
   // TODO
   // - write wrap mixin
@@ -85,7 +10,6 @@
   //   .unwrap--right
   //   .unwrap--right-from-right
   //   etc.
-
 
   $media-keys: map-keys($media);
   $media-length: length($media-keys);

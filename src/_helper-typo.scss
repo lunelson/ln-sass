@@ -1,70 +1,70 @@
 ////////////////////
-// MULT FUNCTIONS //
+// mult functions //
 ////////////////////
 
-@function mod($index, $factor: 2, $spread: 2) { @return _pow($factor, $index/$spread); }
+  @function mod($index, $factor: 2, $spread: 2) { @return _pow($factor, $index/$spread); }
 
-@function auto-line($size: null) {
-  $size: $size or size();
-  $sub-lines: $typo-sub-line or ceil($size);
-  $min-lines: $typo-min-line;
-  $rel-height: medium-value('line-height') / unit-strip($size);
-  @return ceil($min-lines / $rel-height * $sub-lines) / $sub-lines / unit-strip($size);
-}
+  @function auto-line($size: null) {
+    $size: $size or size();
+    $sub-lines: $typo-sub-line or ceil($size);
+    $min-lines: $typo-min-line;
+    $rel-height: medium-value('line-height') / unit-strip($size);
+    @return ceil($min-lines / $rel-height * $sub-lines) / $sub-lines / unit-strip($size);
+  }
 
-@function size($s: $curr-size-key) {
-  @if type-of($s) == 'list' { @return call(join($s, medium-value('size-mod'))...); }
-  @else if type-of($s) == 'string' { @return map-get(medium-value('sizes'), $s); }
-  @else if type-of($s) == 'number' {
-    @if index('' 'em' 'rem' 'px', unit($s)) { @return px($s) / medium-value('font-size'); }
-    @else { @return $s; } }
-  @else { @return $s or 1; }
-}
+  @function size($s: $curr-size-key) {
+    @if type-of($s) == 'list' { @return call(join($s, medium-value('size-mod'))...); }
+    @else if type-of($s) == 'string' { @return map-get(medium-value('sizes'), $s); }
+    @else if type-of($s) == 'number' {
+      @if index('' 'em' 'rem' 'px', unit($s)) { @return px($s) / medium-value('font-size'); }
+      @else { @return $s; } }
+    @else { @return $s or 1; }
+  }
 
-@function line($l: $curr-line-key) {
-  @if $l == 'auto' { @return auto-line(); }
-  @else if type-of($l) == 'string' { @return map-get(medium-value('lines'), $l); }
-  @else if type-of($l) == 'number' {
-    @if index('em' 'rem' 'px', unit($l)) { @return unit-strip(rem($l)) / medium-value('line-height'); }
-    @else { @return $l; } }
-  @else { @return $l or 1; }
-}
+  @function line($l: $curr-line-key) {
+    @if $l == 'auto' { @return auto-line(); }
+    @else if type-of($l) == 'string' { @return map-get(medium-value('lines'), $l); }
+    @else if type-of($l) == 'number' {
+      @if index('em' 'rem' 'px', unit($l)) { @return unit-strip(rem($l)) / medium-value('line-height'); }
+      @else { @return $l; } }
+    @else { @return $l or 1; }
+  }
 
-@function mult-y($m: $curr-mult-y-key) {
-  @if type-of($m) == 'list' { @return apply(append($m, medium-value('mult-y-mod') or medium-value('mult-mod'))); }
-  @else if type-of($m) == 'string' { @return map-get(medium-value('mults-y') or medium-value('mults'), $m); }
-  @else if type-of($m) == 'number' { @return unit-strip(rem($m)); }
-  @else { @return $m or 1; }
-}
+  @function mult-y($m: $curr-mult-y-key) {
+    @if type-of($m) == 'list' { @return apply(append($m, medium-value('mult-y-mod') or medium-value('mult-mod'))); }
+    @else if type-of($m) == 'string' { @return map-get(medium-value('mults-y') or medium-value('mults'), $m); }
+    @else if type-of($m) == 'number' { @return unit-strip(rem($m)); }
+    @else { @return $m or 1; }
+  }
 
-@function mult-x($m: $curr-mult-x-key) {
-  @if type-of($m) == 'list' { @return apply(append($m, medium-value('mult-x-mod') or medium-value('mult-mod'))); }
-  @else if type-of($m) == 'string' { @return map-get(medium-value('mults-x') or medium-value('mults'), $m); }
-  @else if type-of($m) == 'number' { @return unit-strip(rem($m)); }
-  @else { @return $m or 1; }
-}
+  @function mult-x($m: $curr-mult-x-key) {
+    @if type-of($m) == 'list' { @return apply(append($m, medium-value('mult-x-mod') or medium-value('mult-mod'))); }
+    @else if type-of($m) == 'string' { @return map-get(medium-value('mults-x') or medium-value('mults'), $m); }
+    @else if type-of($m) == 'number' { @return unit-strip(rem($m)); }
+    @else { @return $m or 1; }
+  }
 
 /////////////////////
-// VALUE FUNCTIONS //
+// value functions //
 /////////////////////
 
-@function font($f: $curr-font-key) { @return map-get($fonts, ($f or 'base')); }
+  @function font($f: $curr-font-key) { @return map-get($fonts, ($f or 'base')); }
 
-@function ex-factor($f: $curr-font-key) { @return map-get(font($f), 'ex-factor'); }
-@function em-factor($f: $curr-font-key) { @return map-get(font($f), 'em-factor'); }
+  @function ex-factor($f: $curr-font-key) { @return map-get(font($f), 'ex-factor'); }
+  @function em-factor($f: $curr-font-key) { @return map-get(font($f), 'em-factor'); }
 
-@function line-height($l: $curr-line-key) { @return medium-value('line-height') * line($l); }
+  @function line-height($l: $curr-line-key) { @return medium-value('line-height') * line($l); }
 
-@function ex-trim { @return div-calc(sub-calc(line-height()*1em, ex-factor()*1ex), 2); }
-@function em-trim { @return (line-height()*1em - em-factor()*1em)/2; }
+  @function ex-trim { @return div-calc(sub-calc(line-height()*1em, ex-factor()*1ex), 2); }
+  @function em-trim { @return (line-height()*1em - em-factor()*1em)/2; }
 
-@function margin-y($m: $curr-mult-y-key) { @return medium-value('margin-y') * mult-y($m); }
-@function margin-x($m: $curr-mult-x-key) { @return medium-value('margin-x') * mult-x($m); }
+  @function margin-y($m: $curr-mult-y-key) { @return medium-value('margin-y') * mult-y($m); }
+  @function margin-x($m: $curr-mult-x-key) { @return medium-value('margin-x') * mult-x($m); }
 
-@function typo-ex-margin($m: $curr-mult-y-key) { @return sub-calc(margin-y($m), ex-trim()); }
-@function typo-em-margin($m: $curr-mult-y-key) { @return sub-calc(margin-y($m), em-trim()); }
+  @function typo-ex-margin($m: $curr-mult-y-key) { @return sub-calc(margin-y($m), ex-trim()); }
+  @function typo-em-margin($m: $curr-mult-y-key) { @return sub-calc(margin-y($m), em-trim()); }
 
-@function typo-margin($m: $curr-mult-y-key, $unit: 'ex') {
-  @return sub-calc(margin-y($m), call('#{$unit}-trim')); }
+  @function typo-margin($m: $curr-mult-y-key, $unit: 'ex') {
+    @return sub-calc(margin-y($m), call('#{$unit}-trim')); }
 
-@function t-margin($args...) { @return typo-margin($args...); }
+  @function t-margin($args...) { @return typo-margin($args...); }

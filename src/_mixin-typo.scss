@@ -1,5 +1,5 @@
 ///////////
-// STACK //
+// stack //
 ///////////
 
 @mixin stack($m: $curr-mult-y-key, $s: $curr-size-key, $l: $curr-line-key, $f: $curr-font-key) {
@@ -34,10 +34,10 @@
 }
 
 ///////////
-// TYPEL //
+// typel //
 ///////////
 
-// TODO: test typel on lists and tables
+// todo: test typel on lists and tables
 //     - can you still style lists and tables properly
 //     - protocol for defining local stuff
 
@@ -106,7 +106,7 @@
 // font-face //
 ///////////////
 
-// TODO: font-face mixin updates
+// todo: font-face mixin updates
 // - update to use a global $font-folder; pass $file as 'subfolder/filename.ext'
 // - update to include woff2
 // - update to use local ?
@@ -117,7 +117,7 @@
     font-family: $family;
     font-style: $style;
     font-weight: $weight; // this should be both word and number values
-    src: url('#{$dir}#{$file}.eot'); // IE9 Compat Modes
+    src: url('#{$dir}#{$file}.eot'); // ie9 compat modes
     src: url('#{$dir}#{$file}.eot?#iefix') format('embedded-opentype'),
        url('#{$dir}#{$file}.svg##{$file}') format('svg');
        //url('#{$dir}#{$file}.woff') format('woff'),

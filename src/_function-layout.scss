@@ -1,3 +1,7 @@
+//////////////////////
+// margin & padding //
+//////////////////////
+
 @mixin margin($args: $curr-mult-y-key $curr-mult-x-key) {
   $t: nth($args, 1);
   $r: if(length($args)>1, nth($args, 2), $t);
@@ -27,71 +31,3 @@
     padding-left: if($l, margin-x($l), null);
   }
 }
-
-// // margin; compact syntax version
-// @mixin margin($args) {
-//   @if length($args) == 1 {
-//     margin: $args;
-//   } @else if length($args) == 2 {
-//     @if index($args, null) {
-//       margin-top: nth($args,1);
-//       margin-right: nth($args,2);
-//       margin-bottom: nth($args,1);
-//       margin-left: nth($args,2);
-//     } @else {
-//       margin: $args;
-//     }
-//   } @else if length($args) == 3 {
-//     @if index($args, null) {
-//       margin-top: nth($args,1);
-//       margin-right: nth($args,2);
-//       margin-bottom: nth($args,3);
-//       margin-left: nth($args,2);
-//     } @else {
-//       margin: $args;
-//     }
-//   } @else if length($args) == 4 {
-//     @if index($args, null) {
-//       margin-top: nth($args,1);
-//       margin-right: nth($args,2);
-//       margin-bottom: nth($args,3);
-//       margin-left: nth($args,4);
-//     } @else {
-//       margin: $args;
-//     }
-//   }
-// }
-
-// // padding; compact syntax version
-// @mixin padding($args) {
-//   @if length($args) == 1 {
-//     padding: $args;
-//   } @else if length($args) == 2 {
-//     @if index($args, null) {
-//       padding-top: nth($args,1);
-//       padding-right: nth($args,2);
-//       padding-bottom: nth($args,1);
-//       padding-left: nth($args,2);
-//     } @else {
-//       padding: $args;
-//     }
-//   } @else if length($args) == 3 {
-//     @if index($args, null) {
-//       padding-top: nth($args,1);
-//       padding-right: nth($args,2);
-//       padding-bottom: nth($args,3);
-//       padding-left: nth($args,2);
-//     } @else {
-//       padding: $args;
-//     }
-//   } @else if length($args) == 4 {
-//     @if index($args, null) {
-//       padding-top: nth($args,1);
-//       padding-right: nth($args,2);
-//       padding-bottom: nth($args,3);
-//       padding-left: nth($args,4);
-//     } @else {
-//       padding: $args;
-//     }
-//   }
-// }
