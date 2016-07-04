@@ -15,10 +15,10 @@ My personal sass sort-of-framework and utilities
         - NB. typo mixin should only try to @extend if $curr-typo-sel is not null
 - eliminate .cell and .fcell classes in grid setup; make implicit cells, as with the mixins
 - revise typo-setup mixin to create .typo-- variants only
-- revise typo-item mixin to invoke all named mult-y contexts
+- revise typel mixin to invoke all named mult-y contexts
 - change typo to
     @mixin typo() / typo-stack()
-    @mixin typo-item()
+    @mixin typel()
     @function typo-margin()
 - change base/media to
     $media-base

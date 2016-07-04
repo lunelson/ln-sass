@@ -12,9 +12,9 @@ $base: (
 
 @include typo-setup();
 
-// p { @include typo-item; }
+// p { @include typel; }
 
-// .nest p { @include typo-item(0.85, 1.1 ); }
+// .nest p { @include typel(0.85, 1.1 ); }
 
 .cell-test {
   @include cell-span(4);

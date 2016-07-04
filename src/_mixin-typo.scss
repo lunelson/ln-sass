@@ -59,7 +59,7 @@ $curr-stack-sel: null !default;
   $curr-font-key: $prev-font-key !global;
 }
 
-@mixin typo-item($s: $curr-size-key, $l: $curr-line-key, $f: $curr-font-key) {
+@mixin typel($s: $curr-size-key, $l: $curr-line-key, $f: $curr-font-key) {
 
   $same-size-key: ($s == $curr-size-key);
   $same-line-key: ($l == $curr-line-key);

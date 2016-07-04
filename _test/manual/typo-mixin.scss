@@ -27,17 +27,17 @@ $base: (
 
 /* root-typo */
 .root-typo-test {
-  @include typo-item(2);
+  @include typel(2);
 }
 
 /* stack -> nested-typo */
 .stack-test-big {
   @include stack(3) {
     .nested-typo-test {
-      @include typo-item(2);
+      @include typel(2);
     }
     .nested-typo-test2 {
-      @include typo-item(1.5,1.5);
+      @include typel(1.5,1.5);
     }
   }
 }
@@ -45,10 +45,10 @@ $base: (
 /* context-typo */
 .typo-context {
   .context-typo-test {
-    @include typo-item(2);
+    @include typel(2);
   }
   .context-typo-test2 {
-    @include typo-item(1.5,1.5);
+    @include typel(1.5,1.5);
   }
 }
 
@@ -56,7 +56,7 @@ $base: (
 .tldr-text {
   @include stack() {
     p {
-      @include typo-item() {
+      @include typel() {
         @include adjacent-to(h4) {
           margin-top: typo-margin(1.5);
         }
@@ -64,7 +64,7 @@ $base: (
     }
     h4 {
       font-weight: bold;
-      @include typo-item(1.25, 0.9) {
+      @include typel(1.25, 0.9) {
         @include adjacent-to(p) {
           margin-top: typo-margin(3);
         }
@@ -76,7 +76,7 @@ $base: (
 /* example */
 .other-text {
   p {
-    @include typo-item() {
+    @include typel() {
       @include adjacent-to(h4) {
         margin-top: typo-margin(1.5);
       }
@@ -84,7 +84,7 @@ $base: (
   }
   h4 {
     font-weight: bold;
-    @include typo-item(1.25, 0.9) {
+    @include typel(1.25, 0.9) {
       @include adjacent-to(p) {
         margin-top: typo-margin(3);
       }
