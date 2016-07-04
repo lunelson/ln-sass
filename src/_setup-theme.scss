@@ -1,0 +1,25 @@
+/////////////
+// globals //
+/////////////
+
+$colors: (
+
+  body: black,
+  body_bg: white,
+  link: blue,
+  link--active: red,
+  link_bg: null,
+  link_bg--active: null,
+
+) !default;
+
+///////////////
+// functions //
+///////////////
+
+@function color($key) {
+  $keys: map-keys($colors);
+  $value: map-get($colors, $key);
+  @return if(index($keys, $value), color($value), $value);
+}
+

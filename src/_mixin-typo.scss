@@ -1,34 +1,8 @@
 ///////////
-// fonts //
+// STACK //
 ///////////
 
-/* TODO
-  - update to use a global $font-folder; pass $file as 'subfolder/filename.ext'
-  - update to include woff2
-  - update to use local ?
-  - update to allow specifying which types are available: eot, svg, woff, woff2, ttf
-*/
-@mixin font-face($family, $dir, $file, $style, $weight) {
-  @font-face {
-    font-family: $family;
-    font-style: $style;
-    font-weight: $weight; // this should be both word and number values
-    src: url('#{$dir}#{$file}.eot'); // IE9 Compat Modes
-    src: url('#{$dir}#{$file}.eot?#iefix') format('embedded-opentype'),
-       url('#{$dir}#{$file}.svg##{$file}') format('svg');
-       //url('#{$dir}#{$file}.woff') format('woff'),
-       // url('#{$dir}#{$file}.svg##{$file}') format('svg'),
-       // url('#{$dir}#{$file}.ttf') format('truetype');
-  }
-}
-
-//////////////////
-// stack / typo //
-//////////////////
-
-$curr-stack-sel: null !default;
-
-@mixin stack($m: $curr-mult-y-key, $s: $curr-size-key, $l: $curr-line-key, $f: $curr-font-key, $typo: true) {
+@mixin stack($m: $curr-mult-y-key, $s: $curr-size-key, $l: $curr-line-key, $f: $curr-font-key) {
 
   $prev-mult-y-key: $curr-mult-y-key;
   $prev-size-key: $curr-size-key;
@@ -59,6 +33,14 @@ $curr-stack-sel: null !default;
   $curr-font-key: $prev-font-key !global;
 }
 
+///////////
+// TYPEL //
+///////////
+
+// TODO: test typel on lists and tables
+//     - can you still style lists and tables properly
+//     - protocol for defining local stuff
+
 @mixin typel($s: $curr-size-key, $l: $curr-line-key, $f: $curr-font-key) {
 
   $same-size-key: ($s == $curr-size-key);
@@ -81,7 +63,7 @@ $curr-stack-sel: null !default;
   $size-adjust: if($font, map-get($font, 'size-adjust') or 1, 1);
 
   font-family: $font-family;
-  line-height: $line * medium-value('line-height');
+  line-height: $line * medium-value('line-height') / $size-adjust;
 
   // if in a stack
   @if $curr-stack-sel {
@@ -118,4 +100,28 @@ $curr-stack-sel: null !default;
   $curr-size-key: $prev-size-key !global;
   $curr-line-key: $prev-line-key !global;
   $curr-font-key: $prev-font-key !global;
+}
+
+///////////////
+// font-face //
+///////////////
+
+// TODO: font-face mixin updates
+// - update to use a global $font-folder; pass $file as 'subfolder/filename.ext'
+// - update to include woff2
+// - update to use local ?
+// - update to allow specifying which types are available: eot, svg, woff, woff2, ttf
+
+@mixin font-face($family, $dir, $file, $style, $weight) {
+  @font-face {
+    font-family: $family;
+    font-style: $style;
+    font-weight: $weight; // this should be both word and number values
+    src: url('#{$dir}#{$file}.eot'); // IE9 Compat Modes
+    src: url('#{$dir}#{$file}.eot?#iefix') format('embedded-opentype'),
+       url('#{$dir}#{$file}.svg##{$file}') format('svg');
+       //url('#{$dir}#{$file}.woff') format('woff'),
+       // url('#{$dir}#{$file}.svg##{$file}') format('svg'),
+       // url('#{$dir}#{$file}.ttf') format('truetype');
+  }
 }

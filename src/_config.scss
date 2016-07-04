@@ -1,0 +1,65 @@
+/////////////
+// globals //
+/////////////
+
+$base: () !default;
+
+$media: (
+  a: (breakpoint: 32em),
+  b: (breakpoint: 48em),
+  c: (breakpoint: 64em),
+  d: (breakpoint: 80em),
+) !default;
+
+$media-alt: (
+  c4: ( grid-columns: 4 ),
+  c6: ( grid-columns: 6 ),
+  c8: ( grid-columns: 8 ),
+  c10: ( grid-columns: 10 ),
+  c12: ( grid-columns: 12 ),
+) !default;
+
+$media-hd-ratio: 3 2 !default;
+$globals: () !default;
+$curr-medium-key: null !default;
+
+/////////////
+// globals //
+/////////////
+
+$typo-min-line: 1.125 !default;
+$typo-sub-line: 2 !default;
+$curr-stack-sel: null !default;
+$curr-size-key: null !default;
+$curr-line-key: null !default;
+$curr-font-key: null !default;
+$curr-mult-y-key: null !default;
+$curr-mult-x-key: null !default;
+
+$fonts: (
+  base: (
+    font-family: (Arial, sans-serif),
+    em-factor: 1,
+    ex-factor: 1,
+    size-adjust: 1,
+    spacing-max: 0.5,
+    spacing-end: 50,
+  ),
+  serif: (
+    font-family: (Georgia, serif),
+    em-factor: 1,
+    ex-factor: 1,
+    size-adjust: 1,
+    spacing-max: 0.5,
+    spacing-end: 50,
+  ),
+  mono: (
+    font-family: (monaco, Consolas, "Lucida Console", monospace),
+    em-factor: 1,
+    ex-factor: 1,
+    size-adjust: 1,
+    spacing-max: 0.5,
+    spacing-end: 50,
+  )
+) !default;
+

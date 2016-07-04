@@ -1,3 +1,39 @@
+/*
+   _
+  | |
+  | |_ __ ______ ___  __ _ ___ ___
+  | | '_ \______/ __|/ _` / __/ __|
+  | | | | |     \__ \ (_| \__ \__ \
+  |_|_| |_|     |___/\__,_|___/___/
+
+  API
+
+  setup-media ✅
+  setup-page (outer--, wrap--, unwrap--)
+  setup-grid (grid--, fgrid--, cell--, fcell--)
+  setup-typo (font--, stack--) ✅
+  setup-util (...)
+
+  setup-page (page--, wrap--, unwrap--) // ? setup-outer
+  setup-other // helpers, general, base
+
+  medium // media ???
+  media-for
+  media-each
+  media-range
+
+  page
+  wrap
+  unwrap
+  unwrap-align // unwrap??
+  grid
+  fgrid
+  stack ✅
+  typel ✅
+
+
+ */
+
 // DEPS
 
 @import "node_modules/sassdash/index";
@@ -66,25 +102,6 @@
 @import 'src/helper-typo';
 @import 'src/mixin-typo';
 @import 'src/setup-typo';
-
-
-// CURR and DONE VARIABLES
-
-$curr-medium-key: null !default;
-
-$curr-size-key: null !default;
-$curr-line-key: null !default;
-$curr-font-key: null !default;
-$curr-mult-y-key: null !default;
-$curr-mult-x-key: null !default;
-
-$curr-size-val: null !default; // kill
-$curr-line-val: null !default; // kill
-$curr-font-val: null !default; // kill
-$curr-mult-y-val: null !default; // kill
-$curr-mult-x-val: null !default; // kill
-
-$curr-typo-scope: false !default;
 
 $done-base-setup: false !default;
 $done-grid-setup: false !default;

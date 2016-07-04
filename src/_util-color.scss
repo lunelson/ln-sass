@@ -1,26 +1,3 @@
-////////////////
-// MANAGEMENT //
-////////////////
-
-// color config object and self-referential get() function
-
-$colors: (
-
-  body: black,
-  body_bg: white,
-  link: blue,
-  link--active: red,
-  link_bg: null,
-  link_bg--active: null,
-
-) !default;
-
-@function color($key) {
-  $keys: map-keys($colors);
-  $value: map-get($colors, $key);
-  @return if(index($keys, $value), color($value), $value);
-}
-
 ///////////////
 // UTILITIES //
 ///////////////

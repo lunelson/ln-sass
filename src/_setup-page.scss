@@ -1,8 +1,12 @@
-@mixin layout-setup-page {
+@mixin setup-page {
 
-  .page--y { @extend .page--top, .page--bottom; }
-  .page { @extend .page--right, .page--left, %clip; }
-  .unpage {
+  ///////////
+  // outer //
+  ///////////
+
+  .outer--y { @extend .outer--top, .outer--bottom, %clip; }
+  .outer { @extend .outer--right, .outer--left, %clip; }
+  .unwrap {
       margin-right: 0;
       margin-left: 0;
       max-width: none;
@@ -14,8 +18,8 @@
     $outer-top: medium-value('outer-top');
     $outer-bottom: medium-value('outer-bottom');
 
-    .page--top { padding-top: $outer-top; }
-    .page--bottom { padding-bottom: $outer-bottom; }
+    .outer--top { padding-top: $outer-top; }
+    .outer--bottom { padding-bottom: $outer-bottom; }
 
   }
 
@@ -25,45 +29,174 @@
     $outer-right: medium-value('outer-right');
     $outer-left: medium-value('outer-left');
 
-    .page--right { padding-right: $outer-right; }
-    .page--left { padding-left: $outer-left; }
+    .outer--right { padding-right: $outer-right; }
+    .outer--left { padding-left: $outer-left; }
 
-    $page-offset: sub-calc($outer-right, $outer-left);
-    $unpage-margin: sub-calc(100%, 100vw);
-    $unpage-margin-right: div-calc(sub-calc($unpage-margin, $page-offset), 2);
-    $unpage-margin-left: div-calc(add-calc($unpage-margin, $page-offset), 2);
+    ////////////
+    // unwrap //
+    ////////////
 
-    .unpage {
-      &--right { width: add-calc(100vw, $unpage-margin-left);}
-      &--left { width: add-calc(100vw, $unpage-margin-right);}
-      &, &--right { margin-right: $unpage-margin-right; }
-      &, &--left { margin-left: $unpage-margin-left; }
+    $outer-offset: sub-calc($outer-right, $outer-left);
+    $unwrap-margin: sub-calc(100%, 100vw);
+    $unwrap-margin-right: div-calc(sub-calc($unwrap-margin, $outer-offset), 2);
+    $unwrap-margin-left: div-calc(add-calc($unwrap-margin, $outer-offset), 2);
+
+    .unwrap {
+      &--right { width: add-calc(100vw, $unwrap-margin-left);}
+      &--left { width: add-calc(100vw, $unwrap-margin-right);}
+      &, &--right { margin-right: $unwrap-margin-right; }
+      &, &--left { margin-left: $unwrap-margin-left; }
     }
 
-    .unpage--from-right {
-      &, &.unpage--right { margin-right: - $outer-right;}
-      &, &.unpage--left { margin-left: add-calc($unpage-margin, $outer-right); }
-      &.unpage--right {
+    .unwrap--from-right {
+      &, &.unwrap--right { margin-right: - $outer-right;}
+      &, &.unwrap--left { margin-left: add-calc($unwrap-margin, $outer-right); }
+      &.unwrap--right {
         width: add-calc(100%, $outer-right);
         margin-left: 0;
       }
-      &.unpage--left {
+      &.unwrap--left {
         width: sub-calc(100vw, $outer-right);
         margin-right: 0;
       }
     }
 
-    .unpage--from-left {
-      &, &.unpage--right { margin-right: add-calc($unpage-margin, $outer-left); }
-      &, &.unpage--left { margin-left: - $outer-left; }
-      &.unpage--right {
+    .unwrap--from-left {
+      &, &.unwrap--right { margin-right: add-calc($unwrap-margin, $outer-left); }
+      &, &.unwrap--left { margin-left: - $outer-left; }
+      &.unwrap--right {
         width: sub-calc(100vw, $outer-left);
         margin-left: 0;
       }
-      &.unpage--left {
+      &.unwrap--left {
         width: add-calc(100%, $outer-left);
         margin-right: 0;
       }
     }
   }
+
+  //////////
+  // wrap //
+  //////////
+
+  // TODO
+  // - write wrap mixin
+  // - do unwrap classes correctly
+  //   .unwrap--right
+  //   .unwrap--right-from-right
+  //   etc.
+
+
+  $media-keys: map-keys($media);
+  $media-length: length($media-keys);
+  $media-combos: _sort-by(combination-set($media-keys), 'length');
+  $media-combo-strings: ();
+  @each $combo in $media-combos { $media-combo-strings: append($media-combo-strings, to-string($combo, '-')); }
+
+  @include bemify('wrap');
+
+  .wrap { margin-right: auto; margin-left: auto; }
+  .wrap--left { margin-left: 0; }
+  .wrap--right { margin-right: 0; }
+
+  // wrap--combos
+  @each $combo in $media-combos {
+    $combo-string: kebab-string($combo);
+    @if length($combo) == 1 {
+      @each $pair in pair-set($combo) {
+        @include medium($pair...) {
+          %wrap--#{kebab-string($pair)}end, .wrap--#{$combo-string} { max-width: medium-value('content-width'); }
+        }
+      }
+    }
+    @else if length($combo) == 2 {
+      @each $pair in pair-set($combo) {
+        @if nth($pair, 2) {
+          @include medium($pair...) {
+            %wrap--#{kebab-string($pair)}, .wrap--#{$combo-string} { max-width: medium-value('content-width'); }
+          }
+        } @else { .wrap--#{$combo-string} { @extend %wrap--#{kebab-string($pair)}end; } }
+      }
+    }
+    @else {
+      @each $pair in slice(pair-set($combo), 2) {
+        @if nth($pair, 2) { .wrap--#{$combo-string} { @extend %wrap--#{kebab-string($pair)}; } }
+        @else { .wrap--#{$combo-string} { @extend %wrap--#{kebab-string($pair)}end; } }
+      }
+    }
+  }
+
+  // wrap--each
+  .wrap--each { @extend .wrap--#{kebab-string($media-keys)}; }
+
+  // wrap--to-x, // wrap--x-to
+  @for $i from 1 through $media-length {
+    .wrap--#{nth($media-keys, $i)}-to {
+      @extend .wrap--#{kebab-string(slice($media-keys, $i))}; }
+    .wrap--to-#{nth($media-keys, $i)} {
+      @extend .wrap--#{kebab-string(slice($media-keys, 1, $i))}; }
+  }
+
+  // wrap--[ranges]
+  @each $set in range-set($media-keys) {
+    $i: nth($set,1); $j: nth($set,2);
+    .wrap--#{nth($media-keys, $i)}-to-#{nth($media-keys, $j)} {
+      @extend .wrap--#{kebab-string(slice($media-keys, $i ,$j))}; }
+  }
 }
+
+// @mixin setup-wrap-old {
+
+//   //////////
+//   // wrap //
+//   //////////
+
+//   $media-keys: map-keys($media);
+//   $media-combos: power-set($media-keys);
+//   $media-length: length($media-keys);
+
+//   .wrap, [class*='wrap--'] { margin-right: auto; margin-left: auto; }
+//   .wrap--left { margin-left: 0; }
+//   .wrap--right { margin-right: 0; }
+
+//   // wrap--each
+//   .wrap--each {
+//     @include media-each() {
+//       max-width: medium-value('content-width');
+//     }
+//   }
+
+//   // wrap--to-x, // wrap--x-to
+//   @for $i from 1 through $media-length {
+//     .wrap--#{nth($media-keys, $i)}-to {
+//       @include media-each(slice($media-keys, $i)) {
+//         max-width: medium-value('content-width');
+//       }
+//     }
+//     .wrap--to-#{nth($media-keys, $i)} {
+//       @include media-each(slice($media-keys, 1, $i)) {
+//         max-width: medium-value('content-width');
+//       }
+//     }
+//   }
+
+//   // wrap--[combos]
+//   @each $combo in $media-combos {
+//     $combo-string: to-string($combo, '-');
+//     .wrap--#{$combo-string} {
+//       @include media-each($combo) {
+//         max-width: medium-value('content-width');
+//       }
+//     }
+//   }
+
+//   // wrap--[ranges]
+//   @each $set in range-set($media-keys) {
+//     $i: nth($set,1); $j: nth($set,2);
+//     .wrap--#{nth($media-keys, $i)}-to-#{nth($media-keys, $j)} {
+//       @include media-each(slice($media-keys, $i, $j)) {
+//         max-width: medium-value('content-width');
+//       }
+//     }
+//   }
+// }

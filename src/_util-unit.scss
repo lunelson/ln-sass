@@ -208,3 +208,7 @@
 
 @function vwx($rate, $base:0) { @return vx($rate, $base, 1vw); }
 @function vhx($rate, $base:0) { @return vx($rate, $base, 1vh); }
+
+// TODO: viewport units
+// - add an extra variable to `vx` function, to allow an arbitrary other element inserted in to the calc expression
+//   - NB this will allow vx-based typo-margins, for example, by inserting `trim-height()`

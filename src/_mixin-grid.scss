@@ -58,7 +58,9 @@
   }
 }
 
-// new school
+///////////////////
+// cell controls //
+///////////////////
 
 @mixin cell-span($n, $d: null) {
   $d: $d or medium-value('grid-columns') or 4;

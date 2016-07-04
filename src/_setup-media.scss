@@ -1,15 +1,35 @@
+@mixin setup-media($output: true) {
 
-@mixin media-setup($output: true) {
+  $medium-default: (
+    // bases
+    font-size: 16px,
+    line-height: 1.5,
+    margin-x: 2rem,
+    margin-y: 2rem,
+    outer-top: 2rem,
+    outer-right: 2rem,
+    outer-bottom: 2rem,
+    outer-left: 2rem,
+    copy-width: 30rem,
+    copy-columns: 4,
+    // mults and mods
+    lines: (),
+    sizes: (),
+    mults-x: (),
+    mults-y: (),
+    size-mod: 1.5,
+    mult-mod: 1.5
+  );
 
   //////////
-  // BASE //
+  // base //
   //////////
 
   // backup $base as spec'd
   $base-orig: $base !global;
 
   // merge spec'd $base against defaults, and normalize
-  $base: medium-normalize(map-merge($base-defaults, $base)) !global;
+  $base: normalize-medium(map-merge($medium-default, $base)) !global;
 
   @if $output {
     // base styles
@@ -18,7 +38,7 @@
   }
 
   ///////////
-  // MEDIA //
+  // media //
   ///////////
 
   // collect and sort the breakpoint media
@@ -33,7 +53,7 @@
   @each $m, $medium in $media {
 
     // merge current medium against ref-medium, normalize primitive values
-    $reference: medium-normalize(map-merge($reference, $medium));
+    $reference: normalize-medium(map-merge($reference, $medium));
 
     // get and merge sub-maps
     $sizes: map-merge(map-get($reference, 'sizes'), map-get($medium, 'sizes') or ());

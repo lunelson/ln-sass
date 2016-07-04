@@ -1,19 +1,10 @@
-@mixin layout-setup-grid {
+@mixin setup-grid {
 
   //////////
   // grid //
   //////////
 
-  .fgrid, %fgrid {
-    display: flex;
-    & > * {
-      flex: 1 1 auto;
-      min-width: 0%; // https://css-tricks.com/flexbox-truncated-text/
-      width: 0%;
-    }
-  }
-
-  .grid, %grid {
+  .grid {
     display: block;
     position: relative; // for 'out' positioned cells which are absolute
     font-size: 0rem;
@@ -24,6 +15,15 @@
       width: 100%;
       display: inline-block;
       vertical-align: top;
+    }
+  }
+
+  .fgrid {
+    display: flex;
+    & > * {
+      flex: 1 1 auto;
+      min-width: 0%; // https://css-tricks.com/flexbox-truncated-text/
+      width: 0%;
     }
   }
 
@@ -44,14 +44,15 @@
   //   vertical-align: top;
   // }
 
-  @include bemify('fgrid', false);
-  @include bemify('grid', false);
-  @include bemify('fcell', false);
-  @include bemify('cell', false);
+  @include bemify('fgrid');
+  @include bemify('grid');
+  // @include bemify('fcell');
+  // @include bemify('cell');
 
   @include media((for: margin-x mults-x mults)) {
     @each $m, $mult in map-merge((base: 1), medium-value('mults-x') or medium-value('mults')) {
       $margin: $mult * medium-value('margin-x');
+
       .fgrid#{multify($m)}, .grid#{multify($m)} {
         margin-left: $margin / -2;
         margin-right: $margin / -2;
@@ -61,6 +62,7 @@
           padding-right: $margin / 2;
         }
       }
+
       //  .fcell#{multify($m)}, .cell#{multify($m)} {
       //   padding-left: $margin / 2;
       //   padding-right: $margin / 2;

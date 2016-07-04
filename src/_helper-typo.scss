@@ -2,8 +2,6 @@
 // MULT FUNCTIONS //
 ////////////////////
 
-
-
 @function mod($index, $factor: 2, $spread: 2) { @return _pow($factor, $index/$spread); }
 
 @function auto-line($size: null) {
