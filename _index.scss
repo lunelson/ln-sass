@@ -4,68 +4,68 @@
 
 // RESETS
 
-@import 'util-reset-ln';
-@import 'util-reset-meyer';
-@import 'util-reset-norm3';
-@import 'util-reset-norm4';
-@import 'util-reset-opentype';
-// @import 'util-reset-tripoli-minimal';
-// @import 'util-reset-yui3';
+@import 'src/util-reset-ln';
+@import 'src/util-reset-meyer';
+@import 'src/util-reset-norm3';
+@import 'src/util-reset-norm4';
+@import 'src/util-reset-opentype';
+// @import 'src/util-reset-tripoli-minimal';
+// @import 'src/util-reset-yui3';
 
 // UTILITIES
 
-@import 'util-math';
-@import 'util-unit';
+@import 'src/util-math';
+@import 'src/util-unit';
 
-@import 'util-animation';
-@import 'util-calc';
-@import 'util-color';
-@import 'util-debug';
-@import 'util-display';
-@import 'util-function';
-@import 'util-json';
-@import 'util-list';
-@import 'util-map';
-@import 'util-maps';
-@import 'util-misc';
-@import 'util-position';
-@import 'util-scrollbar';
-@import 'util-selector';
-@import 'util-string';
-@import 'util-svg';
-@import 'util-z-index';
+@import 'src/util-animation';
+@import 'src/util-calc';
+@import 'src/util-color';
+@import 'src/util-debug';
+@import 'src/util-display';
+@import 'src/util-function';
+@import 'src/util-json';
+@import 'src/util-list';
+@import 'src/util-map';
+@import 'src/util-maps';
+@import 'src/util-misc';
+@import 'src/util-position';
+@import 'src/util-scrollbar';
+@import 'src/util-selector';
+@import 'src/util-string';
+@import 'src/util-svg';
+@import 'src/util-z-index';
 
-@import 'util-custom';
+@import 'src/util-custom';
 
 // MEDIA
 
-@import 'config-media';
-@import 'function-media';
-@import 'helper-media';
-@import 'mixin-media';
-@import 'mixin-media-v2';
-@import 'setup-media';
-@import 'setup-media-alt';
+@import 'src/config-media';
+@import 'src/function-media';
+@import 'src/helper-media';
+@import 'src/mixin-media';
+@import 'src/mixin-media-v2';
+@import 'src/setup-media';
+@import 'src/setup-media-alt';
 
 // LAYOUT
 
-@import 'config-layout';
-@import 'helper-layout';
-@import 'mixin-layout';
-@import 'setup-layout';
-@import 'setup-grid';
-@import 'setup-misc';
-@import 'setup-page';
-@import 'setup-wrap';
+@import 'src/config-layout';
+@import 'src/helper-layout';
+@import 'src/mixin-layout';
+@import 'src/setup-layout';
+@import 'src/setup-grid';
+@import 'src/setup-misc';
+@import 'src/setup-page';
+@import 'src/setup-wrap';
 
 // THEME
 
 // TYPO
 
-@import 'config-typo';
-@import 'helper-typo';
-@import 'mixin-typo';
-@import 'setup-typo';
+@import 'src/config-typo';
+@import 'src/helper-typo';
+@import 'src/mixin-typo';
+@import 'src/setup-typo';
 
 
 // CURR and DONE VARIABLES

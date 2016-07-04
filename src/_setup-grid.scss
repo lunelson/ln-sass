@@ -44,10 +44,10 @@
   //   vertical-align: top;
   // }
 
-  @include bem-base('fgrid', false);
-  @include bem-base('grid', false);
-  @include bem-base('fcell', false);
-  @include bem-base('cell', false);
+  @include bemify('fgrid', false);
+  @include bemify('grid', false);
+  @include bemify('fcell', false);
+  @include bemify('cell', false);
 
   @include media((for: margin-x mults-x mults)) {
     @each $m, $mult in map-merge((base: 1), medium-value('mults-x') or medium-value('mults')) {

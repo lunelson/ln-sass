@@ -1,36 +1,30 @@
-  /////////////
-  // margins //
-  /////////////
 
-  // @include media((for: margin-y mults-y)) {
+@mixin setup-other {
 
-  //   @each $m, $mult in map-merge((base: 1), medium-value('mults-y')) {
-  //     $margin-y: $mult * medium-value('margin-y');
-  //     .sect#{multify($m)} { @extend .my#{multify($m)}; }
-  //     .my#{multify($m)} { @extend .mt#{multify($m)}, .mb#{multify($m)}; }
-  //     .mt#{multify($m)} { margin-top: $margin-y; }
-  //     .mb#{multify($m)} { margin-bottom: $margin-y; }
-  //   }
-  // }
+  svg {
+    fill: inherit;
+    stroke: inherit;
+    stroke-width: inherit;
+    // transform: inherit;
+    // stroke: currentColor; // this technique will allow a second color
+    // & { width: 100%; height: 100%; }
+    &.icon {
+      width: 1em;
+      height: 1em;
+      display: inline-block;
+      vertical-align: middle;
+      fill: currentColor;
+      margin-right: 0.75em;
+      position: relative;
+      top: calc((1ex - 1em)/4);
+    }
+  }
 
-  // @include media((for: margin-x mults-x)) {
+  // IE fix for fluid resizing
+  img.svg, object.svg { width: 100%; }
 
-  //   @each $m, $mult in map-merge((base: 1), medium-value('mults-x')) {
-  //     $margin-x: $mult * medium-value('margin-x');
-  //     .mx#{multify($m)} { @extend .mr#{multify($m)}, .ml#{multify($m)}; }
-  //     .mr#{multify($m)} { margin-right: $margin-x; }
-  //     .ml#{multify($m)} { margin-left: $margin-x; }
-  //   }
-  // }
+  span { position: relative; }
 
-// TODO: add layout classes
-// - posn // relative
-// - posn--f // fixed
-// - posn--f-...
-// - posn--a // absolute
-// - posn--a-...
-
-@mixin layout-setup-util {
   /////////////
   // iscroll //
   /////////////
@@ -50,7 +44,7 @@
   // clip //
   //////////
 
-  @include bem-base('clip', false);
+  @include bemify('clip', false);
   .clip, %clip { @include clip; }
   .clip--circle { border-radius: 50%; }
 
@@ -77,7 +71,7 @@
   //     object-fit
   // hold--contain
   //     object-fit
-  @include bem-base('hold', false);
+  @include bemify('hold', false);
   .hold, %hold { position: relative; }
 
   // .hold--abs, %hold--abs {
@@ -164,7 +158,7 @@
   }
 
   // this is for flex aspect divs
-  @include bem-base('flex', false) {
+  @include bemify('flex', false) {
     &:before {
       content: '';
       display: table; // non-inline display req'd for IE; block fails in FF
@@ -242,5 +236,37 @@
       transform: rotate(-90deg) translateY(-100%) translateX(50%);
     }
   }
+
+    /////////////
+    // margins //
+    /////////////
+
+    // @include media((for: margin-y mults-y)) {
+
+    //   @each $m, $mult in map-merge((base: 1), medium-value('mults-y')) {
+    //     $margin-y: $mult * medium-value('margin-y');
+    //     .sect#{multify($m)} { @extend .my#{multify($m)}; }
+    //     .my#{multify($m)} { @extend .mt#{multify($m)}, .mb#{multify($m)}; }
+    //     .mt#{multify($m)} { margin-top: $margin-y; }
+    //     .mb#{multify($m)} { margin-bottom: $margin-y; }
+    //   }
+    // }
+
+    // @include media((for: margin-x mults-x)) {
+
+    //   @each $m, $mult in map-merge((base: 1), medium-value('mults-x')) {
+    //     $margin-x: $mult * medium-value('margin-x');
+    //     .mx#{multify($m)} { @extend .mr#{multify($m)}, .ml#{multify($m)}; }
+    //     .mr#{multify($m)} { margin-right: $margin-x; }
+    //     .ml#{multify($m)} { margin-left: $margin-x; }
+    //   }
+    // }
+
+  // TODO: add layout classes
+  // - posn // relative
+  // - posn--f // fixed
+  // - posn--f-...
+  // - posn--a // absolute
+  // - posn--a-...
 
 }

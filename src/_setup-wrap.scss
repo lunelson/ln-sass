@@ -69,7 +69,7 @@
     $media-combo-strings: append($media-combo-strings, to-string($combo, '-'));
   }
 
-  @include bem-base('wrap');
+  @include bemify('wrap');
   .wrap { margin-right: auto; margin-left: auto; }
   .wrap--left { margin-left: 0; }
   .wrap--right { margin-right: 0; }
