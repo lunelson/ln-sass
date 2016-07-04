@@ -34,75 +34,77 @@
 
  */
 
-// DEPS
-
+// dependencies
 @import "node_modules/sassdash/index";
 
-// RESETS
+// config
+@import "src/config";
 
-@import 'src/util-reset-ln';
-@import 'src/util-reset-meyer';
-@import 'src/util-reset-norm3';
-@import 'src/util-reset-norm4';
-@import 'src/util-reset-opentype';
-// @import 'src/util-reset-tripoli-minimal';
-// @import 'src/util-reset-yui3';
+// resets
+// @import "src/util-reset-hard";
+@import "src/util-reset-ln";
+@import "src/util-reset-meyer";
+@import "src/util-reset-norm3";
+// @import "src/util-reset-norm4";
+// @import "src/util-reset-opentype";
+// @import "src/util-reset-tripoli-minimal";
+// @import "src/util-reset-yui3";
 
-// UTILITIES
+// utils-core
+@import "src/util-custom";
+@import "src/util-math";
+@import "src/util-unit";
 
-@import 'src/util-math';
-@import 'src/util-unit';
+// utils
+@import "src/util-animation";
+@import "src/util-calc";
+@import "src/util-color";
+@import "src/util-debug";
+@import "src/util-display";
+@import "src/util-function";
+@import "src/util-json";
+@import "src/util-list";
+@import "src/util-map";
+@import "src/util-maps";
+@import "src/util-misc";
+@import "src/util-position";
+@import "src/util-scrollbar";
+@import "src/util-selector";
+@import "src/util-string";
+@import "src/util-svg";
+@import "src/util-z-index";
 
-@import 'src/util-animation';
-@import 'src/util-calc';
-@import 'src/util-color';
-@import 'src/util-debug';
-@import 'src/util-display';
-@import 'src/util-function';
-@import 'src/util-json';
-@import 'src/util-list';
-@import 'src/util-map';
-@import 'src/util-maps';
-@import 'src/util-misc';
-@import 'src/util-position';
-@import 'src/util-scrollbar';
-@import 'src/util-selector';
-@import 'src/util-string';
-@import 'src/util-svg';
-@import 'src/util-z-index';
+// debug
+@import "src/mixin-debug";
 
-@import 'src/util-custom';
+// media
+@import "src/function-media";
+@import "src/helper-media";
+@import "src/mixin-media-old";
+@import "src/mixin-media";
+@import "src/setup-media-alt";
+@import "src/setup-media";
 
-// MEDIA
+//layout
+@import "src/function-layout";
+@import "src/mixin-grid";
+@import "src/mixin-layute";
+@import "src/mixin-unwrap";
+@import "src/setup-grid";
+@import "src/setup-layute";
+@import "src/setup-outer";
+@import "src/setup-unwrap";
+@import "src/setup-wrap";
 
-@import 'src/config-media';
-@import 'src/function-media';
-@import 'src/helper-media';
-@import 'src/mixin-media';
-@import 'src/mixin-media-v2';
-@import 'src/setup-media';
-@import 'src/setup-media-alt';
+// theme
+@import "src/setup-theme";
 
-// LAYOUT
+// typo
+@import "src/helper-typo";
+@import "src/mixin-typo";
+@import "src/setup-typo";
 
-@import 'src/config-layout';
-@import 'src/helper-layout';
-@import 'src/mixin-layout';
-@import 'src/setup-layout';
-@import 'src/setup-grid';
-@import 'src/setup-misc';
-@import 'src/setup-page';
-@import 'src/setup-wrap';
-
-// THEME
-
-// TYPO
-
-@import 'src/config-typo';
-@import 'src/helper-typo';
-@import 'src/mixin-typo';
-@import 'src/setup-typo';
-
+// globalz
 $done-base-setup: false !default;
 $done-grid-setup: false !default;
 $done-page-setup: false !default;
