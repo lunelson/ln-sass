@@ -12,7 +12,7 @@
 }
 
 // get last parents in & list(s)
-@function sel-lasts {
+@function last-parents {
   $out: ();
   @each $list in & {
     $last: nth($list, length($list));
@@ -24,7 +24,7 @@
 }
 
 // get initial parents in & list(s)
-@function sel-initials {
+@function initial-parents {
   $out: ();
   @each $list in & {
     $initial: slice($list, 1,  length($list) - 1);
@@ -35,10 +35,10 @@
   @return selector-parse($out);
 }
 
-@function sel-insert-parents($selectors, $combinator: '') {
+@function insert-parents($selectors, $combinator: '') {
   $out: ();
-  $lasts: sel-lasts();
-  $initials: sel-initials();
+  $lasts: last-parents();
+  $initials: initial-parents();
   $selectors: if(length($selectors)==0, '', $selectors);
   // $selectors: if(length($selectors)==0, $lasts, $selectors); // use self if no arg given
   @if length(nth($initials, 1)) > 0 {
@@ -59,18 +59,18 @@
   @return selector-parse($out);
 }
 
-@mixin sibling-to($sibs: '*') {
-  @at-root #{sel-insert-parents($sibs, '~')} {
+@mixin sibling-of($sibs: '*') {
+  @at-root #{insert-parents($sibs, '~')} {
     @content;
   }
 }
 @mixin adjacent-to($sibs: '*') {
-  @at-root #{sel-insert-parents($sibs, '+')} {
+  @at-root #{insert-parents($sibs, '+')} {
     @content;
   }
 }
 @mixin adjacent-self {
-  @at-root #{sel-insert-parents(sel-lasts(), '+')} {
+  @at-root #{insert-parents(last-parents(), '+')} {
     @content;
   }
 }
@@ -148,7 +148,7 @@
 // }
 
 // // make selector-string for immediate parent(s) as sibling to $siblings
-// @function sibling-to($siblings: (), $op: '~'){
+// @function sibling-of($siblings: (), $op: '~'){
 //   $initials: initial-parents();
 //   $lasts: last-parents();
 //   $siblings: if(length($siblings)==0, $lasts, $siblings); // use self if no arg given
@@ -179,7 +179,7 @@
 //   @return $out;
 // }
 
-// // revamped version of sibling-to
+// // revamped version of sibling-of
 // @function insert-sels($sels: (), $op: ''){
 //   $inits: initial-parents();
 //   $lasts: last-parents();
@@ -239,24 +239,24 @@
 // }
 
 
-// @mixin sibling-to($args...) {
-//   @at-root #{unquote(sibling-to($args...))} {
+// @mixin sibling-of($args...) {
+//   @at-root #{unquote(sibling-of($args...))} {
 //     @content;
 //   }
 // }
 // @mixin adjacent-to($siblings: ()) {
-//   @at-root #{unquote(sibling-to($siblings, '+'))} {
+//   @at-root #{unquote(sibling-of($siblings, '+'))} {
 //     @content;
 //   }
 // }
 
 // @mixin gen-sib($args...) {
-//   @at-root #{unquote(sibling-to($args...))} {
+//   @at-root #{unquote(sibling-of($args...))} {
 //     @content;
 //   }
 // }
 // @mixin adj-sib($siblings: ()) {
-//   @at-root #{unquote(sibling-to($siblings, '+'))} {
+//   @at-root #{unquote(sibling-of($siblings, '+'))} {
 //     @content;
 //   }
 // }
