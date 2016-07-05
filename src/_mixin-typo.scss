@@ -68,7 +68,7 @@
   // if in a stack
   @if $curr-stack-sel {
     font-size: unit-assert($size, em) * $size-adjust;
-    @at-root #{sel-insert-parents('','>')} {
+    @at-root #{insert-parents('','>')} {
       margin-top: typo-em-margin(0);
       margin-bottom: typo-em-margin(0);
       @include adjacent-to('*') { margin-top: typo-ex-margin(); }
@@ -79,17 +79,17 @@
   // if not in a stack
   @else {
     font-size: unit-assert($size, rem) * $size-adjust;
-    @at-root #{sel-insert-parents('.stack' '%stack')} {
+    @at-root #{insert-parents('.stack' '%stack')} {
       font-size: unit-assert($size, em) * $size-adjust;
     }
-    @at-root #{sel-insert-parents('.stack' '%stack', '>')} {
+    @at-root #{insert-parents('.stack' '%stack', '>')} {
       margin-top: typo-em-margin(0);
       margin-bottom: typo-em-margin(0);
     }
     @each $m, $mult in map-merge((base: 1), medium-value('mults-y') or medium-value('mults')) {
       $stack-sel: '.stack#{multify($m)}';
-      @at-root #{sel-insert-parents($stack-sel,'>')} {
-        @at-root #{sel-insert-parents('*', '+')} {
+      @at-root #{insert-parents($stack-sel,'>')} {
+        @at-root #{insert-parents('*', '+')} {
           margin-top: typo-ex-margin(if($m=='base',1,$m));
         }
         @content;
