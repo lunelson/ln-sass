@@ -5,39 +5,45 @@
 // | | \__ \ |_\__ \
 // |_|_|___/\__|___/
 
-// fault-tolerant version of nth
-// @function _nth($list, $n) {
-//   @if $list == () or $n < 1 or $n > length($list) { @return null; }
-//   @return nth($list, $n);
-// }
+// a more fault-tolerant nth() function. libsass throws more errors for nth
+@function _nth($list, $n) {
+  @if length($list) == 0 or $n < 1 or $n > length($list) { @return null; }
+  @return nth($list, $n);
+}
+
+// alias of above
+@function safe-nth($list, $n) { @return _nth($list, $n); }
+
+// first and last
+@function first($list) { @return nth($list, 1); }
+@function last($list) { @return nth($list, length($list)); }
+
+// normalize splats; must also be passed a splat
+@function normalize-splat($args...) {
+  $output: $args;
+  @if type-of(nth($args, 1)) == list and length($args) == 1 {
+    $output: (); @each $item in nth($args, 1) {
+      $output: append($output, $item, 'comma'); } }
+  @return $output;
+}
 
 // list versions of other built-ins
 @function list-max($list) { @return max($list...); }
 @function list-min($list) { @return min($list...); }
 
 // convert a list to space-separated values
-@function ssv($list) {
-  $output: ();
-  @each $item in $list {
-    $output: append($output, $item, 'space');
-  }
+@function force-ssv($list) {
+  $output: (); @each $item in $list {
+    $output: append($output, $item, 'space'); }
   @return $output;
-}
-
-// new version uses ZIP
-@function csv($list) {
-  @return zip($list);
 }
 
 // convert a list to comma-separated values
-@function csv-old($list) {
-  $output: ();
-  @each $item in $list {
-    $output: append($output, $item, 'comma');
-  }
+@function force-csv($list) {
+  $output: (); @each $item in $list {
+    $output: append($output, $item, 'comma'); }
   @return $output;
 }
-
 
 @function remove($list, $tests...) {
   $out:(); $sep: list-separator($list);
@@ -95,15 +101,6 @@
   @each $item in $items { @if index($list, $item) { @return true; } }
   @return false;
 }
-
-// a more fault-tolerant nth() function. libsass throws more errors for nth
-@function _nth($list, $n) {
-  @if length($list) == 0 or $n < 1 or $n > length($list) { @return null; }
-  @return nth($list, $n);
-}
-
-@function first($list) { @return nth($list, 1); }
-@function last($list) { @return nth($list, length($list)); }
 
 // TODO: make sure slice supports same logic/signature as native str-slice function
 @function slice($list, $start: 1, $end: length($list), $sep: list-separator($list)) {

@@ -1,19 +1,59 @@
-## ...NEXT
-
-- theme solution; combine with colors
+## misc
+- expand theme solution; combine with colors
 - reduce complexity of media values:
     - e.g. one set of mults; NO mults for line-height
     - but keep the line-height() function as multiple of the base, for now
-- revise typel mixin to invoke all named mult-y contexts
-    ??
-- change typo to
-    @mixin typo() / typo-stack()
-    @mixin typel()
-    @function typo-margin()
-- change base/media to
-    $media-base
-    $media
-    @function medium-normalize
-    @mixin media()
-    @mixin media-for()
-    @mixin media-each()
+
+## typo
+- create an init-typo mixin
+  produce .typo--${m} each named size context? (only for one line-height of course) ?
+
+## media
+- make $base contain defaults with !default; merge/copy this to $base-default.
+
+## NEXT
+- make sure that any mixins other than 'init-' ones do not do any magic media stuff
+- kill the following two ideas
+  - try automatically wrapping the @content rule in the stack() mixin, in a media-for() rule
+  - ... do the same for the grid and fgrid mixins???
+- rename typo-margin(); allow a null param, which inverts the trim
+
+```scss
+
+@include init-media;
+@include init-base;
+@include init-layout;
+
+@include media-for('typo') {
+ h1 { @include typo(/* .... */); }
+ h2 { @include typo(/* .... */); }
+ p {
+   @include typo(/* .... */) {
+     @include adjacent-self {
+       margin-top: typo-margin(null) // new API; inverts the trim
+     }
+     @include adjacent-to($headings) {
+       margin-top: typo-margin(0.5);
+     }
+   }
+ }
+}
+
+.some-module .content {
+  @include stack('lg') {
+   /* perhaps automatically include t-media here, for @content passed to stack */
+   h1 { @include typo(/* .... */); }
+   h2 { @include typo(/* .... */); }
+   p {
+     @include typo(/* .... */) {
+       @include adjacent-self {
+         margin-top: typo-margin('undo') // new API
+       }
+       @include adjacent-to($headings) {
+         margin-top: typo-margin(0.5);
+       }
+     }
+   }
+  }
+}
+```

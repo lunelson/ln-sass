@@ -42,25 +42,43 @@
 // media-for //
 ///////////////
 
-  @function media-for($props){
-    $keys: ();
+  // look up prop groups
+  @function property-group($group-key){
     $groups: (
-      font-size sizes size-mod,
-      line-height lines,
-      margin-y mults-y mults mult-y-mod mult-mod,
-      margin-x mults-x mults mult-x-mod mult-mod,
+      font-size: (sizes size-mod),
+      line-height: (lines),
+      margin-x: (mults-x mults mult-x-mod mult-mod),
+      margin-y: (mults-y mults mult-y-mod mult-mod),
+      outer: (outer-right outer-left),
+      outer-y: (outer-top outer-bottom),
+      stack: (margin-y),
+      grid: (margin-x),
+      typo: (line-height margin-y),
     );
-    @each $prop in $props {
-      @each $group in $groups {
-        @if index($group, $prop) {
-          $props: join($props, $group);
+    $group-keys: font-size line-height margin-x margin-y outer outer-y stack grid typo;
+    @if index($group-keys, $group-key) {
+      $group: map-get($groups, $group-key);
+      @each $item in $group {
+        @if index($group-keys, $item) {
+          $group: join($group, map-get($groups, $item));
         }
       }
+      @return $group;
     }
+    @return $group-key;
+  }
+
+  // find all $keys in $media-orig which have specified $props
+  @function media-for($group-keys...) {
+    $group-keys: normalize-splat($group-keys...);
+    $props: $group-keys; $media-keys: ();
+    @each $key in $group-keys {
+      $props: join($props, property-group($key)); }
+    // function is good up to here; compare against media-orig...
     @each $m, $medium in $media-orig {
       @if contains-any(map-keys($medium), $props) {
-        $keys: append($keys, $m);
+        $media-keys: append($media-keys, $m);
       }
     }
-    @return $keys;
+    @return $media-keys;
   }
