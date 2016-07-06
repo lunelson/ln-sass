@@ -215,7 +215,7 @@
     // margins //
     /////////////
 
-    // @include media((for: margin-y mults-y)) {
+    // @include media-for(margin-y mults-y) {
 
     //   @each $m, $mult in map-merge((base: 1), medium-value('mults-y')) {
     //     $margin-y: $mult * medium-value('margin-y');
@@ -226,7 +226,7 @@
     //   }
     // }
 
-    // @include media((for: margin-x mults-x)) {
+    // @include media-for(margin-x mults-x) {
 
     //   @each $m, $mult in map-merge((base: 1), medium-value('mults-x')) {
     //     $margin-x: $mult * medium-value('margin-x');

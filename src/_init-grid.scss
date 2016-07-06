@@ -49,7 +49,7 @@
   // @include bemify('fcell');
   // @include bemify('cell');
 
-  @include media((for: margin-x mults-x mults)) {
+  @include media-for(margin-x mults-x mults) {
     @each $m, $mult in map-merge((base: 1), medium-value('mults-x') or medium-value('mults')) {
       $margin: $mult * medium-value('margin-x');
 

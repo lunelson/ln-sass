@@ -6,7 +6,7 @@
 
   .outer, #{baseify('outer')} { @include clip; }
 
-  @include media((for: outer-right outer-left)) {
+  @include media-for(outer-right outer-left) {
 
     $outer-right: medium-value('outer-right');
     $outer-left: medium-value('outer-left');
@@ -15,7 +15,7 @@
     .outer, .outer--left { padding-left: $outer-left; }
   }
 
-  @include media((for: outer-top outer-bottom)) {
+  @include media-for(outer-top outer-bottom) {
 
     $outer-top: medium-value('outer-top');
     $outer-bottom: medium-value('outer-bottom');
