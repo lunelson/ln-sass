@@ -1,4 +1,13 @@
-// B-M-L
+///////////
+// media //
+///////////
+
+@import "init-media-alt";
+@import "init-media-std";
+@mixin init-media($alt: true, $out: true) {
+  @if $alt { @include init-media-alt($out); }
+  @else { @include init-media-std($out); }
+}
 
 ///////////
 // base //
@@ -10,18 +19,7 @@
 @mixin init-base {
   @include init-fonts;
   @include init-elements;
-  @include init-theme;
-}
-
-///////////
-// media //
-///////////
-
-@import "init-media-alt";
-@import "init-media-std";
-@mixin init-media($alt: true, $out: true) {
-  @if $alt { @include init-media-alt($out); }
-  @else { @include init-media-std($out); }
+  // @include init-theme;
 }
 
 ////////////
