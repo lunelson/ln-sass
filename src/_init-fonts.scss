@@ -1,4 +1,4 @@
-@mixin setup-typo {
+@mixin init-fonts {
 
   ///////////
   // fonts //
@@ -19,26 +19,6 @@
         $spacing-end: get($fonts, $f or 'base', 'spacing-end');
         letter-spacing: calc(#{$spacing-max}px - #{$spacing-max/$spacing-end}em);
       }
-    }
-  }
-
-  ///////////
-  // stack //
-  ///////////
-
-  @include bemify('stack');
-
-  .stack {
-    padding-top: 0.1px;
-    padding-bottom: 0.1px;
-    & > * { margin-top: 0; margin-bottom: 0; }
-  }
-
-  @include media((for: margin-y mults-y mults)) {
-    @each $m, $mult in map-merge((base: 1), (medium-value('mults-y') or medium-value('mults'))) {
-      $margin: $mult * medium-value('margin-y');
-
-      .stack#{multify($m)} { & > * + * { margin-top: $margin; } }
     }
   }
 }

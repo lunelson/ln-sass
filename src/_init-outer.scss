@@ -2,7 +2,7 @@
 // outer //
 ///////////
 
-@mixin setup-outer {
+@mixin init-outer {
 
   .outer--y { @extend .outer--top, .outer--bottom, %clip; }
   .outer { @extend .outer--right, .outer--left, %clip; }

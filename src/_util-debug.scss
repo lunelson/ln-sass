@@ -2,7 +2,7 @@
 // DEBUG //
 ///////////
 
-@mixin setup-debug($visible: false, $color: rgba(0,200,200,0.08)) {
+@mixin init-debug($visible: false, $color: rgba(0,200,200,0.08)) {
 
   // heights
   @for $n from 1 to 10 {

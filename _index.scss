@@ -1,111 +1,25 @@
-/*
-   _
-  | |
-  | |_ __ ______ ___  __ _ ___ ___
-  | | '_ \______/ __|/ _` / __/ __|
-  | | | | |     \__ \ (_| \__ \__ \
-  |_|_| |_|     |___/\__,_|___/___/
+//  _
+// | |
+// | |_ __ ______ ___  __ _ ___ ___
+// | | '_ \______/ __|/ _` / __/ __|
+// | | | | |     \__ \ (_| \__ \__ \
+// |_|_| |_|     |___/\__,_|___/___/
 
-  API
-
-  setup-media ✅
-  setup-page (outer--, wrap--, unwrap--)
-  setup-grid (grid--, fgrid--, cell--, fcell--)
-  setup-typo (font--, stack--) ✅
-  setup-util (...)
-
-  setup-page (page--, wrap--, unwrap--) // ? setup-outer
-  setup-other // helpers, general, base
-
-  medium // media ???
-  media-for
-  media-each
-  media-range
-
-  page
-  wrap
-  unwrap
-  unwrap-align // unwrap??
-  grid
-  fgrid
-  stack ✅
-  typel ✅
-
-
- */
-
-// dependencies
+// deps
 @import "node_modules/sassdash/index";
 
-// config
+// src
+@import "src/util";
+@import "src/reset";
 @import "src/config";
+@import "src/helper";
+@import "src/function";
+@import "src/mixin";
+@import "src/init";
+@import "src/debug";
 
-// resets
-// @import "src/util-reset-hard";
-@import "src/util-reset-ln";
-@import "src/util-reset-meyer";
-@import "src/util-reset-norm3";
-// @import "src/util-reset-norm4";
-// @import "src/util-reset-opentype";
-// @import "src/util-reset-tripoli-minimal";
-// @import "src/util-reset-yui3";
-
-// utils-core
-@import "src/util-custom";
-@import "src/util-math";
-@import "src/util-unit";
-
-// utils
-@import "src/util-animation";
-@import "src/util-calc";
-@import "src/util-color";
-@import "src/util-debug";
-@import "src/util-display";
-@import "src/util-function";
-@import "src/util-json";
-@import "src/util-list";
-@import "src/util-map";
-@import "src/util-maps";
-@import "src/util-misc";
-@import "src/util-position";
-@import "src/util-scrollbar";
-@import "src/util-selector";
-@import "src/util-string";
-@import "src/util-svg";
-@import "src/util-z-index";
-
-// debug
-@import "src/mixin-debug";
-
-// media
-@import "src/function-media";
-@import "src/helper-media";
-@import "src/mixin-media-old";
-@import "src/mixin-media";
-@import "src/setup-media-alt";
-@import "src/setup-media";
-
-//layout
-@import "src/function-layout";
-@import "src/mixin-grid";
-@import "src/mixin-layute";
-@import "src/mixin-unwrap";
-@import "src/setup-grid";
-@import "src/setup-layute";
-@import "src/setup-outer";
-@import "src/setup-unwrap";
-@import "src/setup-wrap";
-
-// theme
-@import "src/setup-theme";
-
-// typo
-@import "src/helper-typo";
-@import "src/mixin-typo";
-@import "src/setup-typo";
-
-// globalz
-$done-base-setup: false !default;
-$done-grid-setup: false !default;
-$done-page-setup: false !default;
-$done-typo-setup: false !default;
+// vars
+$done-base-init: false !default;
+$done-grid-init: false !default;
+$done-page-init: false !default;
+$done-typo-init: false !default;

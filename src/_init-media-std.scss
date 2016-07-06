@@ -1,4 +1,4 @@
-@mixin setup-media($output: true) {
+@mixin init-media-std($out: true) {
 
   $medium-default: (
     // bases
@@ -29,7 +29,7 @@
   // merge spec'd $base against defaults, and normalize
   $base: normalize-medium(map-merge($medium-default, $base)) !global;
 
-  @if $output {
+  @if $out {
     // base styles
     html { font-size: unit-assert(map-get($base, 'html-scale'), em); }
     body { line-height: map-get($base, 'line-height'); }
@@ -76,14 +76,14 @@
     // merge reference back to master
     $media: map-merge($media, ($m: $reference)) !global;
 
-    // styles, if they were are in $media-orig and if $output is true
+    // styles, if they were are in $media-orig and if $out is true
     @media (min-width: #{$breakpoint}) {
-      @if $output and map-has-key($medium, 'font-size') { html { font-size: unit-assert(map-get($reference, 'html-scale'), em); } }
-      @if $output and map-has-key($medium, 'line-height') { body { line-height: map-get($reference, 'line-height'); } }
+      @if $out and map-has-key($medium, 'font-size') { html { font-size: unit-assert(map-get($reference, 'html-scale'), em); } }
+      @if $out and map-has-key($medium, 'line-height') { body { line-height: map-get($reference, 'line-height'); } }
     }
   }
 
-  @if $output {
+  @if $out {
     // output global sass as JSON for js parsing
     $globals: if(variable-exists('globals'), $globals, ());
     @include json-content(map-merge($globals, (media: $media)));
