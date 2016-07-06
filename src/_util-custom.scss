@@ -16,3 +16,24 @@
     @content;
   } }
 }
+
+@function aspect-classes($str) {
+  $aspects: (
+    1: 1 2,
+    2: 1 2 3 4,
+    3: 2 3 4 5,
+    4: 2 3 4 5 6,
+    5: 3 4 5 8,
+    16: 9
+  );
+  $classes: ();
+  @each $n, $d-list in $aspects {
+    @each $d in $d-list {
+      $key: $n/$d;
+      $val: map-get($classes, $key) or ();
+      $val: append($val, '.#{$str}--#{$n}-#{$d}', 'comma');
+      $classes: map-merge($classes, ($key: $val));
+    }
+  }
+  @return $classes
+}
