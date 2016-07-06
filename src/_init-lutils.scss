@@ -19,8 +19,7 @@
   // clip //
   //////////
 
-  @include bemify('clip', false);
-  .clip, %clip { @include clip; }
+  .clip, #{baseify('clip')} { @include clip; }
   .clip--circle { border-radius: 50%; }
 
   //////////
@@ -46,8 +45,8 @@
   //     object-fit
   // hold--contain
   //     object-fit
-  @include bemify('hold', false);
-  .hold, %hold { position: relative; }
+
+  .hold, #{baseify('hold')} { position: relative; }
 
   // .hold--abs, %hold--abs {
   //   @extend %hold;
@@ -124,16 +123,16 @@
   /// NB flex-basis is buggy cross browser; better use 'auto' and set 'width' instead
   /// NB flex-shrink is buggy cross browser; better avoid and keep at 0
 
-  .flex, %flex {
+  .flex {
     @include flex();
   }
 
-  .flex-y, %flex-y {
+  .flex-y {
     @include flex-y();
   }
 
   // this is for flex aspect divs
-  @include bemify('flex', false) {
+  #{baseify('flex')} {
     &:before {
       content: '';
       display: table; // non-inline display req'd for IE; block fails in FF

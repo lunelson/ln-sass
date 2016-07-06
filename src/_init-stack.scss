@@ -4,9 +4,7 @@
   // stack //
   ///////////
 
-  @include bemify('stack');
-
-  .stack {
+  .stack, #{baseify('stack')} {
     padding-top: 0.1px;
     padding-bottom: 0.1px;
     & > * { margin-top: 0; margin-bottom: 0; }

@@ -4,7 +4,7 @@
   // grid //
   //////////
 
-  .grid {
+  .grid, #{baseify('grid')} {
     display: block;
     position: relative; // for 'out' positioned cells which are absolute
     font-size: 0rem;
@@ -18,7 +18,7 @@
     }
   }
 
-  .fgrid, .flex-grid {
+  .fgrid, #{baseify('fgrid')} {
     display: flex;
     & > * {
       flex: 1 1 auto;
@@ -44,8 +44,8 @@
   //   vertical-align: top;
   // }
 
-  @include bemify('fgrid');
-  @include bemify('grid');
+  // @include bemify('fgrid');
+  // @include bemify('grid');
   // @include bemify('fcell');
   // @include bemify('cell');
 

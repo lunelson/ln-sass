@@ -4,24 +4,23 @@
 
 @mixin init-outer {
 
-  .outer--y { @extend .outer--top, .outer--bottom, %clip; }
-  .outer { @extend .outer--right, .outer--left, %clip; }
-
-  @include media((for: outer-top outer-bottom)) {
-
-    $outer-top: medium-value('outer-top');
-    $outer-bottom: medium-value('outer-bottom');
-
-    .outer--top { padding-top: $outer-top; }
-    .outer--bottom { padding-bottom: $outer-bottom; }
-  }
+  .outer, #{baseify('outer')} { @include clip; }
 
   @include media((for: outer-right outer-left)) {
 
     $outer-right: medium-value('outer-right');
     $outer-left: medium-value('outer-left');
 
-    .outer--right { padding-right: $outer-right; }
-    .outer--left { padding-left: $outer-left; }
+    .outer, .outer--right { padding-right: $outer-right; }
+    .outer, .outer--left { padding-left: $outer-left; }
+  }
+
+  @include media((for: outer-top outer-bottom)) {
+
+    $outer-top: medium-value('outer-top');
+    $outer-bottom: medium-value('outer-bottom');
+
+    .outer-y, .outer--top { padding-top: $outer-top; }
+    .outer-y, .outer--bottom { padding-bottom: $outer-bottom; }
   }
 }
