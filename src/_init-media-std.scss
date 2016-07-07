@@ -69,9 +69,11 @@
   }
 
   @if $out {
-    // output global sass as JSON for js parsing
     $globals: if(variable-exists('globals'), $globals, ());
     @include json-content(map-merge($globals, (media: $media)));
+    // @include media-each(map-keys($media), false) {
+    //   @if medium-value-orig('font-size') { html { font-size: unit-assert(map-get($reference, 'html-scale'), em); } }
+    //   @if medium-value-orig('line-height') { body { line-height: map-get($reference, 'line-height'); } }
+    // }
   }
-
 }

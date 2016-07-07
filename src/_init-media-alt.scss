@@ -80,7 +80,12 @@
     }
   }
 
-  // output global sass as json for js parsing
-  $globals: if(variable-exists('globals'), $globals, ());
-  @include json-content(map-merge($globals, (media: $media)));
+  @if $out {
+    $globals: if(variable-exists('globals'), $globals, ());
+    @include json-content(map-merge($globals, (media: $media)));
+    // @include media-each {
+    //   @if medium-value-orig('font-size') { html { font-size: unit-assert(map-get($reference, 'html-scale'), em); } }
+    //   @if medium-value-orig('line-height') { body { line-height: map-get($reference, 'line-height'); } }
+    // }
+  }
 }
