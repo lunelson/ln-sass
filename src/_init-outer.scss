@@ -1,0 +1,26 @@
+///////////
+// outer //
+///////////
+
+@mixin init-outer {
+
+  .outer, #{baseify('outer')} { @include clip; }
+
+  @include media-for('outer') {
+
+    $outer-right: medium-value('outer-right');
+    $outer-left: medium-value('outer-left');
+
+    .outer, .outer--right { padding-right: $outer-right; }
+    .outer, .outer--left { padding-left: $outer-left; }
+  }
+
+  @include media-for('outer-y') {
+
+    $outer-top: medium-value('outer-top');
+    $outer-bottom: medium-value('outer-bottom');
+
+    .outer-y, .outer--top { padding-top: $outer-top; }
+    .outer-y, .outer--bottom { padding-bottom: $outer-bottom; }
+  }
+}

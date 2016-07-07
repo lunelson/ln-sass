@@ -1,0 +1,196 @@
+// ++++++++ AT-ROOT STUFF, only supported in 3.3+
+// basic
+@mixin suffix($string) {
+	@at-root #{&}#{$string} {
+		@content;
+	}
+}
+// BEM style -- elements get appended with "__" and the $string
+@mixin sub_element($string) {
+	@at-root #{&}__#{$string} {
+		@content;
+	}
+}
+
+// BEM style -- modifiers get appended with "--" and the $string
+@mixin sub_module($string) {
+	@at-root #{&}--#{$string} {
+		@content;
+	}
+}
+
+// +++++++++++ UNIT STRIPs and ASSERTs
+
+// deprecated pre-3.3 versions
+// $single-units: 'rem' 1rem, 'em' 1em, 'px' 1px, '%' 1%;
+// @function single($unit) { @each $pair in $single-units { $index: index($pair, $unit); @if $index { @return nth($pair, 3 - $index); } } @return 1; }
+// @function strip($value) { @return $value / single(unit($value)); }
+// @function assert($value, $unit) { @return strip($value) * single($unit); }
+
+/* +++ UNITS
+
+'em'	font size of the element
+'ex'	x-height of the element's font
+'ch'	width of the "0" (ZERO, U+0030) glyph in the element's font
+'rem'	font size of the root element
+'vw'	1% of viewport's width
+'vh'	1% viewport's height
+'vmin'	1% of viewport's smaller dimension
+'vmax'	1% of viewport's larger dimension
+
+'cm'	centimeters
+'mm'	millimeters
+'in'	inches; 1in is equal to 2.54cm
+'px'	pixels; 1px is equal to 1/96th of 1in
+'pt'	points; 1pt is equal to 1/72nd of 1in
+'pc'	picas; 1pc is equal to 12pt
+
+'deg' 	Degrees. There are 360 degrees in a full circle.
+'grad' 	Gradians, also known as "gons" or "grades". There are 400 gradians in a full circle.
+'rad' 	Radians. There are 2π radians in a full circle.
+'turn'	Turns. There is 1 turn in a full circle.
+
+'s'		Seconds.
+'ms'	Milliseconds. There are 1000 milliseconds in a second.
+
+'dpi'	dots per inch
+'dpcm'	dots per centimeter
+'dppx'	dots per 'px' unit
+
+ */
+// 3.3+ versions
+$css-units: (
+	'em': 1em,
+	'ex': 1ex,
+	'ch': 1ch,
+	'rem': 1rem,
+	'%': 1%,
+	'vw': 1vw,
+	'vh': 1vh,
+	'vmin': 1vmin,
+	'vmax': 1vmax,
+	'cm': 1cm,
+	'mm': 1mm,
+	'in': 1in,
+	'px': 1px,
+	'pt': 1pt,
+	'pc': 1pc,
+	'deg': 1deg,
+	'grad': 1grad,
+	'rad': 1rad,
+	'turn': 1turn,
+	's': 1s,
+	'ms': 1ms,
+	'dpi': 1dpi,
+	'dpcm': 1dpcm,
+	'dppx': 1dppx
+);
+
+@function one-unit($unit) { $one-unit: map-get($css-units, $unit); @return if($one-unit, $one-unit, 1); }
+@function strip($value) { @return $value / one-unit(unit($value)); }
+@function assert($value, $unit) { @return strip($value) * one-unit($unit); }
+
+
+// ++++++++++++ MODERNIZR CHECKS
+
+// main version, accepts multiple checks of any kind e.g. incl. "no-"
+@mixin modernizr($tests...) {
+	$selector: 'html';
+	@each $test in $tests { $selector: "#{$selector}.#{$test}"; }
+	#{$selector} & { @content; } }
+// "yep" version, identical to above; meant for affirmative checks
+@mixin yep($tests...) {
+	$selector: 'html';
+	@each $test in $tests { $selector: "#{$selector}.#{$test}"; }
+	#{$selector} & { @content; } }
+// "nope" version: negates whatever you give it
+@mixin nope($tests...) {
+	$selector: 'html';
+	@each $test in $tests { $selector: "#{$selector}.no-#{$test}"; }
+	#{$selector} & { @content; } }
+
+
+// +++++++++++++ OLD FUNCTIONS BELOW THIS LINE:
+
+// PX to REM and vice versa; deprecated
+
+@function px2rem($p) {
+	@if length($p) > 1 {
+		$r: ();
+		@each $px in $p { $r: append($r, assert($px / 16, rem)); }
+		@return $r;
+	} @else {
+		@return assert($p / 16, rem);
+	}
+}
+@function rem2px($r) {
+	@if length($r) > 1 {
+		$p: ();
+		@each $remain in $r { $p: append($p, assert($r * 16, px)); }
+		@return $p;
+	} @else {
+		@return assert($r * 16, px);
+	}
+}
+
+@function px-to-rem($p) { @return px2rem($p); }
+@function rem-to-px($r) { @return rem2px($r); }
+
+@function rem2em($r) {
+	@return assert($r / $base-font-size, em);
+}
+@function em2rem($e) {
+	@return assert($e * $base-font-size, rem);
+}
+
+// NEW versions of rem() and em(), assuming we always use the default 16x base
+@function rem($p) {
+	@if not $p { @return false; }
+	@else if length($p) > 1 {
+		$r: ();
+		@each $px in $p {
+			@if unit($px) == 'rem' { $r: append($r, $px); }
+			@else { $r: append($r, assert($px / 16, rem)); }
+		}
+		@return $r;
+	} @else {
+		@if unit($p) == 'rem' { @return $p; }
+		@else { @return assert($p / 16, rem); }
+	}
+}
+
+@function em($p) {
+	@if length($p) > 1 {
+		$r: ();
+		@each $px in $p { $r: append($r, assert($px / 16, em)); }
+		@return $r;
+	} @else {
+		@return assert($p / 16, em);
+	}
+}
+
+@mixin rem($prop, $rems...) {
+	@if type-of($prop) == "list" and nth($prop, 1) == position {
+		position: #{nth($prop, 2)};
+		@each $rem in $rems {
+			#{nth($rem, 1)}: #{assert_unit(nth($rem, 2),rem)};
+			*#{nth($rem, 1)}: #{assert_unit(nth($rem, 2) * $base-font-size,px)};
+		}
+	}
+	@else {
+		$rm: ();
+		$px: ();
+		@each $rem in $rems {
+			@if type-of($rem) == "string" {
+				$rm: append($rm, $rem);
+				$px: append($px, $rem);
+			}
+			@else {
+				$rm: append($rm, $rem * 1rem);
+				$px: append($px, $rem * $base-font-size);
+			}
+		}
+		#{$prop}: $rm;
+		*#{$prop}: $px;
+	}
+}

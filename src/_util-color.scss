@@ -1,0 +1,117 @@
+///////////////
+// UTILITIES //
+///////////////
+
+// blacken/shade, whiten/tint
+@function shade($color, $percent){ @return mix(black, $color, $percent); }
+@function tint($color, $percent){ @return mix(white, $color, $percent); }
+
+@function blacken($args...) { @return shade($args...); }
+@function whiten($args...) { @return tint($args...); }
+
+// new tint
+@function tint($c, $p) { @return mix(if($p<0,black,white), $c, abs($p)); }
+
+// gray
+@function gray($p) { $g: $p/100*255; @return rgb($g, $g, $g); }
+@function grey($args...) { @return gray($args...); }
+
+// srgb gamma correction, per spec: https://en.wikipedia.org/wiki/srgb
+@function re-gamma($n) { @if $n <= 0.0031308 { @return $n * 12.92; } @else { @return 1.055 * _pow($n, 1/2.4) - 0.055; } }
+@function de-gamma($n) { @if $n <= 0.04045 { @return $n / 12.92; } @else { @return _pow((($n + 0.055)/1.055), 2.4); } }
+// @function re-gamma($n) { @if $n <= 0.00304 { @return $n * 12.92; } @else { @return 1.055 * _pow($n, 1/2.4) - 0.055; } } // alternative
+// @function de-gamma($n) { @if $n <= 0.03928 { @return $n / 12.92; } @else { @return _pow((($n + 0.055)/1.055), 2.4); } } // alternative
+
+// srgb bt-709 luma
+@function luma($c) {
+  $rlin: de-gamma(red($c)/255);
+  $glin: de-gamma(green($c)/255);
+  $blin: de-gamma(blue($c)/255);
+  @return re-gamma(0.2126 * $rlin + 0.7152 * $glin + 0.0722 * $blin) * 100;
+}
+
+// hsy: hsl per luma
+@function hsy($h, $s, $y) {
+  @if $s == 0 { @return gray($y); }
+  @if $y == 0 { @return rgb(0, 0,0); }
+  @else if $y == 100 { @return rgb(255, 255, 255); }
+  @else { $min-l: 0; $max-l: 100; $mid-l: 50;
+    @while ($max-l - $min-l) > 0.01 {
+      $mid-y: luma(hsl($h, $s, $mid-l));
+      @if $mid-y > $y { $max-l: $mid-l; } @else { $min-l: $mid-l; }
+      $mid-l: ($min-l + $max-l) / 2;
+    } @return hsl($h, $s, $mid-l);
+  }
+}
+
+// hsya: hsla per luma
+@function hsya($h, $s, $y, $a: 1) {
+  @return set-alpha(hsy($h, $s, $y), $a);
+}
+
+@function weight($n1, $n2, $w) {
+  @return ($n2 - $n1) * $w + $n1;
+}
+
+@function hsy-mix($c1, $c2, $w) {
+  // input adjustments
+  $h1: hue($c1); $h2: hue($c2);
+  @if $h1 - $h2 > 180deg { $h2: $h2 + 360; }
+  @if $h2 - $h1 > 180deg { $h1: $h1 + 360; }
+  $s1: saturation($c1); $s2: saturation($c2);
+  @if $s1 == 0 { $h1: $h2; }
+  @if $s2 == 0 { $h2: $h1; }
+  // weight calculations
+  $h: weight($h1, $h2, $w);
+  $s: weight($s1, $s2, $w);
+  $y: re-gamma(weight(de-gamma(luma($c1)/100), de-gamma(luma($c2)/100), $w)) * 100;
+  $a: weight(alpha($c1), alpha($c2), $w);
+  // return
+  @return hsya($h, $s, $y, $a);
+}
+// alias (original function implicitly handles alpha)
+@function hsya-mix($args...) { @return hsy-mix($args...); }
+
+
+// contrast color
+@function contrast-color($color, $dark: black, $light: white) {
+  @if $color == null { @return null; }
+  @else {
+    $color-luma: luma($color);
+    $light-luma: luma($light);
+    $dark-luma: luma($dark);
+    @return if($color-luma > ($light-luma + $dark-luma)/2, $light, $dark);
+  }
+}
+
+// direct component setting
+@function set-hue($c, $h) {
+  $s: saturation($c);
+  $l: lightness($c);
+  $a: alpha($c);
+  @return hsla($h, $s, $l, $a);
+}
+@function set-saturation($c, $s) {
+  $h: hue($c);
+  $l: lightness($c);
+  $a: alpha($c);
+  @return hsla($h, $s, $l, $a);
+}
+@function set-lightness($c, $l) {
+  $h: hue($c);
+  $s: saturation($c);
+  $a: alpha($c);
+  @return hsla($h, $s, $l, $a);
+}
+@function set-alpha($c, $a) {
+  $h: hue($c);
+  $s: saturation($c);
+  $l: lightness($c);
+  @return hsla($h, $s, $l, $a);
+}
+@function set-luma($c, $y) {
+  $h: hue($c);
+  $s: saturation($c);
+  $a: alpha($c);
+  @return set-alpha(hsy($h, $s, $y), $a);
+}

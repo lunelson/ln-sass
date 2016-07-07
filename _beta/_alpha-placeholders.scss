@@ -1,0 +1,15 @@
+%clearfix, %cf { @include clearfix; }
+// +++ experimental below this point
+
+// // DISPLAY; requires compass
+// %display {
+// 	@each $value in inline, block, none { &.#{$value} { display: $value; } }
+// 	&.inline-block { @include inline-block();}
+// }
+
+// // BOX-SIZING; automatically includes background clip
+// %background-clip {
+// 	@each $value in border-box, padding-box, content-box {
+// 		&.#{$value} { @include background-clip($value); }
+// 	}
+// }

@@ -1,0 +1,35 @@
+{
+  "name": "ln-sass",
+  "version": "0.0.6",
+  "description": "My personal sass sort-of-framework and utilities",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "private": true,
+  "scripts": {
+    "start": "gulp",
+    "test": "gulp test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lunelson/ln-sass.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/lunelson/ln-sass/issues"
+  },
+  "homepage": "https://github.com/lunelson/ln-sass#readme",
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-mocha": "^2.2.0",
+    "gulp-notify": "^2.2.0",
+    "gulp-plumber": "^1.1.0",
+    "sass-true": "~2.0.2"
+  },
+  "dependencies": {
+    "sassdash": "^0.8.2"
+  }
+}

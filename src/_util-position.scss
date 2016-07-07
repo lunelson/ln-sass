@@ -1,0 +1,144 @@
+/////////////////
+// positioning //
+/////////////////
+
+@mixin position($pos, $args...) {
+  position: $pos;
+  @each $arg in $args { #{nth($arg, 1)}: nth($arg, 2); }
+}
+@mixin absolute($args...) { @include position(absolute, $args...); }
+@mixin fixed($args...) { @include position(fixed, $args...); }
+@mixin relative($args...) { @include position(relative, $args...); }
+
+@mixin clearfix {
+  &:after {
+    content:"";
+    display:table;
+    clear:both;
+  }
+}
+@mixin clearfix-legacy(){
+  & { *zoom: 1; }
+  &:before, &:after { content: ""; display: table; }
+  &:after { clear: both; }
+}
+
+////////////////////////////////////
+// abs brute force position stuff //
+////////////////////////////////////
+
+@mixin abs-align($args...) {
+  $args: if(type-of(nth($args, 1))=='list', nth($args, 1), $args);
+  $x: if(index($args,  'right'), 100%, if(index($args, 'center'), 50%, 0%));
+  $y: if(index($args, 'bottom'), 100%, if(index($args, 'middle'), 50%, 0%));
+  left: $x; top: $y;
+  transform: translate(-$x, -$y);
+}
+
+@mixin turn($dir: cw, $align: center) {
+  white-space: nowrap;
+  position: absolute;
+  top: 50%;
+  @if $dir == "ccw" {
+    transform-origin: right top;
+    @if $align == 'right' {
+      right: 0;
+      transform: rotate(-90deg) translateY(-100%) translateX(50%);
+    } @else if $align == 'left' {
+      right: 100%;
+      transform: rotate(-90deg) translateX(50%);
+    } @else {
+      right: 50%;
+      transform: rotate(-90deg) translateY(-50%) translateX(50%);
+    }
+  }
+  @else {
+    transform-origin: left top;
+    @if $align == 'right' {
+      left: 100%;
+      transform: rotate(90deg) translateX(-50%);
+    } @else if $align == 'left' {
+      left: 0;
+      transform: rotate(90deg) translateY(-100%) translateX(-50%);
+    } @else {
+      left: 50%;
+      transform: rotate(90deg) translateY(-50%) translateX(-50%);
+    }
+  }
+}
+
+/////////////////
+// item-layout //
+/////////////////
+
+@mixin item-layout($selectors, $type, $options...) {
+
+  // contain and cover sizing
+  @if index(contain cover, $type) {
+    position: relative;
+    @if $type == 'cover' { overflow: hidden; }
+    #{children($selectors)} {
+      position: absolute;
+      top: 50%; left: 50%;
+      width: auto; height: auto;
+      transform: translate(-50%, -50%);
+      @if $type == 'contain' {
+        min-width: none; max-width: 100%;
+        min-height: none; max-height: 100%;
+      }
+      @if $type == 'cover' {
+        min-width: 100%; max-width: none;
+        min-height: 100%; max-height: none;
+      }
+    }
+  }
+
+  // table
+  @if index(table table-cell table-row cell row, $type) {
+    width: 100%; // force auto size of children
+    display: table;
+    table-layout: fixed;
+    border-collapse: collapse;
+    #{children($selectors)} {
+      @if index(table-row row, $type) {
+        display: table-row;
+        height: auto; // base setting
+        @if index($options, left) { text-align: left; }
+        @else if index($options, right) { text-align: right;}
+        @else { text-align: center; }
+      }
+      @else {
+        display: table-cell;
+        width: auto; // base setting
+        @if index($options, bottom) { vertical-align: bottom; }
+        @else if index($options, top) { vertical-align: top;}
+        @else { vertical-align: middle; }
+      }
+      overflow: hidden;
+      @content;
+    }
+  }
+
+  // inline-block
+  @else if index(inline-block iblock ib, $type) {
+    font-size: 0rem; // alternate: 0.5px for Opera?
+    &::before, &::after, #{children($selectors)} {
+      display: inline-block;
+      @if index($options, bottom) { vertical-align: bottom; }
+      @else if index($options, middle) { vertical-align: middle;}
+      @else { vertical-align: top; }
+    }
+    @if index($options, justify) {
+      text-align: justify;
+      text-justify: distribute-all-lines; // for IE
+      &::after { content: ''; width: 100%; }
+    }
+    @else {
+      @if index($options, right) { text-align: right;}
+      @else if index($options, center) or index($options, centre) { text-align: center; }
+      @else { text-align: left; }
+      &::before { content: ''; height: 100%; }
+    }
+    #{children($selectors)} { font-size: 1rem; max-width: 100%; @content; }
+  }
+}

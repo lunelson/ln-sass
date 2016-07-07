@@ -1,0 +1,59 @@
+// ++++ QUOTIENT, to force division
+
+@function quotient($a, $b) {
+    @return $a * 1 / $b * 1;
+}
+@function q($a, $b) { @return quotient($a, $b); }
+
+// ++++ SUM and AVERAGE; simple and compound (also compound LENGTH)
+
+// simple; handles only comma-separated args
+@function sum($args...) {
+	$sum: 0;
+	@each $arg in $args {
+		$sum: $sum + $arg;
+	}
+	@return $sum; }
+@function average($args...) {
+	@return sum($args...) / length($args); }
+// flattens nested lists of args
+@function compound-sum($args...) {
+	$sum: 0;
+	@each $arg in $args {
+		@if type-of($arg) == list {
+			$sum: $sum + compound-sum($arg...);
+		} @else {
+			$sum: $sum + $arg;
+		}
+	}
+	@return $sum; }
+@function compound-length($args...) { // flattens nested lists of args
+	$len: 0;
+	@each $arg in $args {
+		@if type-of($arg) == list {
+			$len: $len + compound-length($arg...);
+		} @else {
+			$len: $len + 1;
+		}
+	}
+	@return $len; }
+
+@function compound-average($args...) { // flattens nested lists of args
+	@return compound-sum($args...)/compound-length($args...); }
+
+// +++++++++++ FRACTION REDUCTION
+
+// greatest common denominator function
+@function gcd($n,$d) {
+	$num: if($n < $d,$d,$n);
+	$denom: if($n < $d,$n,$d);
+	$remain: $num;
+	$last_remain: $num;
+	@while $remain != 0 {
+		$last_remain: $remain;
+		$remain: $denom % $num;
+		$denom: $num;
+		$num: $remain;
+	} @return if($last_remain != 0, $last_remain, 1); }
+// reduce fraction
+@function reduce($n,$d) { $gcd: gcd($n,$d); @return ($n/$gcd,$d/$gcd); }

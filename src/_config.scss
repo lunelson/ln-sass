@@ -1,0 +1,85 @@
+///////////
+// media //
+///////////
+
+$medium-default: (
+  // bases
+  font-size: 16px,
+  line-height: 1.5,
+  margin-x: 2rem,
+  margin-y: 2rem,
+  outer-top: 2rem,
+  outer-right: 2rem,
+  outer-bottom: 2rem,
+  outer-left: 2rem,
+  // mults and mods
+  lines: (),
+  sizes: (),
+  mults-x: (),
+  mults-y: (),
+  size-mod: 1.5,
+  mult-mod: 1.5
+);
+
+$base: $medium-default !default;
+
+$media: () !default;
+$globals: () !default;
+
+$curr-medium-key: null !default;
+$media-hd-ratio: 3 2 !default;
+
+///////////
+// theme //
+///////////
+
+$colors: (
+
+  body: black,
+  body_bg: white,
+  link: blue,
+  link--active: red,
+  link_bg: null,
+  link_bg--active: null,
+
+) !default;
+
+//////////
+// typo //
+//////////
+
+$typo-min-line: 1.125 !default;
+$typo-sub-line: 2 !default;
+$curr-stack-sel: null !default;
+$curr-size-key: null !default;
+$curr-line-key: null !default;
+$curr-font-key: null !default;
+$curr-mult-y-key: null !default;
+$curr-mult-x-key: null !default;
+
+$fonts: (
+  base: (
+    font-family: (Arial, sans-serif),
+    em-factor: 1,
+    ex-factor: 1,
+    size-adjust: 1,
+    spacing-max: 0.5,
+    spacing-end: 50,
+  ),
+  serif: (
+    font-family: (Georgia, serif),
+    em-factor: 1,
+    ex-factor: 1,
+    size-adjust: 1,
+    spacing-max: 0.5,
+    spacing-end: 50,
+  ),
+  mono: (
+    font-family: (Monaco, Consolas, "Lucida Console", monospace),
+    em-factor: 1,
+    ex-factor: 1,
+    size-adjust: 1,
+    spacing-max: 0.5,
+    spacing-end: 50,
+  )
+) !default;

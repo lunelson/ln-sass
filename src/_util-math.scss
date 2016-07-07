@@ -1,0 +1,85 @@
+//////////
+// MATH //
+//////////
+
+
+@function modular-scale($base, $power, $spread) { @return _pow($base, $power / $spread); }
+
+@function mscale($index, $factor, $spread) { @return _pow($factor, $index/$spread); }
+
+@function mod-scale($base, $exp, $spread) { @return _pow($base, $exp/$spread); }
+
+@function trend($value, $c1: 0 0, $c2: 1 1) {
+  $x1: nth($c1, 1); $y1: nth($c1, 2);
+  $x2: nth($c2, 1); $y2: nth($c2, 2);
+  $m: ($y2 - $y1) / ($x2 - $x1);
+  @return $y1 + $m * ($value - $x1);
+}
+
+@function sum($list){
+  $result: 0;
+  @each $n in $list {
+    $result: $result + $n;
+  }
+  @return $result;
+}
+
+@function average($numlist){
+  @return sum($numlist) / length($numlist);
+}
+
+@function weighted-average(){}
+
+@function gcd($a, $b) {
+  @if $b == 0 { @return abs($a); }
+  @return gcd($b, $a % $b);
+}
+
+@function reduce($n, $d) {
+  $g: gcd($n, $d);
+  @return ($n/$g, $d/$g)
+}
+
+@function limit($number, $limit1, $limit2) {
+  $max: max($limit1, $limit2);
+  $min: min($limit1, $limit2);
+  @if comparable($number, $min) and comparable($number, $max) {
+    $number: min(max($number, $min), $max);
+  }
+  @return $number;
+}
+
+@function E() { @return 2.71828182845; }
+@function PI() { @return 3.14159265359; }
+@function TAU() { @return 2 * PI(); }
+@function PHI() { @return 1.61803398874; }
+
+@function int-exp($base, $exponent) {
+  $result: $base;
+  @if $exponent > 1 {
+    @for $i from 2 through $exponent {
+      $result: $result * $base;
+    }
+  }
+  @if $exponent < 1 {
+    @for $i from 0 through abs($exponent) {
+      $result: $result / $base;
+    }
+  }
+  @return $result;
+}
+
+@function ceil-to($number, $precision) {
+  $precision: int-exp(10, $precision);
+  @return ceil($number * $precision) / $precision;
+}
+
+@function floor-to($number, $precision) {
+  $precision: int-exp(10, $precision);
+  @return floor($number * $precision) / $precision;
+}
+
+@function round-to($number, $precision) {
+  $precision: int-exp(10, $precision);
+  @return round($number * $precision) / $precision;
+}

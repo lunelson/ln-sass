@@ -1,0 +1,66 @@
+@mixin init-media-std($out: true) {
+
+  //////////
+  // base //
+  //////////
+
+  // backup $base as spec'd
+  $base-orig: $base !global;
+  // merge spec'd $base against defaults, and normalize
+  $base: normalize-medium(map-merge($medium-default, $base)) !global;
+
+  ///////////
+  // media //
+  ///////////
+
+  $media: if(length($media)>0, maps-sort($media, 'breakpoint'), (
+    a: (breakpoint: 32em),
+    b: (breakpoint: 48em),
+    c: (breakpoint: 64em),
+    d: (breakpoint: 80em),
+  )) !global;
+
+  // backup $media
+  $media-orig: $media !global;
+
+  // temp for recursive merging
+  $reference: $base;
+
+  @each $m, $medium in $media {
+
+    // merge current medium against ref-medium, normalize primitive values
+    $reference: normalize-medium(map-merge($reference, $medium));
+
+    // get and merge sub-maps
+    $sizes: map-merge(map-get($reference, 'sizes'), map-get($medium, 'sizes') or ());
+    $lines: map-merge(map-get($reference, 'lines'), map-get($medium, 'lines') or ());
+    $mults-x: map-merge(map-get($reference, 'mults-x'), map-get($medium, 'mults-x') or ());
+    $mults-y: map-merge(map-get($reference, 'mults-y'), map-get($medium, 'mults-y') or ());
+
+    // calc and merge additional props
+    $breakpoint: map-get($reference, 'breakpoint');
+    $outer-width: unit-assert($breakpoint / map-get($reference, 'html-scale'), rem);
+    $outer-x: map-get($reference, 'outer-right') + map-get($reference, 'outer-left');
+
+    // merge these back to reference
+    $reference: map-merge($reference, (
+      'content-width': $outer-width - $outer-x,
+      'sizes': $sizes,
+      'lines': $lines,
+      'mults-x': $mults-x,
+      'mults-y': $mults-y,
+    ));
+
+    // merge reference back to master
+    $media: map-merge($media, ($m: $reference)) !global;
+  }
+
+  @if $out {
+    $globals: if(variable-exists('globals'), $globals, ());
+    @include json-content(map-merge($globals, (media: $media)));
+    @include media-for(font-size line-height) {
+      html { font-size: unit-assert(medium-value('html-scale'), em); }
+      body { line-height: medium-value('line-height'); }
+    }
+  }
+}

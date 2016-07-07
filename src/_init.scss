@@ -1,0 +1,42 @@
+///////////
+// media //
+///////////
+
+@import "init-media-alt";
+@import "init-media-std";
+@mixin init-media($alt: true, $out: true) {
+  @if $alt { @include init-media-alt($out); }
+  @else { @include init-media-std($out); }
+}
+
+///////////
+// base //
+///////////
+
+@import "init-fonts";
+@import "init-elements";
+@import "init-theme";
+@mixin init-base {
+  @include init-fonts;
+  @include init-elements;
+  // @include init-theme;
+}
+
+////////////
+// layout //
+////////////
+
+@import "init-lutils";
+@import "init-outer";
+@import "init-unwrap";
+@import "init-wrap";
+@import "init-grid";
+@import "init-stack";
+@mixin init-layout {
+  @include init-lutils;
+  @include init-outer;
+  @include init-unwrap;
+  @include init-wrap;
+  @include init-grid;
+  @include init-stack;
+}

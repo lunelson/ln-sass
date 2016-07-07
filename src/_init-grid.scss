@@ -1,0 +1,73 @@
+@mixin init-grid {
+
+  //////////
+  // grid //
+  //////////
+
+  .grid, #{baseify('grid')} {
+    display: block;
+    position: relative; // for 'out' positioned cells which are absolute
+    font-size: 0rem;
+    & > * {
+      min-height: 1px; // http://css-tricks.com/make-sure-columns-dont-collapse-horizontally/
+      font-size: 1rem;
+      direction: ltr;
+      width: 100%;
+      display: inline-block;
+      vertical-align: top;
+    }
+  }
+
+  .fgrid, #{baseify('fgrid')} {
+    display: flex;
+    & > * {
+      flex: 1 1 auto;
+      min-width: 0%; // https://css-tricks.com/flexbox-truncated-text/
+      width: 0%;
+    }
+  }
+
+  // .fcell, %fcell, .cell, %cell { background-clip: content-box; }
+
+  // .fcell, %fcell {
+  //   flex: 1 1 auto;
+  //   min-width: 0%; // https://css-tricks.com/flexbox-truncated-text/
+  //   width: 0%;
+  // }
+
+  // .cell, %cell {
+  //   min-height: 1px; // http://css-tricks.com/make-sure-columns-dont-collapse-horizontally/
+  //   font-size: 1rem;
+  //   direction: ltr;
+  //   width: 100%;
+  //   display: inline-block;
+  //   vertical-align: top;
+  // }
+
+  // @include bemify('fgrid');
+  // @include bemify('grid');
+  // @include bemify('fcell');
+  // @include bemify('cell');
+
+  @include media-for('grid') {
+    @each $m, $mult in map-merge((base: 1), medium-value('mults-x') or medium-value('mults')) {
+      $margin: $mult * medium-value('margin-x');
+
+      .fgrid#{multify($m)}, .flex-grid#{multify($m)}, .grid#{multify($m)} {
+        margin-left: $margin / -2;
+        margin-right: $margin / -2;
+        width: calc(100% + #{$margin});
+        & > * {
+          padding-left: $margin / 2;
+          padding-right: $margin / 2;
+        }
+      }
+
+      //  .fcell#{multify($m)}, .cell#{multify($m)} {
+      //   padding-left: $margin / 2;
+      //   padding-right: $margin / 2;
+      // }
+    }
+  }
+
+}

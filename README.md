@@ -1,3 +1,8 @@
 ## ln-sass
 
-My personal sass sort-of-framework and utilities
+Personal Sass sort-of-framework and utils
+
+```sh
+npm install
+npm test
+```

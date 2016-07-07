@@ -1,0 +1,130 @@
+// TRIPOLI + MINIMAL 3
+
+*, *:before, *:after {
+    text-decoration: none;
+    vertical-align: baseline;
+    box-sizing: inherit;
+    font-weight: inherit;
+    font-family: inherit;
+    font-style: inherit;
+    font-size: 1em;
+    border: 0 none;
+    outline: 0 none;
+    padding: 0;
+    margin: 0;
+}
+
+code,
+kbd,
+samp,
+pre,
+tt,
+var,
+textarea,
+input,
+select,
+isindex,
+listing,
+xmp,
+plaintext {
+    font: inherit;
+    font-size: 1em;
+    white-space: normal;
+}
+
+dfn,
+i,
+cite,
+var,
+address,
+em {
+    font-style: normal;
+}
+
+th,
+b,
+strong,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-weight: normal;
+}
+
+a,
+img,
+a img,
+iframe,
+form,
+fieldset,
+abbr,
+acronym,
+object,
+applet,
+table {
+    border: none;
+}
+
+
+img, video, iframe, form, object, table {
+    display: block;
+    max-width: 100%;
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+caption,
+th,
+td,
+center {
+    text-align: left;
+    vertical-align: top;
+}
+body {
+    line-height: 1;
+    background: white;
+    color: black;
+}
+q {
+    quotes: "" "";
+}
+ul,
+ol,
+dl,
+dir,
+menu {
+    list-style: none;
+}
+sub,
+sup {
+    vertical-align: baseline;
+}
+a {
+    color: inherit;
+}
+hr {
+    display: none;
+}
+/* we don't need a visual hr in layout */
+
+font {
+    color: inherit !important;
+    font: inherit !important;
+    color: inherit !important;
+}
+/* disables some nasty font attributes in standard browsers */
+
+marquee {
+    overflow: inherit !important;
+    -moz-binding: none;
+}
+blink {
+    text-decoration: none;
+}
+nobr {
+    white-space: normal;
+}

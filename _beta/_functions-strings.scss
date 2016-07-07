@@ -1,0 +1,25 @@
+// ++++ STRING FUNCTIONS, new in 3.3
+
+// str-length($string)
+// will return the length of a string
+
+// str-insert($string)
+// will insert one string into another
+
+// str-index($string)
+// will return the index of a substring within another string
+
+// str-slice($string)
+// will slice a substring from a string
+
+// to-upper-case($string)
+// will transform a string to upper case characters
+
+// to-lower-case($string)
+// will transform a string to lower case characters.
+
+@function str-remove($str, $sub) {
+    $i: str-index($str, $sub);
+    @if $i == 0 { @return $str; }
+    @else { @return str-remove(str-slice($str, 1, $i - 1) + str-slice($str, $i + 1, str-length($str)), $sub); }
+}

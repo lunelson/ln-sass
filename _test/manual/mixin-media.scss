@@ -1,0 +1,49 @@
+@import '../../index';
+
+$media: (
+  a: (
+    breakpoint: 32em,
+  ),
+  b: (
+    breakpoint: 48em,
+    font-size: 2rem,
+    margin-x: 5rem,
+  ),
+  c: (
+    breakpoint: 64em,
+    margin-y: 3rem,
+  ),
+  d: (
+    breakpoint: 80em,
+    line-height: 2,
+  ),
+);
+
+@include media-setup();
+
+.media-helper-test {
+  size-media: inspect(media-for(font-size));
+  margin-y-media: inspect(media-for(margin-y line-height));
+  typo-media: inspect(media-for(typo));
+  @include media-for(margin-y line-height) {
+    color: red;
+  }
+  @include media-for(margin-x) {
+    color: blue;
+  }
+}
+
+.empty-test {
+  @include margin(1 null);
+  @include padding(1 null);
+  margin-top: t-margin(1);
+  margin-bottom: t-margin(1, em);
+  // @include media-each() {
+  //   color: green;
+  // }
+  // @include media-each(()) {
+  //   color: green;
+  // }
+}
+
+/* #{map-inspect($media)} */

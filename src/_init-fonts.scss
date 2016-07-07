@@ -1,0 +1,22 @@
+@mixin init-fonts {
+
+  ///////////
+  // fonts //
+  ///////////
+
+  @each $f in join(null, map-keys($fonts)) {
+
+    body #{if($f, '.font--' + $f,'')} {
+      $family: get($fonts, $f or 'base', 'font-family');
+      $adjust: get($fonts, $f or 'base', 'size-adjust');
+      font-family: $family;
+      font-size: 1rem * $adjust;
+      @include media-for('line-height') { line-height: medium-value('line-height') / $adjust; }
+      * {
+        $spacing-max: get($fonts, $f or 'base', 'spacing-max');
+        $spacing-end: get($fonts, $f or 'base', 'spacing-end');
+        letter-spacing: calc(#{$spacing-max}px - #{$spacing-max/$spacing-end}em);
+      }
+    }
+  }
+}

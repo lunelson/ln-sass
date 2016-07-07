@@ -1,0 +1,92 @@
+// MAPS
+
+@function map-prev-key($map, $key) {
+  $keys: map-keys($map);
+  $index: index($keys, $key) - 1;
+  @return if($index >= 1, nth($keys, $index), null);
+}
+
+@function map-next-key($map, $key) {
+  $keys: map-keys($map);
+  $index: index($keys, $key) + 1;
+  @return if($index <= length($keys), nth($keys, $index), null);
+}
+
+@function map-values($map, $keys: ()) {
+  $values:();
+  $keys: if(length($keys) == 0, map-keys($map), $keys);
+  @each $key in $keys {
+    $value: map-get($map, $key);
+    $values: if($value, append($values, $value), $values);
+  }
+  @return if($values != (), $values, null);
+}
+
+@function map-has-keys($map, $keys: ()){
+  @if length($keys) > 0 {
+    $key: nth($keys, 1);
+    @if length($keys) > 1 {
+      @return map-has-keys(map-get($map, $key), slice($keys, 2));
+    }
+    @return map-has-key($map, $key);
+  }
+  @return false;
+}
+
+@function map-get-nested($map, $keys...) {
+  @if length($map) == 0 { @return null; }
+  @each $key in $keys {
+    @if type-of($map) != 'map' { @return $map; }
+    $map: map-get($map, $key);
+  }
+  @return $map;
+}
+
+@function map-merge-nested($map, $keys-and-value...) {
+  $keys-and-value-length: length($keys-and-value);
+  $key-length: $keys-and-value-length - 1;
+  $value: nth($keys-and-value, $keys-and-value-length);
+  $value-is-map: type-of($value) == 'map';
+  @if $key-length == 0 {
+    $value: map-merge($map, if($value-is-map or length($value) == 0, $value, ($value: ())));
+  } @else {
+    @for $i from if($value-is-map, 0, 1) through $key-length {
+      $new: if($i == 0, $value, (nth($keys-and-value, $keys-and-value-length - $i): $value));
+      $old: if($i == $key-length, $map, map-merge-nested($map, slice($keys-and-value, 1, $key-length - $i)...) or ());
+      $value: if(type-of($old) == 'map', map-merge($old, $new), $new);
+    }
+  }
+  @return $value;
+}
+
+// map-inspect
+@function map-inspect($map, $level: 1) {
+  @if type-of($map) != 'map' { @return '#{inspect($map)}'; }
+  $tab: '  ';
+  $cr: '\a';
+  $indent: str-multiply($tab, $level);
+  $output: '(' + $cr + $indent; $i: 1;
+  @each $key, $value in $map {
+    @if type-of($value) == 'map' {
+      $output: $output + $key + ':' + map-inspect($value, $level + 1);
+    } @else {
+      $output: $output + $key + ':' + $value;
+    }
+    @if $i < length(map-keys($map)) {
+      $output: $output + ',' + $cr + $indent;
+    }
+    $i: $i + 1;
+  }
+  $outdent: str-multiply($tab, $level);
+  @return unquote($output + $cr + $outdent + ')');
+}
+
+// aliases
+
+@function get($args...){ @return map-get-nested($args...); }
+@function set($args...){ @return map-merge-nested($args...); }
+@function merge($args...){ @return map-merge-nested($args...); }
+@function prev-key($args...){ @return map-prev-key($args...); }
+@function next-key($args...){ @return map-next-key($args...); }
+@function has-keys($args...){ @return map-has-keys($args...); }
+@function values($args...){ @return map-values($args...); }

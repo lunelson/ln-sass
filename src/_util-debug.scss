@@ -1,0 +1,98 @@
+///////////
+// DEBUG //
+///////////
+
+@mixin init-debug($visible: false, $color: rgba(0,200,200,0.08)) {
+
+  // heights
+  @for $n from 1 to 10 {
+    [debug~="height-#{$n * 100}"] {
+    height: $n * 100px;
+    }
+  }
+
+  // aspect ratios
+  @each $aspect in (1 1, 2 1, 1 2, 16 9, 9 16, 3 2, 2 3, 4 3, 3 4) {
+    $n: nth($aspect, 1); $d: nth($aspect, 2);
+    [debug~="aspect-#{$n}-#{$d}"] {
+      position: relative;
+      &:before {
+        display: block;
+        content: '';
+        width: 100%;
+        padding-top: $d/$n * 100%;
+        background-clip: padding-box;
+      }
+      & > * {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+      }
+    }
+  }
+
+  // colors
+  [debug~="color-red"] { background-color: #F2CCBB; }
+  [debug~="color-yellow"] { background-color: #F2F2B6; }
+  [debug~="color-green"] { background-color: #B6F2B6; }
+  [debug~="color-cyan"] { background-color: #B6F2F2; }
+  [debug~="color-blue"] { background-color: #C2DAF2; }
+  [debug~="color-magenta"] { background-color: #F2CEF2; }
+
+  // grid-columns
+  @if $visible {
+    body::after {
+      content: '';
+      top: 0;
+      bottom: 0;
+      left: 50%;
+      position: fixed;
+      height: 100%;
+      pointer-events: none;
+      user-select: none;
+      z-index: 999;
+      display: block;
+
+      $column-count: medium-value('column-count') or 8;
+      $margin-x: medium-value('margin-x');
+      $page-right: medium-value('page-right');
+      $page-left: medium-value('page-left');
+      $page-sum: $page-right + $page-left;
+      $page-diff: $page-right - $page-left;
+
+      width: calc(100% - #{$page-sum} + #{$margin-x});
+      margin-left: calc((100% - #{$page-sum - $page-diff} + #{$margin-x} * 2) / -2);
+      background: linear-gradient(to right,
+        rgba(0,0,0,0) $margin-x,
+        $color $margin-x,
+        $color calc((100% - #{$page-sum} + #{$margin-x}) / #{$column-count} - #{$margin-x})
+      );
+      background-size: calc((100% - #{$page-sum} + #{$margin-x} * 3) / #{$column-count});
+    }
+
+    @each $alias in map-keys($media) {
+      @include media($alias) {
+        $column-count: medium-value('column-count') or 8;
+        $margin-x: medium-value('margin-x');
+        $page-right: medium-value('page-right');
+        $page-left: medium-value('page-left');
+        $page-diff: $page-right - $page-left;
+        $content-width: medium-value('content-width') + $margin-x;
+
+        body:after {
+          width: $content-width;
+          margin-left: ($content-width + $page-diff + $margin-x)/-2;
+          background: linear-gradient(to right,
+            rgba(0,0,0,0) $margin-x,
+            $color $margin-x,
+            $color $content-width / $column-count - $margin-x
+          );
+          background-size: $content-width / $column-count;
+        }
+      }
+    }
+  }
+
+}

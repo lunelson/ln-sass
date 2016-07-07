@@ -1,0 +1,85 @@
+///////////////
+// normalize //
+///////////////
+
+  @function normalize-medium($medium) {
+
+    // correct for font-size and line-height units/non-units
+    $font-size: map-get($medium, 'font-size');
+    $line-height: map-get($medium, 'line-height');
+    $base-size: if($medium == $base, 16px, map-get($base, 'font-size'));
+    @if unit($font-size) != 'px' { $font-size: unit-strip($font-size) * $base-size; }
+    @if unit($line-height) == 'px' { $line-height: $line-height / $font-size; }
+
+    // put these in a new map
+    $normal: (
+      'font-size': $font-size,
+      'line-height': $line-height,
+      'html-scale': unit-strip($font-size / 16px)
+    );
+
+    // merge additional corrections if necessary
+    @each $key, $value in map-remove($medium, 'font-size', 'line-height', 'breakpoint', 'sizes', 'lines', 'mults-x', 'mults-y') {
+      @if unit($value) == 'px' { $normal: map-merge($normal, ($key: $value / $font-size * 1rem)); }
+    }
+    // return merged corrections
+    @return map-merge($medium, $normal);
+  }
+
+//////////////////
+// query string //
+//////////////////
+
+  @function width-query($min: null, $max: null) {
+    $min: if(map-has-key($media, $min), get($media, $min, 'breakpoint'), $min);
+    $max: if(map-has-key($media, $max), get($media, $max, 'breakpoint'), $max);
+    @return 'screen'
+      + if($min, ' and (min-width: #{$min})', '')
+      + if($max, ' and (max-width: #{$max - 0.001})', '');
+  }
+
+///////////////
+// media-for //
+///////////////
+
+  // look up prop groups
+  @function media-prop-group($group-key){
+    $groups: (
+      font-size: (sizes size-mod),
+      line-height: (lines),
+      margin-x: (mults-x mults mult-x-mod mult-mod),
+      margin-y: (mults-y mults mult-y-mod mult-mod),
+      outer: (outer-right outer-left),
+      outer-y: (outer-top outer-bottom),
+      stack: (margin-y),
+      grid: (margin-x),
+      typo: (line-height margin-y),
+    );
+    $group-keys: font-size line-height margin-x margin-y outer outer-y stack grid typo;
+    @if index($group-keys, $group-key) {
+      $group: map-get($groups, $group-key);
+      @each $item in $group {
+        @if index($group-keys, $item) {
+          $group: join($group, map-get($groups, $item));
+        }
+      }
+      @return $group;
+    }
+    @return $group-key;
+  }
+
+  // find all $keys in $media-orig which have specified $props
+  @function media-for($group-keys...) {
+    $group-keys: normalize-splat($group-keys...);
+    $props: $group-keys; $media-keys: ();
+    @each $key in $group-keys {
+      $props: join($props, media-prop-group($key)); }
+    // @return $props;
+    // function is good up to here; compare against media-orig...
+    @each $m, $medium in $media-orig {
+      @if contains-any(map-keys($medium), $props) {
+        $media-keys: append($media-keys, $m);
+      }
+    }
+    @return $media-keys;
+  }

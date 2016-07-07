@@ -1,0 +1,2 @@
+// apply
+@function apply($args) { @return call($args...); }

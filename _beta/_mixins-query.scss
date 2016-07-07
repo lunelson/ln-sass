@@ -1,0 +1,168 @@
+// ++++ BREAKPOINT Aliases and Modifications
+
+$html-font-size: 100% !default;
+
+// bp-data
+// arbitrary aliases for breakpoints; width and gutter can be in rem or em but ideally rem
+// scale can have unit or not
+
+$bp-data: (
+	a: (
+		width: 30rem,
+		gutter: 2rem,
+		scale: 125%
+	),
+	b: (
+		width: 45rem,
+		gutter: 2rem,
+		scale: 150%
+	),
+	c: (
+		width: 60rem,
+		gutter: 2rem,
+		scale: 200%
+	)
+) !default;
+
+@mixin bp-setup($data) {
+    $bp: () !global;
+	@each $alias, $spec in $data {
+		$width: assert(map-get($spec, width), em);
+		$gutter: assert(map-get($spec, gutter), em);
+		$scale: strip(map-get($spec, scale));
+		$breakpoint: map-merge(map-get($data, $alias), (query: ($width + 2 * $gutter) * $scale / 100));
+		$bp: map-merge($bp, (#{$alias}: $breakpoint)) !global;
+		@media (min-width: #{map-get($breakpoint, query)}) { html { font-size: assert($scale, '%'); } }
+	}
+}
+
+// this version outputs html declaration more conservatively; requires bp-data in order from small to large
+@mixin bp-setup-alt($data) {
+    $bp: () !global;
+    $prev-scale: strip($html-font-size);
+	@each $alias, $spec in $data {
+		$width: assert(map-get($spec, width), em);
+		$gutter: assert(map-get($spec, gutter), em);
+		$scale: strip(map-get($spec, scale));
+		$breakpoint: map-merge(map-get($data, $alias), (query: ($width + 2 * $gutter) * $scale / 100));
+		$bp: map-merge($bp, (#{$alias}: $breakpoint)) !global;
+		@if $scale != $prev-scale { @media (min-width: #{map-get($breakpoint, query)}) { html { font-size: assert($scale, '%'); } } }
+		$prev-scale: $scale;
+	}
+}
+
+// bp-query calculates query for aliases and fires breakpoint
+@mixin bp-query($aliases...) {
+    $aliases: if(length($aliases) == 1, nth($aliases, 1), $aliases); $directive: nth($aliases, 1);
+	$lti: index(lessthan less-than lt before below, $directive); $query: ();
+	@if $lti { $aliases: reject($aliases, $directive); $query: (max-width n-get($bp, nth($aliases, 1), query)); }
+	@else { @each $alias in $aliases { $query: append($query, n-get($bp, $alias, query)); } }
+	@include breakpoint($query) { @content; }
+}
+
+// bpp() retrives a parameter for given bp-alias
+@function bpp($parameter, $alias) { @return map-get(map-get($bp, $alias), $parameter); }
+
+// // ++++ WORK AREA BELOW HERE
+
+// @function adjust-breakpoint($bp, $plus) {
+// 	@return ($bp + 2 * assert(reject-strings($plus), em)) * strip($html-font-size / 100);
+// }
+
+// // bp(); could also be written more simply with contains-any() on $args, to check for lt case
+// @mixin bp($args...){
+// 	@if index((lessthan less-than lt before below), $args) { @include breakpoint(max-width reject-strings($args)) { @content; } }
+// 	@else { @include breakpoint(reject-strings($args)) { @content; } }
+// }
+
+// @mixin bpa($args, $plus: 0) {
+// 	@if index((lessthan less-than lt before below), $args) { @include breakpoint(max-width adjust-breakpoint(assert(reject-strings($args), em), $plus)) { @content; } }
+// 	@else { @include breakpoint(adjust-breakpoint(assert(reject-strings($args), em), $plus)) { @content; } }
+// }
+
+
+
+// // breakpoint setup routine; abstract to a mixin
+// $bp-specs: (
+// 	small: (
+// 		width: 30em,
+// 		margin: 1em,
+// 		scale: 100%
+// 	),
+// 	medium: (
+// 		width: 45em,
+// 		margin: 2em,
+// 		scale: 125%
+// 	)
+// );
+
+// $bp-calcs: ();
+
+// @each $bp-alias, $bp-spec in $bp-specs {
+// 	$width: map-get($bp-spec, width);
+// 	$margin: map-get($bp-spec, margin);
+// 	$scale: map-get($bp-spec, scale);
+// 	$bp-value: $width + $margin;
+// 	$bp-calcs: map-merge($bp-calcs, (#{$bp-alias}: $bp-value));
+// 	@if $scale != 100% { @media (min-width: #{$bp-value}) { html { font-size: $scale; } } }
+// }
+
+// $breakpoint-data: (
+// 	a: (
+// 		width: 30em,
+// 		gutter: 2em,
+// 		scale: 150%
+// 	),
+// 	b: (
+// 		width: 45em,
+// 		gutter: 2em,
+// 		scale: 200%
+// 	),
+// 	c: (
+// 		width: 60em,
+// 		gutter: 2em,
+// 		scale: 250%
+// 	)
+// ) !default;
+
+// @mixin breakpoint-setup($data) {
+// 	$breakpoints: () !global;
+// 	@each $alias, $spec in $data {
+// 		$width: map-get($spec, width);
+// 		$gutter: map-get($spec, gutter);
+// 		$scale: map-get($spec, scale);
+// 		$breakpoint: ($width + 2 * $gutter) * $scale / 100% ;
+// 		$breakpoints: map-merge($breakpoints, (#{$alias}: $breakpoint));
+// 		@if $scale != 100% { @media (min-width: #{$breakpoint}) { html { font-size: $scale; } } }
+// 	}
+// }
+
+// @mixin breakpoint-setupB($data) {
+// 	$breakpoints: () !global;
+// 	@each $alias, $spec in $data {
+// 		$width: map-get($spec, width);
+// 		$gutter: map-get($spec, gutter);
+// 		$scale: map-get($spec, scale);
+// 		$breakpoint: (em: ($width + 2 * $gutter) * $scale / 100%, rem: $width);
+// 		$breakpoints: map-merge($breakpoints, (#{$alias}: $breakpoint));
+// 		@if $scale != 100% { @media (min-width: #{map-get($breakpoint, em)}) { html { font-size: $scale; } } }
+// 	}
+// }
+
+// @mixin breakpoint-setupC($data) {
+// 	@each $alias, $spec in $data {
+// 		$width: map-get($spec, width);
+// 		$gutter: map-get($spec, gutter);
+// 		$scale: map-get($spec, scale);
+// 		$breakpoint: (query: ($width + 2 * $gutter) * $scale / 100%);
+// 		$data: map-merge($data, (#{$alias}: $breakpoint)) !global;
+// 		@if $scale != 100% { @media (min-width: #{map-get($breakpoint, query)}) { html { font-size: $scale; } } }
+// 	}
+// }
+
+// // .debug {
+// //     map: map-debug($breakpoints);
+// //     bp1: map-get($breakpoints, a);
+// //     bp2: map-get($breakpoints, b);
+// //     bp3: map-get($breakpoints, c);
+// // }

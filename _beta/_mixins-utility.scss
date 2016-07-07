@@ -1,0 +1,148 @@
+// ++++ DISPLAY
+
+// inline block justification; apply to ol or ul
+@mixin inline-block-justify() {
+	text-align: justify;
+	font-size: 0px;
+	padding: 0;
+	list-style: none;
+	&::after { content: ''; display: inline-block; width: 100%; }
+	& > li { font-size: 16px; font-size: 1rem; display: inline-block; }
+}
+
+
+// ++++ POSITIONING
+
+@mixin position($type, $params...) {
+	position: #{$type};
+	@each $param in $params {
+		#{nth($param, 1)}: #{nth($param, 2)};
+	}
+}
+
+// ++++ DIMENSIONS
+
+// square
+@mixin square($n) {
+	width: $n;
+	height: $n;
+}
+
+// x or y margins, padding; expansion
+@mixin margin-x($n) { margin-right: $n; margin-left: $n; }
+@mixin margin-h($n) { @include margin-x($n); }
+@mixin margin-y($n) { margin-top: $n; margin-bottom: $n; }
+@mixin margin-v($n) { @include margin-y($n); }
+
+@mixin padding-x($n) { padding-right: $n; padding-left: $n; }
+@mixin padding-h($n) { @include padding-x($n); }
+@mixin padding-y($n) { padding-top: $n; padding-bottom: $n; }
+@mixin padding-v($n) { @include padding-y($n); }
+
+@mixin expand($args...) {
+	$negs: ();
+	@each $arg in $args { $negs: append($negs, -($arg)); }
+	padding: $args;
+	margin: $negs;
+}
+
+@mixin expand-x($n) { @include padding-x($n); @include margin-x(-($n)); }
+@mixin expand-h($n) { @include expand-x($n); }
+@mixin expand-y($n) { @include padding-y($n); @include margin-y(-($n)); }
+@mixin expand-v($n) { @include expand-y($n); }
+
+// margin; compact syntax version
+@mixin margin($arguments) {
+	@if length($arguments) == 1 {
+		margin: $arguments;
+	} @else if length($arguments) == 2 {
+		@if index($arguments, null) {
+			margin-top: nth($arguments,1);
+			margin-right: nth($arguments,2);
+			margin-bottom: nth($arguments,1);
+			margin-left: nth($arguments,2);
+		} @else {
+			margin: $arguments;
+		}
+	} @else if length($arguments) == 3 {
+		@if index($arguments, null) {
+			margin-top: nth($arguments,1);
+			margin-right: nth($arguments,2);
+			margin-bottom: nth($arguments,3);
+			margin-left: nth($arguments,2);
+		} @else {
+			margin: $arguments;
+		}
+	} @else if length($arguments) == 4 {
+		@if index($arguments, null) {
+			margin-top: nth($arguments,1);
+			margin-right: nth($arguments,2);
+			margin-bottom: nth($arguments,3);
+			margin-left: nth($arguments,4);
+		} @else {
+			margin: $arguments;
+		}
+	}
+}
+
+// padding; compact syntax version
+@mixin padding($arguments) {
+	@if length($arguments) == 1 {
+		padding: $arguments;
+	} @else if length($arguments) == 2 {
+		@if index($arguments, null) {
+			padding-top: nth($arguments,1);
+			padding-right: nth($arguments,2);
+			padding-bottom: nth($arguments,1);
+			padding-left: nth($arguments,2);
+		} @else {
+			padding: $arguments;
+		}
+	} @else if length($arguments) == 3 {
+		@if index($arguments, null) {
+			padding-top: nth($arguments,1);
+			padding-right: nth($arguments,2);
+			padding-bottom: nth($arguments,3);
+			padding-left: nth($arguments,2);
+		} @else {
+			padding: $arguments;
+		}
+	} @else if length($arguments) == 4 {
+		@if index($arguments, null) {
+			padding-top: nth($arguments,1);
+			padding-right: nth($arguments,2);
+			padding-bottom: nth($arguments,3);
+			padding-left: nth($arguments,4);
+		} @else {
+			padding: $arguments;
+		}
+	}
+}
+
+// ADJACENT SELECTOR @content RULE
+// accepts comma- or space-separated lists, but not in combination
+
+$body-blocks: p ul ol dl table pre blockquote figure img !default;
+$heading-blocks: h1 h2 h3 h4 h5 h6 !default;
+
+@mixin adjacent($args...) {
+	@if length($args) == 0 {
+		& + & { @content; }
+	} @else {
+		@if type_of(nth($args,1)) == list { $args: join($n, $args...); }
+		$arr: unquote("#{nth($args, 1)} + &");
+		@for $n from 2 through length($args) {
+			$arr: append($arr, unquote(", #{nth($args,$n)} + &"));
+		}
+		#{$arr} { @content; }
+	}
+}
+
+// MULTI CLASS EXTENSION
+
+@mixin x($base, $variants...) {
+	@extend %#{$base}.base !optional;
+	@each $var in $variants {
+		@extend %#{$base}.#{$var} !optional;
+	}
+}

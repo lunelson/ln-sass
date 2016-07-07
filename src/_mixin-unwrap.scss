@@ -1,0 +1,58 @@
+////////////
+// unwrap //
+////////////
+
+// this must be originally applied by a class, so JS can access it to fix browser issues
+// other option would be to narrow it down to render engine (stowball JS lib)
+@mixin unwrap-adjust($right: 0%, $left: 0%, $direction: null, $origin: null) {
+
+  $outer-right: add-calc(#{medium-value('outer-right')}, #{$right});
+  $outer-left: add-calc(#{medium-value('outer-left')}, #{$left});
+  $wrap-offset: sub-calc($outer-right, $outer-left);
+  $unwrap-margin: sub-calc(100%, 100vw);
+  $unwrap-margin-right: div-calc(sub-calc($unwrap-margin, $wrap-offset), 2);
+  $unwrap-margin-left: div-calc(add-calc($unwrap-margin, $wrap-offset), 2);
+
+  @if $origin == 'right' {
+    // --from-right
+    @if $direction == 'right' {
+      width: add-calc(100%, $outer-right) !important;
+      margin-right: sub-calc(0%, $outer-right) !important;
+      margin-left: 0 !important;
+    } @else if $direction == 'left' {
+      width: sub-calc(100vw, $outer-right) !important;
+      margin-right: 0 !important;
+      margin-left: add-calc($unwrap-margin, $outer-right) !important;
+    } @else {
+      margin-right: sub-calc(0%, $outer-right) !important;
+      margin-left: add-calc($unwrap-margin, $outer-right) !important;
+    }
+  } @else if $origin == 'left' {
+    // --from-left
+    @if $direction == 'right' {
+      width: sub-calc(100vw, $outer-left) !important;
+      margin-right: add-calc($unwrap-margin, $outer-left) !important;
+      margin-left: 0 !important;
+    } @else if $direction == 'left' {
+      width: add-calc(100%, $outer-left) !important;
+      margin-right: 0 !important;
+      margin-left: sub-calc(0%, $outer-left) !important;
+    } @else {
+      margin-right: add-calc($unwrap-margin, $outer-left) !important;
+      margin-left: sub-calc(0%, $outer-left) !important;
+    }
+  } @else {
+    // [--from-center]
+    @if $direction == 'right' {
+      width: add-calc(100vw, $unwrap-margin-left) !important;
+      margin-right: $unwrap-margin-right !important;
+    } @else if $direction == 'left' {
+      width: add-calc(100vw, $unwrap-margin-right) !important;
+      margin-left: $unwrap-margin-left !important;
+    } @else {
+      margin-right: $unwrap-margin-right !important;
+      margin-left: $unwrap-margin-left !important;
+    }
+  }
+}
+

@@ -1,0 +1,69 @@
+// latest changes: moved padding to left only, added clear:left to n + 1 child, added salvattore mixin
+
+$debug: false !default;
+
+// minimum default dimensions
+$base-margin-x: 1rem !default;
+$page-margin-x: 1rem !default;
+
+// grid extension points
+%ln-grid {
+	&.padding {
+		padding-left: $base-margin-x * 2;
+		padding-right: $base-margin-x * 2;
+	}
+	&.col, &.column {
+		@extend %ln-grid.padding;
+		float: left;
+		width: 100%;
+	}
+	&.row{
+		@extend %clearfix;
+		margin-left: -$base-margin-x * 2;
+		margin-right: -$base-margin-x * 2;
+	}
+	&.wrap, &.wrapper {
+		@extend %clearfix;
+		margin-left: auto;
+		margin-right: auto;
+	}
+}
+
+// wrap mixins
+@mixin wrap-size($w: 100%) { width: $w; }
+@mixin wrap-set($w: 100%) { @extend %ln-grid.wrap; @include wrap-size($w); }
+
+// row mixin
+@mixin row-set() { @extend %ln-grid.row; }
+
+// salvattore row mixins -- could be integrated as option to row mixin
+@mixin salvattore-set($cols) {
+	@extend %ln-grid.row;
+	&:before {
+		display: none;
+		content: '#{$cols} .col';
+	}
+}
+@mixin salvattore-size($cols) {
+	&:before {
+		content: '#{$cols} .col';
+	}
+}
+
+// column mixins
+@mixin col-size($span, $margins...) {
+	$n: nth($span,1); $d: nth($span,2);
+    @if length($span) > 2 { $n: nth($span,2); $d: nth($span,3); }
+	width: $n / $d * 100%;
+	@if length($margins) == 0 { &:nth-child(#{$d}n+1) { clear: left; }}
+	@each $offset in $margins {
+		$dir: nth($offset,1); $p: nth($offset,2);
+        @if length($offset) > 2 { $d: nth($offset, 3); }
+		@if $p == out {
+			margin-#{opposite-position($dir)}: 100%;
+			margin-#{$dir}: $n / $d * -100%;
+			margin-bottom: -100%;
+		} @else { margin-#{$dir}: $p / $d*100%; }
+	}
+}
+@mixin col-set($args...) { @extend %ln-grid.col; @include col-size($args...);}

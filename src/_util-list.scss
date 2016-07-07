@@ -1,0 +1,193 @@
+//  _ _     _
+// | (_)   | |
+// | |_ ___| |_ ___
+// | | / __| __/ __|
+// | | \__ \ |_\__ \
+// |_|_|___/\__|___/
+
+// a more fault-tolerant nth() function. libsass throws more errors for nth
+@function _nth($list, $n) {
+  @if length($list) == 0 or $n < 1 or $n > length($list) { @return null; }
+  @return nth($list, $n);
+}
+
+// alias of above
+@function safe-nth($list, $n) { @return _nth($list, $n); }
+
+// first and last
+@function first($list) { @return nth($list, 1); }
+@function last($list) { @return nth($list, length($list)); }
+
+// normalize splats; must also be passed a splat
+@function normalize-splat($args...) {
+  $output: $args;
+  @if type-of(nth($args, 1)) == list and length($args) == 1 {
+    $output: (); @each $item in nth($args, 1) {
+      $output: append($output, $item, 'comma'); } }
+  @return $output;
+}
+
+// list versions of other built-ins
+@function list-max($list) { @return max($list...); }
+@function list-min($list) { @return min($list...); }
+
+// convert a list to space-separated values
+@function force-ssv($list) {
+  $output: (); @each $item in $list {
+    $output: append($output, $item, 'space'); }
+  @return $output;
+}
+
+// convert a list to comma-separated values
+@function force-csv($list) {
+  $output: (); @each $item in $list {
+    $output: append($output, $item, 'comma'); }
+  @return $output;
+}
+
+@function remove($list, $tests...) {
+  $out:(); $sep: list-separator($list);
+  @if length($list) == 1 { $list: nth($list, 1); }
+  @each $item in $list {
+    @if not index($tests, $item) { $out: append($out, $item, $sep); } }
+  @return $out;
+}
+
+@function reduce($list) { @return remove($list, null, false, ''); }
+@function compact($list) { @return remove($list, null, false, ''); }
+
+@function reject($list, $item) { // same as compass reject() function
+  $out:();
+  @each $arg in $list { @if $arg != $item { $out: append($out, $arg); } }
+  @return if($out == (), empty, $out); }
+  @function except($args...) { @return reject($args...); }
+
+// collect and reject by type comparison
+@function collect-by-type($list, $type) {
+  $out: ();
+  @if length($list) == 1 { $list: nth($list, 1); }
+  @each $item in $list {
+      @if type_of($item) == $type {
+          $out: append($out, $item);
+      }
+  }
+  @return if(length($out) == 1, nth($out, 1), $out);
+}
+
+@function reject-by-type($list, $type) {
+  @if length($list) == 1 { $list: nth($list, 1); }
+  @each $item in $list {
+      @if type_of($item) == $type {
+          $list: reject($list, $item);
+      }
+  }
+  @return if(length($list) == 1, nth($list, 1), $list);
+}
+
+// shortcuts for above
+@function collect-strings($list) { @return collect-by-type($list, 'string'); }
+@function reject-strings($list) { @return reject-by-type($list, 'string'); }
+@function collect-numbers($list) { @return collect-by-type($list, 'number'); }
+@function reject-numbers($list) { @return reject-by-type($list, 'number'); }
+@function collect-bools($list) { @return collect-by-type($list, 'bool'); }
+@function reject-bools($list) { @return reject-by-type($list, 'bool'); }
+
+@function contains($list, $item) {
+  @if index($list, $item) { @return true; }
+  @return false;
+}
+
+@function contains-any($list, $items) {
+  @each $item in $items { @if index($list, $item) { @return true; } }
+  @return false;
+}
+
+// TODO: make sure slice supports same logic/signature as native str-slice function
+@function slice($list, $start: 1, $end: length($list), $sep: list-separator($list)) {
+  $output: ();
+  @if $start >= 1 and $end >= $start {
+    @for $i from $start through $end {
+      $output: append($output, nth($list, $i), $sep);
+    }
+  }
+  // @return if(length($output)==1,nth($output,1),$output);
+  @return $output;
+}
+
+////////////////////
+// list to string //
+////////////////////
+
+@function list-to-string($list, $glue: '') {
+  $result: '';
+  $length: length($list);
+  @for $n from 1 through $length {
+    $result: $result + (nth($list, $n) or '') + if($n == $length,'',$glue);
+  }
+  @return $result;
+}
+@function to-string($args...) { @return list-to-string($args...); }
+@function snake-string($list) { @return list-to-string($list, '_'); }
+@function kebab-string($list) { @return list-to-string($list, '-'); }
+
+/////////////////////
+// sets from lists //
+/////////////////////
+
+// TODO: make these functions the new way
+@function combination-set($list) {
+  $result: ((),);
+  @for $i from 1 through length($list) {
+    @for $j from 1 through length($result) {
+      $result: append($result, (join(nth($result, $j), nth($list, $i))));
+    }
+  }
+  @return slice($result, 2);
+}
+
+@function sequence-pair-set($list, $ends: false) {}
+
+
+@function range-pair-set($list, $ext-start: true, $ext-end: true) {
+  @if length($list) == 0 { @return $list; }
+  $result: ();
+  @for $n from 1 through length($list) + 1 {
+    $m: $n - 1; $a: if($m == 0, null, nth($list, $m));
+    $b: if($n > length($list), null, nth($list, $n));
+    $result: append($result, ($a $b), 'comma');
+  }
+  $length: length($result);
+  $start: if($ext-start, 1, 2);
+  $end: if($ext-end, $length, $length - 1);
+  @return slice($result, $start, $end);
+}
+
+@function power-set($list) {
+  $result: ((),);
+  @for $i from 1 through length($list) {
+    @for $j from 1 through length($result) {
+      $result: append($result, (join(nth($result, $j), nth($list, $i))));
+    }
+  }
+  @return slice($result,2);
+}
+
+@function range-set($list) {
+  $result: ();
+  @for $i from 1 through length($list) - 1 {
+    @for $j from $i + 1 through length($list) {
+      $result: append($result, ($i $j), 'comma');
+    }
+  }
+  @return $result;
+}
+
+@function pair-set($list, $ends: true) {
+  $result: ();
+  @for $n from 1 through length($list) + 1 {
+    $m: $n - 1; $a: if($m == 0, null, nth($list, $m));
+    $b: if($n > length($list), null, nth($list, $n));
+    $result: append($result, ($a $b), 'comma');
+  }
+  @return if($ends, $result, slice($result, 2, length($result) - 1));
+}

@@ -1,0 +1,61 @@
+// STRINGS
+
+// last-index
+@function str-last-index($str, $substr) {
+  $length: str-length($str);
+  @for $n from $length - str-length($substr) through 1 {
+    $index: str-index(str-slice($str, $n + 1, $length), $substr);
+    @if $index { @return $index + $n; }
+  }
+  @return null;
+}
+
+// replace
+@function str-replace($str, $search, $replace: '') {
+  $index: str-index($str, $search);
+  @if $index {
+    @return str-slice($str, 1, $index - 1) + $replace + str-replace(str-slice($str, $index + str-length($search)), $search, $replace);
+  }
+  @return $str;
+}
+
+// remove -- uses replace
+@function str-remove($str, $substr) { @return str-replace($str, $substr, ''); }
+
+// times
+@function str-times($str, $n: 1) {
+  $output: '';
+  @while $n > 0 {
+    $output: $output + $str;
+    $n: $n - 1;
+  }
+  @return $output;
+}
+@function str-multiply($args...) { @return str-times($args...); }
+// KEYWORDS
+
+@function opposite($dirs) {
+  $out: ();
+  $opposites: ('top': bottom, 'right': left, 'bottom': top, 'left': right, 'ltr': rtl, 'rtl': ltr);
+  @each $dir in $dirs {
+    $opposite: map-get($opposites, $dir);
+    @if $opposite {$out: append($out, $opposite); } }
+  @return $out;
+}
+
+// COUNTER
+
+@mixin list-counter($selector: null, $before:'', $after:''){
+  $counter: unique-id();
+  list-style-type: none;
+  counter-reset: $counter;
+  #{children($selector)} {
+    counter-increment: $counter;
+    &:before {
+      content: '#{$before}' counter($counter) '#{$after}';
+      @content;
+    }
+  }
+}
+
+

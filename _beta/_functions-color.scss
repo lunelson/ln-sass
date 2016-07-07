@@ -1,0 +1,90 @@
+// COLOR FUNCTIONS
+
+// LINEAR to LOGARITHMIC and vice-versa
+// @function lin2log($n) { @if $n <= 0.0031308 { @return $n * 12.92; } @else { @return 1.055 * pow($n,1/2.4) - 0.055; } }
+@function lin2log($n) { @if $n <= 0.00304 { @return $n * 12.92; } @else { @return 1.055 * pow($n,1/2.4) - 0.055; } }
+// @function log2lin($n) { @if $n <= 0.04045 { @return $n / 12.92; } @else { @return pow((($n + 0.055)/1.055),2.4); } }
+@function log2lin($n) { @if $n <= 0.03928 { @return $n / 12.92; } @else { @return pow((($n + 0.055)/1.055),2.4); } }
+
+// sRGB BT-709 BRIGHTNESS
+@function brightness($c) {
+	$rlin: log2lin(red($c)/255);
+	$glin: log2lin(green($c)/255);
+	$blin: log2lin(blue($c)/255);
+	@return lin2log(0.2126 * $rlin + 0.7152 * $glin + 0.0722 * $blin) * 100;
+}
+
+// HSY: HSL per BRIGHTNESS
+@function hsy($h, $s, $y) {
+	@if $y == 0 { @return rgb(0,0,0); }
+	@else if $y == 100 { @return rgb(255,255,255); }
+	// add a condition here for $s == 0; return a gray?
+	@else { $min-l: 0; $max-l: 100; $mid-l: 50;
+		@while ($max-l - $min-l) > 0.01 {
+			$mid-y: brightness(hsl($h, $s, $mid-l));
+			@if $mid-y > $y { $max-l: $mid-l; } @else { $min-l: $mid-l; }
+			$mid-l: ($min-l + $max-l) / 2;
+		} @return hsl($h, $s, $mid-l);
+	}
+}
+
+// DIRECT COMPONENT SETTING
+@function set-hue($c, $h) {
+	$s: saturation($c);
+	$l: lightness($c);
+	$a: alpha($c);
+	@return hsla($h,$s,$l,$a);
+}
+@function set-saturation($c, $s) {
+	$h: hue($c);
+	$l: lightness($c);
+	$a: alpha($c);
+	@return hsla($h,$s,$l,$a);
+}
+@function set-lightness($c, $l) {
+	$h: hue($c);
+	$s: saturation($c);
+	$a: alpha($c);
+	@return hsla($h,$s,$l,$a);
+}
+@function set-alpha($c, $a) {
+	$h: hue($c);
+	$s: saturation($c);
+	$l: lightness($c);
+	@return hsla($h,$s,$l,$a);
+}
+@function set-brightness($c, $y) {
+	$h: hue($c);
+	$s: saturation($c);
+	$a: alpha($c);
+	@return set-alpha(hsy($h, $s, $y), $a);
+}
+
+// HSYA: HSLA per BRIGHTNESS
+@function hsya($h, $s, $y, $a: 1) {
+	@return set-alpha(hsy($h, $s, $y), $a);
+}
+
+@function weight($n1,$n2,$w) {
+	@return ($n2 - $n1) * $w + $n1;
+}
+
+@function hsy-interpolate($c1, $c2, $w) {
+	// input adjustments
+	$h1: hue($c1); $h2: hue($c2);
+	@if $h1 - $h2 > 180deg { $h2: $h2 + 360; }
+	@if $h2 - $h1 > 180deg { $h1: $h1 + 360; }
+	$s1: saturation($c1); $s2: saturation($c2);
+	@if $s1 == 0 { $h1: $h2; }
+	@if $s2 == 0 { $h2: $h1; }
+
+	// weight calculations
+	$h: weight($h1, $h2, $w);
+	$s: weight($s1, $s2, $w);
+	$y: lin2log(weight(log2lin(brightness($c1)/100), log2lin(brightness($c2)/100), $w)) * 100;
+	$a: weight(alpha($c1), alpha($c2), $w);
+
+	// return
+	@return hsya($h, $s, $y, $a);
+}
+
