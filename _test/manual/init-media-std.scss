@@ -1,5 +1,5 @@
 @import '../../index';
 
-@include media-setup(false);
+@include init-media(false);
 
 /* #{map-inspect($media)} */
