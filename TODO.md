@@ -12,10 +12,7 @@
 - replace bemify and multify with base-class and mult-class
 
 ## NEXT
-- make sure that any mixins other than 'init-' ones do not do any magic media stuff
-- kill the following two ideas
-  - try automatically wrapping the @content rule in the stack() mixin, in a media-for() rule
-  - ... do the same for the grid and fgrid mixins???
+- group inits in 'media' 'general' 'layout'; not 'base'
 
 ```scss
 
