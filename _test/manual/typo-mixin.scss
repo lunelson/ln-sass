@@ -17,7 +17,7 @@ $base: (
 ///////////
 
 .helper {
-  ex-margin: inspect(typo-ex-margin(s));
+  ex-margin: inspect(typo-margin-ex(s));
 }
 
 /* stack */
