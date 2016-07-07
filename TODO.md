@@ -16,7 +16,6 @@
 - kill the following two ideas
   - try automatically wrapping the @content rule in the stack() mixin, in a media-for() rule
   - ... do the same for the grid and fgrid mixins???
-- rename typo-margin(); allow a null param, which inverts the trim
 
 ```scss
 

@@ -55,16 +55,20 @@
 
   @function line-height($l: $curr-line-key) { @return medium-value('line-height') * line($l); }
 
-  @function ex-trim { @return div-calc(sub-calc(line-height()*1em, ex-factor()*1ex), 2); }
-  @function em-trim { @return (line-height()*1em - em-factor()*1em)/2; }
+  @function trim-ex { @return div-calc(sub-calc(line-height()*1em, ex-factor()*1ex), 2); }
+  @function trim-em { @return (line-height()*1em - em-factor()*1em)/2; }
 
   @function margin-y($m: $curr-mult-y-key) { @return medium-value('margin-y') * mult-y($m); }
   @function margin-x($m: $curr-mult-x-key) { @return medium-value('margin-x') * mult-x($m); }
 
-  @function typo-ex-margin($m: $curr-mult-y-key) { @return sub-calc(margin-y($m), ex-trim()); }
-  @function typo-em-margin($m: $curr-mult-y-key) { @return sub-calc(margin-y($m), em-trim()); }
+  @function typo-margin-ex($m: $curr-mult-y-key) { @return sub-calc(margin-y($m), trim-ex()); }
+  @function typo-margin-em($m: $curr-mult-y-key) { @return sub-calc(margin-y($m), trim-em()); }
 
+  // added-functionality version for public use
+  // if supplied 'false' as arg, will provide the trim value
   @function typo-margin($m: $curr-mult-y-key, $unit: 'ex') {
-    @return sub-calc(margin-y($m), call('#{$unit}-trim')); }
+    @if $m == false { @return call('trim-#{$unit}'); }
+    @return sub-calc(margin-y($m), call('trim-#{$unit}'));
+  }
 
   @function t-margin($args...) { @return typo-margin($args...); }
