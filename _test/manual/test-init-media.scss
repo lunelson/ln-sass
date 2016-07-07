@@ -12,4 +12,11 @@ $media: (
 
 @include init-media(false);
 
+.test {
+  out: media-prop-group(font-size line-height);
+  out: media-prop-group(font-size line-height);
+  out: media-for(font-size line-height);
+  out: media-for(font-size, line-height);
+}
+
 /* #{map-inspect($media)} */

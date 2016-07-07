@@ -11,7 +11,7 @@
       width: 100vw;
   }
 
-  @include media-for(outer-right outer-left) {
+  @include media-for('outer') {
 
     $outer-right: medium-value('outer-right');
     $outer-left: medium-value('outer-left');

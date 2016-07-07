@@ -6,15 +6,8 @@
 
   // backup $base as spec'd
   $base-orig: $base !global;
-
   // merge spec'd $base against defaults, and normalize
   $base: normalize-medium(map-merge($medium-default, $base)) !global;
-
-  @if $out {
-    // base styles
-    html { font-size: unit-assert(map-get($base, 'html-scale'), em); }
-    body { line-height: map-get($base, 'line-height'); }
-  }
 
   ///////////
   // media //
@@ -72,20 +65,14 @@
 
     // merge reference back to master
     $media: map-merge($media, ($m: $reference)) !global;
-
-    // styles, if they were are in $media-orig and if $out is true
-    @media (min-width: #{$breakpoint}) {
-      @if $out and map-has-key($medium, 'font-size') { html { font-size: unit-assert(map-get($reference, 'html-scale'), em); } }
-      @if $out and map-has-key($medium, 'line-height') { body { line-height: map-get($reference, 'line-height'); } }
-    }
   }
 
   @if $out {
     $globals: if(variable-exists('globals'), $globals, ());
     @include json-content(map-merge($globals, (media: $media)));
-    // @include media-each {
-    //   @if medium-value-orig('font-size') { html { font-size: unit-assert(map-get($reference, 'html-scale'), em); } }
-    //   @if medium-value-orig('line-height') { body { line-height: map-get($reference, 'line-height'); } }
-    // }
+    @include media-for(font-size line-height) {
+      html { font-size: unit-assert(medium-value('html-scale'), em); }
+      body { line-height: medium-value('line-height'); }
+    }
   }
 }

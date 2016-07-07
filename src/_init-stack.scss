@@ -10,7 +10,7 @@
     & > * { margin-top: 0; margin-bottom: 0; }
   }
 
-  @include media-for(margin-y mults-y mults) {
+  @include media-for('stack') {
 
     @each $m, $mult in map-merge((base: 1), (medium-value('mults-y') or medium-value('mults'))) {
 

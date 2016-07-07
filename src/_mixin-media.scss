@@ -24,8 +24,8 @@
 }
 
 // multiple, for
-@mixin media-for($props) {
-  @include media-each(media-for($props)) {
+@mixin media-for($props...) {
+  @include media-each(media-for($props...)) {
     @content;
   }
 }

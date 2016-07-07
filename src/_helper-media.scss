@@ -43,7 +43,7 @@
 ///////////////
 
   // look up prop groups
-  @function property-group($group-key){
+  @function media-prop-group($group-key){
     $groups: (
       font-size: (sizes size-mod),
       line-height: (lines),
@@ -73,7 +73,8 @@
     $group-keys: normalize-splat($group-keys...);
     $props: $group-keys; $media-keys: ();
     @each $key in $group-keys {
-      $props: join($props, property-group($key)); }
+      $props: join($props, media-prop-group($key)); }
+    // @return $props;
     // function is good up to here; compare against media-orig...
     @each $m, $medium in $media-orig {
       @if contains-any(map-keys($medium), $props) {
