@@ -2,26 +2,32 @@
 // media //
 ///////////
 
-$base: () !default;
+$medium-default: (
+  // bases
+  font-size: 16px,
+  line-height: 1.5,
+  margin-x: 2rem,
+  margin-y: 2rem,
+  outer-top: 2rem,
+  outer-right: 2rem,
+  outer-bottom: 2rem,
+  outer-left: 2rem,
+  // mults and mods
+  lines: (),
+  sizes: (),
+  mults-x: (),
+  mults-y: (),
+  size-mod: 1.5,
+  mult-mod: 1.5
+);
 
-$media: (
-  a: (breakpoint: 32em),
-  b: (breakpoint: 48em),
-  c: (breakpoint: 64em),
-  d: (breakpoint: 80em),
-) !default;
+$base: $medium-default !default;
 
-$media-alt: (
-  c4: ( grid-columns: 4 ),
-  c6: ( grid-columns: 6 ),
-  c8: ( grid-columns: 8 ),
-  c10: ( grid-columns: 10 ),
-  c12: ( grid-columns: 12 ),
-) !default;
-
-$media-hd-ratio: 3 2 !default;
+$media: () !default;
 $globals: () !default;
+
 $curr-medium-key: null !default;
+$media-hd-ratio: 3 2 !default;
 
 ///////////
 // theme //

@@ -8,8 +8,8 @@
 - create an init-typo mixin
   produce .typo--${m} each named size context? (only for one line-height of course) ?
 
-## media
-- make $base contain defaults with !default; merge/copy this to $base-default.
+## classes
+- replace bemify and multify with base-class and mult-class
 
 ## NEXT
 - make sure that any mixins other than 'init-' ones do not do any magic media stuff
@@ -39,6 +39,7 @@
 }
 
 .some-module .content {
+
   @include stack('lg') {
    /* perhaps automatically include t-media here, for @content passed to stack */
    h1 { @include typo(/* .... */); }
