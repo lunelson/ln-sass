@@ -86,7 +86,8 @@
       margin-top: typo-margin-em(0);
       margin-bottom: typo-margin-em(0);
     }
-    @each $m, $mult in map-merge((base: 1), medium-value('mults-y') or medium-value('mults')) {
+    $mults: medium-value('mults-y') or medium-value('mults');
+    @each $m, $mult in map-merge((base: 1), $mults) {
       $stack-sel: '.stack#{multify($m)}';
       @at-root #{insert-parents($stack-sel,'>')} {
         @at-root #{insert-parents('*', '+')} {
