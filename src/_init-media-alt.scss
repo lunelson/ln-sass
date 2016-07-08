@@ -13,7 +13,8 @@
   // media //
   ///////////
 
-  // TODO: use a sassdash sortBy with a function, to determine proper sorting
+  // NB: must be provided in order !
+  // (sorting these would require recursive pre-calc and check of resulting breakpoints, FTS)
   $media: if(length($media)>0, $media, (
     c4: ( grid-columns: 4 ),
     c6: ( grid-columns: 6 ),
