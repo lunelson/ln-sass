@@ -4,6 +4,7 @@
 
 // grid
 @mixin grid($mult: null, $cols: null, $cell: '*') {
+  @if $cols and $cell != '*' { &:before { display: none; content: '#{$cols} #{$cell}'; } }
   $gutter: if($mult, margin-x($mult), null);
   display: block;
   width: if($gutter, calc(100% + #{$gutter}), null);
@@ -11,8 +12,6 @@
   margin-left: if($gutter, $gutter/-2, null);
   position: relative;
   font-size: 0rem;
-  @if $cols and $cell != '*' { // for salvattore...
-    &:before { display: none; content: '#{$cols} #{$cell}'; } }
   & > #{$cell} {
     display: inline-block;
     direction: rtl;
@@ -46,10 +45,10 @@
 ///////////
 
 // master mixin
-@mixin cell($span: 4, $opts: null, $right: null, $left: null, $out: null) {
+@mixin cell($span: null, $opts: null, $right: null, $left: null, $out: null) {
   @if type-of($opts) == 'map' { @include cell-span($span, $opts...); }
   @else {
-    $n: nth($span, 1);
+    $n: nth($span, 1) or medium-value('type-columns') or 4;
     $d: _nth($span, 2) or medium-value('grid-columns') or 4;
     flex-grow: 0;
     width: $n / $d * 100%;
@@ -63,8 +62,8 @@
 }
 
 // span only
-@mixin cell-span($span: 4) {
-  $n: nth($span, 1);
+@mixin cell-span($span: null) {
+  $n: nth($span, 1) or medium-value('type-columns') or 4;
   $d: _nth($span, 2) or medium-value('grid-columns') or 4;
   flex-grow: 0;
   width: $n / $d * 100%;
