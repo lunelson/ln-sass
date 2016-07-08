@@ -4,9 +4,9 @@
   // base //
   //////////
 
-  // backup $base as spec'd
-  $base-orig: $base !global;
+  // backup $base as spec'd;
   // merge spec'd $base against defaults, and normalize
+  $base-orig: $base !global;
   $base: normalize-medium(map-merge($medium-default, $base)) !global;
 
   ///////////
@@ -20,10 +20,9 @@
     d: (breakpoint: 80em),
   )) !global;
 
-  // backup $media
+  // backup $media;
+  // make temp for recursive merging
   $media-orig: $media !global;
-
-  // temp for recursive merging
   $reference: $base;
 
   @each $m, $medium in $media {

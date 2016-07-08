@@ -12,8 +12,9 @@
 
   @include media-for('stack') {
 
-    @each $m, $mult in map-merge((base: 1), (medium-value('mults-y') or medium-value('mults'))) {
+    $mults: medium-value('mults-y') or medium-value('mults');
 
+    @each $m, $mult in map-merge((base: 1), $mults) {
       .stack#{multify($m)} { & > * + * { margin-top: $mult * medium-value('margin-y'); } }
     }
   }

@@ -15,7 +15,6 @@
 
     $outer-right: medium-value('outer-right');
     $outer-left: medium-value('outer-left');
-
     $wrap-offset: sub-calc($outer-right, $outer-left);
     $unwrap-margin: sub-calc(100%, 100vw);
     $unwrap-margin-right: div-calc(sub-calc($unwrap-margin, $wrap-offset), 2);

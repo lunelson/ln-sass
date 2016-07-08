@@ -4,9 +4,9 @@
   // base //
   //////////
 
-  // backup $base as spec'd
-  $base-orig: $base !global;
+  // backup $base as spec'd;
   // merge spec'd $base against defaults, and normalize
+  $base-orig: $base !global;
   $base: normalize-medium(map-merge($medium-default, $base)) !global;
 
   ///////////
@@ -14,7 +14,6 @@
   ///////////
 
   // TODO: use a sassdash sortBy with a function, to determine proper sorting
-
   $media: if(length($media)>0, $media, (
     c4: ( grid-columns: 4 ),
     c6: ( grid-columns: 6 ),
@@ -23,10 +22,9 @@
     c12: ( grid-columns: 12 ),
   )) !global;
 
-  // backup $media
+  // backup $media;
+  // make temp for recursive merging
   $media-orig: $media !global;
-
-  // temp for recursive merging
   $reference: $base;
 
   @each $m, $medium in $media {
