@@ -4,7 +4,7 @@
 
 @mixin init-outer {
 
-  .outer, #{baseify('outer')} { @include clip; }
+  // .outer, #{baseify('outer')} { @include clip; }
 
   @include media-for('outer') {
 
