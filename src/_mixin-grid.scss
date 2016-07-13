@@ -45,8 +45,8 @@
 ///////////
 
 // master mixin
-@mixin cell($span: null, $opts: null, $right: null, $left: null, $out: null) {
-  @if type-of($opts) == 'map' { @include cell-span($span, $opts...); }
+@mixin cell-posn($span: null, $opts: null, $right: null, $left: null, $out: null) {
+  @if type-of($opts) == 'map' { @include cell-posn($span, $opts...); }
   @else {
     $n: nth($span, 1) or medium-value('type-columns') or 4;
     $d: _nth($span, 2) or medium-value('grid-columns') or 4;

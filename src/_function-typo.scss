@@ -1,0 +1,26 @@
+//////////
+// font //
+//////////
+
+  @function font($font: $curr-font-key) { @return map-get($fonts, ($font or 'base')); }
+  @function ex-factor($font: $curr-font-key) { @return map-get(font($font), 'ex-factor'); }
+  @function em-factor($font: $curr-font-key) { @return map-get(font($font), 'em-factor'); }
+
+//////////////////////////
+// trim and typo-margin //
+//////////////////////////
+
+  @function trim-ex { @return div-calc(sub-calc(line-height()*1em, ex-factor()*1ex), 2); }
+  @function trim-em { @return (line-height()*1em - em-factor()*1em)/2; }
+
+  @function typo-margin-ex($mult: $curr-mult-y-key) { @return sub-calc(margin-y($mult), trim-ex()); }
+  @function typo-margin-em($mult: $curr-mult-y-key) { @return sub-calc(margin-y($mult), trim-em()); }
+
+  // added-functionality version for public use
+  // if supplied 'false' as arg, will provide the trim value
+  @function typo-margin($m: $curr-mult-y-key, $unit: 'ex') {
+    @if $m == false { @return call('trim-#{$unit}'); }
+    @return sub-calc(margin-y($m), call('trim-#{$unit}'));
+  }
+
+  @function t-margin($args...) { @return typo-margin($args...); }

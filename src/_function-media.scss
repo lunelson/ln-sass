@@ -1,6 +1,6 @@
-////////////////////////////////////////
-// core media-object access functions //
-////////////////////////////////////////
+/////////////////////////////
+// medium and medium-value //
+/////////////////////////////
 
   // medium objects
   @function medium($m: $curr-medium-key) { @return if($m, map-get($media, $m) or $base, $base); }
@@ -13,3 +13,65 @@
   // aliases of above
   @function mval($args...){ @return medium-value($args...); }
   @function mval-orig($args...){ @return medium-value-orig($args...); }
+
+/////////////////////
+// specific values //
+/////////////////////
+
+  @function line-height($line: $curr-line-key, $m: $curr-medium-key) {
+    @return medium-value('line-height', $m) * line($line);
+  }
+
+  @function margin-y($mult: $curr-mult-y-key, $m: $curr-medium-key) {
+    @return medium-value('margin-y', $m) * mult-y($mult);
+  }
+
+  @function margin-x($mult: $curr-mult-x-key, $m: $curr-medium-key) {
+    @return medium-value('margin-x', $m) * mult-x($mult);
+  }
+
+//////////////////////////////////////////
+// mods and mults; automatic per medium //
+//////////////////////////////////////////
+
+  @function mod($index, $factor: 2, $spread: 2) { @return _pow($factor, $index/$spread); }
+
+  @function auto-line($size: null) {
+    $size: $size or size();
+    $sub-lines: $typo-sub-line or ceil($size);
+    $min-lines: $typo-min-line;
+    $rel-height: medium-value('line-height') / unit-strip($size);
+    @return ceil($min-lines / $rel-height * $sub-lines) / $sub-lines / unit-strip($size);
+  }
+
+  @function size($size: $curr-size-key) {
+    @if type-of($size) == 'list' { @return call(join($size, medium-value('size-mod'))...); }
+    @else if type-of($size) == 'string' { @return map-get(medium-value('sizes'), $size); }
+    @else if type-of($size) == 'number' {
+      @if index('' 'em' 'rem' 'px', unit($size)) { @return px($size) / medium-value('font-size'); }
+      @else { @return $size; } }
+    @else { @return $size or 1; }
+  }
+
+  @function line($line: $curr-line-key) {
+    @if $line == 'auto' { @return auto-line(); }
+    @else if type-of($line) == 'string' { @return map-get(medium-value('lines'), $line); }
+    @else if type-of($line) == 'number' {
+      @if index('em' 'rem' 'px', unit($line)) { @return unit-strip(rem($line)) / medium-value('line-height'); }
+      @else { @return $line; } }
+    @else { @return $line or 1; }
+  }
+
+  @function mult-y($mult: $curr-mult-y-key) {
+    @if type-of($mult) == 'list' { @return apply(append($mult, medium-value('mult-y-mod') or medium-value('mult-mod'))); }
+    @else if type-of($mult) == 'string' { @return map-get(medium-value('mults-y') or medium-value('mults'), $mult); }
+    @else if type-of($mult) == 'number' { @return unit-strip(rem($mult)); }
+    @else { @return $mult or 1; }
+  }
+
+  @function mult-x($mult: $curr-mult-x-key) {
+    @if type-of($mult) == 'list' { @return apply(append($mult, medium-value('mult-x-mod') or medium-value('mult-mod'))); }
+    @else if type-of($mult) == 'string' { @return map-get(medium-value('mults-x') or medium-value('mults'), $mult); }
+    @else if type-of($mult) == 'number' { @return unit-strip(rem($mult)); }
+    @else { @return $mult or 1; }
+  }
