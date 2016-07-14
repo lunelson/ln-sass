@@ -4,32 +4,11 @@
   // grid //
   //////////
 
-  .grid, #{baseify('grid')} {
-    display: block;
-    position: relative; // for 'out' positioned cells which are absolute
-    font-size: 0rem;
-    & > * {
-      min-height: 1px; // http://css-tricks.com/make-sure-columns-dont-collapse-horizontally/
-      font-size: 1rem;
-      direction: ltr;
-      width: 100%;
-      display: inline-block;
-      vertical-align: top;
-      background-clip: content-box;
-    }
-  }
+  .grid, #{baseify('grid')} { @include grid(false); }
+  .igrid, #{baseify('igrid')} { @include igrid(false); }
+  .fgrid, #{baseify('fgrid')} { @include fgrid(false); }
 
-  .fgrid, #{baseify('fgrid')} {
-    display: flex;
-    & > * {
-      flex: 1 1 auto;
-      min-width: 0%; // https://css-tricks.com/flexbox-truncated-text/
-      width: 0%;
-      background-clip: content-box;
-    }
-  }
-
-  .grid--null, .fgrid--null {
+  .grid--null, .fgrid--null, .igrid--null {
     margin-right: 0;
     margin-left: 0;
     width: 100%;
@@ -42,12 +21,10 @@
   @include media-for('grid') {
 
     $mults: medium-value('mults-x') or medium-value('mults');
-
     @each $m, $mult in map-merge((base: 1), $mults) {
 
       $margin: $mult * medium-value('margin-x');
-
-      .fgrid#{multify($m)}, .grid#{multify($m)} {
+      .grid#{multify($m)}, .fgrid#{multify($m)}, .igrid#{multify($m)} {
         margin-left: $margin / -2;
         margin-right: $margin / -2;
         width: calc(100% + #{$margin});
