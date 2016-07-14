@@ -61,10 +61,10 @@ body {
 
 @mixin scrollbars($size, $fg-color, $bg-color: mix($fg-color, white, 50%)) {
   // Chrome/Safari
-  ::-webkit-scrollbar { width:  $size; height: $size; }
-  ::-webkit-scrollbar-thumb { background-color: $fg-color; }
-  ::-webkit-scrollbar-track { background-color: $bg-color; }
+  &::-webkit-scrollbar { width:  $size; height: $size; }
+  &::-webkit-scrollbar-thumb { background-color: $fg-color; }
+  &::-webkit-scrollbar-track { background-color: $bg-color; }
   // IE
-  body { scrollbar-face-color: $fg-color; scrollbar-track-color: $bg-color; }
+  scrollbar-face-color: $fg-color; scrollbar-track-color: $bg-color;
 }
 
