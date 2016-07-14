@@ -52,7 +52,7 @@
       outer: (outer-right outer-left),
       outer-y: (outer-top outer-bottom),
       stack: (margin-y),
-      grid: (margin-x),
+      grid: (margin-x grid-columns),
       typo: (line-height margin-y),
     );
     $group-keys: font-size line-height margin-x margin-y outer outer-y stack grid typo;
