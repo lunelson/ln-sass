@@ -2,7 +2,7 @@
 // debug grid //
 ////////////////
 
-@mixin debug-grid($m: $curr-mult-x-key, $color: set-alpha(pink, 0.25)) {
+@mixin debug-grid($m: $curr-mult-x-key, $color: set-alpha(pink, 0.25), $offset: 0) {
   body::after {
     content: '';
     top: 0;
@@ -20,7 +20,7 @@
         $margin-x: margin-x($m);
         $outer-right: medium-value('outer-right');
         $outer-left: medium-value('outer-left');
-        $page-offset: $outer-right - $outer-left;
+        $page-offset: $outer-right - $outer-left + $offset;
         $content-width: medium-value('content-width') + $margin-x;
         width: $content-width;
         margin-left: ($content-width + $page-offset + $margin-x)/-2;

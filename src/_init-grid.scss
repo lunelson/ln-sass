@@ -18,7 +18,7 @@
     }
   }
 
-  @include media-for('grid') {
+  @include media-for('margin-x') {
 
     $mults: medium-value('mults-x') or medium-value('mults');
     @each $m, $mult in map-merge((base: 1), $mults) {

@@ -2,19 +2,19 @@
 // outer //
 ///////////
 
-@mixin init-outer {
+@mixin init-outer($t:0, $r:0, $b:0, $l:0) {
 
   // .outer, #{baseify('outer')} { @include clip; }
 
   @include media-for('outer') {
 
-    .outer, .outer--right { padding-right: medium-value('outer-right'); }
-    .outer, .outer--left { padding-left: medium-value('outer-left'); }
+    .outer, .outer--right { padding-right: add-calc(medium-value('outer-right'), $r); }
+    .outer, .outer--left { padding-left: add-calc(medium-value('outer-left'), $l); }
   }
 
   @include media-for('outer-y') {
 
-    .outer-y, .outer--top { padding-top: medium-value('outer-top'); }
-    .outer-y, .outer--bottom { padding-bottom: medium-value('outer-bottom'); }
+    .outer-y, .outer--top { padding-top: add-calc(medium-value('outer-top'), $t); }
+    .outer-y, .outer--bottom { padding-bottom: add-calc(medium-value('outer-bottom'), $b); }
   }
 }
