@@ -11,10 +11,18 @@
 // the classic unit unit-stripping hack
 @function unit-strip-alt($value){ @return if(unitless($value), $value, $value / (0 * $value + 1)); }
 
-@function has-unit($number, $unit: null) {
-  @if $unit { @return unit($number) == $unit; }
-  @return not unitless($number);
+@function has-unit($n, $unit: null) {
+  @if type-of($n) == 'number' {
+    @if $unit { @return unit($n) == $unit; }
+    @return not unitless($n);
+  }
+  @return false;
 }
+
+@function no-unit($n) {
+  @return if(type-of($n) == 'number', unitless($n), false);
+}
+
 
 @function unit-relative($number){ @return index('%' 'ex' 'rem' 'em' 'vh' 'vw' 'vmin' 'vmax', unit($number)); }
 @function unit-absolute($number){ @return not index('%' 'ex' 'rem' 'em' 'vh' 'vw' 'vmin' 'vmax', unit($number)) and not unitless($number); }
