@@ -212,3 +212,10 @@
       }
     }
   }
+
+  // cycle; for floats
+  @mixin cell-cycle($n) {
+    &:nth-child(#{$n}n+#{$n+1}) {
+      clear: left;
+    }
+  }
