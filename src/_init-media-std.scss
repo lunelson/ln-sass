@@ -56,7 +56,12 @@
 
   @if $out {
     $globals: if(variable-exists('globals'), $globals, ());
-    @include json-content(map-merge($globals, (media: $media)));
+    @include json-content((
+      globals: $globals,
+      media: $media,
+      base: $base
+    ));
+    // @include json-content(map-merge($globals, (media: $media)));
     @include media-for(font-size line-height) {
       html { font-size: unit-assert(medium-value('html-scale'), em); }
       body { line-height: medium-value('line-height'); }
