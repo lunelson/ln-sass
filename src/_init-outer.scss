@@ -4,7 +4,7 @@
 
 @mixin init-outer($t:0, $r:0, $b:0, $l:0) {
 
-  // .outer, #{baseify('outer')} { @include clip; }
+  .outer, #{baseify('outer')} { overflow-x: hidden; }
 
   @include media-for('outer') {
 
