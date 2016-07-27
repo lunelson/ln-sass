@@ -1,0 +1,21 @@
+{
+  "name": "ln-sass",
+  "description": "My personal sass sort-of-framework and utilities",
+  "main": "_index.scss",
+  "authors": [
+    "Lu Nelson <lunelson@gmail.com>"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/lunelson/ln-sass",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "quantity-queries": "^0.4.0"
+  }
+}
