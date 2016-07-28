@@ -6,13 +6,9 @@
 //  \__,_|_| |_|_|_| |_| |_|      \__|_|  \__,_|_| |_|___/
 
 
-@mixin animation($args...) {
+@mixin animation($arglist...) {
   $name: unique-id(); // name for @keyframes
-  $args: join((), $args, 'space'); // conform args as SSV
-  animation: $name + ' ' + $args;
-  @keyframes #{$name} {
-    @content;
-  }
+  $arglist: join((), $arglist, 'space'); // conform args as SSV
+  animation: $arglist $name;
+  @keyframes #{$name} { @content; }
 }
-// alias of above
-@mixin anim($args...) { @include animation($args...) { @content; } }

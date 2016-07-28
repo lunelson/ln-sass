@@ -18,31 +18,20 @@
 @function first($list) { @return nth($list, 1); }
 @function last($list) { @return nth($list, length($list)); }
 
-// normalize splats; must also be passed a splat
-@function normalize-splat($args...) {
-  $output: $args;
-  @if type-of(nth($args, 1)) == list and length($args) == 1 {
-    $output: (); @each $item in nth($args, 1) {
-      $output: append($output, $item, 'comma'); } }
-  @return $output;
-}
-
 // list versions of other built-ins
 @function list-max($list) { @return max($list...); }
 @function list-min($list) { @return min($list...); }
 
-// convert a list to space-separated values
-@function force-ssv($list) {
-  $output: (); @each $item in $list {
-    $output: append($output, $item, 'space'); }
-  @return $output;
-}
+// ssv / csv conversion
+@function force-ssv($list){ @return join((), $list, 'space'); }
+@function force-csv($list){ @return join((), $list, 'comma'); }
 
-// convert a list to comma-separated values
-@function force-csv($list) {
-  $output: (); @each $item in $list {
-    $output: append($output, $item, 'comma'); }
-  @return $output;
+// normalize capture of arglist
+@function normalize-arglist($arglist...) {
+  @if length($arglist) == 1 and type-of(nth($arglist, 1)) == list {
+    $arglist: join((), nth($arglist, 1), 'comma');
+  }
+  @return $arglist;
 }
 
 @function remove($list, $tests...) {
