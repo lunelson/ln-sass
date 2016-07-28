@@ -70,7 +70,7 @@
 
   // find all $keys in $media-orig which have specified $props
   @function media-for($group-keys...) {
-    $group-keys: normalize-splat($group-keys...);
+    $group-keys: normalize-arglist($group-keys...);
     $props: $group-keys; $media-keys: ();
     @each $key in $group-keys {
       $props: join($props, media-prop-group($key)); }

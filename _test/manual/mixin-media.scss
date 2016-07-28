@@ -1,25 +1,38 @@
 @import '../../index';
 
 $media: (
-  a: (
-    breakpoint: 32em,
+  c4a: (
+    type-columns: 4,
+    grid-columns: 4,
   ),
-  b: (
-    breakpoint: 48em,
-    font-size: 2rem,
-    margin-x: 5rem,
+  c4b: (
+    font-size: 16px,
+    line-height: 1.6,
+    margin-x: 2rem,
+    type-width: 32rem,
   ),
-  c: (
-    breakpoint: 64em,
-    margin-y: 3rem,
+  c4c: (
+    font-size: 18px,
+    outer-right: 2rem,
+    outer-left: 2rem,
   ),
-  d: (
-    breakpoint: 80em,
-    line-height: 2,
+  c6: (
+    grid-columns: 6,
+    // outer-right: 2rem,
+    // outer-left: 2rem,
   ),
+  c8: (
+    grid-columns: 8,
+  ),
+  // c10: (
+  //   grid-columns: 10,
+  // ),
+  // c12: (
+  //   grid-columns: 12,
+  // ),
 );
 
-@include media-setup();
+@include init-media(true,true);
 
 .media-helper-test {
   size-media: inspect(media-for(font-size));
