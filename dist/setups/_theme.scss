@@ -1,0 +1,48 @@
+//  _   _
+// | | | |
+// | |_| |__   ___ _ __ ___   ___
+// | __| '_ \ / _ \ '_ ` _ \ / _ \
+// | |_| | | |  __/ | | | | |  __/
+//  \__|_| |_|\___|_| |_| |_|\___|
+
+// COLORS
+
+$colors: (
+
+  body: black,
+  body_bg: white,
+  link: blue,
+  link--active: red,
+  link_bg: null,
+  link_bg--active: null,
+
+) !default;
+
+// FONTS
+
+$fonts: (
+  base: (
+    font-family: (Arial, sans-serif),
+    em-factor: 1,
+    ex-factor: 1,
+    size-adjust: 1,
+    spacing-max: 0.5,
+    spacing-end: 50,
+  ),
+  serif: (
+    font-family: (Georgia, serif),
+    em-factor: 1,
+    ex-factor: 1,
+    size-adjust: 1,
+    spacing-max: 0.5,
+    spacing-end: 50,
+  ),
+  mono: (
+    font-family: (Monaco, Consolas, "Lucida Console", monospace),
+    em-factor: 1,
+    ex-factor: 1,
+    size-adjust: 1,
+    spacing-max: 0.5,
+    spacing-end: 50,
+  )
+) !default;

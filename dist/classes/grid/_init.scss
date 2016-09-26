@@ -1,4 +1,4 @@
-@mixin init-grid {
+@mixin class--grid {
 
   //////////
   // grid //
@@ -8,7 +8,9 @@
   .igrid, #{baseify('igrid')} { @include igrid(false); }
   .fgrid, #{baseify('fgrid')} { @include fgrid(false); }
 
-  .grid--null, .fgrid--null, .igrid--null {
+  .grid--null,
+  .fgrid--null,
+  .igrid--null {
     margin-right: 0;
     margin-left: 0;
     width: 100%;
@@ -19,11 +21,11 @@
   }
 
   @include media-for('margin-x') {
-
     $mults: medium-value('mults-x') or medium-value('mults');
-    @each $m, $mult in map-merge((base: 1), $mults) {
 
+    @each $m, $mult in map-merge((base: 1), $mults) {
       $margin: $mult * medium-value('margin-x');
+
       .grid#{multify($m)}, .fgrid#{multify($m)}, .igrid#{multify($m)} {
         margin-left: $margin / -2;
         margin-right: $margin / -2;

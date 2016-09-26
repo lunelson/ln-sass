@@ -1,0 +1,74 @@
+// Text-level semantics
+
+abbr[title] {
+  border-bottom: none; // Remove the bottom border in Firefox 39-.
+  text-decoration: underline; // Add the correct text decoration in Chrome, Edge, IE, Opera, and Safari.
+  text-decoration: underline dotted; // ^
+}
+
+// Prevent the duplicate application of `bolder` by the next rule in Safari 6.
+
+
+b,
+strong {
+  font-weight: inherit;
+}
+
+// Add the correct font weight in Chrome, Edge, and Safari.
+
+
+b,
+strong {
+  font-weight: bolder;
+}
+
+// Add the correct font style in Android 4.3-.
+
+
+dfn {
+  font-style: italic;
+}
+
+// Correct the font size and margin on `h1` elements within `section` and
+// `article` contexts in Chrome, Firefox, and Safari.
+
+
+h1 {
+  font-size: 2em;
+  margin: 0.67em 0;
+}
+
+// Add the correct background and color in IE 9-.
+
+
+mark {
+  background-color: #ff0;
+  color: #000;
+}
+
+// Add the correct font size in all browsers.
+
+
+small {
+  font-size: 80%;
+}
+
+// Prevent `sub` and `sup` elements from affecting the line height in
+// all browsers.
+
+
+sub,
+sup {
+  font-size: 75%;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+}
+
+sub {
+  bottom: -0.25em;
+}
+
+sup {
+  top: -0.5em;
+}

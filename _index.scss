@@ -8,15 +8,12 @@
 // deps
 @import "node_modules/sassdash/index";
 
-// src
-@import "src/util";
-@import "src/reset";
-@import "src/config";
-@import "src/helper";
-@import "src/function";
-@import "src/mixin";
-@import "src/init";
-@import "src/debug";
+// dist
+// @import "dist/utils/all";
+// @import "dist/resets/all";
+// @import "dist/inits/media";
+// @import "dist/inits/theme";
+// @import "dist/patterns/all";
 
 // vars
 $done-base-init: false !default;

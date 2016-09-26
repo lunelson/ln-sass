@@ -1,6 +1,6 @@
 {
     "output": {
-        "dir": "build",      // Relative or absolute path (can have ..)
+        "dir": ".",      // Relative or absolute path (can have ..)
         "structure": "nested"       // "flat", "nested", or ["nested", "relative/root/of/nest"]
     },
     "compile": {
