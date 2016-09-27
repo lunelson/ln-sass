@@ -1,7 +1,8 @@
 // @import '../../index';
 @import '../../dist/utils/all';
-@import '../../dist/resets/all';
-@import '../../dist/classes/grid';
+@import '../../dist/reset/all';
+
+@include reset--all;
 
 // @include reset--ln();
 

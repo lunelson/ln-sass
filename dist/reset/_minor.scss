@@ -1,0 +1,75 @@
+//////////////////
+// RESET--MINOR //
+//////////////////
+
+// based on necolas normalize.css v 4.2.0 https://github.com/necolas/normalize.css/releases
+// based on meyer reset v2.0 http://meyerweb.com/eric/tools/css/reset/
+// based on html5doctor http://html5doctor.com/html-5-reset-stylesheet/
+
+@mixin reset--minor {
+
+  a {
+    background-color: transparent; // Remove the gray background on active links in IE 10.
+    -webkit-text-decoration-skip: objects; // Remove gaps in links underline in iOS 8+ and Safari 8+.
+    &:active, &:hover {
+      outline-width: 0; // Remove the outline on focused links when they are also active or hovered
+    }
+    &.block { display: block; }
+  }
+
+  code,
+  kbd,
+  pre,
+  samp {
+    font-family: monospace, monospace; // Correct the inheritance and scaling of font size in all browsers.
+    font-size: 1em; //  Correct the odd `em` font sizing in all browsers.
+  }
+
+  abbr[title], dfn[title] {
+    border-bottom: none; // Remove the bottom border in Firefox 39-.
+    text-decoration: underline; // Add the correct text decoration in Chrome, Edge, IE, Opera, and Safari.
+    text-decoration: underline dotted; // ^
+    cursor:help;
+  }
+
+  dfn {
+    font-style: italic; // add the correct font style in android 4.3-.
+  }
+
+  b,
+  strong {
+    font-weight: inherit; // prevent the duplicate application of `bolder` by the next rule in safari 6.
+    font-weight: bolder; // add the correct font weight in chrome, edge, and safari.
+  }
+
+  ins {
+    background-color:#ff0;
+    color:#000;
+    text-decoration:none;
+  }
+
+  mark {
+    background-color: #ff0; // add the correct background and color in ie 9-.
+    color: #000; // ^
+    font-style:italic;
+    font-weight:bold;
+  }
+
+  small {
+    font-size: 80%; // add the correct font size in all browsers.
+  }
+
+  sub,
+  sup {
+    font-size: 75%; // Prevent `sub` and `sup` elements from affecting the line height
+    line-height: 0; // ^
+    position: relative; // ^
+    vertical-align: baseline; // ^
+  }
+  sub { bottom: -0.25em; }
+  sup { top: -0.5em; }
+
+  del {
+    text-decoration: line-through;
+  }
+}
