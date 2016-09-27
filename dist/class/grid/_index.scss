@@ -11,19 +11,14 @@
 @import 'mixins';
 @import 'debug';
 
-@mixin class--grid($ns: 'l') {
+@mixin class--grid($ns: '') {
+  $ns: if(str-length($ns)>0, '#{$ns}-', '');
 
-  //////////
-  // grid //
-  //////////
+  #{base-class('#{$ns}grid')} { @include grid(false); }
+  #{base-class('#{$ns}fgrid')} { @include fgrid(false); }
 
-  .grid, #{baseify('grid')} { @include grid(false); }
-  .igrid, #{baseify('igrid')} { @include igrid(false); }
-  .fgrid, #{baseify('fgrid')} { @include fgrid(false); }
-
-  .grid--null,
-  .fgrid--null,
-  .igrid--null {
+  .#{$ns}grid--null,
+  .#{$ns}fgrid--null {
     margin-right: 0;
     margin-left: 0;
     width: 100%;
@@ -39,7 +34,8 @@
     @each $m, $mult in map-merge((base: 1), $mults) {
       $margin: $mult * medium-value('margin-x');
 
-      .grid#{multify($m)}, .fgrid#{multify($m)}, .igrid#{multify($m)} {
+      #{mult-class('#{$ns}grid', $m)},
+      #{mult-class('#{$ns}fgrid', $m)} {
         margin-left: $margin / -2;
         margin-right: $margin / -2;
         width: calc(100% + #{$margin});

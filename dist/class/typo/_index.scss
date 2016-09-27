@@ -9,6 +9,7 @@
 
 $typo-min-line: 1.125 !default;
 $typo-sub-line: 2 !default;
+
 $curr-stack-sel: null !default;
 $curr-size-key: null !default;
 $curr-line-key: null !default;
@@ -16,7 +17,19 @@ $curr-font-key: null !default;
 $curr-mult-y-key: null !default;
 $curr-mult-x-key: null !default;
 
-// @import "typo/debug";
-@import "typo/functions";
-// @import "typo/init";
-@import "typo/mixins";
+// @import "debug";
+@import "functions";
+// @import "init";
+@import "mixins";
+
+@mixin class--typo($ns: '') {
+  $ns: if(str-length($ns)>0, '#{$ns}-', '');
+
+  @include media-for('typo') {
+    $sizes: medium-value('sizes');
+    $line: medium-value('line-height');
+    @each $s, $size in map-merge($sizes, (base: 1)) {
+      #{mult-class('#{$ns}typo', $s)} { @include typo($size); }
+    }
+  }
+}

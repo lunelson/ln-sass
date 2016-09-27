@@ -1,9 +1,15 @@
-///////////
-// outer //
-///////////
+//
+//
+//  _ __   __ _  __ _  ___
+// | '_ \ / _` |/ _` |/ _ \
+// | |_) | (_| | (_| |  __/
+// | .__/ \__,_|\__, |\___|
+// | |           __/ |
+// |_|          |___/
 
-@mixin init-outer($t:0, $r:0, $b:0, $l:0) {
+@mixin class--page($t:0, $r:0, $b:0, $l:0) {
 
+  // ! this seems to cause problems
   // .outer, #{baseify('outer')} { overflow-x: hidden; overflow-y: visible; }
 
   @include media-for('outer') {

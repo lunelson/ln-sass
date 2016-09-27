@@ -1,0 +1,23 @@
+///////////////
+// font-face //
+///////////////
+
+// todo: font-face mixin updates
+// - update to use a global $font-folder; pass $file as 'subfolder/filename.ext'
+// - update to include woff2
+// - update to use local ?
+// - update to allow specifying which types are available: eot, svg, woff, woff2, ttf
+
+@mixin font-face($family, $dir, $file, $style, $weight) {
+  @font-face {
+    font-family: $family;
+    font-style: $style;
+    font-weight: $weight; // this should be both word and number values
+    src: url('#{$dir}#{$file}.eot'); // ie9 compat modes
+    src: url('#{$dir}#{$file}.eot?#iefix') format('embedded-opentype'),
+       url('#{$dir}#{$file}.svg##{$file}') format('svg');
+       //url('#{$dir}#{$file}.woff') format('woff'),
+       // url('#{$dir}#{$file}.svg##{$file}') format('svg'),
+       // url('#{$dir}#{$file}.ttf') format('truetype');
+  }
+}

@@ -1,0 +1,52 @@
+//
+//
+// __      ___ __ __ _ _ __
+// \ \ /\ / / '__/ _` | '_ \
+//  \ V  V /| | | (_| | |_) |
+//   \_/\_/ |_|  \__,_| .__/
+//                    | |
+//                    |_|
+
+@mixin class--wrap($ns: '') {
+  $ns: if(str-length($ns)>0, '#{$ns}-', '');
+
+  $media-keys: map-keys($media);
+  $media-length: length($media-keys);
+
+  #{base-class('#{$ns}wrap')} { margin-right: auto; margin-left: auto; }
+  .#{$ns}wrap--left { margin-left: 0; }
+  .#{$ns}wrap--right { margin-right: 0; }
+
+  @each $key in $media-keys {
+    @include medium($key) {
+      .#{$ns}wrap--each,
+      .#{$ns}wrap--#{$key} {
+        max-width: medium-value('content-width', $key);
+      }
+    }
+  }
+
+  // // wrap--to-x, // wrap--x-to
+  // @for $i from 1 through $media-length {
+  //   .#{$ns}wrap--#{nth($media-keys, $i)}-to {
+  //     @include media-each(slice($media-keys, $i)) {
+  //       max-width: medium-value('content-width');
+  //     }
+  //   }
+  //   .#{$ns}wrap--to-#{nth($media-keys, $i)} {
+  //     @include media-each(slice($media-keys, 1, $i)) {
+  //       max-width: medium-value('content-width');
+  //     }
+  //   }
+  // }
+
+  // // wrap--x-to-y
+  // @each $set in range-set($media-keys) {
+  //   $i: nth($set,1); $j: nth($set,2);
+  //   .#{$ns}wrap--#{nth($media-keys, $i)}-to-#{nth($media-keys, $j)} {
+  //     @include media-each(slice($media-keys, $i, $j)) {
+  //       max-width: medium-value('content-width');
+  //     }
+  //   }
+  // }
+}

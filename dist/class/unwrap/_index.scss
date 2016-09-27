@@ -1,14 +1,22 @@
-////////////
-// unwrap //
-////////////
+//
+//
+//  _   _ _ ____      ___ __ __ _ _ __
+// | | | | '_ \ \ /\ / / '__/ _` | '_ \
+// | |_| | | | \ V  V /| | | (_| | |_) |
+//  \__,_|_| |_|\_/\_/ |_|  \__,_| .__/
+//                               | |
+//                               |_|
 
-@mixin init-unwrap {
+@import 'mixins';
 
-  .unwrap {
-      margin-right: 0;
-      margin-left: 0;
-      max-width: none;
-      width: 100vw;
+@mixin class--unwrap($ns: '') {
+  $ns: if(str-length($ns)>0, '#{$ns}-', '');
+
+  .#{$ns}unwrap {
+    margin-right: 0;
+    margin-left: 0;
+    max-width: none;
+    width: 100vw;
   }
 
   @include media-for('outer') {
@@ -20,34 +28,34 @@
     $unwrap-margin-right: div-calc(sub-calc($unwrap-margin, $wrap-offset), 2);
     $unwrap-margin-left: div-calc(add-calc($unwrap-margin, $wrap-offset), 2);
 
-    .unwrap {
+    .#{$ns}unwrap {
       &--right { width: add-calc(100vw, $unwrap-margin-left);}
       &--left { width: add-calc(100vw, $unwrap-margin-right);}
       &, &--right { margin-right: $unwrap-margin-right; }
       &, &--left { margin-left: $unwrap-margin-left; }
     }
 
-    .unwrap--from-right {
-      &, &.unwrap--right { margin-right: - $outer-right;}
-      &, &.unwrap--left { margin-left: add-calc($unwrap-margin, $outer-right); }
-      &.unwrap--right {
+    .#{$ns}unwrap--from-right {
+      &, &.#{$ns}unwrap--right { margin-right: - $outer-right;}
+      &, &.#{$ns}unwrap--left { margin-left: add-calc($unwrap-margin, $outer-right); }
+      &.#{$ns}unwrap--right {
         width: add-calc(100%, $outer-right);
         margin-left: 0;
       }
-      &.unwrap--left {
+      &.#{$ns}unwrap--left {
         width: sub-calc(100vw, $outer-right);
         margin-right: 0;
       }
     }
 
-    .unwrap--from-left {
-      &, &.unwrap--right { margin-right: add-calc($unwrap-margin, $outer-left); }
-      &, &.unwrap--left { margin-left: - $outer-left; }
-      &.unwrap--right {
+    .#{$ns}unwrap--from-left {
+      &, &.#{$ns}unwrap--right { margin-right: add-calc($unwrap-margin, $outer-left); }
+      &, &.#{$ns}unwrap--left { margin-left: - $outer-left; }
+      &.#{$ns}unwrap--right {
         width: sub-calc(100vw, $outer-left);
         margin-left: 0;
       }
-      &.unwrap--left {
+      &.#{$ns}unwrap--left {
         width: add-calc(100%, $outer-left);
         margin-right: 0;
       }

@@ -1,0 +1,24 @@
+//      _             _
+//     | |           | |
+//  ___| |_ __ _  ___| | __
+// / __| __/ _` |/ __| |/ /
+// \__ \ || (_| | (__|   <
+// |___/\__\__,_|\___|_|\_\
+
+@mixin class--stack($ns: '') {
+  $ns: if(str-length($ns)>0, '#{$ns}-', '');
+
+  #{base-class('#{$ns}stack')} {
+    padding-top: 0.1px;
+    padding-bottom: 0.1px;
+    & > * { margin-top: 0; margin-bottom: 0; }
+  }
+
+  @include media-for('margin-y') {
+    $mults: medium-value('mults-y') or medium-value('mults');
+
+    @each $m, $mult in map-merge((base: 1), $mults) {
+      #{mult-class('#{$ns}stack', $m)} { & > * + * { margin-top: $mult * medium-value('margin-y'); } }
+    }
+  }
+}

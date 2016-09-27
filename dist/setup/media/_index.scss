@@ -48,7 +48,7 @@ $media-hd-ratio: 3 2 !default;
 @import 'setup--alt';
 @import 'setup--std';
 
-@mixin setup--media($alt: true, $out: true) {
+@mixin setup--media($out: true, $alt: true) {
   @if $alt { @include setup--media--alt($out); }
   @else { @include setup--media--std($out); }
 }

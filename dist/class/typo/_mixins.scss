@@ -1,47 +1,12 @@
 ///////////
-// stack //
+// typo //
 ///////////
 
-@mixin stack($m: $curr-mult-y-key, $s: $curr-size-key, $l: $curr-line-key, $f: $curr-font-key) {
-
-  $prev-mult-y-key: $curr-mult-y-key;
-  $prev-size-key: $curr-size-key;
-  $prev-line-key: $curr-line-key;
-  $prev-font-key: $curr-font-key;
-
-  $curr-mult-y-key: $m !global;
-  $curr-size-key: $s !global;
-  $curr-line-key: $l !global;
-  $curr-font-key: $f !global;
-
-  $curr-stack-sel: & !global;
-
-  // stack styles
-  padding-top: 0.1px;
-  padding-bottom: 0.1px;
-  & > * { margin-top: 0; margin-bottom: 0; }
-  & > * + * { margin-top: margin-y($m); }
-
-  // content
-  @content;
-
-  $curr-stack-sel: null !global;
-
-  $curr-mult-y-key: $prev-mult-y-key !global;
-  $curr-size-key: $prev-size-key !global;
-  $curr-line-key: $prev-line-key !global;
-  $curr-font-key: $prev-font-key !global;
-}
-
-///////////
-// typel //
-///////////
-
-// todo: test typel on lists and tables
+// todo: test typo on lists and tables
 //     - can you still style lists and tables properly
 //     - protocol for defining local stuff
 
-@mixin typel($s: $curr-size-key, $l: $curr-line-key, $f: $curr-font-key) {
+@mixin typo($s: $curr-size-key, $l: $curr-line-key, $f: $curr-font-key) {
 
   $same-size-key: ($s == $curr-size-key);
   $same-line-key: ($l == $curr-line-key);
@@ -57,8 +22,8 @@
 
   $size: size($s);
   $line: line($l);
-  $font: if($f, font($f), null);
 
+  $font: if($f, font($f), null);
   $font-family: if($font, map-get($font, 'font-family'), null);
   $size-adjust: if($font, map-get($font, 'size-adjust') or 1, 1);
 
@@ -101,28 +66,4 @@
   $curr-size-key: $prev-size-key !global;
   $curr-line-key: $prev-line-key !global;
   $curr-font-key: $prev-font-key !global;
-}
-
-///////////////
-// font-face //
-///////////////
-
-// todo: font-face mixin updates
-// - update to use a global $font-folder; pass $file as 'subfolder/filename.ext'
-// - update to include woff2
-// - update to use local ?
-// - update to allow specifying which types are available: eot, svg, woff, woff2, ttf
-
-@mixin font-face($family, $dir, $file, $style, $weight) {
-  @font-face {
-    font-family: $family;
-    font-style: $style;
-    font-weight: $weight; // this should be both word and number values
-    src: url('#{$dir}#{$file}.eot'); // ie9 compat modes
-    src: url('#{$dir}#{$file}.eot?#iefix') format('embedded-opentype'),
-       url('#{$dir}#{$file}.svg##{$file}') format('svg');
-       //url('#{$dir}#{$file}.woff') format('woff'),
-       // url('#{$dir}#{$file}.svg##{$file}') format('svg'),
-       // url('#{$dir}#{$file}.ttf') format('truetype');
-  }
 }
