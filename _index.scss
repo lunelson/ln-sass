@@ -9,11 +9,10 @@
 @import "node_modules/sassdash/index";
 
 // dist
-@import "dist/utils/all";
-@import "dist/reset/all";
-// @import "dist/setup/media";
-// @import "dist/setup/theme";
-// @import "dist/class/all";
+@import 'dist/utils/index';
+@import 'dist/reset/index';
+@import 'dist/setup/index';
+@import 'dist/class/index';
 
 // vars
 $done-base-init: false !default;

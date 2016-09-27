@@ -1,21 +1,21 @@
-// @import '../../index';
+@import '../../index';
 
-@import '../../dist/utils/index';
-@import '../../dist/reset/index';
+// @import '../../dist/utils/index';
+// @import '../../dist/reset/index';
 
 // @include reset--full;
 
-@import '../../dist/setup/index';
+// @import '../../dist/setup/index';
 
 // @include setup--theme;
 @include setup--media(false);
 
 // @import '../../dist/class/index';
-@import '../../dist/class/grid/index';
-@import '../../dist/class/stack/index';
-@import '../../dist/class/wrap/index';
-@import '../../dist/class/unwrap/index';
-@import '../../dist/class/typo/index';
+// @import '../../dist/class/grid/index';
+// @import '../../dist/class/stack/index';
+// @import '../../dist/class/wrap/index';
+// @import '../../dist/class/unwrap/index';
+// @import '../../dist/class/typo/index';
 
 @include class--grid('l');
 @include class--stack('l')
