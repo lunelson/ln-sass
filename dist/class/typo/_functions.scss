@@ -3,9 +3,11 @@
 // trim and typo-margin //
 //////////////////////////
 
-  @function trim-ex { @return div-calc(sub-calc(line-height()*1em, ex-factor()*1ex), 2); }
+  @function trim-mx { @return add-calc(div-calc(sub-calc(line-height()*1em, em-factor()*1em), 2), sub-calc(div-calc(em-factor()*1em, 2), div-calc(ex-factor()*1ex, 2))); }
+  @function trim-ex { @return add-calc(div-calc(sub-calc(line-height()*1em, em-factor()*1em), 2), sub-calc(em-factor()*1em, ex-factor()*1ex)); }
   @function trim-em { @return (line-height()*1em - em-factor()*1em)/2; }
 
+  @function typo-margin-mx($mult: $curr-mult-y-key) { @return sub-calc(margin-y($mult), trim-mx()); }
   @function typo-margin-ex($mult: $curr-mult-y-key) { @return sub-calc(margin-y($mult), trim-ex()); }
   @function typo-margin-em($mult: $curr-mult-y-key) { @return sub-calc(margin-y($mult), trim-em()); }
 

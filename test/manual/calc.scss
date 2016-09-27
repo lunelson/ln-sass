@@ -1,0 +1,8 @@
+@import '../../index';
+
+.calc {
+  out: sub-calc(1.5em, 1em);
+  out: div-calc(sub-calc(1.5em, 1em), 2);
+  out: sub-calc(div-calc(sub-calc(1.5em, 1em), 2), sub-calc(1em, 1ex));
+
+}
