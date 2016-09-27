@@ -5,18 +5,6 @@
 // | | | | | |  __/ (_| | | (_| |
 // |_| |_| |_|\___|\__,_|_|\__,_|
 
-@import 'functions';
-@import 'helpers';
-@import 'mixins';
-
-@import 'setup--alt';
-@import 'setup--std';
-
-@mixin setup--media($alt: true, $out: true) {
-  @if $alt { @include setup--media--alt($out); }
-  @else { @include setup--media--std($out); }
-}
-
 $medium-default: (
 
   // bases
@@ -47,5 +35,20 @@ $base: $medium-default !default;
 $media: () !default;
 $globals: () !default;
 
+$base-orig: () !default;
+$media-orig: () !default;
+
 $curr-medium-key: null !default;
 $media-hd-ratio: 3 2 !default;
+
+@import 'functions';
+@import 'helpers';
+@import 'mixins';
+
+@import 'setup--alt';
+@import 'setup--std';
+
+@mixin setup--media($alt: true, $out: true) {
+  @if $alt { @include setup--media--alt($out); }
+  @else { @include setup--media--std($out); }
+}

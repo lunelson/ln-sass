@@ -5,7 +5,13 @@
 // | |_| | | |  __/ | | | | |  __/
 //  \__|_| |_|\___|_| |_| |_|\___|
 
-// COLORS
+@import 'functions';
+@import 'setups';
+
+@mixin setup--theme {
+  @include setup--fonts;
+  @include setup--colors;
+}
 
 $colors: (
 
@@ -17,8 +23,6 @@ $colors: (
   link_bg--active: null,
 
 ) !default;
-
-// FONTS
 
 $fonts: (
   base: (
@@ -46,3 +50,4 @@ $fonts: (
     spacing-end: 50,
   )
 ) !default;
+

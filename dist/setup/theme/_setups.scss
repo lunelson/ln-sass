@@ -1,26 +1,12 @@
-
 ///////////
-// base //
+// fonts //
 ///////////
 
-@import "init-fonts";
-@import "init-elements";
-@import "init-theme";
-@mixin init-base {
-  @include init-fonts;
-  @include init-elements;
-  // @include init-theme;
-}
-
-@mixin init-fonts {
-
-  ///////////
-  // fonts //
-  ///////////
+@mixin setup--fonts($ns: 'font--') {
 
   @each $f in join(null, map-keys($fonts)) {
 
-    body #{if($f, '.font--' + $f,'')} {
+    body #{if($f, $ns + $f,'')} {
       $family: get($fonts, $f or 'base', 'font-family');
       $adjust: get($fonts, $f or 'base', 'size-adjust');
       font-family: $family;
@@ -35,11 +21,10 @@
   }
 }
 
-@mixin init-colors {
+////////////
+// colors //
+////////////
 
-  ////////////
-  // colors //
-  ////////////
-
+@mixin setup--colors {
   // TODO: write a routine to generate color classes
 }

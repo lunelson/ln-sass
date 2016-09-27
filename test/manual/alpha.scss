@@ -4,10 +4,9 @@
 
 @include reset--ln;
 
-// @import '../../dist/setup/index';
-@import '../../dist/setup/media/index';
+@import '../../dist/setup/index';
 
-// @include setup--theme;
+@include setup--theme;
 @include setup--media;
 
 // @import '../../dist/class/index';
