@@ -1,4 +1,4 @@
-@mixin init-media-alt($out: true) {
+@mixin setup--media--std($out: true) {
 
   //////////
   // base //
@@ -13,14 +13,11 @@
   // media //
   ///////////
 
-  // NB: must be provided in order !
-  // (sorting these would require recursive pre-calc and check of resulting breakpoints, FTS)
-  $media: if(length($media)>0, $media, (
-    c4: ( grid-columns: 4 ),
-    c6: ( grid-columns: 6 ),
-    c8: ( grid-columns: 8 ),
-    c10: ( grid-columns: 10 ),
-    c12: ( grid-columns: 12 ),
+  $media: if(length($media)>0, maps-sort($media, 'breakpoint'), (
+    a: (breakpoint: 32em),
+    b: (breakpoint: 48em),
+    c: (breakpoint: 64em),
+    d: (breakpoint: 80em),
   )) !global;
 
   // backup $media;
@@ -40,22 +37,13 @@
     $mults-y: map-merge(map-get($reference, 'mults-y'), map-get($medium, 'mults-y') or ());
 
     // calc and merge additional props
-    $font-size: map-get($reference, 'font-size');
-    $margin-x: map-get($reference, 'margin-x');
+    $breakpoint: map-get($reference, 'breakpoint');
+    $outer-width: unit-assert($breakpoint / map-get($reference, 'html-scale'), rem);
     $outer-x: map-get($reference, 'outer-right') + map-get($reference, 'outer-left');
 
-    $type-width: map-get($reference, 'type-width');
-    $type-columns: map-get($reference, 'type-columns');
-    $grid-columns: map-get($reference, 'grid-columns');
-    $type-vs-grid: $type-columns/$grid-columns;
-
-    $content-width: ($type-width + $margin-x) / $type-vs-grid - $margin-x;
-    $outer-width: $content-width + $outer-x;
-    $breakpoint: unit-assert($outer-width * map-get($reference, 'html-scale'), em);
-
+    // merge these back to reference
     $reference: map-merge($reference, (
-      'content-width': $content-width,
-      'breakpoint': $breakpoint,
+      'content-width': $outer-width - $outer-x,
       'sizes': $sizes,
       'lines': $lines,
       'mults-x': $mults-x,

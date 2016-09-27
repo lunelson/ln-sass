@@ -5,8 +5,20 @@
 // | | | | | |  __/ (_| | | (_| |
 // |_| |_| |_|\___|\__,_|_|\__,_|
 
+@import 'functions';
+@import 'helpers';
+@import 'mixins';
+
+@import 'setup--alt';
+@import 'setup--std';
+
+@mixin setup--media($alt: true, $out: true) {
+  @if $alt { @include setup--media--alt($out); }
+  @else { @include setup--media--std($out); }
+}
 
 $medium-default: (
+
   // bases
   font-size: 16px,
   line-height: 1.5,
@@ -16,10 +28,12 @@ $medium-default: (
   outer-right: 2rem,
   outer-bottom: 2rem,
   outer-left: 2rem,
+
   // grid
   type-width: 24rem,
   type-columns: 4,
   grid-columns: 4,
+
   // mults and mods
   lines: (),
   sizes: (),
@@ -30,15 +44,8 @@ $medium-default: (
 );
 
 $base: $medium-default !default;
-
 $media: () !default;
 $globals: () !default;
 
 $curr-medium-key: null !default;
 $media-hd-ratio: 3 2 !default;
-
-@import "media/helpers";
-@import "media/functions";
-@import "media/mixins";
-// @import "media/mixins-old";
-@import "media/init";

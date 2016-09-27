@@ -2,7 +2,7 @@
 @import "minor";
 @import "forms";
 
-@mixin reset--all {
+@mixin reset--ln {
   @include reset--major;
   @include reset--minor;
   @include reset--forms;
