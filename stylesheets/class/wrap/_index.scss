@@ -20,6 +20,7 @@
   @each $key in $media-keys {
     @include medium($key) {
       .#{$ns}wrap--each,
+      .#{$ns}wrap--grid,
       .#{$ns}wrap--#{$key} {
         max-width: medium-value('content-width', $key);
       }

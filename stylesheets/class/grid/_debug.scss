@@ -2,7 +2,7 @@
 // debug grid //
 ////////////////
 
-@mixin debug-grid($m: $curr-mult-x-key, $color: set-alpha(pink, 0.25), $offset: 0) {
+@mixin grid-debug($color: set-alpha(pink, 0.25),$m: $curr-mult-x-key, $offset: 0) {
   body::after {
     content: '';
     top: 0;
