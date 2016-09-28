@@ -9,10 +9,10 @@
 @import "node_modules/sassdash/index";
 
 // dist
-@import 'dist/utils/index';
-@import 'dist/reset/index';
-@import 'dist/setup/index';
-@import 'dist/class/index';
+@import 'stylesheets/utils/index';
+@import 'stylesheets/reset/index';
+@import 'stylesheets/setup/index';
+@import 'stylesheets/class/index';
 
 // vars
 $done-base-init: false !default;
