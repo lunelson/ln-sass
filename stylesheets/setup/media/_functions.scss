@@ -22,6 +22,14 @@
     @return medium-value('line-height', $m) * line($line);
   }
 
+  @function inner-y($mult: $curr-mult-y-key, $m: $curr-medium-key) {
+    @return medium-value('margin-y', $m) * mult-y($mult);
+  }
+
+  @function inner-x($mult: $curr-mult-x-key, $m: $curr-medium-key) {
+    @return medium-value('margin-x', $m) * mult-x($mult);
+  }
+
   @function margin-y($mult: $curr-mult-y-key, $m: $curr-medium-key) {
     @return medium-value('margin-y', $m) * mult-y($mult);
   }
