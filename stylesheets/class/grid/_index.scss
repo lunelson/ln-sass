@@ -15,10 +15,10 @@
   $ns: if(str-length($ns)>0, '#{$ns}-', '');
 
   #{base-class('#{$ns}grid')} { @include grid(false); }
-  #{base-class('#{$ns}fgrid')} { @include fgrid(false); }
+  #{base-class('#{$ns}f-grid')} { @include f-grid(false); }
 
   .#{$ns}grid--null,
-  .#{$ns}fgrid--null {
+  .#{$ns}f-grid--null {
     margin-right: 0;
     margin-left: 0;
     width: 100%;
@@ -35,7 +35,7 @@
       $margin: $mult * medium-value('margin-x');
 
       #{mult-class('#{$ns}grid', $m)},
-      #{mult-class('#{$ns}fgrid', $m)} {
+      #{mult-class('#{$ns}f-grid', $m)} {
         margin-left: $margin / -2;
         margin-right: $margin / -2;
         width: calc(100% + #{$margin});
