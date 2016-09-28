@@ -60,3 +60,47 @@
 }
 // alias
 @mixin hd($args...) { @include hidpi($args...) { @content; } }
+
+/////////////////////
+// media mixins v3 //
+/////////////////////
+
+@mixin m($min, $max: null) {
+  $prev-medium-key: $curr-medium-key;
+  $curr-medium-key: $min !global;
+  @media #{width-query($min, $max)} { @content }
+  $curr-medium-key: $prev-medium-key !global;
+}
+
+@mixin mm-at($keys: map-keys($media), $head: true, $tail: true) {
+  $pair-set: range-pair-set($keys, $head, $tail);
+  @if length($pair-set) == 0 { @content; }
+  @else {
+    @each $pair in $pair-set {
+      @include m($pair...) {
+        @content;
+      }
+    }
+  }
+}
+
+@mixin mm-for($props...) {
+  @include mm-at(media-for($props...)) {
+    @content;
+  }
+}
+
+@mixin mm($lo: map-keys($media), $hi: null) {
+  @if type-of($lo) == 'list' {
+    @include mm-at($lo) { @content; }
+  } @else {
+    $media-keys: map-keys($media);
+    $media-length: length($media-keys);
+    $start: if($lo, (index($media-keys, $lo) or 1), 1);
+    $end: if($hi, (index($media-keys, $hi) or $media-length), $media-length);
+    $range: slice($media-keys, $start, $end);
+    $head: ($lo or nth($media-keys, $start)) == first($media-keys);
+    $tail: ($hi or nth($media-keys, $end)) == last($media-keys);
+    @include mm-at($range, $head, $tail) { @content; }
+  }
+}
