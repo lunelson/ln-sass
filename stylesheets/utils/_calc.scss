@@ -1,12 +1,23 @@
 // CALC functions
 
+// TODO: include these pre-check functions https://gist.github.com/lunelson/fc25a8681d81b58b2b1901d81000e36b
+
 // @function is-zero($n) {
 //   @return if(type-of($n) == 'number', unitless($n) and $n == 0, false);
 // }
 
-// @function no-unit($n) {
-//   @return if(type-of($n) == 'number', unitless($n), false);
-// }
+@function str-last-index($str, $substr) {
+  $length: str-length($str);
+  @for $n from $length - str-length($substr) through 1 {
+    $index: str-index(str-slice($str, $n + 1, $length), $substr);
+    @if $index { @return $index + $n; }
+  }
+  @return null;
+}
+
+@function unitless-number($n) {
+  @return if(type-of($n) == 'number', unitless($n), false);
+}
 
 // @function zero-calc($value) {
 //   @if $value == 0 { @return $value + '%'; }
@@ -16,8 +27,8 @@
 @function pre-calc($value){
   @if not $value{
     @return 0%;
-  } @else if no-unit($value) {
-    @return $value + 'rem';
+  } @else if unitless-number($value) {
+    @return $value + 'em';
   } @else if type-of($value) == 'string' {
     $is-calc: str-index($value, 'calc') == 1;
     $start: str-index($value, '(');

@@ -3,6 +3,7 @@
 //////////
 
 @mixin cell-padding($mult) {
+  // false = no output; null = default output
   $gutter: if($mult!=false, margin-x($mult), $mult);
   @if $gutter {
     padding-right: $gutter/2;
@@ -11,7 +12,8 @@
 }
 
 @mixin grid-margins($mult) {
-  $gutter: if($mult!=false, margin-x($mult), null);
+  // false = no output; null = default output
+  $gutter: if($mult!=false, margin-x($mult), $mult);
   @if $gutter {
     width: add-calc(100%, $gutter);
     margin-right: $gutter/-2;
@@ -122,8 +124,9 @@
 }
 
 // cycle; for floats
-@mixin cell-cycle($n) {
-  &:nth-child(#{$n}n+#{$n+1}) {
+@mixin cell-cycle($d: null) {
+  $d: $d or medium-value('grid-columns') or 4;
+  &:nth-child(#{$d}n+#{$d+1}) {
     clear: left;
   }
 }

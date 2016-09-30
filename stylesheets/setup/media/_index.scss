@@ -38,8 +38,15 @@ $globals: () !default;
 $base-orig: () !default;
 $media-orig: () !default;
 
-$curr-medium-key: null !default;
 $media-hd-ratio: 3 2 !default;
+
+$curr-medium-key: null !default;
+$curr-stack-sel: null !default;
+$curr-size-key: null !default;
+$curr-line-key: null !default;
+$curr-font-key: null !default;
+$curr-mult-y-key: null !default;
+$curr-mult-x-key: null !default;
 
 @import 'functions';
 @import 'helpers';

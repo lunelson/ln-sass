@@ -11,6 +11,13 @@
   @function typo-margin-ex($mult: $curr-mult-y-key) { @return sub-calc(margin-y($mult), trim-ex()); }
   @function typo-margin-em($mult: $curr-mult-y-key) { @return sub-calc(margin-y($mult), trim-em()); }
 
+  // NEW API
+  // TODO: allow ex-trim and em-trim to take $line and $font arguments
+  @function ex-trimval { @return add-calc(div-calc(sub-calc(line-height()*1em, em-factor()*1em), 2), sub-calc(em-factor()*1em, ex-factor()*1ex)); }
+  @function em-trimval { @return (line-height()*1em - em-factor()*1em)/2; }
+  @function ex-trimmed($mult: $curr-mult-y-key) { @return sub-calc(inner-y($mult), ex-trimval()); }
+  @function em-trimmed($mult: $curr-mult-y-key) { @return sub-calc(inner-y($mult), em-trimval()); }
+
   // added-functionality version for public use
   // if supplied 'false' as arg, will provide the trim value
   @function typo-margin($m: $curr-mult-y-key, $unit: 'ex') {

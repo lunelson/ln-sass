@@ -1,0 +1,106 @@
+// master global ?
+$_m: ();
+
+@include init-m((
+  base: (
+    size: 16px,
+    size-mults: (),
+
+    line: 1.5,
+    line-mults: (),
+
+    inner-x: 2rem,
+    inner-y: 2rem,
+    inner-x-mults: (),
+    inner-y-mults: (),
+
+    outer-top: 2rem,
+    outer-right: 2rem,
+    outer-bottom: 2rem,
+    outer-left: 2rem,
+    outer-x-mults: (),
+    outer-y-mults: (),
+
+    grid-columns: 4,
+    text-columns: 4,
+    text-measure: 32rem,
+  ),
+  media: (
+    //...
+  ),
+  options: (
+    grid-type: flex, // flex | float
+    breakpoints: min-width, // min-width | grid-columns
+    wrap-type: standard, // standard | extended
+  ),
+));
+
+.test {
+  color: green;
+  @include m(alpha, beta) { color: blue; }
+  @include m(beta, delta) { color: green; }
+
+  @include mm-for(inner-x) {
+    margin-left: m-inner-x(lg);
+    margin-right: m-inner-x(sm);
+  }
+}
+
+// functions
+// @function font-size($mult: null, $medium: $curr-medium) {}
+// @function line-height($mult: null, $medium: $curr-medium) {}
+@function font($font: null) {
+  // $font: $curr-font or base;
+  // get($fonts, $font)
+}
+
+@function parse-mult($mult, $ns, $medium: null) {
+  // mult: N -> N * m-value(size)
+  // mult: string -> lookup or 1 * m-value(size)
+  // @warn if defaulting to 1
+  // mult: unit-N -> rem(unit-N) [direct spec, skip size]
+}
+
+@function size($mult: null, $medium: null) {
+  $mult: $mult or $curr-size-mult or 1;
+  $mult: parse-mult($mult, 'size', $medium);
+  @return if(unitless($mult), $mult * m-value('size', $medium), $mult);
+}
+@function line($mult: null, $medium: null) {
+  // mult: null -> $curr-line-mult or 1 * m-value(line)
+  // mult: string -> lookup or 1 * m-value(line)
+  // mult: N -> N * m-value(line)
+  // mult: unit-N -> convert PX, EM or REM to a line-height multiple
+}
+
+@function inner-x($mult: null, $medium: null) {}
+@function inner-y($mult: null, $medium: null) {}
+@function inner-y--ex($mult: null, $medium: null, $line: null, $font: null) {}
+@function inner-y--em($mult: null, $medium: null, $line: null, $font: null) {}
+
+@function delta-ex() {}
+@function delta-em() {}
+
+@function outer-top($mult: null, $medium: null) {}
+@function outer-right($mult: null, $medium: null) {}
+@function outer-bottom($mult: null, $medium: null) {}
+@function outer-left($mult: null, $medium: null) {}
+
+@function m($medium: null)
+@function m-value($key, $medium: null)
+
+@mixin setup--base()
+  @mixin setup--outer()
+  @mixin setup--wrap()
+@mixin setup--grid()
+@mixin setup--stack()
+@mixin setup--typo()
+
+@mixin grid()
+@mixin stack()
+@mixin typo()
+
+@mixin m()
+@mixin mm-at()
+@mixin mm-for()
+@mixin mm()
