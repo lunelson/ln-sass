@@ -1,10 +1,46 @@
-// CALC functions
+//                                    _
+//                                   | |
+//  ___  __ _ ___ ___ ______ ___ __ _| | ___
+// / __|/ _` / __/ __|______/ __/ _` | |/ __|
+// \__ \ (_| \__ \__ \     | (_| (_| | | (__
+// |___/\__,_|___/___/      \___\__,_|_|\___|
 
-// TODO: include these pre-check functions https://gist.github.com/lunelson/fc25a8681d81b58b2b1901d81000e36b
+////////////
+// CHECKS //
+////////////
 
-// @function is-zero($n) {
-//   @return if(type-of($n) == 'number', unitless($n) and $n == 0, false);
-// }
+@function num-check($a, $b){
+  @return type-of($a) == 'number' and type-of($b) == 'number';
+}
+
+@function add-check($a, $b){
+  @if num-check($a, $b) {
+    @return unit($a) == unit($b) or (unitless($a) or unitless($b));
+  }
+  @return false;
+}
+
+@function mul-check($a, $b){
+  @if num-check($a, $b) {
+    @return unitless($a) or unitless($b);
+  }
+  @return false;
+}
+
+@function div-check($a, $b){
+  @if num-check($a, $b) {
+    @return unitless($b);
+  }
+  @return false;
+}
+
+@function unitless-number($n) {
+  @return if(type-of($n) == 'number', unitless($n), false);
+}
+
+///////////
+// UTILS //
+///////////
 
 @function str-last-index($str, $substr) {
   $length: str-length($str);
@@ -14,15 +50,6 @@
   }
   @return null;
 }
-
-@function unitless-number($n) {
-  @return if(type-of($n) == 'number', unitless($n), false);
-}
-
-// @function zero-calc($value) {
-//   @if $value == 0 { @return $value + '%'; }
-//   @return $value;
-// }
 
 @function pre-calc($value){
   @if not $value{
@@ -43,30 +70,33 @@
   }
 }
 
-// // re-calc... ?
-// @function re-calc($calc1, $calc2, $op: '+'){
-//   @return unquote('calc(#{pre-calc($calc1)} #{$op} #{pre-calc($calc2)})');
-// }
+//////////
+// MAIN //
+//////////
 
-// add/sub -- both args can be calc()
 @function add-calc($calc1, $calc2){
   @if not $calc1 { @return $calc2; }
   @if not $calc2 { @return $calc1; }
+  @if add-check($calc1, $calc2) { @return $calc1 + $calc2; }
   @return unquote('calc(#{pre-calc($calc1)} + #{pre-calc($calc2)})');
 }
+
 @function sub-calc($calc1, $calc2){
   @if not $calc1 { @return $calc2; }
   @if not $calc2 { @return $calc1; }
+  @if add-check($calc1, $calc2) { @return $calc1 - $calc2; }
   @return unquote('calc(#{pre-calc($calc1)} - #{pre-calc($calc2)})');
 }
 
-// mul/div -- second arg must be number
 @function mul-calc($calc, $n){
   @if not $n or type-of($n) != 'number' { @return $calc; }
+  @if mul-check($calc, $n) { @return $calc * $n; }
   @return unquote('calc(#{pre-calc($calc)} * #{$n})');
 }
+
 @function div-calc($calc, $n){
   @if $n == 0 { @error 'div-calc: attempt to divide by zero'; }
   @if not $n or type-of($n) != 'number' { @return $calc; }
+  @if div-check($calc, $n) { @return $calc / $n; }
   @return unquote('calc(#{pre-calc($calc)} / #{$n})');
 }
