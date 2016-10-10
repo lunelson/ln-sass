@@ -7,7 +7,7 @@
 
 @import 'mixins';
 
-@mixin general-patterns {
+@mixin class--utils {
 
   //////////
   // clip //
@@ -34,7 +34,7 @@
 
   .hold, #{baseify('hold')} { position: relative; }
 
-  .hold--abs, .hold--center, .hold--aspect {
+  .hold--abs, .hold--center, .hold--ratio {
     z-index: 0; // make sure container can clip
     & > * {
       display: block;
@@ -47,7 +47,7 @@
     }
   }
 
-  .hold--aspect {
+  .hold--ratio {
     height: 0;
     overflow: hidden;
     padding: 0 0 100%;

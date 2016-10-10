@@ -3,26 +3,26 @@
 // trim and typo-margin //
 //////////////////////////
 
-  @function trim-mx { @return add-calc(div-calc(sub-calc(line-height()*1em, em-factor()*1em), 2), sub-calc(div-calc(em-factor()*1em, 2), div-calc(ex-factor()*1ex, 2))); }
-  @function trim-ex { @return add-calc(div-calc(sub-calc(line-height()*1em, em-factor()*1em), 2), sub-calc(em-factor()*1em, ex-factor()*1ex)); }
-  @function trim-em { @return (line-height()*1em - em-factor()*1em)/2; }
+  @function trim-mx { @return add(divide(subtract(line-height()*1em, em-factor()*1em), 2), subtract(divide(em-factor()*1em, 2), divide(ex-factor()*1ex, 2))); }
+  @function trim-ex { @return add(divide(subtract(line-height()*1em, em-factor()*1em), 2), subtract(em-factor()*1em, ex-factor()*1ex)); }
+  @function trim-em { @return divide(subtract(line-height()*1em, em-factor()*1em), 2); }
 
-  @function typo-margin-mx($mult: $curr-mult-y-key) { @return sub-calc(margin-y($mult), trim-mx()); }
-  @function typo-margin-ex($mult: $curr-mult-y-key) { @return sub-calc(margin-y($mult), trim-ex()); }
-  @function typo-margin-em($mult: $curr-mult-y-key) { @return sub-calc(margin-y($mult), trim-em()); }
+  @function typo-margin-mx($mult: $curr-mult-y-key) { @return subtract(margin-y($mult), trim-mx()); }
+  @function typo-margin-ex($mult: $curr-mult-y-key) { @return subtract(margin-y($mult), trim-ex()); }
+  @function typo-margin-em($mult: $curr-mult-y-key) { @return subtract(margin-y($mult), trim-em()); }
 
   // NEW API
   // TODO: allow ex-trim and em-trim to take $line and $font arguments
-  @function ex-trimval { @return add-calc(div-calc(sub-calc(line-height()*1em, em-factor()*1em), 2), sub-calc(em-factor()*1em, ex-factor()*1ex)); }
+  @function ex-trimval { @return add(divide(subtract(line-height()*1em, em-factor()*1em), 2), subtract(em-factor()*1em, ex-factor()*1ex)); }
   @function em-trimval { @return (line-height()*1em - em-factor()*1em)/2; }
-  @function ex-trimmed($mult: $curr-mult-y-key) { @return sub-calc(inner-y($mult), ex-trimval()); }
-  @function em-trimmed($mult: $curr-mult-y-key) { @return sub-calc(inner-y($mult), em-trimval()); }
+  @function ex-trimmed($mult: $curr-mult-y-key) { @return subtract(inner-y($mult), ex-trimval()); }
+  @function em-trimmed($mult: $curr-mult-y-key) { @return subtract(inner-y($mult), em-trimval()); }
 
   // added-functionality version for public use
   // if supplied 'false' as arg, will provide the trim value
   @function typo-margin($m: $curr-mult-y-key, $unit: 'ex') {
     @if $m == false { @return call('trim-#{$unit}'); }
-    @return sub-calc(margin-y($m), call('trim-#{$unit}'));
+    @return subtract(margin-y($m), call('trim-#{$unit}'));
   }
 
   @function t-margin($args...) { @return typo-margin($args...); }

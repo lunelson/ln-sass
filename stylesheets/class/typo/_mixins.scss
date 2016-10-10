@@ -6,6 +6,32 @@
 //     - can you still style lists and tables properly
 //     - protocol for defining local stuff
 
+/*
+  // SALIENT INFORMATION IS ONLY LINE AND FONT.
+  @include typo($line, $font) // specific line and font
+  @include typo(null, $font) // default line, specific font
+  @include typo($line, null) or typo($line) // specific line, default font
+  @include typo(null, null) or typo() // default line and font
+  @include typo(auto-line($size))
+
+  // AUTO LINE CALC
+  .foo { font-size: size(lg); @include typo(line(size, lg)); }
+  .foo {
+    $line: auto-line(lg);
+    font-size: size(lg);
+    line-height: $line;
+    @include typo((line: $line));
+  }
+  .foo { font-size: size(lg); @include typo(autoline(lg)); }
+
+  // default is ex-trimmed() margin-top. Pass a list of exceptions?
+  .stack p {
+    @include typo((line: 1.1, excl: div pre ))
+    // excl: [.m-block], trim: [ex]|mx|em
+    // -> .m-stack *:not(.m-block):not(div):not(pre) + p {}
+  }
+ */
+
 @mixin typo($s: $curr-size-key, $l: $curr-line-key, $f: $curr-font-key) {
 
   $same-size-key: ($s == $curr-size-key);
@@ -36,7 +62,8 @@
     @at-root #{insert-parents('','>')} {
       margin-top: typo-margin-em(0);
       margin-bottom: typo-margin-em(0);
-      @include adjacent-to('*') { margin-top: typo-margin-ex(); }
+      @include adjacent-to('*') { margin-top: typo-margin-em(); }
+      @include adjacent-to(p h1 h2 h3 h4 h5 h6 ul ol dl) { margin-top: typo-margin-ex(); }
       @content;
     }
   }
@@ -44,10 +71,10 @@
   // if not in a stack
   @else {
     font-size: unit-assert($size, rem) * $size-adjust;
-    @at-root #{insert-parents('.stack' '%stack')} {
+    @at-root #{insert-parents(base-class('stack'))} {
       font-size: unit-assert($size, em) * $size-adjust;
     }
-    @at-root #{insert-parents('.stack' '%stack', '>')} {
+    @at-root #{insert-parents(base-class('stack'), '>')} {
       margin-top: typo-margin-em(0);
       margin-bottom: typo-margin-em(0);
     }
@@ -55,8 +82,11 @@
     @each $m, $mult in map-merge((base: 1), $mults) {
       $stack-sel: '.stack#{multify($m)}';
       @at-root #{insert-parents($stack-sel,'>')} {
-        @at-root #{insert-parents('*', '+')} {
+        @at-root #{insert-parents(p h1 h2 h3 h4 h5 h6 ul ol dl, '+')} {
           margin-top: typo-margin-ex(if($m=='base',1,$m));
+        }
+        @at-root #{insert-parents('*', '+')} {
+          margin-top: typo-margin-em(if($m=='base',1,$m));
         }
         @content;
       }
