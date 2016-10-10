@@ -7,6 +7,11 @@
 // - sibling-of
 // - adjacent-to
 
+@function selector-not($selector, $nots...) {
+  @each $not in $nots { $selector: $selector + ':not(#{$not})'; }
+  @return selector-parse($selector);
+}
+
 @function unique-selector() {
   @return unquote("%#{unique-id()}");
 }
