@@ -59,3 +59,100 @@ $curr-mult-x-key: null !default;
   @if $alt { @include setup--media--alt($out); }
   @else { @include setup--media--std($out); }
 }
+
+@mixin init-media($opts:( 'init-type': columns, out: true )) {
+
+  $type: map-get($opts, 'init-type');
+  $out: map-get($opts, 'out');
+
+  // backup $base as spec'd;
+  // TODO: merge $base on to $default-medium
+  // merge spec'd $base against defaults, and normalize
+
+  $base-orig: $base !global;
+  $base: normalize-medium(map-merge($medium-default, $base)) !global;
+
+  // NB: must be provided in order !
+  // (sorting these would require recursive pre-calc and check of resulting breakpoints, FTS)
+  $media: if(length($media) > 0, $media, map-get($media-defaults, $type)) !global;
+
+  // backup $media;
+  // make temp for recursive merging
+  $media-orig: $media !global;
+  $reference: $base;
+
+  @each $m, $medium in $media {
+
+    // merge current medium against ref-medium, normalize primitive values
+    $reference: normalize-medium(map-merge($reference, $medium));
+
+    // merge reference back to master
+    $media: map-merge($media, ($m: call('setup-medium-#{$type}', $reference))) !global;
+  }
+  @if $out {
+    $globals: if(variable-exists('globals'), $globals, ());
+    @include json-content((
+      globals: $globals,
+      media: $media,
+      base: $base
+    ));
+    // @include json-content(map-merge($globals, (media: $media)));
+    @include media-for(font-size line-height) {
+      html { font-size: unit-assert(medium-value('html-scale'), em); }
+      body { line-height: medium-value('line-height'); }
+    }
+  }
+}
+
+@function setup-medium-by-breakpoints($reference) {
+  // get and merge sub-maps
+  $sizes: map-merge(map-get($reference, 'sizes'), map-get($medium, 'sizes') or ());
+  $lines: map-merge(map-get($reference, 'lines'), map-get($medium, 'lines') or ());
+  $mults-x: map-merge(map-get($reference, 'mults-x'), map-get($medium, 'mults-x') or ());
+  $mults-y: map-merge(map-get($reference, 'mults-y'), map-get($medium, 'mults-y') or ());
+
+  // calc and merge additional props
+  $breakpoint: map-get($reference, 'breakpoint');
+  $outer-width: unit-assert($breakpoint / map-get($reference, 'html-scale'), rem);
+  $outer-x: map-get($reference, 'outer-right') + map-get($reference, 'outer-left');
+
+  // merge these back to reference
+  @return map-merge($reference, (
+    'content-width': $outer-width - $outer-x,
+    'sizes': $sizes,
+    'lines': $lines,
+    'mults-x': $mults-x,
+    'mults-y': $mults-y,
+  ));
+}
+
+@function setup-medium-by-columns($reference) {
+  // get and merge sub-maps
+  $sizes: map-merge(map-get($reference, 'sizes'), map-get($medium, 'sizes') or ());
+  $lines: map-merge(map-get($reference, 'lines'), map-get($medium, 'lines') or ());
+  $mults-x: map-merge(map-get($reference, 'mults-x'), map-get($medium, 'mults-x') or ());
+  $mults-y: map-merge(map-get($reference, 'mults-y'), map-get($medium, 'mults-y') or ());
+
+  // calc and merge additional props
+  $font-size: map-get($reference, 'font-size');
+  $margin-x: map-get($reference, 'margin-x');
+  $outer-x: map-get($reference, 'outer-right') + map-get($reference, 'outer-left');
+
+  $copy-width: map-get($reference, 'copy-width');
+  $copy-columns: map-get($reference, 'copy-columns');
+  $grid-columns: map-get($reference, 'grid-columns');
+  $type-vs-grid: $copy-columns/$grid-columns;
+
+  $content-width: ($copy-width + $margin-x) / $type-vs-grid - $margin-x;
+  $outer-width: $content-width + $outer-x;
+  $breakpoint: unit-assert($outer-width * map-get($reference, 'html-scale'), em);
+
+  @return map-merge($reference, (
+    'content-width': $content-width,
+    'breakpoint': $breakpoint,
+    'sizes': $sizes,
+    'lines': $lines,
+    'mults-x': $mults-x,
+    'mults-y': $mults-y,
+  ));
+}
