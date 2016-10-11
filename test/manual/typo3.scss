@@ -1,43 +1,14 @@
 @import '../../index';
 
-/*
-  $default-medium
+// mult, line, opts
+@mixin stack($mult: $curr-mult-y-key, $line: $curr-line-key, $font: $curr-font-key) {
 
-    font-size
-    font-size-mult
-
-    line-height
-    line-height-mult
-
-    inner-x
-    inner-x-mult
-
-    inner-y
-    inner-y-mult
-
-    outer-top
-    outer-right
-    outer-bottom
-    outer-left
-    text-width
-    text-columns
-    grid-columns
-    breakpoint
-
-    $curr-inner-y-mult
-    $curr-inner-x-mult
-    $curr-font-size-mult
-    $curr-line-mult
- */
-
-@mixin stack($mult: $curr-inner-y-mult, $line: $curr-line-mult, $font: $curr-font-key) {
-
-  $prev-inner-y-mult: $curr-inner-y-mult;
-  $prev-line-mult: $curr-line-mult;
+  $prev-mult-y-key: $curr-mult-y-key;
+  $prev-line-key: $curr-line-key;
   $prev-font-key: $curr-font-key;
 
-  $curr-inner-y-mult: $mult !global;
-  $curr-line-mult: $line !global;
+  $curr-mult-y-key: $mult !global;
+  $curr-line-key: $line !global;
   $curr-font-key: $font !global;
   $curr-stack-sel: & !global;
 
@@ -47,29 +18,30 @@
 
   @content;
 
-  $curr-inner-y-mult: $prev-inner-y-mult !global;
-  $curr-line-mult: $prev-line-mult !global;
+  $curr-mult-y-key: $prev-mult-y-key !global;
+  $curr-line-key: $prev-line-key !global;
   $curr-font-key: $prev-font-key !global;
   $curr-stack-sel: null !global;
 }
 
+@function family($font) { @return get($fonts, $font, 'font-family'); }
 
+// line, font, opts
+@mixin trim($line: $curr-line-key, $font: $curr-font-key, $opts: (type: 'ex')) {
 
-@mixin typo($opts: ()) {
+  @if type-of($line) == 'map' { $opts: $line; $line: $curr-line-key }
+  @if type-of($font) == 'map' { $opts: $font; $font: $curr-font-key }
+  $excl: append(map-get($opts, 'excl') or (), '.m-block');
+  $type: map-get($opts, 'type');
 
-  $line: line(map-get($opts, 'line'));
-  $font: font(map-get($opts, 'font'));
+  @if $line { line-height: line($line); }
+  @if $font { font-family: family($font); }
 
-  $type: map-get($opts, 'type') or 'ex';
-  $nots: map-get($opts, 'excl') or ();
-  $nots: join($nots, '.m-block');
-
-  line-height: line;
   @if $curr-stack-sel {
     @at-root #{insert-parents(null,'>')} {
       margin-top: trim-to-em(0, $line);
       margin-bottom: trim-to-em(0, $line);
-      @include adjacent-to(not-selector('*', $nots...)) { margin-top: trim-to-em(null, $line, $type); }
+      @include adjacent-to(not-selector('*', $excl...)) { margin-top: trim-to-em(null, $line, $type); }
       @content;
     }
   } @else {
@@ -80,7 +52,7 @@
     $mults: medium-value('mults-y') or medium-value('mults');
     @each $m, $mult in map-merge((base: 1), $mults) {
       @at-root #{insert-parents(mult-class('m-stack', $m),'>')} {
-        @include adjacent-to(not-selector('*', $nots...)) { margin-top: trim-to-em(if($m=='base',1,$m), $line, $type); }
+        @include adjacent-to(not-selector('*', $excl...)) { margin-top: trim-to-em(if($m=='base',1,$m), $line, $type); }
         @content;
       }
     }
@@ -109,7 +81,7 @@
   @include stack(2, 1.1, null) {
 
     // line, font, trim
-    @include typo-margins(null, mono, 'em') {
+    @include typo(null, mono, 'em') {
 
       // mult, line, font, trim
       @include adjacent-to(h3 h4) { margin-top: typo-margin(3, null, null, 'ex'); }
@@ -120,23 +92,45 @@
   }
 
  */
+.content--mini {
+
+  @include stack(0.8) {
+    h4, h5, h6 {
+      font-size: 0.9em;
+      @include trim(0.9, 'mono', (type: 'mx'));
+    }
+  }
+}
+
+.content--large {
+
+  @include stack(1.4) {
+    p, ul, ol {
+      font-size: 1.2em;
+      @include trim(1.1, (type: 'em')) {
+        // @include adjacent-to(h2 h3) { @include trim-margin(2, null, null, 'em'); }
+      }
+    }
+    // ol { @include trim-adjacent(); }
+  }
+}
 
 h1, h2, h3, h4, h5, h6 {
   font-weight: bold;
-  @include typo-margins(null, null, 'em');
-  @include typo-adjacent(h2 h4, 2, null. 'em');
-  // @include typo((type: 'em'));
+  @include trim(null, null, (type: 'em'));
+  // @include trim-adjacent(h2 h4, 2, null. 'em');
+  // @include trim((type: 'em'));
   // trim-to
   // not-for
   // line-height
 
-  // typo-adjacent(h2 h3 h4, 1.5, mono) {}
+  // trim-adjacent(h2 h3 h4, 1.5, mono) {}
 }
 
 h2 {
 }
 
 p, ul, ol, dl {
-  @include typo((exclude: div pre, line-height: 1.5));
-  // @include typo-adjacent(h5) { margin-top: trim-to-em(); }
+  // @include trim((exclude: div pre, line-height: 1.5));
+  // @include trim-adjacent(h5) { margin-top: trim-to-em(); }
 }
