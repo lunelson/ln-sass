@@ -1,0 +1,31 @@
+
+
+@mixin typo($opts: ()) {
+
+  $line: line(map-get($opts, 'line'));
+  $font: font(map-get($opts, 'font'));
+
+  $trim: map-get($opts, 'trim') or 'ex';
+  $nots: join(map-get($opts, 'excl') or (), '.m-block');
+  $mults: medium-value('mults-y') or medium-value('mults');
+
+  @if $__curr-stack {
+    @at-root #{insert-parents(null,'>')} {
+      margin-top: trimmed(0, $line);
+      margin-bottom: trimmed(0, $line);
+      @include adjacent-to(not-selector('*', $nots...)) { margin-top: trimmed(null, $line, $trim); }
+      @content;
+    }
+  } @else {
+    @at-root #{insert-parents(base-class('m-stack'), '>')} {
+      margin-top: trimmed(0, $line);
+      margin-bottom: trimmed(0, $line);
+    }
+    @each $m, $mult in map-merge((base: 1), $mults) {
+      @at-root #{insert-parents(mult-class('m-stack', $m),'>')} {
+        @include adjacent-to(not-selector('*', $nots...)) { margin-top: trimmed(if($m=='base',1,$m), $line, $trim); }
+        @content;
+      }
+    }
+  }
+}

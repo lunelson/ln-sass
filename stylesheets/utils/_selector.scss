@@ -1,13 +1,14 @@
 // SELECTORS
 
 // TODO: renames
+// - not-selector
 // - last-parents
 // - initial-parents
 // - insert-parents
 // - sibling-of
 // - adjacent-to
 
-@function selector-not($selector, $nots...) {
+@function not-selector($selector, $nots...) {
   @each $not in $nots { $selector: $selector + ':not(#{$not})'; }
   @return selector-parse($selector);
 }
@@ -44,7 +45,7 @@
   $out: ();
   $lasts: last-parents();
   $initials: initial-parents();
-  $selectors: if(length($selectors)==0, '', $selectors);
+  $selectors: if(length($selectors) == 0, '', $selectors);
   // $selectors: if(length($selectors)==0, $lasts, $selectors); // use self if no arg given
   @if length(nth($initials, 1)) > 0 {
     @for $i from 1 through length($initials) {

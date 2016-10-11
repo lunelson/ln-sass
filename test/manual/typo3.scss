@@ -1,0 +1,142 @@
+@import '../../index';
+
+/*
+  $default-medium
+
+    font-size
+    font-size-mult
+
+    line-height
+    line-height-mult
+
+    inner-x
+    inner-x-mult
+
+    inner-y
+    inner-y-mult
+
+    outer-top
+    outer-right
+    outer-bottom
+    outer-left
+    text-width
+    text-columns
+    grid-columns
+    breakpoint
+
+    $curr-inner-y-mult
+    $curr-inner-x-mult
+    $curr-font-size-mult
+    $curr-line-mult
+ */
+
+@mixin stack($mult: $curr-inner-y-mult, $line: $curr-line-mult, $font: $curr-font-key) {
+
+  $prev-inner-y-mult: $curr-inner-y-mult;
+  $prev-line-mult: $curr-line-mult;
+  $prev-font-key: $curr-font-key;
+
+  $curr-inner-y-mult: $mult !global;
+  $curr-line-mult: $line !global;
+  $curr-font-key: $font !global;
+  $curr-stack-sel: & !global;
+
+  padding-top: 0.1px; // prevent margin collapse
+  padding-bottom: 0.1px; // ^
+  & > * + * { margin-top: margin-y($mult); }
+
+  @content;
+
+  $curr-inner-y-mult: $prev-inner-y-mult !global;
+  $curr-line-mult: $prev-line-mult !global;
+  $curr-font-key: $prev-font-key !global;
+  $curr-stack-sel: null !global;
+}
+
+
+
+@mixin typo($opts: ()) {
+
+  $line: line(map-get($opts, 'line'));
+  $font: font(map-get($opts, 'font'));
+
+  $type: map-get($opts, 'type') or 'ex';
+  $nots: map-get($opts, 'excl') or ();
+  $nots: join($nots, '.m-block');
+
+  line-height: line;
+  @if $curr-stack-sel {
+    @at-root #{insert-parents(null,'>')} {
+      margin-top: trim-to-em(0, $line);
+      margin-bottom: trim-to-em(0, $line);
+      @include adjacent-to(not-selector('*', $nots...)) { margin-top: trim-to-em(null, $line, $type); }
+      @content;
+    }
+  } @else {
+    @at-root #{insert-parents(base-class('m-stack'), '>')} {
+      margin-top: trim-to-em(0, $line);
+      margin-bottom: trim-to-em(0, $line);
+    }
+    $mults: medium-value('mults-y') or medium-value('mults');
+    @each $m, $mult in map-merge((base: 1), $mults) {
+      @at-root #{insert-parents(mult-class('m-stack', $m),'>')} {
+        @include adjacent-to(not-selector('*', $nots...)) { margin-top: trim-to-em(if($m=='base',1,$m), $line, $type); }
+        @content;
+      }
+    }
+  }
+}
+
+@mixin typo-adjacent($sels) {
+
+  @if $curr-stack-sel {
+    @at-root #{insert-parents(base-class('m-stack'), '>')} {
+      @include adjacent-to($sels) { @content; }
+    }
+  } @else {
+    $mults: medium-value('mults-y') or medium-value('mults');
+    @each $m, $mult in map-merge((base: 1), $mults) {
+      @at-root #{insert-parents(mult-class('m-stack', $m),'>')} {
+        @include adjacent-to($sels) { @content; }
+      }
+    }
+  }
+}
+/*
+  // API of stack / typo
+
+  // mult, line, font
+  @include stack(2, 1.1, null) {
+
+    // line, font, trim
+    @include typo-margins(null, mono, 'em') {
+
+      // mult, line, font, trim
+      @include adjacent-to(h3 h4) { margin-top: typo-margin(3, null, null, 'ex'); }
+    }
+    @include typo(null, mono, 'em') {
+      @include adjacent-to(h3 h4) { }
+    }
+  }
+
+ */
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: bold;
+  @include typo-margins(null, null, 'em');
+  @include typo-adjacent(h2 h4, 2, null. 'em');
+  // @include typo((type: 'em'));
+  // trim-to
+  // not-for
+  // line-height
+
+  // typo-adjacent(h2 h3 h4, 1.5, mono) {}
+}
+
+h2 {
+}
+
+p, ul, ol, dl {
+  @include typo((exclude: div pre, line-height: 1.5));
+  // @include typo-adjacent(h5) { margin-top: trim-to-em(); }
+}
