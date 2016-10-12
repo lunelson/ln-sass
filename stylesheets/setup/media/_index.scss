@@ -79,15 +79,15 @@ $curr-mult-x-key: null !default;
   // backup $media;
   // make temp for recursive merging
   $media-orig: $media !global;
-  $reference: $base;
+  $current: $base;
 
   @each $m, $medium in $media {
 
     // merge current medium against ref-medium, normalize primitive values
-    $reference: normalize-medium(map-merge($reference, $medium));
+    $current: normalize-medium(map-merge($current, $medium));
 
     // merge reference back to master
-    $media: map-merge($media, ($m: call('setup-medium-#{$type}', $reference))) !global;
+    $media: map-merge($media, ($m: call('setup-medium-by-#{$type}', $current))) !global;
   }
   @if $out {
     $globals: if(variable-exists('globals'), $globals, ());
@@ -104,20 +104,20 @@ $curr-mult-x-key: null !default;
   }
 }
 
-@function setup-medium-by-breakpoints($reference) {
+@function setup-medium-by-breakpoints($current) {
   // get and merge sub-maps
-  $sizes: map-merge(map-get($reference, 'sizes'), map-get($medium, 'sizes') or ());
-  $lines: map-merge(map-get($reference, 'lines'), map-get($medium, 'lines') or ());
-  $mults-x: map-merge(map-get($reference, 'mults-x'), map-get($medium, 'mults-x') or ());
-  $mults-y: map-merge(map-get($reference, 'mults-y'), map-get($medium, 'mults-y') or ());
+  $sizes: map-merge(map-get($current, 'sizes'), map-get($medium, 'sizes') or ());
+  $lines: map-merge(map-get($current, 'lines'), map-get($medium, 'lines') or ());
+  $mults-x: map-merge(map-get($current, 'mults-x'), map-get($medium, 'mults-x') or ());
+  $mults-y: map-merge(map-get($current, 'mults-y'), map-get($medium, 'mults-y') or ());
 
   // calc and merge additional props
-  $breakpoint: map-get($reference, 'breakpoint');
-  $outer-width: unit-assert($breakpoint / map-get($reference, 'html-scale'), rem);
-  $outer-x: map-get($reference, 'outer-right') + map-get($reference, 'outer-left');
+  $breakpoint: map-get($current, 'breakpoint');
+  $outer-width: unit-assert($breakpoint / map-get($current, 'html-scale'), rem);
+  $outer-x: map-get($current, 'outer-right') + map-get($current, 'outer-left');
 
   // merge these back to reference
-  @return map-merge($reference, (
+  @return map-merge($current, (
     'content-width': $outer-width - $outer-x,
     'sizes': $sizes,
     'lines': $lines,
@@ -126,28 +126,28 @@ $curr-mult-x-key: null !default;
   ));
 }
 
-@function setup-medium-by-columns($reference) {
+@function setup-medium-by-columns($current) {
   // get and merge sub-maps
-  $sizes: map-merge(map-get($reference, 'sizes'), map-get($medium, 'sizes') or ());
-  $lines: map-merge(map-get($reference, 'lines'), map-get($medium, 'lines') or ());
-  $mults-x: map-merge(map-get($reference, 'mults-x'), map-get($medium, 'mults-x') or ());
-  $mults-y: map-merge(map-get($reference, 'mults-y'), map-get($medium, 'mults-y') or ());
+  $sizes: map-merge(map-get($current, 'sizes'), map-get($medium, 'sizes') or ());
+  $lines: map-merge(map-get($current, 'lines'), map-get($medium, 'lines') or ());
+  $mults-x: map-merge(map-get($current, 'mults-x'), map-get($medium, 'mults-x') or ());
+  $mults-y: map-merge(map-get($current, 'mults-y'), map-get($medium, 'mults-y') or ());
 
   // calc and merge additional props
-  $font-size: map-get($reference, 'font-size');
-  $margin-x: map-get($reference, 'margin-x');
-  $outer-x: map-get($reference, 'outer-right') + map-get($reference, 'outer-left');
+  $font-size: map-get($current, 'font-size');
+  $margin-x: map-get($current, 'margin-x');
+  $outer-x: map-get($current, 'outer-right') + map-get($current, 'outer-left');
 
-  $copy-width: map-get($reference, 'copy-width');
-  $copy-columns: map-get($reference, 'copy-columns');
-  $grid-columns: map-get($reference, 'grid-columns');
+  $copy-width: map-get($current, 'copy-width');
+  $copy-columns: map-get($current, 'copy-columns');
+  $grid-columns: map-get($current, 'grid-columns');
   $type-vs-grid: $copy-columns/$grid-columns;
 
   $content-width: ($copy-width + $margin-x) / $type-vs-grid - $margin-x;
   $outer-width: $content-width + $outer-x;
-  $breakpoint: unit-assert($outer-width * map-get($reference, 'html-scale'), em);
+  $breakpoint: unit-assert($outer-width * map-get($current, 'html-scale'), em);
 
-  @return map-merge($reference, (
+  @return map-merge($current, (
     'content-width': $content-width,
     'breakpoint': $breakpoint,
     'sizes': $sizes,
