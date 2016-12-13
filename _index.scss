@@ -1,19 +1,19 @@
-//  _
-// | |
-// | |_ __ ______ ___  __ _ ___ ___
-// | | '_ \______/ __|/ _` / __/ __|
-// | | | | |     \__ \ (_| \__ \__ \
-// |_|_| |_|     |___/\__,_|___/___/
+//                           _
+//                          | |
+//  ___  __ _ ___ ___ ______| |_ __
+// / __|/ _` / __/ __|______| | '_ \
+// \__ \ (_| \__ \__ \      | | | | |
+// |___/\__,_|___/___/      |_|_| |_|
+
+// IMPORTS
 
 // deps
-@import "node_modules/sassdash/index";
+// @import "node_modules/sassdash/index";
 @import "node_modules/sass-calc/index";
 
-// dist
-@import 'stylesheets/utils/index';
-@import 'stylesheets/reset/index';
-@import 'stylesheets/setup/index';
-@import 'stylesheets/class/index';
+@import "scss/utils/all";
+@import "scss/reset/all";
+@import "scss/setup/all";
 
 // vars
 $done-base-init: false !default;

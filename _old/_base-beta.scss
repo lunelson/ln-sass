@@ -1,0 +1,16 @@
+//
+// stuff related to single-global variable; not implemented
+// --------------------------------------------------------------------------
+
+  // // one global to hold them all
+  // $__m: () !global;
+
+  // // get main maps
+  // @function __base() { @return map-get($M, 'base'); }
+  // @function __fonts() { @return map-get($M, 'fonts'); }
+  // @function __media() { @return map-get($M, 'media'); }
+
+  // // get orig maps
+  // @function __base-orig() { @return map-get($M, 'base-orig'); }
+  // @function __media-orig() { @return map-get($M, 'media-orig'); }
+

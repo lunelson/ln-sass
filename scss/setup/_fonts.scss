@@ -1,0 +1,109 @@
+////////////////////
+// FONTS DEFAULTS //
+////////////////////
+
+// DEFAULTS
+
+$fonts: () !default;
+$curr-font: null; // key
+
+$font-default: (
+  family: (arial, sans-serif),
+  em-adjust: 1,
+  ex-adjust: 1,
+  size-adjust: 1,
+  spacing-max: 0.5,
+  spacing-end: 50,
+  line-min: 1.2,
+  line-div: 2
+);
+
+$fonts-default: (
+  base: ( family: (arial, sans-serif) ),
+  serif: ( family: (georgia, serif) ),
+  mono: ( family: (monaco, consolas, "lucida console", monospace) )
+);
+
+$fonts-init-defaults: (
+  output: true,
+);
+
+
+////////////////////////////////////
+// FONTS PUBLIC FUNCTIONS / MIXIN //
+////////////////////////////////////
+
+//
+// functions
+//
+
+@function font($font: $curr-font) {
+  @if not $done-inits { @return error("m not initialized; please '@include init-m()'"); }
+  $font: $font or 'base';
+  @return map-get($fonts, $font) or error("$font '#{$font}' not found");
+}
+
+
+@function font-value($value-key, $f: $curr-font) {
+  $font: font($f);
+  @if $font {
+    @return map-get($font, $value-key) or error("key '#{$value-key}' not found in $font '#{$f or base}'");
+  }
+  @return $font; // will be null if $throw-catch is true; otherwise will have @error'd out
+}
+
+  // alias of above
+  @function fval($args...) { @return font-value($args...);}
+
+//
+// mixins
+//
+
+@mixin f($f) {
+
+  // family, size, line
+  $adjust: font-value('size-adjust', $f);
+  font-family: font-value('family', $f);
+  font-size: 1rem * $adjust;
+  @include mm-for('line') { line-height: medium-value('line') / $adjust; }
+
+  // letter spacing
+  $spacing-max: font-value('spacing-max', $f);
+  @if $spacing-max > 0 {
+
+    $sel: if(&, selector-parse(&, '*'), '*');
+    #{$sel} { letter-spacing: calc(#{$spacing-max}px - #{$spacing-max/font-value('spacing-end', $f)}em); }
+  }
+}
+
+
+/////////////////
+// FONTS SETUP //
+/////////////////
+
+
+@mixin init-fonts() {
+
+  // if length of fonts is 0, merge fonts-default against it;
+  $fonts: if(length($fonts) > 0, $fonts, $fonts-default) !global;
+
+  // merge each font against font-default; merge result back to $fonts
+  @each $f, $font in $fonts {
+
+    $font: map-merge($font-default, $font);
+    $fonts: map-merge($fonts, ($f: $font)) !global;
+  }
+}
+
+
+@mixin output-fonts() {
+
+  @if not $done-inits { @include error('sass-m: cannot output before init'); }
+
+  // output either body or .ff-- class for each font
+  @each $f, $font in $fonts {
+
+    #{if($f=='base', body, '.ff--#{$f}')} { @include f($f); }
+  }
+}
+

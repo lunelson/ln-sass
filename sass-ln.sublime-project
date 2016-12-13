@@ -3,6 +3,30 @@
 	[
 		{
 			"path": "."
+		},
+		{
+			"path": "/Users/lunelson/Git/packages/sass-m"
+		},
+		{
+			"path": "/Users/lunelson/Git/packages/sass-u"
+		},
+		{
+			"path": "/Users/lunelson/Git/packages/sass-calc"
+		},
+		{
+			"path": "/Users/lunelson/Git/packages/sass-list-maps"
+		},
+		{
+			"path": "/Users/lunelson/Git/packages/sass-maps-plus"
+		},
+		{
+			"path": "/Users/lunelson/Git/packages/sass-reset"
+		},
+		{
+			"path": "/Users/lunelson/Git/packages/sass-throw"
+		},
+		{
+			"path": "/Users/lunelson/Git/packages/sass-to-js"
 		}
 	]
 }

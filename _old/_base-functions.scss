@@ -1,0 +1,337 @@
+//
+// init helpers [private] ✅
+// --------------------------------------------------------------------------
+
+
+  // normalize medium
+  @function __normalize-medium($medium) {
+
+    // correct for size and line units/non-units
+    $size: map-get($medium, 'size');
+    $line: map-get($medium, 'line');
+    $ref-px-size: if($medium == $base, 16px, map-get($base, 'size'));
+    @if unit($size) != 'px' { $size: strip($size) * $ref-px-size; }
+    @if unit($line) == 'px' { $line: $line / $size; }
+
+    // put these in a new map
+    $normalized: (
+      'size': $size,
+      'line': $line,
+      'scale': strip($size / 16px)
+    );
+
+    // merge additional corrections if necessary
+    @each $key, $value in map-remove($medium, 'size', 'line', 'breakpoint', 'size-mults', 'line-mults', 'inner-x-mults', 'inner-y-mults', 'outer-x-mults', 'outer-y-mults') {
+      @if unit($value) == 'px' { $normalized: map-merge($normalized, ($key: $value / $size * 1rem)); }
+    }
+
+    // return merged corrections
+    @return map-merge($medium, $normalized);
+  }
+
+  // setup medium by breakpoints
+  @function __setup-medium-by-breakpoints($current, $medium) {
+
+    // merge medium to current; normalize result
+    $current: __normalize-medium(map-merge($current, $medium));
+
+    // get and merge sub-maps
+    $size-mults: map-merge(map-get($current, 'size-mults'), map-get($medium, 'size-mults') or ());
+    $line-mults: map-merge(map-get($current, 'line-mults'), map-get($medium, 'line-mults') or ());
+    $inner-x-mults: map-merge(map-get($current, 'inner-x-mults'), map-get($medium, 'inner-x-mults') or ());
+    $inner-y-mults: map-merge(map-get($current, 'inner-y-mults'), map-get($medium, 'inner-y-mults') or ());
+
+    // calc and merge additional props
+    $breakpoint: map-get($current, 'breakpoint');
+    $outer-width: assert($breakpoint / map-get($current, 'scale'), rem);
+    $outer-x: map-get($current, 'outer-right') + map-get($current, 'outer-left');
+
+    // merge these back to reference
+    @return map-merge($current, (
+      'content-width': $outer-width - $outer-x,
+      'size-mults': $size-mults,
+      'line-mults': $line-mults,
+      'inner-x-mults': $inner-x-mults,
+      'inner-y-mults': $inner-y-mults,
+    ));
+  }
+
+  // setup medium by columns
+  @function __setup-medium-by-columns($current, $medium) {
+
+    // merge medium to current; normalize result
+    $current: __normalize-medium(map-merge($current, $medium));
+
+    // get and merge sub-maps
+    $size-mults: map-merge(map-get($current, 'size-mults'), map-get($medium, 'size-mults') or ());
+    $line-mults: map-merge(map-get($current, 'line-mults'), map-get($medium, 'line-mults') or ());
+    $inner-x-mults: map-merge(map-get($current, 'inner-x-mults'), map-get($medium, 'inner-x-mults') or ());
+    $inner-y-mults: map-merge(map-get($current, 'inner-y-mults'), map-get($medium, 'inner-y-mults') or ());
+
+    // calc and merge additional props
+    $size: map-get($current, 'size');
+    $inner-x: map-get($current, 'inner-x');
+    $outer-x: map-get($current, 'outer-right') + map-get($current, 'outer-left');
+
+    $copy-width: map-get($current, 'copy-width');
+    $copy-columns: map-get($current, 'copy-columns');
+    $grid-columns: map-get($current, 'grid-columns');
+    $reading-vs-grid: $copy-columns/$grid-columns;
+
+    $content-width: ($copy-width + $inner-x) / $reading-vs-grid - $inner-x;
+    $outer-width: $content-width + $outer-x;
+    $breakpoint: assert($outer-width * map-get($current, 'scale'), em);
+
+    @return map-merge($current, (
+      'content-width': $content-width,
+      'breakpoint': $breakpoint,
+      'size-mults': $size-mults,
+      'line-mults': $line-mults,
+      'inner-x-mults': $inner-x-mults,
+      'inner-y-mults': $inner-y-mults,
+    ));
+  }
+
+
+//
+// [private] query helpers
+// --------------------------------------------------------------------------
+
+
+  @function __props-for($group-key){
+    $groups: (
+      size: (size-mults),
+      line: (line-mults),
+      inner-x: (inner-x-mults),
+      inner-y: (inner-y-mults),
+      outer: (outer-right outer-left outer-x-mults),
+      outer-y: (outer-top outer-bottom outer-y-mults),
+      stack: (inner-y inner-y-mults),
+      grid: (inner-x inner-x-mults grid-columns),
+      typo: (line line-mults inner-y),
+    );
+    $group-keys: map-keys($groups);
+    @if index($group-keys, $group-key) {
+      $group: map-get($groups, $group-key);
+      @each $item in $group {
+        @if index($group-keys, $item) {
+          $group: join($group, map-get($groups, $item));
+        }
+      }
+      @return $group;
+    }
+    @return $group-key;
+  }
+
+  @function __media-for($group-keys...) {
+    $group-keys: __normalize-arglist($group-keys...);
+    $props: $group-keys; $media-keys: ();
+    @each $key in $group-keys {
+      $props: join($props, __props-for($key)); }
+    // @return $props;
+    // function is good up to here; compare against media-orig...
+    @each $m, $medium in $media-orig {
+      @if __contains-any(map-keys($medium), $props) {
+        $media-keys: append($media-keys, $m);
+      }
+    }
+    @return $media-keys;
+  }
+
+  @function __query-string($min: null, $max: null) {
+    $min: if(map-has-key($media, $min), __get($media, $min, 'breakpoint'), $min);
+    $max: if(map-has-key($media, $max), __get($media, $max, 'breakpoint'), $max);
+    @return 'screen'
+      + if($min, ' and (min-width: #{$min})', '')
+      + if($max, ' and (max-width: #{$max - 0.001})', '');
+  }
+
+
+//
+// value getters, base ✅
+// --------------------------------------------------------------------------
+
+
+  @function font($font: $curr-font) {
+    @if not $init-done { @return error("m not initialized; please '@include init-m()'"); }
+    $font: $font or 'base';
+    @return map-get($fonts, $font) or error("$font '#{$font}' not found");
+  }
+
+  @function m($m: $curr-m) {
+    @if not $init-done { @return error("m not initialized; please '@include init-m()'"); }
+    @if $m { @return map-get($media, $m) or error("medium '#{$m}' not found in $media");}
+    @return $base;
+  }
+
+  @function m-orig($m: $curr-m) {
+    @if not $init-done { @return error("m not initialized; please '@include init-m()'"); }
+    @if $m { @return map-get($media-orig, $m) or error("original medium '#{$m}' not found in $media"); }
+    @return $base-orig;
+  }
+
+
+//
+// value getters, generic
+// --------------------------------------------------------------------------
+
+
+  @function font-value($value-key, $f: $curr-font) {
+    $font: font($f);
+    @if $font {
+      @return map-get($font, $value-key) or error("key '#{$value-key}' not found in $font '#{$f or base}'");
+    }
+    @return $font; // will be null if $throw-catch is true; otherwise will have @error'd out
+  }
+
+  @function m-value($value-key, $m: $curr-m) {
+    $medium: m($m);
+    @if $medium {
+      $medium-desc: if($m, "$medium '#{$m}'", "$base");
+      @return map-get($medium, $value-key) or error("key '#{$value-key}' not found in #{$medium-desc}");
+    }
+    @return $medium; // will be null if $throw-catch is true; otherwise will have @error'd out
+  }
+
+  @function m-orig-value($value-key, $m: $curr-m) {
+    $medium-orig: m-orig($m);
+    @if $medium-orig {
+      $medium-desc: if($m, "$medium-orig '#{$m}'", "$base-orig");
+      @return map-get($medium-orig, $value-key) or error("key '#{$value-key}' not found in #{$medium-desc}");
+    }
+    @return $medium-orig; // will be null if $throw-catch is true; otherwise will have @error'd out
+  }
+
+
+//
+// [private] value helpers ✅
+// --------------------------------------------------------------------------
+
+
+  @function __rem($values, $m: $curr-m) {
+    @if not $values or length($values) == 0 { @return null; }
+    @if not (is-number($values) or is-list($values)) { @return error("$values argument must be number or list of numbers"); }
+    $result: (); $size: m-value('size', $m) or 16px;
+    @each $value in $values {
+      @if not is-number($value) { @return error("a $value in $values was a non-number"); }
+      @if unit($value) == 'px' { $result: append($result, $value / $size * 1rem, 'space'); }
+      @else { $result: append($result, assert($value, rem), 'space'); }
+    }
+    @return if(length($result) > 1, $result, nth($result, 1));
+  }
+
+  @function __px($values, $m: $curr-m) {
+    @if not $values or length($values) == 0 { @return null; }
+    @if not (is-number($values) or is-list($values)) { @return error("$values argument must be number or list of numbers"); }
+    $result: (); $size: m-value('size', $m) or 16px;
+    @each $value in $values {
+      @if not is-number($value) { @return error("a $value in $values was a non-number"); }
+      @if unit($value) == 'px' { $result: append($result, $value, 'space'); }
+      @else { $result: append($result, strip($value) * $size, 'space'); }
+    }
+    @return if(length($result) > 1, $result, nth($result, 1));
+  }
+
+  @function __mult($mult, $name, $m: $curr-m) {
+    @if not $mult { @return 1; }
+    @else if is-unitless($mult) { @return $mult; }
+    @else if is-number($mult) { @return __rem($mult, $m); }
+    @else if is-string($mult) and is-string($name) {
+      $mults: m-value('#{$name}-mults', $m);
+      @if not $mults { @return error("no mults-map named '#{$name}-mults'"); }
+      $value: map-get($mults, $mult);
+      @if not $value { @return error("no mult named '#{$mult}' in '#{$name}-mults'"); }
+      @return $value;
+    }
+    @return error("either $mult or $name argument is not a string");
+  }
+
+
+//
+// value getters, simple ✅
+// --------------------------------------------------------------------------
+
+
+  @function inner-x($mult: $curr-inner-x, $m: $curr-m) {
+    $mult: __mult($mult, 'inner-x', $m);
+    @return if(is-unitless($mult), $mult * m-value('inner-x', $m), $mult);
+  }
+
+  @function inner-y($mult: $curr-inner-y, $m: $curr-m) {
+    $mult: __mult($mult, 'inner-y', $m);
+    @return if(is-unitless($mult), $mult * m-value('inner-y', $m), $mult);
+  }
+
+  @function outer-top($mult: $curr-outer-y, $m: $curr-m) {
+    $mult: __mult($mult, 'outer-y', $m);
+    @return if(is-unitless($mult), $mult * m-value('outer-top', $m), $mult);
+  }
+
+  @function outer-right($mult: $curr-outer-x, $m: $curr-m) {
+    $mult: __mult($mult, 'outer-x', $m);
+    @return if(is-unitless($mult), $mult * m-value('outer-right', $m), $mult);
+  }
+
+  @function outer-bottom($mult: $curr-outer-y, $m: $curr-m) {
+    $mult: __mult($mult, 'outer-y', $m);
+    @return if(is-unitless($mult), $mult * m-value('outer-bottom', $m), $mult);
+  }
+
+  @function outer-left($mult: $curr-outer-x, $m: $curr-m) {
+    $mult: __mult($mult, 'outer-x', $m);
+    @return if(is-unitless($mult), $mult * m-value('outer-left', $m), $mult);
+  }
+
+//
+// value getters, complex [auto m resolution]
+// --------------------------------------------------------------------------
+
+
+  // mult, font
+  @function size($size: $curr-size, $font: $curr-font) {
+    $mult: __mult($size, 'size');
+    @if not is-unitless($mult) { @return error("$mult argument must resolve to unitless number"); }
+    @return $mult * 1rem * font-value('size-adjust', $font);
+  }
+
+  @function line($line: $curr-line, $font: $curr-font) {
+    $mult: __mult($line, 'line');
+    @if not is-unitless($mult) { @return error("$mult argument must resolve to unitless number"); }
+    @return $mult * m-value('line') / font-value('size-adjust', $font);
+  }
+
+  // size, font
+  @function auto-line($size: $curr-size, $font: $curr-font) {
+    $size: size($size, $font);
+    $div: font-value('line-div', $font);
+    $min: font-value('line-min', $font);
+    $rel: line() / strip($size);
+    @return ceil($min / $rel * $div) / $div / strip($size);
+  }
+
+  // line, font, type
+  @function trim-value($line: $curr-line, $font: $curr-font, $type: 'ex'){
+    $lh: line($line, $font);
+    $em: font-value('em-adjust', $font) * 1em;
+    $ex: font-value('ex-adjust', $font) * 1ex;
+    $deltas: (em: 0, ex: subtract($em, $ex), mx: subtract($em/2, $ex/2));
+    @return add((($lh * 1em - $em) / 2), map-get($deltas, $type));
+  }
+
+
+  // mult, line, font, type
+  @function trim-margin($mult: $curr-inner-y, $line: $curr-line, $font: $curr-font, $type: 'ex') {
+    @return subtract(inner-y($mult), trim-value($line, $font, $type));
+  }
+
+  @function trim-margin-ex($mult: $curr-inner-y, $line: $curr-line, $font: $curr-font) {
+    @return subtract(inner-y($mult), trim-value($line, $font, 'ex'));
+  }
+
+  @function trim-margin-em($mult: $curr-inner-y, $line: $curr-line, $font: $curr-font) {
+    @return subtract(inner-y($mult), trim-value($line, $font, 'em'));
+  }
+
+  @function trim-margin-mx($mult: $curr-inner-y, $line: $curr-line, $font: $curr-font) {
+    @return subtract(inner-y($mult), trim-value($line, $font, 'mx'));
+  }

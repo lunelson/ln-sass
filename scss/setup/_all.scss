@@ -1,0 +1,18 @@
+@import 'outer';
+@import 'wrap';
+@import 'grid';
+@import 'cell';
+@import 'stack';
+@import 'trim';
+@import 'util';
+
+
+$options: (
+  outer: true,
+  wrap: true,
+  grid: true,
+  stack: true,
+  typo: false,
+  grid-type: flex, // flex | float
+  wrap-type: standard, // standard | extended
+);

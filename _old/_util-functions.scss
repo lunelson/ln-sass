@@ -1,0 +1,61 @@
+//
+// selectors
+// --------------------------------------------------------------------------
+
+
+  @function not-selector($selector, $nots...) {
+    @each $not in $nots { $selector: $selector + ':not(#{$not})'; }
+    @return selector-parse($selector);
+  }
+
+  @function unique-selector() {
+    @return unquote("%#{unique-id()}");
+  }
+
+  // get last parents in & list(s)
+  @function last-parents {
+    $out: ();
+    @each $list in & {
+      $last: nth($list, length($list));
+      @if not index($out, $last) {
+        $out: append($out, $last, 'comma');
+      }
+    }
+    @return selector-parse($out);
+  }
+
+  // get initial parents in & list(s)
+  @function initial-parents {
+    $out: ();
+    @each $list in & {
+      $initial: slice($list, 1,  length($list) - 1);
+      @if not index($out, $initial) {
+        $out: append($out, $initial, 'comma');
+      }
+    }
+    @return selector-parse($out);
+  }
+
+  @function insert-parents($selectors, $combinator: '') {
+    $out: ();
+    $lasts: last-parents();
+    $initials: initial-parents();
+    $selectors: if(length($selectors) == 0, '', $selectors);
+    // $selectors: if(length($selectors)==0, $lasts, $selectors); // use self if no arg given
+    @if length(nth($initials, 1)) > 0 {
+      @for $i from 1 through length($initials) {
+        @for $s from 1 through length($selectors) {
+          @for $l from 1 through length($lasts) {
+            $out: append($out, #{nth($initials, $i)} #{nth($selectors, $s)} #{$combinator} #{nth($lasts, $l)}, 'comma');
+          }
+        }
+      }
+    } @else {
+      @for $s from 1 through length($selectors) {
+        @for $l from 1 through length($lasts) {
+          $out: append($out, #{nth($selectors, $s)} #{$combinator} #{nth($lasts, $l)}, 'comma');
+        }
+      }
+    }
+    @return selector-parse($out);
+  }
